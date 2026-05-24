@@ -1,0 +1,167 @@
+---
+id: observability-pick
+title: Observability Pick — Logs, Traces, Cost
+sidebar_position: 9
+sidebar_label: Observability pick
+description: Langfuse, Helicone, LangSmith, Phoenix, Braintrust — when to use which, and when a Postgres table is still the right answer.
+---
+
+# Observability Pick — Logs, Traces, Cost
+
+> **In one line:** Start with the Postgres table from Stage 7. Move to a platform when you want trace UIs, per-feature cost breakdowns out of the box, or alerts you don't want to build.
+
+## Tier 1 — the boring answer
+
+The `llm_calls` Postgres table from [Stage 7](../01-part-1-from-zero/08-stage-7-observability.md).
+
+When this is enough:
+
+- You're a solo dev or small team.
+- You're shipping \&lt;10K calls/day.
+- Your queries are answered by 5 SQL statements (cost by feature, top users, p95 latency, sample-to-eval, replay).
+- You don't need a trace-tree UI yet (you don't have agents or deep call chains).
+
+It's enough longer than people expect. Don't move off it until you can name what you're missing.
+
+## Tier 2 — when to move
+
+### Langfuse (OSS + hosted)
+
+The pragmatic open-source pick. Self-host on Docker or use Langfuse Cloud.
+
+**Strengths:**
+- OSS — full data ownership.
+- Traces with span-tree UI for multi-step flows.
+- Cost dashboards built-in.
+- Evals + observability in one tool.
+- Generous free tier (cloud) or fully self-hosted.
+
+**Trade-offs:**
+- Self-hosting is more work than just SaaS.
+- UI is functional but not flashy.
+
+**Pick if:** you want OSS data ownership, you have agents (where trace UIs matter), you want one tool for evals + obs.
+
+### Helicone (OSS + hosted)
+
+Drop-in proxy. Change your OpenAI base URL to Helicone's; everything else stays the same.
+
+**Strengths:**
+- Lowest friction integration in the space — minutes.
+- Excellent cost dashboards.
+- Built-in cache, rate limiting, prompt versioning.
+- Hybrid: works as proxy or async SDK.
+
+**Trade-offs:**
+- Less rich trace UI than Langfuse.
+- Proxy adds a hop (small but real latency cost).
+
+**Pick if:** you want the fastest possible setup, you care most about cost analytics.
+
+### LangSmith (hosted)
+
+LangChain's observability platform.
+
+**Strengths:**
+- Best-in-class if you use LangChain / LangGraph — traces integrate naturally.
+- Strong dataset / eval integration.
+- Production traces tie to eval suites.
+
+**Trade-offs:**
+- Hosted only.
+- Best for LangChain users; less ideal otherwise.
+
+**Pick if:** you're deep in LangChain.
+
+### Arize Phoenix (OSS + hosted)
+
+Open-source, strong on trace visualization and embedding analytics.
+
+**Strengths:**
+- Open-source.
+- Excellent for understanding embedding-space drift in RAG.
+- Strong span/trace UI.
+
+**Trade-offs:**
+- Heavier setup than Helicone.
+- Smaller community than Langfuse.
+
+**Pick if:** you have a complex RAG and want to visualize what's happening in embedding space; or you want OpenTelemetry-native AI observability.
+
+### Braintrust (hosted, also does obs)
+
+Primarily an eval platform, but also handles production logs and traces.
+
+**Strengths:**
+- One tool for evals + obs.
+- Premium UI.
+- Strong on sample-to-eval workflows (production traces become test cases).
+
+**Trade-offs:**
+- Hosted, paid.
+
+**Pick if:** you're already on Braintrust for evals; consolidating is worth it.
+
+### Datadog LLM Observability (paid hosted)
+
+If your company is already on Datadog.
+
+**Strengths:**
+- Integrates with everything else you monitor.
+- Enterprise-grade SLAs.
+
+**Trade-offs:**
+- Expensive.
+- Designed for big-co context.
+
+**Pick if:** you're a Datadog shop with an enterprise contract.
+
+## Tier 3 — skip or defer
+
+- **Build your own dashboard from scratch in React.** Tempting; ~3 weeks of work that the above tools do for free.
+- **OpenTelemetry without a backend.** OTel is the right standard, but you need a backend that understands GenAI semantic conventions. Phoenix is the open-source bet; most others lag.
+
+## The matrix
+
+| Need | Pick |
+|------|------|
+| Just shipping; small team | **Postgres table (DIY)** |
+| Fastest setup; great cost dashboards | **Helicone** (proxy mode) |
+| OSS, obs + evals in one | **Langfuse** |
+| LangChain shop | **LangSmith** |
+| Embedding-space analytics for RAG | **Phoenix** |
+| Already on Braintrust | **Braintrust** |
+| Already on Datadog | **Datadog LLM Obs** |
+
+## What to optimize for
+
+When evaluating, weigh:
+
+1. **Time-to-first-trace.** Helicone's proxy gets you traces in 5 minutes. Langfuse SDK setup takes ~30 minutes. Custom Postgres takes a day.
+2. **Cost-attribution granularity.** Can you break down spend by user × feature × model? Helicone and Langfuse: yes. Phoenix: less so.
+3. **Trace UI quality.** Does the UI clearly show a multi-step agent's call tree? Langfuse and LangSmith: best. Phoenix: also strong.
+4. **Eval integration.** Can you turn production traces into eval cases? Langfuse and Braintrust: yes natively.
+5. **Self-host option.** Langfuse, Helicone, Phoenix: yes. Braintrust, LangSmith, Datadog: no.
+
+## The migration story
+
+You'll likely run two systems in parallel briefly:
+
+1. **Existing:** Postgres table from Stage 7.
+2. **New:** Hosted platform.
+
+Send to both for 1–2 weeks. Compare costs, query patterns, dashboards. Cutover when you're confident.
+
+Migrating the eval set + run history *out* of a platform is often harder than getting data in. Bias toward tools with good export.
+
+## Common mistakes
+
+:::caution[Where people commonly trip up]
+- **Adopting too early.** A side project doesn't need Helicone. A 500-call-a-day app doesn't need Datadog. Match tool weight to actual scale.
+- **Skipping cost attribution.** Without breaking spend down by feature + user, you can't tell which feature is profitable and which is a money pit. Whatever tool you pick, set up the dimensions on day one.
+- **Logging incomplete prompts.** Don't strip the system prompt, tool definitions, or retrieved chunks to "save storage." The whole point of logs is replayability; missing context means no replay.
+- **No alerts.** Logs without alerts mean problems are discovered weeks later. Wire up: cost spike, error rate spike, latency p95 spike, refusal rate spike.
+- **Vendor lock-in via SDK.** Wrap your logging in a `log_llm_call` interface; only that function knows the vendor. Swappable later.
+:::
+
+→ Next: [Gateway pick](./09-gateway-pick.md) — Cloudflare AI Gateway, LiteLLM, OpenRouter, and friends.

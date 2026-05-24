@@ -1,0 +1,10 @@
+{
+  "label": "Part II — The 2026 AI Stack",
+  "position": 4,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "doc",
+    "id": "part-2-overview"
+  }
+}

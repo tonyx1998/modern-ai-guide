@@ -1,0 +1,7 @@
+{
+  "label": "1. Foundations",
+  "position": 2,
+  "collapsible": true,
+  "collapsed": true,
+  "link": { "type": "doc", "id": "foundational-concepts" }
+}

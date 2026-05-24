@@ -1,0 +1,10 @@
+{
+  "label": "Part III — Beyond the Stack",
+  "position": 5,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "doc",
+    "id": "part-3-overview"
+  }
+}

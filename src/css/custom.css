@@ -1,0 +1,299 @@
+/**
+ * Global styles for the Modern AI Engineer Guide site.
+ * Built on Infima (Docusaurus's default CSS framework).
+ * Color palette: violet/indigo (vs. the web-dev guide's blue).
+ */
+
+:root {
+  --ifm-color-primary: #7c3aed;
+  --ifm-color-primary-dark: #6d28d9;
+  --ifm-color-primary-darker: #5b21b6;
+  --ifm-color-primary-darkest: #4c1d95;
+  --ifm-color-primary-light: #8b5cf6;
+  --ifm-color-primary-lighter: #a78bfa;
+  --ifm-color-primary-lightest: #c4b5fd;
+  --ifm-code-font-size: 92%;
+  --ifm-font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  --ifm-heading-font-weight: 700;
+  --ifm-h1-font-size: 2.2rem;
+  --ifm-h2-font-size: 1.6rem;
+  --ifm-h3-font-size: 1.25rem;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.08);
+  --ifm-navbar-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+[data-theme='dark'] {
+  --ifm-color-primary: #a78bfa;
+  --ifm-color-primary-dark: #8b5cf6;
+  --ifm-color-primary-darker: #7c3aed;
+  --ifm-color-primary-darkest: #6d28d9;
+  --ifm-color-primary-light: #c4b5fd;
+  --ifm-color-primary-lighter: #ddd6fe;
+  --ifm-color-primary-lightest: #ede9fe;
+  --ifm-background-color: #0b0a18;
+  --docusaurus-highlighted-code-line-bg: rgba(255, 255, 255, 0.1);
+}
+
+.theme-code-block {
+  font-size: 0.9em;
+}
+
+.theme-admonition {
+  border-radius: 8px;
+  border-width: 1px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.markdown h1:first-child {
+  margin-bottom: 1rem;
+}
+
+.markdown hr {
+  border: none;
+  border-top: 1px solid var(--ifm-color-emphasis-300);
+  margin: 2.5rem 0;
+}
+
+/* ============================================================
+   Sidebar hierarchy — three visual levels
+   ============================================================ */
+
+.menu__link {
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+
+.menu__link--sublist-caret::after {
+  opacity: 0.7;
+}
+
+/* Level 1 — Chapter category headers */
+.theme-doc-sidebar-item-category-level-1 > .menu__list-item-collapsible > .menu__link,
+.theme-doc-sidebar-item-category-level-1 > .menu__list-item-collapsible > a.menu__link {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--ifm-color-emphasis-900);
+  padding-top: 0.55rem;
+  padding-bottom: 0.55rem;
+  margin-top: 0.4rem;
+}
+
+.theme-doc-sidebar-item-link-level-1 > .menu__link {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--ifm-color-emphasis-900);
+  padding-top: 0.55rem;
+  padding-bottom: 0.55rem;
+}
+
+/* Level 2 — Sub-category headers */
+.theme-doc-sidebar-item-category-level-2 > .menu__list-item-collapsible > .menu__link {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--ifm-color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding-top: 0.45rem;
+  padding-bottom: 0.35rem;
+  opacity: 0.85;
+}
+
+[data-theme='dark'] .theme-doc-sidebar-item-category-level-2 > .menu__list-item-collapsible > .menu__link {
+  color: var(--ifm-color-primary-light);
+}
+
+/* Leaf page links */
+.theme-doc-sidebar-item-link-level-2 > .menu__link,
+.theme-doc-sidebar-item-link-level-3 > .menu__link {
+  font-size: 0.88rem;
+  font-weight: 400;
+  color: var(--ifm-color-emphasis-800);
+}
+
+.theme-doc-sidebar-item-link-level-2 > .menu__link--active,
+.theme-doc-sidebar-item-link-level-3 > .menu__link--active {
+  font-weight: 600;
+}
+
+/* Subtle divider above each chapter */
+.theme-doc-sidebar-item-category-level-1:not(:first-child) {
+  border-top: 1px solid var(--ifm-color-emphasis-200);
+  margin-top: 0.5rem;
+  padding-top: 0.3rem;
+}
+
+[data-theme='dark'] .theme-doc-sidebar-item-category-level-1:not(:first-child) {
+  border-top-color: var(--ifm-color-emphasis-300);
+}
+
+.theme-doc-sidebar-item-link-level-3 > .menu__link {
+  padding-left: 1.5rem;
+}
+
+.table-of-contents__link--active {
+  font-weight: 600;
+}
+
+.markdown > header > h1,
+.markdown h1:first-child {
+  font-size: 2.4rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+/* Mobile-friendly Tabs */
+@media (max-width: 600px) {
+  .tabs {
+    flex-direction: column;
+    gap: 0.35rem;
+    border-bottom: none;
+  }
+  .tabs .tabs__item {
+    border-radius: 8px;
+    border: 1px solid var(--ifm-color-emphasis-300);
+    padding: 0.75rem 1rem;
+    width: 100%;
+    text-align: left;
+    font-size: 1rem;
+    line-height: 1.25;
+    white-space: normal;
+  }
+  .tabs .tabs__item--active {
+    border-color: var(--ifm-color-primary);
+    background: var(--ifm-color-emphasis-100);
+  }
+  [data-theme='dark'] .tabs .tabs__item--active {
+    background: rgba(167, 139, 250, 0.12);
+  }
+}
+
+/* Calmer dark-mode callouts */
+[data-theme='dark'] .theme-admonition {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+[data-theme='dark'] .theme-admonition-tip,
+[data-theme='dark'] .theme-admonition-success {
+  background-color: rgba(46, 133, 85, 0.08);
+}
+[data-theme='dark'] .theme-admonition-info,
+[data-theme='dark'] .theme-admonition-note {
+  background-color: rgba(124, 58, 237, 0.08);
+}
+[data-theme='dark'] .theme-admonition-warning,
+[data-theme='dark'] .theme-admonition-caution {
+  background-color: rgba(234, 179, 8, 0.06);
+}
+[data-theme='dark'] .theme-admonition-danger {
+  background-color: rgba(239, 68, 68, 0.06);
+}
+
+/* Breathing room between sections */
+.markdown h2 {
+  margin-top: 2.75rem;
+  padding-top: 0.5rem;
+}
+.markdown h3 {
+  margin-top: 2rem;
+}
+.markdown > p,
+.markdown > ul,
+.markdown > ol,
+.markdown > blockquote,
+.markdown > .theme-admonition {
+  margin-bottom: 1.1rem;
+}
+
+.markdown ul {
+  padding-left: 1.25rem;
+}
+
+/* Big CTA-style Prev/Next pagination */
+.pagination-nav {
+  margin-top: 3rem;
+  gap: 1rem;
+}
+
+.pagination-nav__link {
+  padding: 1.1rem 1.3rem;
+  border-radius: 14px;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  background: var(--ifm-background-surface-color);
+  transition: border-color 0.15s, transform 0.1s, box-shadow 0.15s, background 0.15s;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.pagination-nav__link:hover {
+  border-color: var(--ifm-color-primary);
+  background: var(--ifm-color-emphasis-100);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(124, 58, 237, 0.12);
+  text-decoration: none;
+}
+
+[data-theme='dark'] .pagination-nav__link:hover {
+  background: rgba(167, 139, 250, 0.06);
+  box-shadow: 0 6px 18px rgba(167, 139, 250, 0.2);
+}
+
+.pagination-nav__sublabel {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ifm-color-emphasis-600);
+  margin-bottom: 0.35rem;
+}
+
+.pagination-nav__label {
+  font-size: 1.08rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--ifm-color-emphasis-900);
+  line-height: 1.3;
+}
+
+.pagination-nav__link--next {
+  border-color: var(--ifm-color-primary);
+  background: rgba(124, 58, 237, 0.04);
+}
+
+.pagination-nav__link--next .pagination-nav__sublabel,
+.pagination-nav__link--next .pagination-nav__label {
+  color: var(--ifm-color-primary-darker);
+}
+
+[data-theme='dark'] .pagination-nav__link--next {
+  background: rgba(167, 139, 250, 0.07);
+}
+
+[data-theme='dark'] .pagination-nav__link--next .pagination-nav__sublabel,
+[data-theme='dark'] .pagination-nav__link--next .pagination-nav__label {
+  color: var(--ifm-color-primary-light);
+}
+
+.pagination-nav__link--next:hover {
+  background: rgba(124, 58, 237, 0.08);
+  border-color: var(--ifm-color-primary-dark);
+}
+
+[data-theme='dark'] .pagination-nav__link--next:hover {
+  background: rgba(167, 139, 250, 0.13);
+}
+
+@media (max-width: 600px) {
+  .pagination-nav {
+    grid-template-columns: 1fr;
+  }
+  .pagination-nav__link {
+    padding: 0.9rem 1rem;
+  }
+  .pagination-nav__label {
+    font-size: 1rem;
+  }
+}
