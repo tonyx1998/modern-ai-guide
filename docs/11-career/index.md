@@ -56,10 +56,15 @@ Each page focuses on **one topic** with worked examples and specific named refer
 4. [The skill stack](./04-skill-stack.md) — Software-eng foundations plus the three AI-specific disciplines.
 5. [Specialization tracks](./05-specializations.md) — Retrieval / agents / evals / inference / voice / multimodal / safety / fine-tuning.
 
+### Interview prep
+
+6. [AI system-design interviews](./ai-system-design.md) — How to whiteboard "Design ChatGPT," "Design Cursor," "Design Perplexity."
+
 ### Becoming visible
 
-6. [Portfolio anatomy](./06-portfolio.md) — Shipped > polished. Evaluated > impressive. With specific project ideas.
-7. [Compensation context](./07-compensation.md) — 2026 bands by city, level, and company tier. Real numbers, real caveats.
+7. [Portfolio anatomy](./06-portfolio.md) — Shipped > polished. Evaluated > impressive. With specific project ideas.
+8. [The "defend your portfolio" drill](./defend-portfolio-drill.md) — 7-day rehearsal that converts a fast-shipped AI project into an interview-defensible one.
+9. [Compensation context](./07-compensation.md) — 2026 bands by city, level, and company tier. Real numbers, real caveats.
 
 ### Growing over time
 

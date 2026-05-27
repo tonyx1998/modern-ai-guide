@@ -3,7 +3,7 @@ id: career-checkpoint
 title: Chapter 11 Checkpoint
 sidebar_position: 99
 sidebar_label: ✅ Checkpoint quiz
-description: Mandatory checkpoint quiz for Chapter 11 — AI Engineering Career. 5 random questions drawn from a 14-question bank. Last chapter of the guide.
+description: Mandatory checkpoint quiz for Chapter 11 — AI Engineering Career. 5 random questions drawn from a 14-question bank.
 ---
 
 # Chapter 11 Checkpoint
@@ -202,8 +202,10 @@ This is the last chapter — passing this quiz doesn't unlock anything more, but
 
 ---
 
-## You finished the guide
+## Next: shipped architectures
 
-→ Look back at the [Introduction](/) and notice how much more those tabs make sense now. Then pick a project from your portfolio idea list and ship it — with an eval suite.
+→ Read the [Case Studies](/docs/case-studies-overview) chapter — eight worked architectures (Cursor, Claude Code, Perplexity, Sierra, Harvey, Glean, Notion AI, Duolingo Max) reconstructed from public sources.
+
+→ Or look back at the [Introduction](/) and notice how much more those tabs make sense now. Then pick a project from your portfolio idea list and ship it — with an eval suite.
 
 → The [Glossary](/docs/glossary) is always available as a reference for terms you encounter in the wild.

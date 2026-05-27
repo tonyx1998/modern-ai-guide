@@ -45,6 +45,7 @@ flowchart TD
 
 1. [Problem framing](./01-problem-framing.md) — Is this actually an AI problem? What's the failure cost?
 2. [Data sourcing](./02-data.md) — What data do you have, and is it good enough?
+2b. [Data engineering for AI features](./data-engineering.md) — Ingest, parse, chunk, embed, refresh, dedupe, multi-tenancy — the pipelines behind every RAG feature.
 3. [Model & approach selection](./03-approach.md) — Prompt vs RAG vs fine-tune vs agent.
 4. [Eval design](./04-evals.md) — How will you know if it's good?
 5. [Build (v0)](./05-build.md) — The fastest possible end-to-end implementation.

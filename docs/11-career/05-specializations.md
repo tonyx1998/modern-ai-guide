@@ -140,4 +140,4 @@ The way you actually become "the retrieval person" is by being the one your team
 - **Treating Forward-Deployed Engineer as a downgrade.** At Anthropic, OpenAI, Sierra, and Decagon, FDE is a senior IC track with high comp and unusual career upside (you see the most interesting enterprise problems first).
 :::
 
-→ Next: [Portfolio anatomy](./06-portfolio.md).
+→ Next: [AI system-design interviews](./ai-system-design.md).

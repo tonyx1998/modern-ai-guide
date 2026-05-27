@@ -167,4 +167,4 @@ Every multi-agent system should be measured against the same task solved by a si
 
 ---
 
-→ Next: [Foundations checkpoint](./foundations-checkpoint.md)
+→ Next: [Computer use & browser agents](./computer-use.md)
