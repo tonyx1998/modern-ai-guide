@@ -59,7 +59,7 @@ This is the cardinal RAG quality lever. See [RAG basics](../01-foundations/rag-b
 
 ### 3. Multiple model tiers per query type
 
-Quick search uses a fast model (latency budget: <3s end-to-end including retrieval). Pro and Deep Research use frontier-tier reasoning models. The router decides which.
+Quick search uses a fast model (latency budget: &lt;3s end-to-end including retrieval). Pro and Deep Research use frontier-tier reasoning models. The router decides which.
 
 For Deep Research specifically, the agent loop runs for minutes — decomposing the query, retrieving across multiple sub-queries, building an outline, drafting, refining. This is closer to a long-running agent than a chat call.
 

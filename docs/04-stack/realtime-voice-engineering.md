@@ -226,7 +226,7 @@ Hosted products (Vapi, Retell, Bland) bundle all of this. DIY uses LiveKit + Pip
 | Failure | What you'll see | What to do |
 |---|---|---|
 | Network jitter spike | Choppy audio, dropped words | RTCP-based jitter buffer (built into WebRTC); play "you're cutting out" if `connectionState === 'disconnected'` |
-| Bandwidth crashes to <100kbps | Codec falls back to low-bitrate, robotic voice | Detect via `RTCInboundRtpStreamStats`; warn user |
+| Bandwidth crashes to &lt;100kbps | Codec falls back to low-bitrate, robotic voice | Detect via `RTCInboundRtpStreamStats`; warn user |
 | User's mic is muted at OS level | Provider VAD never fires `speech_started` | Detect with `getStats()` showing zero audio level; prompt the user |
 | AI gets stuck in an infinite "hmm let me think" | Token generation loops | Cap max output tokens per turn; cap turns per session |
 | User dialing in from corporate NAT/firewall | ICE can't get a direct connection | TURN relay (provider-supplied) handles it but adds 50ms |

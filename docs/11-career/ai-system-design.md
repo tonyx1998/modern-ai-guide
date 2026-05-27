@@ -168,7 +168,7 @@ That's a complete answer. Notice: numbers everywhere, evals in the architecture,
 
 - **Talk while you draw.** Silent diagramming reads as uncertainty. Narrate.
 - **Ask before assuming.** "Are we building this for consumers or enterprises?" — interviewer will tell you.
-- **Name your tradeoffs.** "I'm picking pgvector over Pinecone because we're <10M vectors and operational simplicity matters more than peak QPS." Beats picking without naming.
+- **Name your tradeoffs.** "I'm picking pgvector over Pinecone because we're &lt;10M vectors and operational simplicity matters more than peak QPS." Beats picking without naming.
 - **Acknowledge what you don't know.** "I haven't built voice at this scale; my best guess for the latency budget is X — happy to be corrected." Strong.
 - **Stay at the right level.** Don't pixelate the implementation; don't float at the buzzword layer. Pick a few components for deep-dive depth and leave the rest at architecture level.
 

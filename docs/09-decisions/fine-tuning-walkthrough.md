@@ -47,7 +47,7 @@ When fine-tuning is **not** the answer (even though it tempts):
 1. **"The model is sometimes wrong."** Wrong how? Specific failure modes — usually fixable with a better prompt, better retrieval, or a reasoning model.
 2. **"I want the model to know about my company."** That's RAG, not fine-tuning. Fine-tuning bakes facts in poorly and they go stale instantly.
 3. **"My users want a specific persona."** Prompt + few-shot. Fine-tuning a persona is overkill for almost every product.
-4. **"I have a small training set and want quality gains."** With <500 high-quality examples, fine-tuning often makes things *worse* — you over-fit on a tiny distribution.
+4. **"I have a small training set and want quality gains."** With &lt;500 high-quality examples, fine-tuning often makes things *worse* — you over-fit on a tiny distribution.
 
 ## The four flavors of fine-tuning
 

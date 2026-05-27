@@ -75,7 +75,7 @@ This is the unsexy engineering that makes "the AI edits your code" not become "t
 
 ## What to copy
 
-- **Latency-tier your models by surface.** If you have a feature that needs <300ms and a feature that can wait 5s, they don't use the same model.
+- **Latency-tier your models by surface.** If you have a feature that needs &lt;300ms and a feature that can wait 5s, they don't use the same model.
 - **Index the repo as multiple representations.** Embeddings alone miss exact-symbol lookups; AST/symbol alone misses semantic queries. Combine.
 - **Apply diffs, don't write files.** Show the user a diff for approval, anchor by context, re-emit if anchors drift.
 - **Local-first when the user cares.** Enterprise contracts often hinge on whether you can run without sending code to a third party.
