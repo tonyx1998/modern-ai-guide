@@ -7,6 +7,10 @@ const config: Config = {
   tagline: 'How AI systems are actually built in 2026 — for absolute beginners and beyond',
   favicon: 'img/favicon.ico',
 
+  stylesheets: [
+    'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap',
+  ],
+
   future: {
     v4: true,
   },
