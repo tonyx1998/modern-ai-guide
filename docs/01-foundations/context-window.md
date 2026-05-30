@@ -13,6 +13,8 @@ description: The hard cap on how many tokens the model can see and emit in one c
 The context window is the model's working memory for one call — everything it can "see" at once. Picture a giant whiteboard. You write the system prompt, the conversation, any documents, anything the model should reference. The whiteboard has a fixed size. Run out of room? You have to erase, summarize, or pick smaller documents.
 :::
 
+![Context window budget: the system prompt, chat history, retrieved docs, and the answer all share one fixed space](/img/context-budget.svg)
+
 ## Numbers to know (May 2026)
 
 - **Frontier chat models:** 200K tokens (Claude Opus 4.7, GPT-5) — some up to 1M–2M (Gemini 2.5).

@@ -7,6 +7,10 @@ const config: Config = {
   tagline: 'How AI systems are actually built in 2026 — for absolute beginners and beyond',
   favicon: 'img/favicon.ico',
 
+  stylesheets: [
+    'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap',
+  ],
+
   future: {
     v4: true,
   },
@@ -74,16 +78,21 @@ const config: Config = {
     mermaid: {
       theme: {light: 'neutral', dark: 'dark'},
       options: {
+        fontFamily: "'Inter', ui-sans-serif, system-ui, sans-serif",
+        flowchart: {curve: 'basis', htmlLabels: true, padding: 16, nodeSpacing: 55, rankSpacing: 55},
+        sequence: {useMaxWidth: true, mirrorActors: false},
         themeVariables: {
           darkMode: true,
           primaryColor: '#4c1d95',
           primaryTextColor: '#f1f5f9',
           primaryBorderColor: '#a78bfa',
-          lineColor: '#94a3b8',
+          lineColor: '#a5b4cb',
           secondaryColor: '#334155',
-          tertiaryColor: '#0f172a',
+          tertiaryColor: '#1e1b2b',
           fontSize: '15px',
+          fontFamily: "'Inter', ui-sans-serif, system-ui, sans-serif",
         },
+        themeCSS: '.node rect{rx:8px;ry:8px} .node rect,.node polygon{stroke-width:1.5px} .edgePath .path{stroke-width:1.5px} .cluster rect{rx:10px;ry:10px}',
       },
     },
     docs: {
