@@ -79,8 +79,9 @@ const config: Config = {
       theme: {light: 'neutral', dark: 'dark'},
       options: {
         fontFamily: "'Inter', ui-sans-serif, system-ui, sans-serif",
-        flowchart: {curve: 'basis', htmlLabels: true, padding: 16, nodeSpacing: 55, rankSpacing: 55},
-        sequence: {useMaxWidth: true, mirrorActors: false},
+        flowchart: {curve: 'basis', htmlLabels: true, padding: 16, nodeSpacing: 55, rankSpacing: 55, useMaxWidth: false},
+        sequence: {useMaxWidth: false, mirrorActors: false},
+        gantt: {useMaxWidth: false},
         themeVariables: {
           darkMode: true,
           primaryColor: '#4c1d95',

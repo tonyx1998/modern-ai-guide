@@ -58,6 +58,8 @@ gantt
     Continuous            :2026-05-01, 31d
 ```
 
+> **Reading this:** each bar is a one-day event on the calendar. The **red bar is the major SDK release** (the high-stakes train everything else coordinates around). Minor gateway trains ship weekly; feature deploys run continuously all month.
+
 ## The train workflow
 
 A typical major-train cycle:

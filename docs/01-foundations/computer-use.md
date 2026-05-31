@@ -19,7 +19,7 @@ Most agent work goes through APIs and tools. Computer use is the escape hatch fo
 flowchart LR
     M[Model] -->|"action: click(420, 180)"| E[Executor<br/>browser / VM]
     E -->|screenshot| M
-    E -->|action result<br/>(URL changed, etc.)| M
+    E -->|"action result<br/>(URL changed, etc.)"| M
     M -->|"action: type('hello')"| E
     M -->|"final answer"| U[User]
 ```

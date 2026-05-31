@@ -299,3 +299,33 @@ html {
     font-size: 1rem;
   }
 }
+
+/* --- Mermaid diagrams: keep them legible --- */
+/* Paired with `useMaxWidth: false` in docusaurus.config.ts. On desktop, diagrams
+   render at full, readable size and a wide one scrolls horizontally inside its own
+   block — instead of being shrunk to fit the column, which made text tiny.
+   On narrow screens we restore shrink-to-fit so phones don't scroll every diagram. */
+.docusaurus-mermaid-container {
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+  padding-bottom: 0.4rem; /* breathing room for the scrollbar */
+}
+.docusaurus-mermaid-container svg {
+  display: block;
+  margin: 0 auto; /* centers diagrams narrower than the column; left-aligns wide ones */
+  height: auto;
+  max-width: none; /* override Docusaurus's global svg{max-width:100%} so wide diagrams render full-size */
+}
+@media (max-width: 996px) {
+  .docusaurus-mermaid-container svg {
+    max-width: 100%; /* shrink-to-fit on tablet/phone instead of scrolling every diagram */
+  }
+}
+/* Big "overview" diagrams (enterprise architecture, org chart) are wider than the text column.
+   Fit the whole thing to the column so the structure reads at a glance, instead of scrolling a
+   huge canvas. The diagrams' labels were tightened so the fitted text stays legible. */
+html.docs-doc-id-enterprise\/enterprise-ai-architecture .docusaurus-mermaid-container svg,
+html.docs-doc-id-enterprise\/enterprise-org-chart .docusaurus-mermaid-container svg {
+  max-width: 100%;
+}

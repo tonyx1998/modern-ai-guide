@@ -22,13 +22,13 @@ Updates the model's weights using examples. Three flavors:
 - **RLHF / preference tuning / DPO** — Aligning a model to human preferences. The technique that turned raw pre-trained models into ChatGPT-style assistants. Increasingly accessible via tools like TRL, OpenAI's preference fine-tuning, Anthropic's Constitutional AI.
 
 ```mermaid
-flowchart LR
-    A[Trillions of web tokens] --> B[Pre-training: months, $10M-$1B]
-    B --> C[Base model]
-    C --> D[Instruction fine-tuning: days, $1K-$100K]
-    D --> E[RLHF / DPO: days, $1K-$1M]
-    E --> F[Released model]
-    F --> G[Inference: your daily API calls]
+flowchart TB
+    A["Trillions of web tokens"] --> B["Pre-training: months, $10M-$1B"]
+    B --> C["Base model"]
+    C --> D["Instruction tuning: days, $1K-$100K"]
+    D --> E["RLHF / DPO: days, $1K-$1M"]
+    E --> F["Released model"]
+    F --> G["Inference: your daily API calls"]
 ```
 
 The whole pipeline above happens once per model release, every 6–18 months. The bottom row — inference — happens millions of times a day.
