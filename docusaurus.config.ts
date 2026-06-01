@@ -133,13 +133,6 @@ const config: Config = {
           label: 'Glossary',
           position: 'left',
         },
-        {
-          href: 'https://github.com/tonyx1998/modern-ai-engineer-guide',
-          label: 'GitHub',
-          position: 'right',
-          className: 'header-github-link',
-          'aria-label': 'GitHub repository',
-        },
       ],
     },
     footer: {
