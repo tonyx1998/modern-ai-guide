@@ -81,6 +81,7 @@ Use them as a check before you commit to an architecture: *did I actually justif
 15. [On-prem vs cloud](./09-on-prem-vs-cloud.md) — when self-hosted earns its cost.
 16. [Framework vs raw SDK](./10-framework-vs-raw-sdk.md) — build a raw v0 first.
 17. [Prompt engineering vs fine-tuning](./11-prompt-engineering-vs-fine-tuning.md) — the explicit escalation rule.
+17b. [Fine-tuning — the decision walkthrough](./fine-tuning-walkthrough.md) — once you've decided to fine-tune, SFT vs DPO vs RFT with worked numbers.
 
 ### Risk, planning, and people
 

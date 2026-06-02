@@ -25,6 +25,7 @@ A demo proves the model *can* do the thing. A product proves you can do the thin
 - [Tool use done right](./tool-use.md) — Tight tool sets, great descriptions, parallel execution.
 - [The RAG pattern in production](./rag-prod.md) — Hybrid search, reranking, citations, evals.
 - [The agent loop with guardrails](./agent-loop.md) — Iteration caps, observability per step, human handoff.
+- [Coding agents](./coding-agents.md) — Context strategies, diff application, test-loop verification — the patterns behind Cursor / Claude Code / Aider.
 
 ### Operational patterns
 
@@ -38,6 +39,8 @@ A demo proves the model *can* do the thing. A product proves you can do the thin
 - [Multimodal patterns](./10-multimodal-patterns.md) — Vision-first extraction, transcribe-then-process, the "give the model the image" trick.
 - [Safety & privacy](./11-safety-privacy.md) — Prompt injection, PII scrubbing, authorization in RAG.
 - [Fallbacks & graceful degradation](./12-fallbacks.md) — Tiered fallback, cached response, non-AI path, "temporarily unavailable" UX.
+- [The LLM debugging playbook](./debugging-playbook.md) — Symptom → likely root causes → first three things to check. The reference card for when something's misbehaving.
+- [Safe model swaps & canary deploys](./model-swaps.md) — Shadow traffic, canary rollouts, A/B tests for prompt and model changes — the deployment discipline that prevents silent regressions.
 
 ### Putting it together
 

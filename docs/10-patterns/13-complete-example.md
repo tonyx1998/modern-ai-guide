@@ -41,7 +41,7 @@ flowchart TB
     ACL --> AGENT[Bounded agent loop<br/>maxSteps=6, $0.25 cap]
     AGENT -->|tool| LOOKUP[lookupOrder]
     AGENT -->|tool| ESC[escalateToHuman]
-    AGENT --> GEN[stream + structured<br/>{text, cited_ids, confident}]
+    AGENT --> GEN["stream + structured<br/>{text, cited_ids, confident}"]
     GEN --> VAL[Validate citations<br/>+ scrub PII for logs]
     VAL --> SSE[SSE response]
     SSE --> OBS[(Langfuse trace)]

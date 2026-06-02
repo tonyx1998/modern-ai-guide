@@ -221,4 +221,4 @@ Specifically: write the non-AI version *first*. Ship it. Add the AI version as a
 
 ---
 
-→ Next: [Complete worked example](./13-complete-example.md).
+→ Next: [The LLM debugging playbook](./debugging-playbook.md).

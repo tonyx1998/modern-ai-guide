@@ -20,37 +20,18 @@ Why all that? Because at 500+ engineers, you need *one place* where you can flip
 
 ```mermaid
 flowchart TB
-    subgraph Apps["Feature teams' applications"]
-        FT1["Underwriting svc"]
-        FT2["Support agent"]
-        FT3["Search svc"]
-        FT4["Internal copilot"]
-    end
-    SDK["Standard AI SDK<br/>(in-house wrapper)"]
-    GW["Central AI Gateway<br/>(Portkey Enterprise / Kong AI / in-house Envoy)"]
-    Policy["Policy Engine<br/>(OPA / Cedar)<br/>auth, rate, PII redaction, model allowlist"]
-    Router["Router<br/>(by tenant, region, risk tier)"]
-    subgraph Providers["Model providers"]
-        Bedrock["AWS Bedrock<br/>(Claude, Llama, Mistral)"]
-        AOAI["Azure OpenAI<br/>(GPT-4o, o-series)"]
-        Vertex["GCP Vertex<br/>(Gemini, Claude on Vertex)"]
-        Self["Self-hosted vLLM<br/>(Llama 3/4, Mistral)<br/>on internal H100/MI300"]
-    end
-    subgraph Retrieval["Retrieval layer"]
-        Vec["Vector DB<br/>(Vespa / Pinecone Ent / OpenSearch)"]
-        Ing["Ingestion pipelines<br/>(Snowflake AI / Databricks)"]
-    end
-    subgraph Tele["Telemetry fanout"]
-        Eval["Eval platform<br/>(Braintrust / LangSmith / MLflow)"]
-        Obs["LLM Observability<br/>(Datadog LLM Obs + Langfuse)"]
-        SIEM["SIEM<br/>(Splunk / Sentinel)"]
-        Audit["Audit log store<br/>(immutable, retention per policy)"]
-    end
+    Apps["Feature teams' apps<br/>underwriting · support<br/>search · internal copilot"]
+    SDK["Standard AI SDK"]
+    GW["Central AI Gateway"]
+    Policy["Policy Engine<br/>auth · rate · PII · allowlist"]
+    Router["Router<br/>by tenant / region / tier"]
+    Providers["Model providers<br/>Bedrock · Azure OpenAI<br/>Vertex · self-hosted vLLM"]
+    Retrieval["Retrieval<br/>vector DB + ingestion"]
+    Tele["Telemetry fanout<br/>evals · LLM observability<br/>SIEM · audit log"]
     Apps --> SDK --> GW --> Policy --> Router --> Providers
-    Apps -.->|retrieval calls| Vec
-    Vec --> Ing
+    Apps -.->|retrieval| Retrieval
     GW --> Tele
-    Providers -.->|cost / usage| Obs
+    Providers -.->|cost / usage| Tele
 ```
 
 ## Layer-by-layer

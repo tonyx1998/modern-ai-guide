@@ -21,22 +21,27 @@ const config: Config = {
 
   onBrokenLinks: 'warn',
 
+  // "Technical Editorial" type system — Space Grotesk / Hanken Grotesk / JetBrains Mono.
+  headTags: [
+    {
+      tagName: 'link',
+      attributes: {rel: 'preconnect', href: 'https://fonts.googleapis.com'},
+    },
+    {
+      tagName: 'link',
+      attributes: {rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: 'anonymous'},
+    },
+  ],
+  stylesheets: [
+    'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap',
+  ],
+
   markdown: {
     mermaid: true,
     hooks: {
       onBrokenMarkdownLinks: 'warn',
     },
   },
-
-  // JetBrains Mono for the reimagined diagram figures (.aieg-fig, swizzled
-  // @theme/Mermaid). Loaded at build time so the renderer needn't inject it at
-  // runtime — avoids a first-paint flash and keeps the component SSR-pure.
-  stylesheets: [
-    {
-      href: 'https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap',
-      rel: 'stylesheet',
-    },
-  ],
 
   themes: [
     '@docusaurus/theme-mermaid',
@@ -84,16 +89,22 @@ const config: Config = {
     mermaid: {
       theme: {light: 'neutral', dark: 'dark'},
       options: {
+        fontFamily: "'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif",
+        flowchart: {curve: 'basis', htmlLabels: true, padding: 16, nodeSpacing: 55, rankSpacing: 55, useMaxWidth: false},
+        sequence: {useMaxWidth: false, mirrorActors: false},
+        gantt: {useMaxWidth: false},
         themeVariables: {
           darkMode: true,
           primaryColor: '#4c1d95',
           primaryTextColor: '#f1f5f9',
           primaryBorderColor: '#a78bfa',
-          lineColor: '#94a3b8',
+          lineColor: '#a5b4cb',
           secondaryColor: '#334155',
-          tertiaryColor: '#0f172a',
+          tertiaryColor: '#1e1b2b',
           fontSize: '15px',
+          fontFamily: "'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif",
         },
+        themeCSS: '.node rect{rx:8px;ry:8px} .node rect,.node polygon{stroke-width:1.5px} .edgePath .path{stroke-width:1.5px} .cluster rect{rx:10px;ry:10px}',
       },
     },
     docs: {
@@ -107,6 +118,11 @@ const config: Config = {
       hideOnScroll: false,
       items: [
         {
+          type: 'html',
+          position: 'left',
+          value: '<span class="nav-ver">2026</span>',
+        },
+        {
           type: 'docSidebar',
           sidebarId: 'tutorialSidebar',
           position: 'left',
@@ -116,11 +132,6 @@ const config: Config = {
           to: '/docs/glossary',
           label: 'Glossary',
           position: 'left',
-        },
-        {
-          href: 'https://github.com/tonyx1998/modern-ai-engineer-guide',
-          label: 'GitHub',
-          position: 'right',
         },
       ],
     },

@@ -32,7 +32,7 @@ flowchart LR
     H --> F[Filter:<br/>tenant, lang, ACL, freshness]
     F --> RR[Reranker<br/>top 50 → top 5]
     RR --> P[Prompt assembly<br/>+ cite-only-these-IDs]
-    P --> G[LLM generate<br/>structured: {answer, cited_ids}]
+    P --> G["LLM generate<br/>structured: {answer, cited_ids}"]
     G --> V{Citations<br/>valid?}
     V -->|yes| O[Return + log]
     V -->|no| X[Retry / hedge / fallback]

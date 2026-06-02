@@ -128,4 +128,4 @@ If you do nothing else from this page, do these two: deploy one project to `your
 - **Going quiet between projects.** A blog with one post from 2024 reads worse than no blog. If you can't sustain writing, delete the link.
 :::
 
-→ Next: [Compensation context](./07-compensation.md).
+→ Next: [The "defend your portfolio" drill](./defend-portfolio-drill.md).

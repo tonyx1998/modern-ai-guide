@@ -102,20 +102,16 @@ The 2017 paper invented attention as we know it. Eight years later the architect
 
 ## A useful mental picture for the bill
 
-Think of each request as having two timelines stacked:
+Think of each request as two phases — one slow prefill, then token-by-token decode:
 
 ```mermaid
-gantt
-    title One request, split by phase
-    dateFormat X
-    axisFormat %s
-    section Prefill
-    Process N input tokens   :done, 0, 400
-    section Decode
-    Generate token 1         :active, 400, 50
-    Generate token 2         :active, 450, 50
-    Generate token 3         :active, 500, 50
-    Generate token M         :active, 550, 100
+flowchart LR
+    P["①  PREFILL · happens once<br/>read the whole prompt<br/><b>~400 ms before any output</b>"]:::big
+    P --> D1["②  DECODE · streams out<br/>token 1<br/>~50 ms"]
+    D1 --> D2["token 2<br/>~50 ms"]
+    D2 --> D3["token 3<br/>~50 ms"]
+    D3 --> DM["… token M<br/>~50 ms each"]
+    classDef big fill:#4c1d95,stroke:#a78bfa,color:#f8fafc;
 ```
 
 - Prefill (~400ms in the diagram) is what you wait for before *anything* shows up. Long prompts blow this up. Caching cuts it dramatically.

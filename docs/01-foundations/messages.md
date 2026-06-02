@@ -131,4 +131,4 @@ Once you understand the message list pattern, every chat-style provider in the w
 
 ---
 
-→ Next: [Context windows](./context-window.md)
+→ Next: [Prompting — the craft](./prompting-craft.md)

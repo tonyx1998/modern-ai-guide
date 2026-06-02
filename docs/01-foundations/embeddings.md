@@ -13,6 +13,8 @@ description: A vector of floats that captures the meaning of a piece of text. Th
 Think of every possible string mapped to a point in a high-dimensional space — like a city map, but with 1,536 axes instead of 2. "How do I reset my password?" lands next to "I forgot my login." "Pizza recipe" lands far away. To find similar text, you find nearby points. That's the whole trick.
 :::
 
+![Embeddings cluster map: words with related meaning sit near each other in vector space](/img/embeddings-map.svg)
+
 ## What you actually do with them
 
 You hand a string to an embedding model and get back a vector. You store many such vectors. Later, you embed a query the same way and find the vectors closest to the query vector — those are the texts most semantically similar to the query.

@@ -220,4 +220,4 @@ Treat it like an API contract: stable names, clear descriptions, validated input
 
 ---
 
-→ Next: [Multimodal inputs](./multimodal-inputs.md)
+→ Next: [MCP — Model Context Protocol](./mcp.md)

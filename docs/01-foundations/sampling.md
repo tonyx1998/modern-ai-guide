@@ -28,7 +28,8 @@ flowchart LR
     B -->|temp 0.7| D[Slightly varied]
     B -->|temp 1.5| E[Wildly varied]
     A --> F{Apply top_p}
-    F --> G[Drop unlikely tail, sample from rest]
+    F -->|"top_p 0.9"| G[Keep top 90% of probability mass]
+    F -->|"top_p 0.5"| H[Tighter: keep top 50%]
 ```
 
 ## When to use what

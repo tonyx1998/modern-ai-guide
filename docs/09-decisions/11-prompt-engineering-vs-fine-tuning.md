@@ -121,4 +121,4 @@ The lesson: prompt engineering is more powerful than its reputation. Fine-tuning
 
 ---
 
-→ Next: [What would hurt](./12-what-would-hurt.md).
+→ Next: [Fine-tuning — the decision walkthrough](./fine-tuning-walkthrough.md).
