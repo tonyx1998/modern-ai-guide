@@ -28,6 +28,16 @@ const config: Config = {
     },
   },
 
+  // JetBrains Mono for the reimagined diagram figures (.aieg-fig, swizzled
+  // @theme/Mermaid). Loaded at build time so the renderer needn't inject it at
+  // runtime — avoids a first-paint flash and keeps the component SSR-pure.
+  stylesheets: [
+    {
+      href: 'https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap',
+      rel: 'stylesheet',
+    },
+  ],
+
   themes: [
     '@docusaurus/theme-mermaid',
     [
