@@ -14,6 +14,8 @@ description: Prompt iteration in a Jupyter/REPL, the 20-row eval script, and the
 A solo AI project is not a normal "code → run → test" loop. Most of the work is *prompt iteration*. The right environment is a notebook or REPL where you can re-run the same prompt against the same 20 rows in two seconds, eyeball pass/fail, edit the prompt, repeat. Get this rhythm right and everything else flows from it.
 :::
 
+> **→ Going deeper:** The 20-row CSV here is the solo-scale version of a real eval discipline. When your project grows or you want to understand *why* this works — metrics, LLM-as-judge, statistical significance — see [Chapter 5: Evaluation & Measurement](/docs/evaluation).
+
 ## The four-file v0 codebase
 
 A solo AI project, at v0, is usually four files:

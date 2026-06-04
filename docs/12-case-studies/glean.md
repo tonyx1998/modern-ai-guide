@@ -130,6 +130,10 @@ These aren't features so much as table-stakes for the enterprise tier.
 - **Skipping the "what was deleted" pass.** Stale data in the index is a permission-leak waiting to happen.
 - **Multi-tenant indexing without strict per-customer isolation.** Even with ACL filtering, the tenant boundary is sacred.
 
+:::tip[→ Going deeper]
+Glean's per-user ACL enforcement is a security-boundary problem, not a retrieval one — [Chapter 6: Responsible & Safe AI](/docs/safety) covers the principle (the model is never the boundary) and the [guardrails](/docs/safety/safety-guardrails) that enforce it.
+:::
+
 ## Sources
 
 - Glean's engineering blog posts on connectors and unified search.

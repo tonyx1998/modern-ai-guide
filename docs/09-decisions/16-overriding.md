@@ -127,4 +127,4 @@ The framework's value isn't in the answer; it's in forcing you to defend the ove
 
 ---
 
-→ Next: [Chapter 9 checkpoint](./17-checkpoint.md).
+→ Next: [Chapter 13 checkpoint](./17-checkpoint.md).

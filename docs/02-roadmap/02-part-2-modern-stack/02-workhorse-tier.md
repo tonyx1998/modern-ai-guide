@@ -128,7 +128,7 @@ Workhorse-tier prompt caching is the highest-leverage cost optimization in produ
 
 For a chat app that re-sends a 5k-token system prompt + tool definitions on every call, caching is the difference between $5k/month and $500/month.
 
-→ [Patterns: Caching](/docs/patterns/caching) for the full implementation.
+→ [Patterns: Caching](/docs/patterns/pattern-caching) for the full implementation.
 
 ## Common mistakes
 

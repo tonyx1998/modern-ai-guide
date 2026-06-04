@@ -131,6 +131,26 @@ When you need the *same* prompt to produce the *same* output as often as possibl
 
 This still isn't *guaranteed* reproducibility (see the myth section above), but it's as close as the providers allow today.
 
+## Practice: greedy decoding (temperature 0)
+
+`temperature=0` means "always pick the highest-probability token" — i.e., `argmax` over the distribution. That's the whole of greedy decoding. Write it and you've implemented the deterministic end of the sampling dial. (Ties resolve to the lowest index, which is how most implementations break them.)
+
+<CodeChallenge
+  id="foundations-argmax"
+  fnName="argmax"
+  prompt="Write argmax(probs) — given an array of next-token probabilities, return the index of the largest. On a tie, return the lowest index. This is exactly what temperature=0 does."
+  starter={`function argmax(probs) {\n  // return the index of the maximum value\n}`}
+  solution={`function argmax(probs) {\n  let best = 0;\n  for (let i = 1; i < probs.length; i++) {\n    if (probs[i] > probs[best]) best = i;\n  }\n  return best;\n}`}
+  tests={[
+    {args: [[0.1, 0.7, 0.2]], expected: 1},
+    {args: [[0.9, 0.05, 0.05]], expected: 0},
+    {args: [[0.2, 0.2, 0.6]], expected: 2},
+    {args: [[0.5, 0.5]], expected: 0},
+    {args: [[0.1, 0.3, 0.3, 0.29]], expected: 1},
+  ]}
+  hint="Track the index of the best value seen so far. Use strict greater-than (>) when comparing so the first of any tied maxima wins."
+/>
+
 ---
 
 → Next: [Streaming](./streaming.md)

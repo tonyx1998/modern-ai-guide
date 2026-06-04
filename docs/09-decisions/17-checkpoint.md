@@ -1,18 +1,18 @@
 ---
 id: decisions-checkpoint
-title: Chapter 9 checkpoint
+title: Chapter 13 checkpoint
 sidebar_position: 99
 sidebar_label: Checkpoint
 description: Self-test of the decision rules from chapter 9. Do you remember the defaults and the conditions that flip them?
 ---
 
-# Chapter 9 checkpoint
+# Chapter 13 checkpoint
 
 You've reached the end of the AI decisions chapter. These rules are the most-leveraged ideas in the whole guide — if you internalize even half of them, you'll avoid most of the failures that derail AI features.
 
 There are **14 questions in the bank** — each visit picks 5 at random, so retaking gives you different ones. If you miss one, the result card links directly to the page that explains the rule.
 
-You must pass (≥ 60%) to unlock the Next button and Chapter 10 in the sidebar.
+You must pass (≥ 60%) to unlock the Next button and Chapter 14 in the sidebar.
 
 <Quiz id="decisions-checkpoint" title="AI decisions checkpoint" sampleSize={5}>
 
@@ -215,4 +215,4 @@ If you remember nothing else:
 
 ## What's next
 
-→ Continue to [Chapter 10: Production Patterns](/docs/patterns) — the patterns that turn a "works on my laptop" AI feature into one that runs reliably at scale.
+→ Continue to [Chapter 14: Production Patterns](/docs/patterns) — the patterns that turn a "works on my laptop" AI feature into one that runs reliably at scale.

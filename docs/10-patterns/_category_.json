@@ -1,6 +1,6 @@
 {
-  "label": "10. Production Patterns",
-  "position": 11,
+  "label": "14. Production Patterns",
+  "position": 14,
   "collapsible": true,
   "collapsed": true,
   "link": { "type": "doc", "id": "production-patterns" }

@@ -236,10 +236,10 @@ Each of those is its own multi-month track. The roadmap got you to the starting 
 
 ## Deeper in this guide
 
-- [Lifecycle: Deploy](/docs/lifecycle/08-deploy) — the lifecycle perspective on deployment.
-- [Lifecycle: Monitor](/docs/lifecycle/09-monitor) — what to monitor post-launch.
+- [Lifecycle: Deploy](/docs/lifecycle/lifecycle-deploy) — the lifecycle perspective on deployment.
+- [Lifecycle: Monitor](/docs/lifecycle/lifecycle-monitor) — what to monitor post-launch.
 - [Stack: AI gateways](/docs/stack/ai-gateways) — gateways like Cloudflare AI Gateway, LiteLLM, Helicone that add rate limiting + caching + observability as middleware.
-- [Patterns: Cost control](/docs/patterns/cost-control) — production patterns for keeping cost predictable.
+- [Patterns: Cost control](/docs/patterns/pattern-cost-control) — production patterns for keeping cost predictable.
 
 ## Project
 

@@ -300,7 +300,7 @@ For everything else, start single, scale only when forced. → [Foundations: Mul
 
 - [Foundations: Agent loop](/docs/foundations/agent-loop) — the conceptual loop in detail.
 - [Foundations: Multi-agent](/docs/foundations/multi-agent) — when and how to use multiple agents.
-- [Patterns: Agent loop](/docs/patterns/agent-loop) — production patterns: memory, retries, planner-executor split.
+- [Patterns: Agent loop](/docs/patterns/pattern-agent-loop) — production patterns: memory, retries, planner-executor split.
 - [Agent discipline (Part III)](../03-part-3-beyond/04-agent-discipline.md) — the *judgment* side: when to use agents, when not to.
 
 ## Project

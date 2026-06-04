@@ -111,6 +111,10 @@ After deployment, sampled real conversations are reviewed (LLM-as-judge + human 
 - **Treating voice as just "text with a TTS wrapper."** Interruption, latency, turn-taking are first-class concerns.
 - **"The AI handled it" without graceful escalation.** Unhappy customers escalated badly is worse than unhappy customers escalated cleanly.
 
+:::tip[→ Going deeper]
+Sierra's voice loop is the production face of [Chapter 8: Multimodal & Voice AI](/docs/multimodal) — see [voice](/docs/multimodal/mm-voice) for the latency budgets and turn-taking that make this work. Its per-customer eval gate is [Chapter 5: Evaluation & Measurement](/docs/evaluation) applied as a deployment control.
+:::
+
 ## Sources
 
 - Bret Taylor (CEO) interviews and conference keynotes (No Priors, AI Engineer Summit).

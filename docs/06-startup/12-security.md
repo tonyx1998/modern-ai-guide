@@ -14,6 +14,8 @@ description: Prompt injection defenses, PII scrubbing, least-privilege tool exec
 AI products have all the usual web security concerns *plus* a new class: the model itself is a partially-untrusted execution environment. User input becomes part of the model's instructions, and the model can be tricked into ignoring your rules. Plus, you're sending customer data to a third-party API, which makes compliance buyers ask sharper questions than regular SaaS buyers do.
 :::
 
+> **→ Going deeper:** This page is the startup-operations view (SOC 2, DPAs, defense-in-depth). For the underlying mechanics — why prompt injection is unsolved, how guardrails actually work, and the 2026 regulatory landscape — see [Chapter 6: Responsible & Safe AI](/docs/safety), especially [Prompt injection](/docs/safety/safety-prompt-injection), [Guardrails](/docs/safety/safety-guardrails), and [Governance](/docs/safety/safety-governance).
+
 ## AI-specific threat model
 
 | Threat                     | Likelihood (2026) | Impact                                       |

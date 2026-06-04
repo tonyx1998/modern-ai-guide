@@ -107,6 +107,10 @@ A separate artifact from the model registry. Lives with the Responsible AI funct
 
 A typical enterprise risk register has 30–80 entries; the items get reviewed quarterly by the Responsible AI committee. The point is the *active management*, not the document.
 
+:::note[→ Going deeper]
+The governance *rituals* on this page sit on top of the AI-safety primitives covered in Chapter 6. For the underlying controls — how to set up [AI governance as a function](/docs/safety/safety-governance), defend against [prompt injection](/docs/safety/safety-prompt-injection), and wire in [guardrails](/docs/safety/safety-guardrails) — start at the [Safety overview](/docs/safety).
+:::
+
 ## Tooling that helps
 
 - **Braintrust, Vellum, LangSmith Enterprise** — prompt registry + eval platform.

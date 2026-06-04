@@ -126,6 +126,27 @@ Dimensionality matters: bigger vectors = better quality but more storage and slo
 Pre-2020, "find similar text" required hand-tuned synonyms, query expansion, and BM25 tweaks. Today it's one API call and a vector index. The single most useful technique in this whole guide.
 :::
 
+## Practice: compute cosine similarity
+
+"Closest vector" is just cosine similarity, and cosine similarity is a four-line function. Write it once and the rest of retrieval stops being magic: `cosine(a, b) = dot(a, b) / (‖a‖·‖b‖)`. Parallel vectors score `1`, orthogonal score `0`, opposite score `-1` — exactly the behaviour the cluster map above shows.
+
+<CodeChallenge
+  id="foundations-cosine"
+  fnName="cosine"
+  prompt="Write cosine(a, b) — the cosine similarity of two equal-length number arrays. Identical direction → 1, orthogonal → 0, opposite → -1."
+  starter={`function cosine(a, b) {\n  // dot product over the product of magnitudes\n}`}
+  solution={`function cosine(a, b) {\n  let dot = 0, na = 0, nb = 0;\n  for (let i = 0; i < a.length; i++) {\n    dot += a[i] * b[i];\n    na += a[i] * a[i];\n    nb += b[i] * b[i];\n  }\n  return dot / (Math.sqrt(na) * Math.sqrt(nb));\n}`}
+  tolerance={0.001}
+  tests={[
+    {args: [[1, 0], [1, 0]], expected: 1},
+    {args: [[1, 0], [0, 1]], expected: 0},
+    {args: [[1, 0], [-1, 0]], expected: -1},
+    {args: [[1, 2, 3], [2, 4, 6]], expected: 1},
+    {args: [[0.12, -0.04, 0.31], [0.14, -0.05, 0.29]], expected: 0.9962},
+  ]}
+  hint="Accumulate three sums in one pass: the dot product, and the squared magnitude of each vector. Then divide the dot product by sqrt(na) * sqrt(nb)."
+/>
+
 ---
 
 → Next: [The transformer](./transformer.md)

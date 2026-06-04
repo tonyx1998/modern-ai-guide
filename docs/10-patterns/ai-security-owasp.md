@@ -91,4 +91,4 @@ Before shipping, deliberately try to break your own app: fire injection payloads
 - No cost ceiling — one runaway loop empties the account.
 :::
 
-**Further reading:** [OWASP GenAI Security Project — LLM Top 10](https://genai.owasp.org/llmrisk/llm01-prompt-injection/). See also [Safety & privacy](./11-safety-privacy.md) and [enterprise governance](../07-enterprise/governance.md).
+**Further reading:** [OWASP GenAI Security Project — LLM Top 10](https://genai.owasp.org/llmrisk/llm01-prompt-injection/). See also [Safety & privacy](./11-safety-privacy.md) and [enterprise governance](../07-enterprise/governance.md). For the full discipline behind these controls — threat modeling, guardrails, and red-teaming — go deep in [Chapter 6: Responsible & Safe AI](/docs/safety).

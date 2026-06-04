@@ -184,6 +184,10 @@ Mitigations:
 - **Right-to-be-forgotten ignoring the vector index.** Deleting a user from Postgres but leaving their embeddings in the vector store is a compliance failure waiting to be audited.
 - **Logging the system prompt with secrets in it.** API keys, internal hostnames, escalation tokens get pasted into system prompts more than you'd think. Pull secrets through env at request time; never bake them into a prompt that gets logged.
 
+:::tip[→ Going deeper]
+This page covers the *patterns* for a single feature. The full safety discipline — threat modeling, layered guardrails, and the broader responsible-AI surface — is [Chapter 6: Responsible & Safe AI](/docs/safety). For the two topics above, go deep on [prompt injection](/docs/safety/safety-prompt-injection) and [guardrails](/docs/safety/safety-guardrails).
+:::
+
 ## 2026 stack
 
 | Layer              | Default pick                                                                |

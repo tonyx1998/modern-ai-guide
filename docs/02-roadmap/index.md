@@ -38,11 +38,11 @@ Becoming a good AI engineer isn't one skill — it's roughly ten overlapping ski
 
 The chapters that follow this one (Foundations, Lifecycle, Stack, Solo/Startup/Enterprise, Decisions, Patterns, Career) are **reference material**. You don't read them straight through — you reach for them when a roadmap stage points you at them.
 
-For example, [Stage 5 — RAG](./01-part-1-from-zero/07-stage-5-rag.md) links into:
+For example, [Stage 5 — RAG](./01-part-1-from-zero/06-stage-5-rag.md) links into:
 
 - [Foundations: Embeddings](/docs/foundations/embeddings) — for the underlying vector math
 - [Stack: Vector databases](/docs/stack/vector-databases) — for the choice matrix
-- [Patterns: RAG in production](/docs/patterns/rag-prod) — for the failure modes once it leaves your laptop
+- [Patterns: RAG in production](/docs/patterns/pattern-rag-prod) — for the failure modes once it leaves your laptop
 - [Decisions: Prompt vs RAG vs fine-tune](/docs/decisions/prompt-vs-rag-vs-finetune) — for when to even reach for RAG in the first place
 
 ## What this roadmap is *not*

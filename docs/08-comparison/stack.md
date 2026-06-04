@@ -67,7 +67,7 @@ At solo scale you don't need it (you are the only team). At startup scale a SaaS
 ## What stays the same
 
 - The **patterns** — streaming, tool use, RAG, agent loops, structured output — are byte-for-byte identical at every scale. A Solo dev and a bank both write the same `tools=[...]` array.
-- The **discipline of evals** is non-negotiable everywhere; only the tooling and cadence change.
+- The **discipline of evals** is non-negotiable everywhere; only the tooling and cadence change. (→ Going deeper: the eval techniques themselves — scorers, LLM-as-judge, production grading — are the same across all three columns. See [Chapter 5: Evaluation & Measurement](/docs/evaluation).)
 - **Prompts live in version control** at every scale — even if there's also a registry on top.
 - **Sentry-equivalent error tracking** is universal.
 

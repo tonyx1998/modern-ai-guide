@@ -10,6 +10,10 @@ description: Langfuse, Helicone, LangSmith, Phoenix, Braintrust — when to use 
 
 > **In one line:** Start with the Postgres table from Stage 7. Move to a platform when you want trace UIs, per-feature cost breakdowns out of the box, or alerts you don't want to build.
 
+:::note[Observability feeds evaluation]
+Traces aren't just for debugging — sampling production traffic and scoring it is how you catch quality drift. See [production evals](/docs/evaluation/eval-production) in [Chapter 5: Evaluation & Measurement](/docs/evaluation).
+:::
+
 ## Tier 1 — the boring answer
 
 The `llm_calls` Postgres table from [Stage 7](../01-part-1-from-zero/08-stage-7-observability.md).

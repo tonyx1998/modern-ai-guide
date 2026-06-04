@@ -76,6 +76,10 @@ Try in this exact order; **stop at the first that passes your evals.**
 
 Useful when fine-tuning teaches *style/format/safety* and RAG injects *current knowledge*. Rare at startup scale, common in mature enterprise deployments. Order matters: get prompt and RAG right *first*, then layer fine-tuning on top, not the other way around.
 
+:::note[→ Going deeper]
+Once you've decided fine-tuning is actually the right rung, the next questions are *which kind* (SFT / DPO / RFT) and *how much data*. See the [fine-tuning decision walkthrough](./fine-tuning-walkthrough.md) for the worked numbers, and [Chapter 7: Fine-tuning & Customization](/docs/fine-tuning) — especially [when to fine-tune](/docs/fine-tuning/ft-when) — for the full treatment.
+:::
+
 ## When this rule doesn't apply
 
 - **You already have a great fine-tuning dataset.** Then fine-tuning may be a reasonable first move — but you still benchmark against a strong prompt baseline.

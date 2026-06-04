@@ -13,6 +13,8 @@ description: Braintrust, Langfuse, Promptfoo, Ragas, DeepEval, Vellum, Inspect A
 "Evals" are how you answer "did my change make things better or worse?" — automatically, repeatedly, and on real cases. An eval is a triple: an input, an expected behavior (sometimes an expected answer, sometimes a rubric), and a way to score the actual output. You build a suite of 50 to 500 of these, run them on every prompt or model change, and watch the aggregate score. Without evals, you're tuning by vibes and your last user complaint. With evals, you ship faster than people without them.
 :::
 
+> **→ Going deeper:** This page is the *tool* layer. For the *discipline* — how to design eval cases, pick metrics, use LLM-as-judge well, and gate CI — see [Chapter 5: Evaluation & Measurement](/docs/evaluation), especially [LLM-as-judge](/docs/evaluation/eval-llm-as-judge) and [Production evals](/docs/evaluation/eval-production).
+
 ## The major options (2026)
 
 | Tool | Type | OSS? | Eval style | CI-friendly | Best for |

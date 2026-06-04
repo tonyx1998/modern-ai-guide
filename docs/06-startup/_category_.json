@@ -1,6 +1,6 @@
 {
-  "label": "6. Startup AI Team",
-  "position": 7,
+  "label": "10. Startup AI Team",
+  "position": 10,
   "collapsible": true,
   "collapsed": true,
   "link": { "type": "doc", "id": "startup-ai-workflow" }

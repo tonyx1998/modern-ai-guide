@@ -13,6 +13,8 @@ description: OpenAI fine-tuning, Together, Modal, Hugging Face, Unsloth, Prediba
 Fine-tuning takes a base model and continues training it on your data so it gets better at your specific task. It's not magic: it can't teach the model facts (that's RAG), it doesn't fix bad prompts, and it costs more time and money than people expect. When it works, it's transformative — a small specialized model that beats a frontier model on your one task, for 1/10th the cost per call. When it doesn't, you've spent two weeks for nothing. The platforms here are the *how*; deciding *whether* is the bigger question.
 :::
 
+> **→ Going deeper:** This page is the *platform* layer. For the method — the decision tree, data prep, LoRA vs full SFT, and how to evaluate a fine-tune — see [Chapter 7: Fine-tuning & Customization](/docs/fine-tuning), starting with [When to fine-tune](/docs/fine-tuning/ft-when) and [LoRA / QLoRA](/docs/fine-tuning/ft-lora).
+
 ## The major options (2026)
 
 | Platform | Type | Models supported | Style | Best for |

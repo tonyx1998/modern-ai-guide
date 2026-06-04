@@ -310,8 +310,8 @@ The data was always there. Observability is the difference between knowing and n
 ## Deeper in this guide
 
 - [Stack: Observability tools](/docs/stack/observability-tools) — the full tier list with pros and cons.
-- [Patterns: Caching](/docs/patterns/caching) — once you have observability, cache-hit-rate becomes a measurable target.
-- [Lifecycle: Monitor](/docs/lifecycle/09-monitor) — observability in the build-iterate-ship lifecycle.
+- [Patterns: Caching](/docs/patterns/pattern-caching) — once you have observability, cache-hit-rate becomes a measurable target.
+- [Lifecycle: Monitor](/docs/lifecycle/lifecycle-monitor) — observability in the build-iterate-ship lifecycle.
 
 ## Project
 

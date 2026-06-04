@@ -113,6 +113,15 @@ The wrong reason to specialize: "this track pays 25% more on levels.fyi." If you
 - **Companies hiring FDE / Applied AI:** **Anthropic, OpenAI, Sierra, Decagon, Harvey, Hebbia, Glean, Cresta, Palantir (the original).**
 - **Comp note:** at frontier labs, FDE is paid at senior IC bands and often has unusual upside.
 
+:::tip[→ Going deeper into a track]
+Four of these tracks have a full chapter in this guide — the fastest way to test whether one energizes you before you commit:
+
+- **Evals & quality** → [Chapter 5: Evaluation & Measurement](/docs/evaluation)
+- **Safety / responsible AI** → [Chapter 6: Responsible & Safe AI](/docs/safety)
+- **Fine-tuning / custom models** → [Chapter 7: Fine-tuning & Customization](/docs/fine-tuning) (start with [when to fine-tune](/docs/fine-tuning/ft-when))
+- **Voice / multimodal** → [Chapter 8: Multimodal & Voice AI](/docs/multimodal)
+:::
+
 ## Picking a track: the curiosity audit
 
 :::note[Try it yourself: a 2-hour curiosity audit]

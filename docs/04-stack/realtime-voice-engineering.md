@@ -13,6 +13,8 @@ description: WebRTC handshake, ephemeral keys, session events, VAD and turn-taki
 The [voice infrastructure](./voice-infra.md) page tells you which provider to pick. This page is what you actually have to build on top of it: how the browser opens a WebRTC connection without exposing your API key, how the session is set up and updated mid-call, how the model knows the user finished talking, how it stops gracefully when the user interrupts, and how every layer's latency stacks up to the moment-of-truth "how fast did the AI respond?" budget.
 :::
 
+> **→ Going deeper:** This is the infra/wiring view of voice. For the modeling side — what speech and vision models can actually do, and how to evaluate them — see [Chapter 8: Multimodal & Voice AI](/docs/multimodal), especially [Voice](/docs/multimodal/mm-voice) and [Vision](/docs/multimodal/mm-vision).
+
 ## The realtime architecture, in one diagram
 
 ```mermaid

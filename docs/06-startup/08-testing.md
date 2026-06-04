@@ -14,6 +14,8 @@ description: Four layers — unit, integration, eval suite, adversarial. LLM-as-
 Regular software testing checks "does this function return the right value." AI testing checks "does this prompt produce acceptable outputs across hundreds of realistic cases." Both matter. Neither replaces the other. The startups that conflate them — or skip one — produce either brittle code or hallucinating products.
 :::
 
+> **→ Going deeper:** Layer 3 (the eval suite) is the heart of this page, and it has a whole chapter behind it. For the full treatment of eval design, metrics, and judge calibration, see [Chapter 5: Evaluation & Measurement](/docs/evaluation), especially [LLM-as-judge](/docs/evaluation/eval-llm-as-judge).
+
 ## The four layers
 
 | Layer        | What it tests                                     | Runtime per run | Tools                            |

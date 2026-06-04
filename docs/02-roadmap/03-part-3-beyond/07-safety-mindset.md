@@ -22,6 +22,10 @@ Three categories of risk specific to AI features:
 
 Plus the classic web risks (auth, rate limiting, etc.) you already know.
 
+:::tip[→ Going deeper]
+This page builds the instinct; [Chapter 6: Responsible & Safe AI](/docs/safety) builds the practice — defense-in-depth against [prompt injection](/docs/safety/safety-prompt-injection), layered [guardrails](/docs/safety/safety-guardrails), red-teaming, and governance.
+:::
+
 ## 2. Prompt injection: the SQL-injection of AI
 
 The core insight: **the model doesn't distinguish your instructions from user-supplied content**. Whatever is in the context, it might follow.

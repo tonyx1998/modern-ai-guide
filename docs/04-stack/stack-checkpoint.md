@@ -201,4 +201,4 @@ You must pass (≥ 60%) to unlock the Next button and Chapter 5 in the sidebar.
 
 ---
 
-→ Continue to [Chapter 5: Solo / Indie AI](/docs/solo).
+→ Continue to [Chapter 5: Evaluation & Measurement](/docs/evaluation) — you can build the stack now; next you learn to *measure* whether it's any good.

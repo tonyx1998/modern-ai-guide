@@ -1,12 +1,12 @@
 ---
 id: decision-frameworks
-title: 9. Decisions — Overview
+title: 13. Decisions — Overview
 sidebar_position: 1
 sidebar_label: Decisions intro
 description: The recurring choices in AI engineering — prompt vs RAG vs fine-tune, agent vs chain, open vs closed, build vs buy. Decision rules, not opinions.
 ---
 
-# Part 9: Decision Frameworks
+# Part 13: Decision Frameworks
 
 *The recurring "should we…" debates, with decision rules instead of vibes.*
 
@@ -96,7 +96,7 @@ Use them as a check before you commit to an architecture: *did I actually justif
 
 ### Checkpoint
 
-99. [Chapter 9 checkpoint](./17-checkpoint.md) — a short self-test.
+99. [Chapter 13 checkpoint](./17-checkpoint.md) — a short self-test.
 
 ---
 

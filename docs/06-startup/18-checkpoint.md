@@ -1,18 +1,18 @@
 ---
 id: startup-ai-checkpoint
-title: Chapter 6 Checkpoint
+title: Chapter 10 Checkpoint
 sidebar_position: 99
 sidebar_label: 18. Checkpoint
-description: Mandatory checkpoint quiz for Chapter 6 — Startup AI Workflow. 5 random questions drawn from a 14-question bank. Pass to unlock Chapter 7.
+description: Mandatory checkpoint quiz for Chapter 10 — Startup AI Workflow. 5 random questions drawn from a 14-question bank. Pass to unlock Chapter 11.
 ---
 
-# Chapter 6 Checkpoint
+# Chapter 10 Checkpoint
 
 You've finished the Startup AI chapter. Take a minute to make sure the core ideas stuck before moving on to enterprise.
 
 There are **14 questions in the bank** — each visit picks 5 at random, so retaking gives you different ones. If you miss one, the result card tells you exactly which page to revisit.
 
-You must pass (≥ 60%) to unlock the Next button and Chapter 7 in the sidebar.
+You must pass (≥ 60%) to unlock the Next button and Chapter 11 in the sidebar.
 
 <Quiz id="startup-checkpoint" title="Startup AI checkpoint" sampleSize={5}>
 
@@ -204,4 +204,4 @@ You must pass (≥ 60%) to unlock the Next button and Chapter 7 in the sidebar.
 
 ## What's next
 
-→ Continue to [Chapter 7: Enterprise AI](/docs/enterprise) for a contrast — same problems, very different solutions at 100+ engineers, regulated industries, and central platform teams.
+→ Continue to [Chapter 11: Enterprise AI](/docs/enterprise) for a contrast — same problems, very different solutions at 100+ engineers, regulated industries, and central platform teams.

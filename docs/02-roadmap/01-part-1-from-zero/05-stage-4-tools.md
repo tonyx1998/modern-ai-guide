@@ -362,7 +362,7 @@ Conceptually identical; field names differ. The Vercel AI SDK (`tool()` + `strea
 ## Deeper in this guide
 
 - [Foundations: Tool use](/docs/foundations/tool-use) — what the model is actually doing under the hood.
-- [Patterns: Tool use](/docs/patterns/tool-use) — production patterns: timeouts, retries, sandboxing, observability.
+- [Patterns: Tool use](/docs/patterns/pattern-tool-use) — production patterns: timeouts, retries, sandboxing, observability.
 - [Foundations: Agent loop](/docs/foundations/agent-loop) — the connection from tool calling to agents (Stage 8).
 
 ## Project

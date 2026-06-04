@@ -112,6 +112,10 @@ This is correct for the domain. A coding agent that commits to main is one risk 
 - **Multi-tenant indexing without strict filtering.** A single data-leak incident is existential.
 - **"AI files the brief" autonomy.** Wrong risk class. Humans in the loop.
 
+:::tip[→ Going deeper]
+Harvey's two hardest problems map to two new chapters: citation-grade faithfulness is the heart of [Chapter 5: Evaluation & Measurement](/docs/evaluation), and audit-grade, leak-proof handling of privileged documents is [Chapter 6: Responsible & Safe AI](/docs/safety) — see [guardrails](/docs/safety/safety-guardrails).
+:::
+
 ## Sources
 
 - Harvey's website and engineering blog posts.

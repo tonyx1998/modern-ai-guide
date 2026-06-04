@@ -114,6 +114,10 @@ Return ONLY a number."""
 
 You don't need a tool for the first 30 days. A `evals/` directory and a `pytest` run is fine.
 
+:::tip[→ Going deeper]
+This page is the lifecycle-level view. For the full discipline — LLM-as-judge design and its biases, the metrics that actually correlate with quality, and running evals continuously against production traffic — see [Chapter 5: Evaluation & Measurement](/docs/evaluation), especially [LLM-as-judge](/docs/evaluation/eval-llm-as-judge) and [eval metrics](/docs/evaluation/eval-metrics).
+:::
+
 ## The cycle that actually works
 
 1. Curate 30-50 representative cases by hand. Cover the top 5 categories of input.

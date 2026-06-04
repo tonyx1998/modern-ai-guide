@@ -13,6 +13,10 @@ description: The hype-vs-reality view of AI architectures. Chain by default. Sin
 "Build an agent" was the 2024 instinct. By 2026 it's clear: most so-called agents should have been chains. Chains are predictable, debuggable, and cheap to evaluate. Agents have an exploding state space and one bad LLM decision can blow up the whole workflow. Start with the simpler thing and only escalate when you have proof the simpler thing isn't enough.
 :::
 
+:::note[New to agents?]
+This page is about *when* to use each shape. For the mechanics — what an agent loop actually is, planning/reflection, and how multi-agent works — see Foundations: [the agent loop](/docs/foundations/agent-loop), [planning and reflection](/docs/foundations/planning-and-reflection), and [multi-agent systems](/docs/foundations/multi-agent).
+:::
+
 ## The three patterns
 
 - **Chain** — A predetermined sequence of LLM and non-LLM steps. Predictable. Easy to debug. Easy to evaluate.

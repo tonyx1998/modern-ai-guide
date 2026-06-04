@@ -10,6 +10,10 @@ description: Start with a 50-line script. Move to Braintrust, Langfuse, Promptfo
 
 > **In one line:** Start with a 50-line Python script (Stage 6). Move to a platform when you have ~100+ cases, need diff-across-runs visualizations, or want eval+observability in one place.
 
+:::note[Tools vs the discipline]
+This page picks the *tool*. To learn *what* these tools measure and how to design an eval suite — metrics, datasets, LLM-as-judge, CI gating, production evals — see [Chapter 5: Evaluation & Measurement](/docs/evaluation).
+:::
+
 ## Tier 1 — start here, no framework
 
 A flat JSON file of cases + a runner script + git versioning. Stage 6 walked through this.

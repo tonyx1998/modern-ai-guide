@@ -308,7 +308,7 @@ Now your eval can check: "Did the response include `[Source: ...]`?" "Was each c
 - [Foundations: RAG basics](/docs/foundations/rag-basics) — the conceptual frame at more length.
 - [Stack: Vector databases](/docs/stack/vector-databases) — the tier-list of vector DBs.
 - [Stack: Embedding models](/docs/stack/embedding-models) — which embedding model to pick.
-- [Patterns: RAG in production](/docs/patterns/rag-prod) — what breaks at scale and how to fix it.
+- [Patterns: RAG in production](/docs/patterns/pattern-rag-prod) — what breaks at scale and how to fix it.
 
 ## Project
 

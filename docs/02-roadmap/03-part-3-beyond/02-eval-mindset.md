@@ -12,6 +12,10 @@ description: How to think about measurement. LLM-judge biases (positional, verbo
 
 You built an eval runner in [Stage 6](../01-part-1-from-zero/07-stage-6-evals.md). This page is the *thinking* side: what to grade, how to grade it, what biases corrupt your scores, and how to keep an eval set honest as your product evolves.
 
+:::tip[→ Going deeper]
+The journey doesn't stop at this mindset — Chapters 5–8 are the deep dives the roadmap points you toward. For evaluation specifically, [Chapter 5: Evaluation & Measurement](/docs/evaluation) is the full treatment of [LLM-as-judge](/docs/evaluation/eval-llm-as-judge), [metrics](/docs/evaluation/eval-metrics), and [production evals](/docs/evaluation/eval-production).
+:::
+
 ## 1. What an eval is actually for
 
 Three separate purposes, all worth keeping distinct in your head:

@@ -90,6 +90,10 @@ For Medium and High tier. The promotion-to-production record carries the committ
 
 Stored in the eval platform. Auditors can sample any deployed feature and confirm that the latest eval run beat the gating thresholds.
 
+:::note[→ Going deeper]
+The eval evidence auditors sample here is only as good as the eval practice that produced it. For how to build the suites, scorers, and production grading that feed this artifact, see [Chapter 5: Evaluation & Measurement](/docs/evaluation) — in particular [LLM-as-judge](/docs/evaluation/eval-llm-as-judge) and [production evals](/docs/evaluation/eval-production).
+:::
+
 ### Audit logs
 
 Every model call, retained per regime. The [Observability page](./11-observability.md) covers the storage; from a compliance perspective, the requirements are:

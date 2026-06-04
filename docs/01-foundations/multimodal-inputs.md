@@ -201,6 +201,10 @@ For high-volume pipelines, benchmark all three on *your* documents. For prototyp
 80% of B2B data lives in PDFs, scans, screenshots, and Word docs nobody wants to manually re-key. Multimodal LLMs turned that pile into a queryable dataset. The unsexy invoice-extraction use case is doing more revenue in 2026 than every consumer AI startup combined.
 :::
 
+:::tip[→ Going deeper]
+This page covers the *inputs*. For building real vision and voice systems — production OCR pipelines, video understanding, voice-agent latency budgets, and how to evaluate multimodal output — see [Chapter 8: Multimodal & Voice AI](/docs/multimodal), especially [vision](/docs/multimodal/mm-vision) and [voice](/docs/multimodal/mm-voice).
+:::
+
 ---
 
 → Next: [Vector search](./vector-search.md)

@@ -139,7 +139,7 @@ const config: Config = {
       style: 'dark',
       links: [
         {
-          title: 'Foundations',
+          title: 'Fundamentals & building',
           items: [
             {label: 'Introduction', to: '/'},
             {label: '1. Foundations', to: '/docs/foundations'},
@@ -149,21 +149,31 @@ const config: Config = {
           ],
         },
         {
-          title: 'Workflows',
+          title: 'Disciplines & specializations',
           items: [
-            {label: '5. Solo / Indie', to: '/docs/solo'},
-            {label: '6. Startup AI Team', to: '/docs/startup'},
-            {label: '7. Enterprise AI', to: '/docs/enterprise'},
-            {label: '8. Comparison', to: '/docs/comparison'},
+            {label: '5. Evaluation', to: '/docs/evaluation'},
+            {label: '6. Responsible & Safe AI', to: '/docs/safety'},
+            {label: '7. Fine-tuning', to: '/docs/fine-tuning'},
+            {label: '8. Multimodal & Voice', to: '/docs/multimodal'},
           ],
         },
         {
-          title: 'Applied',
+          title: 'Workflows by scale',
           items: [
-            {label: '9. Decisions', to: '/docs/decisions'},
-            {label: '10. Production Patterns', to: '/docs/patterns'},
-            {label: '11. Career', to: '/docs/career'},
-            {label: '12. Glossary', to: '/docs/glossary'},
+            {label: '9. Solo / Indie', to: '/docs/solo'},
+            {label: '10. Startup AI Team', to: '/docs/startup'},
+            {label: '11. Enterprise AI', to: '/docs/enterprise'},
+            {label: '12. Comparison', to: '/docs/comparison'},
+          ],
+        },
+        {
+          title: 'Judgment, career & reference',
+          items: [
+            {label: '13. Decisions', to: '/docs/decisions'},
+            {label: '14. Production Patterns', to: '/docs/patterns'},
+            {label: '15. Career', to: '/docs/career'},
+            {label: '16. Case Studies', to: '/docs/case-studies'},
+            {label: '17. Glossary', to: '/docs/glossary'},
           ],
         },
         {

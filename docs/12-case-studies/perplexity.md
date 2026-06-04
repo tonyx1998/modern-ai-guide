@@ -95,6 +95,10 @@ The follow-up suggestions ("ask about X next") and the multi-turn conversation f
 - **Generic web retrieval in a content-farm world.** Filter or your answers degrade as the open web gets noisier.
 - **Ignoring the "is this a question we should answer at all" filter.** Some queries (medical, legal, financial advice) need different handling than "what's the population of Lisbon."
 
+:::tip[→ Going deeper]
+Perplexity lives or dies on citation faithfulness — verifying that an answer is actually grounded in its sources is the core problem of [Chapter 5: Evaluation & Measurement](/docs/evaluation), especially [LLM-as-judge](/docs/evaluation/eval-llm-as-judge) for scoring faithfulness at scale.
+:::
+
 ## Sources
 
 - Perplexity engineering blog posts on Sonar models and retrieval.

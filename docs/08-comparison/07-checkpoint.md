@@ -176,4 +176,4 @@ There are **12 questions in the bank** — each visit picks 5 at random, so reta
 
 ## What's next
 
-→ Continue with [Chapter 9: Decision Frameworks](/docs/decisions) — the recurring choices (build vs buy, prompt vs RAG vs fine-tune, agent vs chain, closed vs open) that apply *across* all three columns.
+→ Continue with [Chapter 13: Decision Frameworks](/docs/decisions) — the recurring choices (build vs buy, prompt vs RAG vs fine-tune, agent vs chain, closed vs open) that apply *across* all three columns.

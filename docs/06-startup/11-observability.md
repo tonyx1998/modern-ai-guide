@@ -14,6 +14,8 @@ description: Langfuse or Braintrust for traces + evals, Datadog or Better Stack 
 Regular observability answers "did the request succeed?" AI observability also answers "was the answer any good, how much did it cost, and which customer is using it?" You need all four signals because an AI bug can be a fluent, fast, successful HTTP 200 that's completely wrong.
 :::
 
+> **→ Going deeper:** "Was the answer any good?" in production is its own discipline — scoring live traffic, sampling, and closing the loop back into your eval set. See [Production evaluation](/docs/evaluation/eval-production) in [Chapter 5: Evaluation & Measurement](/docs/evaluation).
+
 ## The four signal surfaces
 
 | Surface       | Tool                              | Owner            |

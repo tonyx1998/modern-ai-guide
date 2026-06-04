@@ -45,7 +45,7 @@ When 2–3 of these signals are flashing red, the transition has started whether
 | Data residency               | One region                               | Multi-region with per-customer routing                       |
 | Provider relationships       | Click-through ToS                        | Enterprise contracts with zero-retention, custom DPAs        |
 
-The full enterprise pattern is the subject of [Chapter 7](/docs/enterprise). The point here: you don't adopt all of it at once.
+The full enterprise pattern is the subject of [Chapter 11](/docs/enterprise). The point here: you don't adopt all of it at once.
 
 ## The migration playbook
 
@@ -141,4 +141,4 @@ The hardest discipline: resisting both extremes. Don't be vibes-driven like a ha
 
 ## What's next
 
-→ Take the [Chapter 6 Checkpoint](./18-checkpoint.md), then continue to [Chapter 7: Enterprise AI](/docs/enterprise) for a contrast — same problems, very different solutions at 100+ engineers.
+→ Take the [Chapter 10 Checkpoint](./18-checkpoint.md), then continue to [Chapter 11: Enterprise AI](/docs/enterprise) for a contrast — same problems, very different solutions at 100+ engineers.

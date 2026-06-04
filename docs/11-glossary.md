@@ -1,8 +1,8 @@
 ---
 id: glossary
-title: 12. Glossary
+title: 17. Glossary
 sidebar_position: 99
-sidebar_label: 12. Glossary
+sidebar_label: 17. Glossary
 description: Every term used in the Modern AI Engineer Guide, defined in plain English.
 ---
 

@@ -97,4 +97,8 @@ Each page focuses on a single concept. Read in order the first time.
 
 ---
 
+:::note[Where this leads]
+Foundations is the *vocabulary*. Everything after it builds on these primitives: you'll learn the project [lifecycle](/docs/lifecycle) and [tech stack](/docs/stack), then the disciplines that separate a demo from a product — [evaluation](/docs/evaluation) and [responsible & safe AI](/docs/safety) — then specializations like [fine-tuning](/docs/fine-tuning) and [multimodal & voice](/docs/multimodal), the [workflows](/docs/solo) at every team scale, and finally [decisions](/docs/decisions), [career](/docs/career), and real [case studies](/docs/case-studies). Read in order and you go from "what's a token?" to job-ready.
+:::
+
 When you finish this chapter, move on to [Chapter 2: Roadmap](/docs/roadmap).

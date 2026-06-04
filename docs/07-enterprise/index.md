@@ -1,12 +1,12 @@
 ---
 id: enterprise-ai-workflow
-title: 7. Enterprise AI — Overview
+title: 11. Enterprise AI — Overview
 sidebar_position: 1
 sidebar_label: Enterprise intro
 description: 500+ engineers, governance, private cloud, SOC 2 / HIPAA / FedRAMP / EU AI Act, MLOps + LLMOps. The shape of enterprise AI work in 2026.
 ---
 
-# Part 7: The Enterprise AI Workflow (500+ Engineers)
+# Part 11: The Enterprise AI Workflow (500+ Engineers)
 
 *For organizations where every AI decision involves Legal, Security, Procurement, Risk, and at least one VP.*
 

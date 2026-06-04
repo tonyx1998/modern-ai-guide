@@ -189,6 +189,10 @@ Levers:
 | Dedicated OCR       | AWS Textract, Google Document AI, Reducto, LlamaParse — for very high volume. |
 | Vision moderation   | Cloud vendor's image moderation API, or a vision LLM with a safety schema. |
 
+:::tip[→ Going deeper]
+These are the production *patterns*. For the underlying capabilities — how vision and voice models actually work, and how to choose and evaluate them — see [Chapter 8: Multimodal & Voice AI](/docs/multimodal), specifically [vision](/docs/multimodal/mm-vision) and [voice](/docs/multimodal/mm-voice).
+:::
+
 :::note[The collapse of three pipelines into one prompt]
 A team's receipt-parsing service in 2023 had three deployed components: an OCR microservice, a layout model, and a field extractor — plus 1,500 lines of glue and a 14-page runbook. The 2026 version is a single Lambda calling `generateObject` with a schema and a vision model. Same accuracy on their evals; one-fifth the code; lower latency; broadly cheaper at their volume.
 

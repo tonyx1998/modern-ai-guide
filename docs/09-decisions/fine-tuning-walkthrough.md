@@ -163,6 +163,10 @@ In 2026, you don't necessarily train fine-tunes yourself:
 
 Managed wins if your needs match the platform's supported recipes (SFT and DPO on common models). DIY wins for novel methods, exotic base models, or strict data residency.
 
+:::note[→ Going deeper]
+This page is the *decision* layer. For the full how-to — data preparation, training recipes, evaluation of the tuned model, and serving — see [Chapter 7: Fine-tuning & Customization](/docs/fine-tuning), starting with [when fine-tuning is worth it](/docs/fine-tuning/ft-when).
+:::
+
 ## What beginners get wrong
 
 :::caution[Common mistakes]

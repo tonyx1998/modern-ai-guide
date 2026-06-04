@@ -75,6 +75,10 @@ Concretely:
 
 **Wrong when:** the task is still evolving (you'll burn through fine-tunes), you have < 200 good labeled examples, you haven't exhausted prompting yet. Fine-tuning is almost never the right *first* move.
 
+:::tip[→ Going deeper]
+For the full decision — LoRA vs full fine-tune, data prep, preference tuning, and how to tell when you've genuinely hit the prompting/RAG ceiling — see [Chapter 7: Fine-tuning & Customization](/docs/fine-tuning), especially [when to fine-tune](/docs/fine-tuning/ft-when).
+:::
+
 ### Agents
 
 **Right when:** the workflow genuinely varies (the model must choose between 5+ tools based on input), multi-step reasoning is required, the output isn't a single answer but a sequence of actions.

@@ -1,12 +1,12 @@
 ---
 id: production-patterns
-title: 10. Production Patterns — Overview
+title: 14. Production Patterns — Overview
 sidebar_position: 1
 sidebar_label: Patterns intro
 description: The patterns that actually ship in production LLM apps. Streaming, structured output, tool use, RAG, agents, evals, caching, cost control, embeddings, multimodal, safety, fallbacks.
 ---
 
-# Part 10: Production Patterns
+# Part 14: Production Patterns
 
 *The patterns that turn an LLM demo into something you can charge for.*
 
@@ -41,6 +41,7 @@ A demo proves the model *can* do the thing. A product proves you can do the thin
 - [Fallbacks & graceful degradation](./12-fallbacks.md) — Tiered fallback, cached response, non-AI path, "temporarily unavailable" UX.
 - [The LLM debugging playbook](./debugging-playbook.md) — Symptom → likely root causes → first three things to check. The reference card for when something's misbehaving.
 - [Safe model swaps & canary deploys](./model-swaps.md) — Shadow traffic, canary rollouts, A/B tests for prompt and model changes — the deployment discipline that prevents silent regressions.
+- [LLMOps — the production operations loop](./llmops-loop.md) — The closed loop that ties every other pattern together: version, roll out, observe, evaluate in prod, and feed failures back. The "SRE for AI" synthesis.
 
 ### Putting it together
 

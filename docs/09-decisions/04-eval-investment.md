@@ -67,6 +67,10 @@ The minimum viable eval setup is one Saturday:
 
 This setup catches 80% of the regressions a fancy eval platform would catch. Adopt the platform when "70 eval files in pytest" starts feeling clumsy — not before.
 
+:::note[→ Going deeper]
+This page is about *how much* to invest. For *how* to build the evals — scorer design, [LLM-as-judge](/docs/evaluation/eval-llm-as-judge), [the metrics that matter](/docs/evaluation/eval-metrics), and [grading production traffic](/docs/evaluation/eval-production) — see [Chapter 5: Evaluation & Measurement](/docs/evaluation).
+:::
+
 ## What to eval
 
 For each AI feature, at minimum:

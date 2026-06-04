@@ -14,6 +14,8 @@ description: Clerk or Supabase auth in twenty minutes. Why anonymous LLM endpoin
 "I'll add auth later" is the most expensive sentence in solo AI. The exact moment you tweet your URL is the exact moment a scraper or a curious teenager finds the open endpoint. Within minutes, you're paying for someone else's "research." Auth + per-user rate limits is a 20-minute job and the only thing standing between you and a 3am SMS from your provider.
 :::
 
+> **→ Going deeper:** Auth and rate limits stop abuse of the endpoint; they don't stop abuse of the *model itself* (prompt injection, jailbreaks). Even a solo public LLM is worth one read of [Chapter 6: Responsible & Safe AI](/docs/safety), especially [Prompt injection](/docs/safety/safety-prompt-injection).
+
 ## Why auth comes before features
 
 A free, anonymous, uncapped LLM endpoint will be discovered and abused. Concretely:

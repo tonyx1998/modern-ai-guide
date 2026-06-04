@@ -153,6 +153,10 @@ flowchart LR
 - **Costly evals run on every commit.** Tier them: deterministic on every PR, LLM-judge on prompt changes, human on weekly cadence. Don't pay $50 in judge calls per docs typo.
 - **No baseline.** "85% pass" means nothing without "vs. 78% last week." Version-control your eval set and track scores by version.
 
+:::tip[→ Going deeper]
+This page is the *pattern* — the shape an eval suite takes inside a feature. The full discipline (LLM-as-judge calibration, production sampling, metric design) lives in [Chapter 5: Evaluation & Measurement](/docs/evaluation) — start with [LLM-as-judge](/docs/evaluation/eval-llm-as-judge) and [evaluating in production](/docs/evaluation/eval-production).
+:::
+
 ## 2026 stack
 
 | Layer        | Default pick                                                                  |

@@ -287,8 +287,8 @@ A 1000-case set that takes 30 minutes to run is worse than a 100-case set that t
 
 - [Eval mindset (Part III)](../03-part-3-beyond/02-eval-mindset.md) — the *thinking* side of evals: bias, calibration, drift.
 - [Stack: Eval tools](/docs/stack/eval-tools) — the tier list of evaluation tools.
-- [Patterns: Evals](/docs/patterns/evals) — production eval patterns: CI integration, regression dashboards, traffic-sampled grading.
-- [Lifecycle: Evals](/docs/lifecycle/evals) — where evals fit in the build-iterate-ship cycle.
+- [Patterns: Evals](/docs/patterns/pattern-evals) — production eval patterns: CI integration, regression dashboards, traffic-sampled grading.
+- [Lifecycle: Evals](/docs/lifecycle/lifecycle-evals) — where evals fit in the build-iterate-ship cycle.
 
 ## Project
 
