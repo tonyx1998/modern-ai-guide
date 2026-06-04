@@ -208,6 +208,25 @@ This recipe beats every "we used the default" RAG implementation I've ever seen.
 There is no universal chunking config because there are no universal documents. The 30 minutes you spend looking at five representative documents and deciding what a "useful unit" is — that's the difference between a working RAG system and a frustrating one.
 :::
 
+## Practice: fixed-size chunking with overlap
+
+The simplest chunker — and the one most production RAG systems start with — is a sliding window: take `size` tokens, slide forward by `size − overlap`, repeat. Overlap is what stops a fact from being severed at a chunk boundary. Implement the windowing once and the "overlap" knob stops being abstract.
+
+<CodeChallenge
+  id="foundations-chunk"
+  fnName="chunk"
+  prompt="Write chunk(tokens, size, overlap) — split the array `tokens` into consecutive windows of length `size`, each starting `size − overlap` after the previous one. The last window may be shorter. (Assume 0 ≤ overlap < size.)"
+  starter={`function chunk(tokens, size, overlap) {\n  // step = size - overlap; slide a window across the array\n}`}
+  solution={`function chunk(tokens, size, overlap) {\n  const step = size - overlap;\n  const out = [];\n  for (let start = 0; start < tokens.length; start += step) {\n    out.push(tokens.slice(start, start + size));\n  }\n  return out;\n}`}
+  tests={[
+    {args: [[1, 2, 3, 4, 5, 6], 3, 0], expected: [[1, 2, 3], [4, 5, 6]]},
+    {args: [[1, 2, 3, 4, 5], 3, 1], expected: [[1, 2, 3], [3, 4, 5], [5]]},
+    {args: [[1, 2], 5, 2], expected: [[1, 2]]},
+    {args: [[1, 2, 3, 4], 2, 0], expected: [[1, 2], [3, 4]]},
+  ]}
+  hint="The step between window starts is size − overlap. Loop `start` from 0 while it's less than the length, pushing tokens.slice(start, start + size) each time."
+/>
+
 ---
 
 → Next: [Reranking](./reranking.md)

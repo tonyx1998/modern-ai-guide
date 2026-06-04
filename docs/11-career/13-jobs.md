@@ -171,4 +171,4 @@ A referred application to an AI-native scaleup converts to a first-round intervi
 - **Skipping the community step.** In 2026, the highest-yield career move under "first AI job" is often "join one community, ship one post a month, answer two questions a week." Six months of that builds the referral surface that powers the job search.
 :::
 
-→ Next: [Chapter 11 Checkpoint](./99-checkpoint.md).
+→ Next: [Chapter 15 Checkpoint](./99-checkpoint.md).

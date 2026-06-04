@@ -1,12 +1,12 @@
 ---
 id: comparison
-title: 8. Comparison — Solo vs Startup vs Enterprise AI
+title: 12. Comparison — Solo vs Startup vs Enterprise AI
 sidebar_position: 1
 sidebar_label: Comparison intro
 description: The three AI workflows from chapters 5, 6, 7 side-by-side across team, stack, ops, governance, economics.
 ---
 
-# Part 8: Comparison
+# Part 12: Comparison
 
 *Solo, startup, and enterprise AI work, side-by-side.*
 
@@ -44,10 +44,10 @@ Chapters 5, 6, and 7 each built out one column in detail. This chapter is the **
 ```mermaid
 flowchart TD
     Start{"How many AI engineers ship to the same surface?"}
-    Start -->|1| Solo["Solo / Indie AI (Chapter 5)"]
-    Start -->|2–10| Startup["Startup AI Team (Chapter 6)"]
+    Start -->|1| Solo["Solo / Indie AI (Chapter 9)"]
+    Start -->|2–10| Startup["Startup AI Team (Chapter 10)"]
     Start -->|10+ across teams| Q2{"Regulated industry or > 1,000 employees?"}
-    Q2 -->|Yes| Ent["Enterprise AI (Chapter 7)"]
+    Q2 -->|Yes| Ent["Enterprise AI (Chapter 11)"]
     Q2 -->|No| Startup
 ```
 
@@ -99,7 +99,7 @@ The corollary is that **column-jumping is the most expensive moment in an AI tea
 - The `:::tip[In plain English]` callouts are the TL;DR if you're in a hurry.
 - The "common mistakes" sections at the bottom of each page are the highest-density part — that's where the chapter's opinion sits.
 
-Skim this chapter when you need a quick mental model of how a specific dimension differs across scales. Read [Chapter 9: Decision Frameworks](/docs/decisions) when you need to actually pick.
+Skim this chapter when you need a quick mental model of how a specific dimension differs across scales. Read [Chapter 13: Decision Frameworks](/docs/decisions) when you need to actually pick.
 
 ---
 

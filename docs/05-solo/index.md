@@ -1,12 +1,12 @@
 ---
 id: indie-ai-workflow
-title: 5. Solo / Indie AI — Overview
+title: 9. Solo / Indie AI — Overview
 sidebar_position: 1
 sidebar_label: Solo intro
 description: One-person AI builders, side projects, demos, indie apps. Frontier APIs, free tiers, minimal infra, maximum shipping speed.
 ---
 
-# Part 5: The Solo / Indie AI Workflow
+# Part 9: The Solo / Indie AI Workflow
 
 *For the one-person builder shipping AI side projects, demos, and indie apps in 2026.*
 
@@ -58,10 +58,10 @@ The pages are deliberately short and opinionated. There's a whole industry telli
 15. [Starter Templates](./15-templates.md) — Streaming chat, RAG over docs, structured-output classifier, simple agent.
 16. [Sample Project: AI Meeting-Notes Summarizer](./16-sample-project.md) — End-to-end walkthrough with code, costs, deploy, and first users.
 17. [Graduating Beyond Solo](./17-graduating.md) — When to bring on a co-founder, when to convert to a real company, when to keep it indie.
-18. [Chapter 5 Checkpoint](./18-checkpoint.md) — Self-test before moving on.
+18. [Chapter 9 Checkpoint](./18-checkpoint.md) — Self-test before moving on.
 
 ---
 
 → Start with [The Solo AI Builder Mindset](./01-mindset.md).
 
-When you finish all 18 pages, move on to [Chapter 6: Startup AI Team](/docs/startup).
+When you finish all 18 pages, move on to [Chapter 10: Startup AI Team](/docs/startup).

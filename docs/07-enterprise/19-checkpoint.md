@@ -1,18 +1,18 @@
 ---
 id: enterprise-ai-checkpoint
-title: Chapter 7 Checkpoint
+title: Chapter 11 Checkpoint
 sidebar_position: 99
 sidebar_label: Checkpoint
-description: Mandatory checkpoint quiz for Chapter 7 — Enterprise AI. 5 random questions drawn from a 14-question bank. Pass to unlock Chapter 8.
+description: Mandatory checkpoint quiz for Chapter 11 — Enterprise AI. 5 random questions drawn from a 14-question bank. Pass to unlock Chapter 12.
 ---
 
-# Chapter 7 Checkpoint
+# Chapter 11 Checkpoint
 
 You've finished the Enterprise AI chapter. Take a minute to make sure the core ideas stuck.
 
 There are **14 questions in the bank** — each visit picks 5 at random, so retaking gives you different ones. If you miss one, the result card tells you exactly which page section to revisit, and the link highlights the paragraph for you.
 
-You must pass (≥ 60%) to unlock the Next button and Chapter 8 in the sidebar.
+You must pass (≥ 60%) to unlock the Next button and Chapter 12 in the sidebar.
 
 <Quiz id="enterprise-checkpoint" title="Enterprise AI checkpoint" sampleSize={5}>
 
@@ -204,4 +204,4 @@ You must pass (≥ 60%) to unlock the Next button and Chapter 8 in the sidebar.
 
 ## What's next
 
-→ Continue to [Chapter 8: Comparison](/docs/comparison) where solo / startup / enterprise AI workflows are laid out side by side.
+→ Continue to [Chapter 12: Comparison](/docs/comparison) where solo / startup / enterprise AI workflows are laid out side by side.

@@ -1,6 +1,6 @@
 {
-  "label": "7. Enterprise AI",
-  "position": 8,
+  "label": "11. Enterprise AI",
+  "position": 11,
   "collapsible": true,
   "collapsed": true,
   "link": { "type": "doc", "id": "enterprise-ai-workflow" }

@@ -26,7 +26,7 @@ You must pass (≥ 60%) to unlock the Next button and Chapter 4 in the sidebar.
   ]}
   correct={1}
   explanation="If a deterministic alternative exists for a structured-input problem with well-known rules, that's almost always the right v0. AI here would be slower, more expensive, and less reliable than a regex."
-  revisit={{ to: "/docs/lifecycle/problem-framing", label: "When AI is the wrong tool" }}
+  revisit={{ to: "/docs/lifecycle/lifecycle-problem-framing", label: "When AI is the wrong tool" }}
 />
 
 <Question
@@ -39,7 +39,7 @@ You must pass (≥ 60%) to unlock the Next button and Chapter 4 in the sidebar.
   ]}
   correct={1}
   explanation="Without ideal outputs you don't know what 'good' looks like; without a numeric success metric you can't tell if you ever got there. Architecture comes after framing, not before."
-  revisit={{ to: "/docs/lifecycle/problem-framing", label: "Output of the framing phase" }}
+  revisit={{ to: "/docs/lifecycle/lifecycle-problem-framing", label: "Output of the framing phase" }}
 />
 
 <Question
@@ -52,7 +52,7 @@ You must pass (≥ 60%) to unlock the Next button and Chapter 4 in the sidebar.
   ]}
   correct={2}
   explanation="Teams reach launch with great knowledge data and zero graded eval cases, then can't tell whether their next change helps or hurts. Most projects never need training data; eval data is non-negotiable."
-  revisit={{ to: "/docs/lifecycle/data", label: "The three uses of data" }}
+  revisit={{ to: "/docs/lifecycle/lifecycle-data", label: "The three uses of data" }}
 />
 
 <Question
@@ -65,7 +65,7 @@ You must pass (≥ 60%) to unlock the Next button and Chapter 4 in the sidebar.
   ]}
   correct={2}
   explanation="Each step up adds cost, latency, and operational pain. The most common mistake is jumping to 'let's build an agent' or 'let's fine-tune' before exhausting simpler prompting."
-  revisit={{ to: "/docs/lifecycle/approach", label: "Default decision order" }}
+  revisit={{ to: "/docs/lifecycle/lifecycle-approach", label: "Default decision order" }}
 />
 
 <Question
@@ -78,7 +78,7 @@ You must pass (≥ 60%) to unlock the Next button and Chapter 4 in the sidebar.
   ]}
   correct={1}
   explanation="Evals use structured behavioral checks: must cite this doc ID, must contain these phrases, tone must match a rubric (LLM judge), output must validate against a schema. Aggregate score across the set tells you whether things are improving."
-  revisit={{ to: "/docs/lifecycle/evals", label: "What an eval is" }}
+  revisit={{ to: "/docs/lifecycle/lifecycle-evals", label: "What an eval is" }}
 />
 
 <Question
@@ -91,7 +91,7 @@ You must pass (≥ 60%) to unlock the Next button and Chapter 4 in the sidebar.
   ]}
   correct={2}
   explanation="Without a baseline you can't tell whether the next month of iteration helped. v0 deliberately omits routing, multiple personas, frameworks, vector DBs (if a flat file works), and pretty UI."
-  revisit={{ to: "/docs/lifecycle/build", label: "What v0 looks like" }}
+  revisit={{ to: "/docs/lifecycle/lifecycle-build", label: "What v0 looks like" }}
 />
 
 <Question
@@ -104,7 +104,7 @@ You must pass (≥ 60%) to unlock the Next button and Chapter 4 in the sidebar.
   ]}
   correct={1}
   explanation="Bundle three changes into one PR and a score move tells you nothing about which change caused it. Three separate eval runs cost a few dollars and save weeks of debugging confusion."
-  revisit={{ to: "/docs/lifecycle/iterate", label: "What to avoid in the iterate loop" }}
+  revisit={{ to: "/docs/lifecycle/lifecycle-iterate", label: "What to avoid in the iterate loop" }}
 />
 
 <Question
@@ -117,7 +117,7 @@ You must pass (≥ 60%) to unlock the Next button and Chapter 4 in the sidebar.
   ]}
   correct={1}
   explanation="Fine-tuning is the last resort, in order of cheapness. Teams that fine-tune early end up locked into stale models, when three sentences added to the prompt would have moved the score the same amount in 20 minutes."
-  revisit={{ to: "/docs/lifecycle/iterate", label: "What to vary, in order of cheapness" }}
+  revisit={{ to: "/docs/lifecycle/lifecycle-iterate", label: "What to vary, in order of cheapness" }}
 />
 
 <Question
@@ -130,7 +130,7 @@ You must pass (≥ 60%) to unlock the Next button and Chapter 4 in the sidebar.
   ]}
   correct={2}
   explanation="The app-side cap catches runaway logic; the provider-side cap catches bugs in your app-side cap. Cost of a weekend $5K bill: $5K. Cost of implementing both caps: one hour."
-  revisit={{ to: "/docs/lifecycle/harden", label: "Cost discipline in the harden phase" }}
+  revisit={{ to: "/docs/lifecycle/lifecycle-harden", label: "Cost discipline in the harden phase" }}
 />
 
 <Question
@@ -143,7 +143,7 @@ You must pass (≥ 60%) to unlock the Next button and Chapter 4 in the sidebar.
   ]}
   correct={1}
   explanation="Relying on the model's safety training alone is insufficient. Architectural defenses — delimiters, labeling, output validation, sandboxed tools — are what actually contain the blast radius of a successful injection."
-  revisit={{ to: "/docs/lifecycle/harden", label: "Safety and prompt injection" }}
+  revisit={{ to: "/docs/lifecycle/lifecycle-harden", label: "Safety and prompt injection" }}
 />
 
 <Question
@@ -156,7 +156,7 @@ You must pass (≥ 60%) to unlock the Next button and Chapter 4 in the sidebar.
   ]}
   correct={1}
   explanation="The kill-switch flag flip is identical at 5% and at 100%, but the user impact isn't. Rollback at 5% is '0.3% of users saw a bad experience'; rollback at 100% is 'everyone did.'"
-  revisit={{ to: "/docs/lifecycle/deploy", label: "Cohort deployment pattern" }}
+  revisit={{ to: "/docs/lifecycle/lifecycle-deploy", label: "Cohort deployment pattern" }}
 />
 
 <Question
@@ -169,7 +169,7 @@ You must pass (≥ 60%) to unlock the Next button and Chapter 4 in the sidebar.
   ]}
   correct={1}
   explanation="When cold-eval and prod-eval diverge, the most common cause is eval-set staleness. Eval sets should roughly track production distribution; when they don't, the eval score lies to you. Also rule out a silent model update or retrieval regression."
-  revisit={{ to: "/docs/lifecycle/monitor", label: "Drift detection" }}
+  revisit={{ to: "/docs/lifecycle/lifecycle-monitor", label: "Drift detection" }}
 />
 
 <Question
@@ -182,7 +182,7 @@ You must pass (≥ 60%) to unlock the Next button and Chapter 4 in the sidebar.
   ]}
   correct={2}
   explanation="Alert on rates and trends, not individual events. Pager fatigue from per-call alerts destroys the signal value of real alerts. Individual bad answers go into the triage queue, not the on-call's phone."
-  revisit={{ to: "/docs/lifecycle/monitor", label: "What not to alert on" }}
+  revisit={{ to: "/docs/lifecycle/lifecycle-monitor", label: "What not to alert on" }}
 />
 
 <Question
@@ -195,7 +195,7 @@ You must pass (≥ 60%) to unlock the Next button and Chapter 4 in the sidebar.
   ]}
   correct={1}
   explanation="Teams that do this watch their eval set grow from 100 to 800+ cases in year one, with scores climbing from ~0.6 to ~0.9. The weekly review meeting is the cadence that makes it stick — without it, 'we'll sample logs' becomes 'we never did.'"
-  revisit={{ to: "/docs/lifecycle/improve", label: "The weekly review meeting" }}
+  revisit={{ to: "/docs/lifecycle/lifecycle-improve", label: "The weekly review meeting" }}
 />
 
 <Question
@@ -208,7 +208,7 @@ You must pass (≥ 60%) to unlock the Next button and Chapter 4 in the sidebar.
   ]}
   correct={1}
   explanation="A prompt buried in code with no version history means no reproducibility, no clear ownership, no way to attribute regressions, and no way for a domain expert to suggest a change via PR. The prompt registry is one of the highest-ROI process changes you can make."
-  revisit={{ to: "/docs/lifecycle/handoffs", label: "AI engineer owns the prompt registry" }}
+  revisit={{ to: "/docs/lifecycle/lifecycle-handoffs", label: "AI engineer owns the prompt registry" }}
 />
 
 </Quiz>

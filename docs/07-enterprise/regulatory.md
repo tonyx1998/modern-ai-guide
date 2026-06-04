@@ -145,4 +145,4 @@ This shapes vendor evaluation: a vendor that gives you good documentation, evalu
 
 ## What's next
 
-→ Back to [Enterprise AI overview](./index.md), or continue to the [Checkpoint](./19-checkpoint.md) to self-test, then on to [Chapter 8: Comparison](/docs/comparison).
+→ Back to [Enterprise AI overview](./index.md), or continue to the [Checkpoint](./19-checkpoint.md) to self-test, then on to [Chapter 12: Comparison](/docs/comparison).

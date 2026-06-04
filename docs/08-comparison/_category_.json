@@ -1,6 +1,6 @@
 {
-  "label": "8. Comparison",
-  "position": 9,
+  "label": "12. Comparison",
+  "position": 12,
   "collapsible": true,
   "collapsed": true,
   "link": { "type": "doc", "id": "comparison" }

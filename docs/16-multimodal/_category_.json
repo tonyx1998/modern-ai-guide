@@ -1,0 +1,7 @@
+{
+  "label": "8. Multimodal & Voice AI",
+  "position": 8,
+  "collapsible": true,
+  "collapsed": true,
+  "link": { "type": "doc", "id": "multimodal/multimodal-overview" }
+}

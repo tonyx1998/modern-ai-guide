@@ -33,7 +33,7 @@ The numbers below are illustrative — yours will vary — but the *shape* is wh
 | **Self-hosted GPU capex** | $0 | $0 | Variable, can be millions/year |
 | **Total monthly infra+AI** | **$0–$200** | **$5K–$80K** | **$500K–$20M+** |
 
-For the deep dive on enterprise cost shape, see [Chapter 7: A Realistic Cost Picture](/docs/enterprise-ai).
+For the deep dive on enterprise cost shape, see [Chapter 11: A Realistic Cost Picture](/docs/enterprise).
 
 ## People costs (dominant at every scale)
 

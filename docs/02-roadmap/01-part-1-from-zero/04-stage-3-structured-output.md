@@ -246,7 +246,7 @@ Most "AI features" in shipped products are some variant of this template.
 ## Deeper in this guide
 
 - [Foundations: Structured output](/docs/foundations/structured-output) — what constrained decoding actually does under the hood.
-- [Patterns: Structured output in production](/docs/patterns/structured-output) — retry strategies, partial parsing, schema versioning.
+- [Patterns: Structured output in production](/docs/patterns/pattern-structured-output) — retry strategies, partial parsing, schema versioning.
 
 ## Project
 

@@ -1,18 +1,18 @@
 ---
 id: patterns-checkpoint
-title: Chapter 10 Checkpoint
+title: Chapter 14 Checkpoint
 sidebar_position: 99
 sidebar_label: Checkpoint
-description: Mandatory checkpoint quiz for Chapter 10 — Production Patterns. 5 random questions drawn from a 14-question bank. Pass to unlock the next chapter.
+description: Mandatory checkpoint quiz for Chapter 14 — Production Patterns. 5 random questions drawn from a 14-question bank. Pass to unlock the next chapter.
 ---
 
-# Chapter 10 Checkpoint
+# Chapter 14 Checkpoint
 
 You've finished the production patterns chapter. Make sure the practical patterns stuck — streaming, structured output, tools, RAG, agents, evals, caching, costs, embeddings, multimodal, safety, fallbacks, and the Acme glue.
 
 There are **14 questions in the bank** — each visit picks 5 at random, so retaking gives you different ones. If you miss one, the result card tells you exactly which page to revisit.
 
-You must pass (≥ 60%) to unlock the Next button and Chapter 11 in the sidebar.
+You must pass (≥ 60%) to unlock the Next button and Chapter 15 in the sidebar.
 
 <Quiz id="patterns-checkpoint" title="Production Patterns checkpoint" sampleSize={5}>
 
@@ -204,4 +204,4 @@ You must pass (≥ 60%) to unlock the Next button and Chapter 11 in the sidebar.
 
 ## What's next
 
-→ Continue to [Chapter 11: Career](/docs/career) for the personal layer — how to actually grow as an AI engineer in 2026.
+→ Continue to [Chapter 15: Career](/docs/career) for the personal layer — how to actually grow as an AI engineer in 2026.

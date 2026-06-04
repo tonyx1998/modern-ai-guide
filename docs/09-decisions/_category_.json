@@ -1,6 +1,6 @@
 {
-  "label": "9. Decisions",
-  "position": 10,
+  "label": "13. Decisions",
+  "position": 13,
   "collapsible": true,
   "collapsed": true,
   "link": { "type": "doc", "id": "decision-frameworks" }

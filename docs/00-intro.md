@@ -4,7 +4,7 @@ title: Modern AI Engineer Guide
 sidebar_position: 1
 sidebar_label: Introduction
 slug: /
-description: How AI systems are actually built in 2026 — for absolute beginners and beyond. 12 chapters plus an introduction, designed so you can master one topic per page.
+description: How AI systems are actually built in 2026 — for absolute beginners and beyond. 17 chapters in seven parts, designed so you can master one topic per page.
 toc_max_heading_level: 2
 ---
 
@@ -12,7 +12,7 @@ toc_max_heading_level: 2
 
 *How AI systems are actually built in 2026 — for absolute beginners and beyond.*
 
-**What it is** — A 2026 reference on how LLM-powered applications are designed, built, evaluated, shipped, and operated, paired with a step-by-step roadmap for getting there from zero. **12 chapters plus this introduction**, split into focused single-topic pages.
+**What it is** — A 2026 reference on how LLM-powered applications are designed, built, evaluated, shipped, and operated, paired with a step-by-step roadmap for getting there from zero. **17 chapters in seven parts**, split into focused single-topic pages. Read it front to back as a complete beginner and you finish job-ready.
 
 **Who it's for** — Anyone from "I've used ChatGPT but never written code against an LLM" to "I build production AI systems and want a refresh on 2026 tooling."
 
@@ -32,49 +32,50 @@ toc_max_heading_level: 2
 
 ## What this guide covers
 
-Six themes, twelve chapters — written so a beginner can follow along while still being useful to working engineers.
+**Seven parts, seventeen chapters** — written so a complete beginner can follow along while still being useful to working engineers. Read top to bottom and you go from "what is a token?" to designing evals, shipping safely, fine-tuning a model, building voice agents, and reading the architectures of products like Cursor and Glean. Each part builds on the one before it.
 
-### How LLM systems actually work
-The bedrock: tokens, embeddings, the transformer (just enough to be useful), context windows, sampling, streaming, structured output, tool/function calling, retrieval-augmented generation (RAG), and agent loops.
+### Part A · Fundamentals
+How LLMs actually work, and how to learn the rest of this guide.
 
-→ Tokens and tokenizers · Embeddings and vector similarity · The attention mechanism · Sampling parameters · Tool use · The agent loop
+- **[1. Foundations →](/docs/foundations)** — The bedrock: tokens, embeddings, the transformer (just enough to be useful), context windows, sampling, streaming, structured output, tool calling, RAG, and agent loops.
+- **[2. Roadmap →](/docs/roadmap)** — A staged, beginner-to-job-ready learning path: what to learn, in what order, and how to know you've learned it.
 
-[Read Foundations →](/docs/foundations)
+### Part B · Building & shipping
+The process you follow and the tools you reach for.
 
-### The 2026 AI toolbox
-Every major provider, framework, and service explained: what it does, when to use it, why it exists, what it replaces.
+- **[3. Lifecycle →](/docs/lifecycle)** — What an AI project looks like from "idea" to "shipped and measured": problem framing, data, evals, build, harden, deploy, monitor, improve.
+- **[4. Tech Stack →](/docs/stack)** — Every major provider, framework, and service explained — OpenAI / Anthropic / Google / open models · vLLM / Ollama · LangChain / LlamaIndex / DSPy / Vercel AI SDK · Pinecone / pgvector / Turbopuffer · Braintrust / Langfuse · Portkey / OpenRouter.
 
-→ OpenAI / Anthropic / Google / open models · vLLM / TGI / Ollama · LangChain / LlamaIndex / DSPy / Vercel AI SDK · Pinecone / Weaviate / pgvector / Turbopuffer · Braintrust / Langfuse / Promptfoo · Portkey / OpenRouter
+### Part C · Core disciplines
+The two skills that separate a demo from a production system.
 
-[Read Tech Stack →](/docs/stack)
+- **[5. Evaluation & Measurement →](/docs/evaluation)** — The #1 AI-engineering discipline: eval types, datasets, metrics, LLM-as-judge, human eval, regression-gating in CI, and production evals + the data flywheel.
+- **[6. Responsible & Safe AI →](/docs/safety)** — Threat modeling, prompt injection & jailbreak defense, guardrails, hallucination control, bias & fairness, privacy, red-teaming, and 2026 governance (EU AI Act, NIST AI RMF).
 
-### Workflows at every scale
-Solo indie builder, 20-person AI-first startup, and 2,000-engineer enterprise — three radically different ways to ship the same kind of AI feature.
+### Part D · Specializations
+Change the model's behavior, and build beyond text.
 
-→ Free-tier solo stack · Startup eval + obs stack · Enterprise governance + private cloud · How a feature ships at each scale
+- **[7. Fine-tuning & Customization →](/docs/fine-tuning)** — When fine-tuning beats prompting/RAG, dataset prep, SFT, LoRA/QLoRA, preference tuning (RLHF/DPO), distillation, and serving fine-tunes.
+- **[8. Multimodal & Voice AI →](/docs/multimodal)** — Building with vision, image generation, audio/speech, realtime voice agents, video, and multimodal retrieval — and how to evaluate non-text outputs.
 
-[Read Solo →](/docs/solo) · [Startup →](/docs/startup) · [Enterprise →](/docs/enterprise)
+### Part E · Workflows by scale
+The same kind of AI feature, shipped three radically different ways.
 
-### The lifecycle and the patterns
-What does an AI project actually look like, from "idea" to "shipped and measured"? And what patterns recur in every production LLM app?
+- **[9. Solo / Indie →](/docs/solo)** · **[10. Startup AI Team →](/docs/startup)** · **[11. Enterprise AI →](/docs/enterprise)** — Free-tier solo stack, startup eval + obs stack, enterprise governance + private cloud, and how a feature actually ships at each scale.
+- **[12. Comparison →](/docs/comparison)** — The three workflows side by side: stack, process, economics, and the tradeoffs.
 
-→ Problem framing · Eval design · Streaming UX · Tool calling · Agent loops · Cost and latency control · Safety
+### Part F · Judgment & patterns
+How to decide, and what recurs in every production LLM app.
 
-[Read Lifecycle →](/docs/lifecycle) · [Read Production Patterns →](/docs/patterns)
+- **[13. Decisions →](/docs/decisions)** — The recurring "should we…" debates with concrete rules: prompt vs RAG vs fine-tune · single agent vs chain vs multi-agent · closed vs open model · build vs buy · when *not* to use AI.
+- **[14. Production Patterns →](/docs/patterns)** — The patterns that recur in every shipped app: streaming UX, structured output, tool use, RAG in production, cost control, LLMOps, safety, and fallbacks.
 
-### Decision frameworks
-The recurring "should we…" debates in AI engineering, with concrete decision rules.
+### Part G · Career & reference
+Grow as an AI engineer, study shipped systems, and look things up.
 
-→ Prompt vs RAG vs fine-tune · Single agent vs chain vs multi-agent · Closed vs open model · Build vs buy · When *not* to use AI
-
-[Read Decisions →](/docs/decisions)
-
-### Career
-What an AI engineer actually does in 2026, the specializations, and how to position yourself.
-
-→ AI engineer vs ML engineer vs research engineer · Portfolio anatomy · Specialization tracks · Compensation context
-
-[Read Career →](/docs/career)
+- **[15. Career →](/docs/career)** — What an AI engineer actually does in 2026: AI engineer vs ML engineer vs research engineer, portfolio anatomy, specialization tracks, compensation context.
+- **[16. Case Studies →](/docs/case-studies)** — Eight shipped 2026 architectures reconstructed from public sources — Cursor, Claude Code, Perplexity, Sierra, Harvey, Glean, Notion AI, Duolingo Max — what's durable vs. what's a snapshot.
+- **[17. Glossary →](/docs/glossary)** — Every term in the guide, defined in plain English.
 
 ---
 
@@ -85,6 +86,12 @@ What an AI engineer actually does in 2026, the specializations, and how to posit
 - **Cost estimates** are in US dollars and assume small/mid-scale usage unless specified.
 - **"In 2026"** indicates current-state context — these things change.
 - **Pitfalls and gotchas** are flagged explicitly. Most of the value of experience is knowing what *not* to do.
+
+## Does this guide send you elsewhere to learn?
+
+**No.** Each page teaches its topic in full, right here. The cross-links you'll see — the "→ Next" at the foot of every page, and the inline "see [X]" pointers — are *internal*: they move you around this guide, not off it. External links appear only for two things: tools you need to install, and optional further reading you can safely skip. The learning path is self-contained from "what is a token?" to the case studies.
+
+Where a concept reduces to a small piece of code — cosine similarity, chunking, greedy decoding — you'll find a **runnable challenge** right on the page: write the function, click *Run*, and it's auto-checked in your browser. No setup, no account, nothing to install.
 
 ## A note on bias
 

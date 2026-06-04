@@ -1,6 +1,6 @@
 {
-  "label": "5. Solo / Indie",
-  "position": 6,
+  "label": "9. Solo / Indie",
+  "position": 9,
   "collapsible": true,
   "collapsed": true,
   "link": { "type": "doc", "id": "indie-ai-workflow" }

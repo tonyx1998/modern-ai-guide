@@ -1,18 +1,18 @@
 ---
 id: solo-ai-checkpoint
-title: Chapter 5 Checkpoint
+title: Chapter 9 Checkpoint
 sidebar_position: 99
 sidebar_label: ✅ Checkpoint quiz
-description: Mandatory checkpoint quiz for Chapter 5 — Solo / Indie AI. 5 random questions drawn from a 14-question bank. Pass to unlock Chapter 6.
+description: Mandatory checkpoint quiz for Chapter 9 — Solo / Indie AI. 5 random questions drawn from a 14-question bank. Pass to unlock Chapter 10.
 ---
 
-# Chapter 5 Checkpoint
+# Chapter 9 Checkpoint
 
 You've finished the Solo / Indie AI chapter. Take a minute to make sure the core ideas stuck.
 
 There are **14 questions in the bank** — each visit picks 5 at random, so retaking gives you different ones. If you miss one, the result card tells you exactly which page section to revisit, and the link highlights the paragraph for you.
 
-You must pass (≥ 60%) to unlock the Next button and Chapter 6 in the sidebar.
+You must pass (≥ 60%) to unlock the Next button and Chapter 10 in the sidebar.
 
 <Quiz id="solo-checkpoint" title="Solo AI workflow checkpoint" sampleSize={5}>
 
@@ -204,4 +204,4 @@ You must pass (≥ 60%) to unlock the Next button and Chapter 6 in the sidebar.
 
 ## What's next
 
-→ Continue to [Chapter 6: Startup AI Team](/docs/startup) where the same workflow scales to a team of 3–10, with the trade-offs that come with not being alone.
+→ Continue to [Chapter 10: Startup AI Team](/docs/startup) where the same workflow scales to a team of 3–10, with the trade-offs that come with not being alone.

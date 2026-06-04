@@ -1,0 +1,164 @@
+.challenge {
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 10px;
+  padding: 1rem 1.1rem 1.1rem;
+  margin: 1.5rem 0;
+  background: var(--ifm-background-surface-color);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--ifm-color-primary);
+}
+
+.solvedBadge {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--ifm-color-success-darkest, #1a7f37);
+  background: var(--ifm-color-success-contrast-background, #e6f4ea);
+  border-radius: 999px;
+  padding: 0.1rem 0.6rem;
+}
+
+.prompt {
+  margin: 0 0 0.75rem;
+  font-size: 0.98rem;
+}
+
+.editor {
+  width: 100%;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  tab-size: 2;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 8px;
+  background: var(--ifm-pre-background, #1e1e1e);
+  color: var(--ifm-font-color-base);
+  resize: vertical;
+  white-space: pre;
+  overflow-wrap: normal;
+  overflow-x: auto;
+}
+
+.editor:focus {
+  outline: 2px solid var(--ifm-color-primary);
+  outline-offset: 1px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.run {
+  font-weight: 600;
+  color: #fff;
+  background: var(--ifm-color-primary);
+  border: none;
+  border-radius: 6px;
+  padding: 0.4rem 1rem;
+  cursor: pointer;
+}
+.run:hover {
+  background: var(--ifm-color-primary-dark);
+}
+.run:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.secondary {
+  font-weight: 500;
+  color: var(--ifm-font-color-base);
+  background: transparent;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 6px;
+  padding: 0.4rem 0.85rem;
+  cursor: pointer;
+}
+.secondary:hover {
+  background: var(--ifm-color-emphasis-100);
+}
+
+.hint {
+  margin-top: 0.75rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 6px;
+  background: var(--ifm-color-info-contrast-background, #eef6fb);
+  border-left: 3px solid var(--ifm-color-info, #4cb3d4);
+  font-size: 0.9rem;
+}
+
+.error {
+  margin-top: 0.75rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 6px;
+  background: var(--ifm-color-danger-contrast-background, #fdecea);
+  border-left: 3px solid var(--ifm-color-danger, #e5534b);
+  font-size: 0.88rem;
+  font-family: var(--ifm-font-family-monospace);
+}
+
+.resultPass,
+.resultFail {
+  margin-top: 0.75rem;
+  padding: 0.7rem 0.85rem;
+  border-radius: 8px;
+}
+.resultPass {
+  background: var(--ifm-color-success-contrast-background, #e6f4ea);
+  border: 1px solid var(--ifm-color-success, #2a8f4e);
+}
+.resultFail {
+  background: var(--ifm-color-warning-contrast-background, #fff8e6);
+  border: 1px solid var(--ifm-color-warning, #e6a700);
+}
+
+.resultHead {
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+.testList {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+  font-size: 0.85rem;
+}
+.testList li {
+  padding: 0.15rem 0;
+}
+.testList code {
+  font-size: 0.82rem;
+}
+.testPass {
+  color: var(--ifm-color-success-darkest, #1a7f37);
+}
+.testFail {
+  color: var(--ifm-color-emphasis-800);
+}
+.testIcon {
+  font-weight: 800;
+}
+.testWhy {
+  color: var(--ifm-color-emphasis-700);
+}
+
+.solution {
+  margin-top: 0.75rem;
+}

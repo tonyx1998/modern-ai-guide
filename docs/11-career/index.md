@@ -1,12 +1,12 @@
 ---
 id: career-path
-title: 11. Career — Overview
+title: 15. Career — Overview
 sidebar_position: 1
 sidebar_label: Career intro
 description: What an AI engineer actually does in 2026 — roles, skills, specializations, comp, market, and how to grow into the job.
 ---
 
-# Part 11: Career
+# Part 15: Career
 
 *The AI Engineer role in 2026 — what it is, how it differs from adjacent roles, and how to grow into it.*
 
@@ -76,7 +76,7 @@ Each page focuses on **one topic** with worked examples and specific named refer
 ### Finding work, and a checkpoint
 
 12. [Where to find work](./13-jobs.md) — Companies, communities, the indie path.
-13. [Chapter 11 Checkpoint](./99-checkpoint.md) — Self-test for career readiness.
+13. [Chapter 15 Checkpoint](./99-checkpoint.md) — Self-test for career readiness.
 
 ---
 

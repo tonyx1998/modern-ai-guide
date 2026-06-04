@@ -284,7 +284,7 @@ The Vercel AI SDK abstracts provider differences — same `streamText` call, dif
 ## Deeper in this guide
 
 - [Foundations: Streaming](/docs/foundations/streaming) — SSE vs WebSocket vs HTTP/2, when each makes sense.
-- [Patterns: Streaming UX](/docs/patterns/streaming-ux) — the production tricks (resumability, partial JSON, etc.).
+- [Patterns: Streaming UX](/docs/patterns/pattern-streaming-ux) — the production tricks (resumability, partial JSON, etc.).
 - [Stack: LLM SDKs](/docs/stack/llm-sdks) — Vercel AI SDK vs raw provider SDK vs LiteLLM.
 
 ## Project

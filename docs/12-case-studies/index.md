@@ -1,16 +1,16 @@
 ---
 id: case-studies-overview
-title: 12. Case Studies — Overview
+title: 16. Case Studies — Overview
 sidebar_position: 1
 sidebar_label: Case studies intro
 description: Architectures of eight shipped 2026 AI products — Cursor, Claude Code, Perplexity, Sierra, Harvey, Glean, Notion AI, Duolingo Max — reconstructed from public sources.
 ---
 
-# Part 12: Case Studies
+# Part 16: Case Studies
 
 *Eight production AI architectures, reconstructed from public engineering blogs, conference talks, and podcast interviews.*
 
-> **In one line:** The patterns in chapters 1–10 tell you what primitives exist; this chapter shows you how shipped products in 2026 *combine* those primitives into specific architectures — what's durable, what's a snapshot, and what you'd copy vs. avoid.
+> **In one line:** The earlier chapters tell you what primitives exist; this chapter shows you how shipped products in 2026 *combine* those primitives into specific architectures — what's durable, what's a snapshot, and what you'd copy vs. avoid.
 
 :::tip[In plain English]
 Reading about primitives in isolation tells you what's possible; reading how real products combine them tells you what's *practical*. This chapter is eight worked architectures of shipped AI products — four developer-tooling, two enterprise-vertical, one productivity, one consumer. The shape of each (high-level architecture, key engineering decisions) is durable across model changes; the specific tools each uses (which model, which vector DB) are 2026 snapshots and will rot. Read the shapes, not the brand names.
@@ -88,3 +88,7 @@ When you read these case studies, the architecture diagrams are the load-bearing
 ---
 
 → Start with [Cursor](./cursor.md).
+
+## What's next
+
+This is the last content chapter. When you've worked through the case studies that interest you, the [Glossary](/docs/glossary) is your standing reference for any term in the guide — and you're ready to go build. Re-read the [Introduction](/) and notice how much more of it lands now.

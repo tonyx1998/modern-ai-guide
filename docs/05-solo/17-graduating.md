@@ -149,4 +149,4 @@ Self-check:
 
 ## What's next
 
-→ Continue to [Chapter 5 Checkpoint](./18-checkpoint.md) to self-test the whole chapter before moving to startup-scale AI in [Chapter 6](/docs/startup).
+→ Continue to [Chapter 9 Checkpoint](./18-checkpoint.md) to self-test the whole chapter before moving to startup-scale AI in [Chapter 10](/docs/startup).

@@ -1,12 +1,12 @@
 ---
 id: career-checkpoint
-title: Chapter 11 Checkpoint
+title: Chapter 15 Checkpoint
 sidebar_position: 99
 sidebar_label: ✅ Checkpoint quiz
-description: Mandatory checkpoint quiz for Chapter 11 — AI Engineering Career. 5 random questions drawn from a 14-question bank.
+description: Mandatory checkpoint quiz for Chapter 15 — AI Engineering Career. 5 random questions drawn from a 14-question bank.
 ---
 
-# Chapter 11 Checkpoint
+# Chapter 15 Checkpoint
 
 You've finished the Career chapter — and the whole AI-engineering guide. Make sure the practical career advice stuck.
 
@@ -202,10 +202,10 @@ This is the last chapter — passing this quiz doesn't unlock anything more, but
 
 ---
 
-## Next: shipped architectures
+## What's next
 
-→ Read the [Case Studies](/docs/case-studies-overview) chapter — eight worked architectures (Cursor, Claude Code, Perplexity, Sierra, Harvey, Glean, Notion AI, Duolingo Max) reconstructed from public sources.
+→ Continue to [Chapter 16: Case Studies](/docs/case-studies) — eight worked architectures (Cursor, Claude Code, Perplexity, Sierra, Harvey, Glean, Notion AI, Duolingo Max) reconstructed from public sources. After all the theory, this is what shipped systems actually look like.
 
-→ Or look back at the [Introduction](/) and notice how much more those tabs make sense now. Then pick a project from your portfolio idea list and ship it — with an eval suite.
+→ Then pick a project from your portfolio idea list and ship it — with an eval suite. Re-read the [Introduction](/) and notice how much more of it lands now.
 
-→ The [Glossary](/docs/glossary) is always available as a reference for terms you encounter in the wild.
+→ The [Glossary](/docs/glossary) is always there as a reference for terms you meet in the wild.

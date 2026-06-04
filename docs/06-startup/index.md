@@ -1,12 +1,12 @@
 ---
 id: startup-ai-workflow
-title: 6. Startup AI Team — Overview
+title: 10. Startup AI Team — Overview
 sidebar_position: 1
 sidebar_label: Startup intro
 description: 5–50 person AI-first startups. Real customers, real evals, real bills. Managed everything, eval-driven iteration, AI as a product surface.
 ---
 
-# Part 6: The Startup AI Team Workflow (5–50 People)
+# Part 10: The Startup AI Team Workflow (5–50 People)
 
 *For AI-first startups shipping LLM-powered product to paying customers.*
 
@@ -63,10 +63,10 @@ The pages are short, opinionated, and full of real tool names. The whole AI ecos
 15. [Day in the Life](./15-day-in-life.md) — A worked day for the AI engineer.
 16. [Common Pitfalls](./16-pitfalls.md) — Launching without evals, agent runaway, fine-tuning too early.
 17. [Outgrowing the Stack](./17-outgrowing.md) — Signals you've outgrown startup and need enterprise governance.
-18. [Chapter 6 Checkpoint](./18-checkpoint.md) — Self-test before moving on.
+18. [Chapter 10 Checkpoint](./18-checkpoint.md) — Self-test before moving on.
 
 ---
 
 → Start with [The Startup AI Mindset](./01-mindset.md).
 
-When you finish all 18 pages, move on to [Chapter 7: Enterprise AI](/docs/enterprise).
+When you finish all 18 pages, move on to [Chapter 11: Enterprise AI](/docs/enterprise).

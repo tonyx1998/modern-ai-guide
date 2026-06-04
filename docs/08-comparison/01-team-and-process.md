@@ -33,7 +33,7 @@ The trick is matching the number of nods to the actual blast radius of being wro
 
 The biggest cultural break is again between **startup** and **enterprise**. A startup AI team is generalists who ship end-to-end: the same person writes the prompt, builds the retrieval, wires the eval, and watches the dashboard. An enterprise splits those into specialized teams that have to coordinate via tickets.
 
-For each column in depth, see [Chapter 5: Solo](/docs/indie-ai-workflow), [Chapter 6: Startup](/docs/startup-ai), and [Chapter 7: Enterprise](/docs/enterprise-ai).
+For each column in depth, see [Chapter 9: Solo](/docs/solo), [Chapter 10: Startup](/docs/startup), and [Chapter 11: Enterprise](/docs/enterprise).
 
 ## Decision style
 

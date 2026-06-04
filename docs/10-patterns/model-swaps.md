@@ -195,4 +195,4 @@ The model-swap discipline is what makes AI features feel reliable to users over 
 
 ---
 
-→ Next: [Complete worked example](./13-complete-example.md)
+→ Next: [LLMOps — the production operations loop](./llmops-loop.md)
