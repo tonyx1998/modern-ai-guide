@@ -13,6 +13,10 @@ description: Build your own agent runtime vs use Cognition / Crew / Sierra / Sup
 The agent-platform pitch sounds great: state management, durability, retries, observability, human-in-the-loop, audit logs. In reality, your first agent doesn't need any of that — it needs to work. You'll know you need a platform when you're hand-rolling all of those features and they're starting to dominate your code. Until then, a raw SDK loop with a job runner is enough.
 :::
 
+:::note[New to agents?]
+If "raw agent loop" isn't yet concrete, read Foundations first — [the agent loop](/docs/foundations/agent-loop) and [multi-agent systems](/docs/foundations/multi-agent) — then come back for the build-vs-buy call.
+:::
+
 ## What an "agent platform" actually gives you
 
 Platforms like Sierra (customer support), Cognition (Devin / coding), Crew (multi-agent orchestration), and SuperAGI offer some combination of:

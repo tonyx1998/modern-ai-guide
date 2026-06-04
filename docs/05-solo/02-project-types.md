@@ -14,6 +14,10 @@ description: Four shapes of solo AI project that consistently finish — single-
 Most "AI startup ideas" are about the size of a small company. As a solo builder, you're slicing one of those ideas into the *thinnest possible version* that's still useful — usually one prompt doing one thing. The four shapes below are the ones that consistently finish and find users.
 :::
 
+:::tip[Going deeper on the building blocks]
+Two of these shapes lean on patterns taught in full elsewhere. For **niche RAG**, see [RAG basics](/docs/foundations/rag-basics) (Foundations) and [RAG in production](/docs/patterns/pattern-rag-prod) (Patterns). For **narrow agents**, see [the agent loop](/docs/foundations/agent-loop) (Foundations) and [the agent loop with guardrails](/docs/patterns/pattern-agent-loop) (Patterns). This page is about *what to build*; those teach *how*.
+:::
+
 ## The four shapes that work
 
 ### Shape 1: The single-prompt tool
