@@ -1,0 +1,12 @@
+---
+description: Docusaurus guide conventions
+globs: "docs/**/*.{md,mdx}"
+alwaysApply: false
+---
+
+# Docusaurus guides
+
+- Follow `GUIDE-STANDARD.md` for content structure and pedagogy.
+- Keep lessons linear and self-contained — no "you should already know X."
+- Do not break doc IDs or sidebar paths without updating cross-links.
+- Use `make dev` (npm start) to preview doc changes.

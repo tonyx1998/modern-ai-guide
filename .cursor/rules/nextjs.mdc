@@ -1,0 +1,12 @@
+---
+description: Next.js App Router conventions
+globs: "**/*.{ts,tsx,js,jsx}"
+alwaysApply: false
+---
+
+# Next.js
+
+- Read `AGENTS.md` if present — this repo may use a newer Next.js than your training data.
+- Prefer App Router patterns already used in the repo.
+- Keep server-only secrets in server components, route handlers, or server actions — never in client bundles.
+- Run `make dev` or `npm run dev` to verify locally when UI or routing changes.
