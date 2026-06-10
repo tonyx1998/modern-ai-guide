@@ -9,6 +9,10 @@ description: Voice + chat agent for B2B customer support. The escalation discipl
 
 > **In one line:** Sierra builds AI customer-support agents that handle voice and chat for enterprise customers — and the engineering interesting bits are how they blend realtime voice with pipeline-style control, how they encode per-customer business rules without fine-tuning, and how they enforce *what the agent is not allowed to say*.
 
+:::tip[In plain English]
+Sierra builds AI agents that answer customer-service calls and chats for big brands — the AI checks order systems, follows the company's rules, and hands off to a human when it gets stuck. The clever part is that each company's business rules live in a structured policy engine the agent must consult, not in the prompt, so the LLM never gets to decide on its own whether a refund is allowed. Study this page because it's the reference design for putting an agent in front of real customers without letting it improvise on things that matter.
+:::
+
 ## The product
 
 A platform for deploying AI agents that handle customer conversations at scale. Used by ADT, SiriusXM, WeightWatchers, Casper, OluKai, and a growing roster of enterprise brands.
@@ -111,6 +115,13 @@ After deployment, sampled real conversations are reviewed (LLM-as-judge + human 
 - **Treating voice as just "text with a TTS wrapper."** Interruption, latency, turn-taking are first-class concerns.
 - **"The AI handled it" without graceful escalation.** Unhappy customers escalated badly is worse than unhappy customers escalated cleanly.
 
+:::caution[What people get wrong when copying this]
+- **Stuffing business rules into the system prompt because it works for the first ten rules.** The architecture's whole point is that enforcement lives in a deterministic policy layer the agent consults — prompts don't scale past ~50 rules and don't pass audits.
+- **Treating escalation as a failure path to minimize.** Clean handoff with a structured summary is the feature enterprises actually buy; optimizing for "deflection rate" alone produces stranded customers.
+- **Copying the voice stack as pure realtime or pure pipeline.** The blend exists because each alone fails enterprise requirements — pure realtime lacks control, pure pipeline is too slow.
+- **Launching new customers without a customer-specific eval suite**, on the theory that the agent "already works" for existing ones. Each customer's policies and corner cases are a new regression surface.
+:::
+
 :::tip[→ Going deeper]
 Sierra's voice loop is the production face of [Chapter 8: Multimodal & Voice AI](/docs/multimodal) — see [voice](/docs/multimodal/mm-voice) for the latency budgets and turn-taking that make this work. Its per-customer eval gate is [Chapter 5: Evaluation & Measurement](/docs/evaluation) applied as a deployment control.
 :::
@@ -121,6 +132,46 @@ Sierra's voice loop is the production face of [Chapter 8: Multimodal & Voice AI]
 - Sierra engineering blog posts on agent design and policy enforcement.
 - Public discussions about deployment process and per-customer customization.
 - AI Engineer Summit talks (2024–2026) on voice agent architecture.
+
+<Quiz id="case-sierra-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="How does Sierra enforce a customer's thousands of business rules, like refund policies, on its agents?"
+  options={[
+    { text: "Each customer's rules are written into the system prompt and refreshed weekly" },
+    { text: "A custom model is fine-tuned on each customer's policy documents" },
+    { text: "Human reviewers approve every agent action that involves money" },
+    { text: "The agent consults a structured policy engine via tool calls, which returns deterministic allowed-or-not answers it must follow" }
+  ]}
+  correct={3}
+  explanation="The LLM is the natural-language interface, but the policy engine is the boundary. Cramming thousands of rules into a prompt is unreliable and unauditable; teaching the agent to consult a deterministic policy layer is the 'don't let the LLM be the policy enforcer' pattern at scale."
+/>
+
+<Question
+  prompt="Why does Sierra's voice architecture blend a realtime LLM with a pipeline LLM instead of using only one approach?"
+  options={[
+    { text: "Pure realtime lacks the control enterprises need, while a pure STT-to-LLM-to-TTS pipeline is too slow - the blend covers conversation flow and careful thinking separately" },
+    { text: "Realtime models cannot make tool calls at all" },
+    { text: "Telephony providers require two separate model endpoints" },
+    { text: "The pipeline model exists only as a backup when the realtime model is down" }
+  ]}
+  correct={0}
+  explanation="The realtime model handles turn-taking, interruption, and natural prosody, while the pipeline model runs the deliberate steps - policy checks, order lookups, escalation decisions - even saying 'let me check that for you' while the tool call runs. Neither approach alone satisfies both latency and control."
+/>
+
+<Question
+  prompt="What role does escalation to a human play in Sierra's design?"
+  options={[
+    { text: "It is a temporary measure until agents can handle 100 percent of cases" },
+    { text: "It is a first-class outcome - the agent detects out-of-scope queries or frustration and hands off with a structured summary of the conversation" },
+    { text: "It only triggers when the LLM provider has an outage" },
+    { text: "It is discouraged because each escalation costs the customer money" }
+  ]}
+  correct={1}
+  explanation="Customers buy because the agent handles most cases well and escalates the rest cleanly - never leaving a customer stranded. Designing the failure path as a feature, with structured handoff context, is the durable lesson for any customer-facing agent."
+/>
+
+</Quiz>
 
 ---
 

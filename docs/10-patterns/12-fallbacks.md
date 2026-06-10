@@ -219,6 +219,46 @@ The teams who get fallbacks right don't think of them as "what we do when the mo
 Specifically: write the non-AI version *first*. Ship it. Add the AI version as an upgrade. The non-AI version is then *automatically* your bottom rung when AI breaks — already tested, already live, already understood. The product never falls below it.
 :::
 
+<Quiz id="pattern-fallbacks-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the shape of the fallback ladder this page describes?"
+  options={[
+    { text: "Retry the primary model with exponential backoff until it answers" },
+    { text: "Primary model, then secondary or smaller model, then cached response, then non-AI path, then an honest 'temporarily unavailable'" },
+    { text: "Route all failures to a human support queue immediately" },
+    { text: "Cache every response so the model is never needed twice" }
+  ]}
+  correct={1}
+  explanation="Each rung is faster, cheaper, and worse than the one above — but always better than a spinner or a 500, and the transitions run automatically. Pure retry is the tempting wrong answer: it does nothing for a sustained provider outage and can create retry storms, which the page warns need jitter, circuit breakers, and a retry budget."
+/>
+
+<Question
+  prompt="When should the tier cascade NOT fall through to the next model?"
+  options={[
+    { text: "When the error is a 429 rate limit" },
+    { text: "When the error is a 503 from the provider" },
+    { text: "When latency exceeds the timeout" },
+    { text: "When the error is non-transient, like a 400 schema mismatch or content-policy refusal" }
+  ]}
+  correct={3}
+  explanation="A 400 will fail on every tier, so cycling through providers just burns money and latency — classify the error before retrying. The transient cases (429, 503, timeouts) are exactly what the cascade is for, which is why they are the plausible-but-wrong options here."
+/>
+
+<Question
+  prompt="Why must a cached answer served during an outage carry a 'stale' badge?"
+  options={[
+    { text: "An answer rendered as if it were live is worse than no answer — honesty preserves user trust" },
+    { text: "The badge improves cache hit rates" },
+    { text: "Providers require attribution for cached responses" },
+    { text: "Stale badges reduce token costs on the next request" }
+  ]}
+  correct={0}
+  explanation="The page calls silent staleness out as a failure mode: the cached rung is honest about what it is ('answers may be slightly out of date'), which is much better than nothing and much better than pretending. The other options dress up plausible-sounding mechanics, but the badge exists purely for user honesty, not for performance or cost."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [The LLM debugging playbook](./debugging-playbook.md).

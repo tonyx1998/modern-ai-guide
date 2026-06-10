@@ -187,6 +187,46 @@ The whole thing was caught by the drift alert ~10 days before users would have n
 - [ ] On-call rotation defined; runbooks exist for the top 5 alert types.
 - [ ] Quarterly review scheduled to refresh thresholds and runbooks.
 
+<Quiz id="lifecycle-monitor-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="According to the page, why should you NOT alert on individual bad responses?"
+  options={[
+    { text: "Single bad outputs happen normally; the signal is the rate, and per-event alerts cause pager fatigue until real alerts get ignored" },
+    { text: "Individual responses are impossible to capture in structured logs" },
+    { text: "Provider terms prohibit storing single responses" },
+    { text: "Bad responses are almost always caused by user error" }
+  ]}
+  correct={0}
+  explanation="Individual bad responses happen — that is the nature of a stochastic system. The meaningful signal is the rate (thumbs-down rate, schema-failure rate, error rate sustained over a window). Alerting on single events trains the team to ignore the pager, which is exactly when a real regression slips through. Triage single complaints; alert on aggregates."
+/>
+
+<Question
+  prompt="Why does the page tell you to pin an explicit model version instead of an alias like 'claude-sonnet-latest'?"
+  options={[
+    { text: "Aliases cost more per token than pinned versions" },
+    { text: "Aliases are rate-limited more aggressively by providers" },
+    { text: "If the provider updates the alias, your system's behavior changes silently" },
+    { text: "Pinned versions get priority access during outages" }
+  ]}
+  correct={2}
+  explanation="Providers silently update models, and an alias means those updates flow straight into production with no deploy on your side — silent behavior shifts. Pin the dated version, re-run the eval suite weekly against the live model, and run a side-by-side bake-off before deliberately swapping. Cost and rate limits are not the issue; control is."
+/>
+
+<Question
+  prompt="In the Acme drift story, the prod-eval score fell from 0.84 to 0.78 with no errors, no cost spike, and no user complaints. What was the root cause?"
+  options={[
+    { text: "The provider silently upgraded the model behind an alias" },
+    { text: "A prompt change shipped without an eval run" },
+    { text: "A malicious user was prompt-injecting the bot" },
+    { text: "The embedding cron had been disabled, so the RAG index was missing docs for a newly shipped feature" }
+  ]}
+  correct={3}
+  explanation="A new 'automations' feature flooded support with tickets, but the doc-embedding cron had been disabled during maintenance and never re-enabled — so retrieval had nothing to offer. This is the silent quality regression the page warns about: nothing errors, nothing costs more, answers just get worse. The nightly prod-eval drift alert caught it roughly 10 days before users would have noticed."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Continuous improvement](./10-improve.md)

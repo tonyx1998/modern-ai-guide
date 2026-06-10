@@ -10,6 +10,10 @@ description: The foundational papers whose ideas keep recurring. How to triage t
 
 > **In one line:** Most AI papers don't matter for shipping AI. A short list of foundational ones gives you the conceptual vocabulary; the rest you skim only when they intersect a problem you're hitting.
 
+:::tip[In plain English]
+Here's a relieving secret: you can ship production AI for years without reading a single research paper. Most of the job is engineering — prompts, evals, retrieval, deployment — not research. But about ten foundational papers gave the field its shared vocabulary, and knowing them makes everything newer dramatically easier to skim. This page lists those ten, then shows you how to triage the endless rest in minutes instead of hours.
+:::
+
 ## 1. The honest claim
 
 You can ship production AI for years without reading a single research paper. Most AI engineering is engineering — prompts, evals, retrieval, observability, deployment. The papers are interesting but rarely actionable.
@@ -139,5 +143,45 @@ After two years you have:
 - **Skipping the foundational ten.** Reading newer papers without the foundations is reading a sequel you haven't read the original of.
 - **Reading to "look smart."** If the only audience for your reading is yourself-pretending-to-be-impressive, skip it. Read what you'll use.
 :::
+
+<Quiz id="papers-worth-reading-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="In the paper-triage method, what happens to roughly 90% of papers you encounter?"
+  options={[
+    { text: "You read them fully over a weekend" },
+    { text: "You bookmark them and move on after the title, abstract, and conclusion" },
+    { text: "You summarize them for your team" },
+    { text: "You reproduce their experiments before judging" }
+  ]}
+  correct={1}
+  explanation="The triage starts with a 5-minute read of title, abstract, and conclusion. If the claim doesn't address a problem you're working on, bookmark and move on - and that's the correct outcome 90% of the time."
+/>
+
+<Question
+  prompt="What does the page say about lab engineering blog posts compared to research papers?"
+  options={[
+    { text: "Blog posts are marketing and should be ignored" },
+    { text: "Papers are always the more practical resource" },
+    { text: "For practical engineering, lab blog posts are often higher signal than papers" },
+    { text: "They cover completely different topics with no overlap" }
+  ]}
+  correct={2}
+  explanation="Engineering posts tell you 'here's how to use this in your app'; papers tell you 'here's why this exists.' For shipping, the first is usually what you need."
+/>
+
+<Question
+  prompt="According to the page, which of these is a bad reason to read a paper?"
+  options={[
+    { text: "To stay current, when it doesn't address anything you're building" },
+    { text: "To understand a technique before testing it on your eval set" },
+    { text: "To learn the vocabulary the foundational papers established" },
+    { text: "To dig into a method you're about to adopt" }
+  ]}
+  correct={0}
+  explanation="Reading 'to stay current' without a connecting problem has negative ROI - the cost of context-switching into academic prose outweighs the benefit. Build first, read when a paper intersects your work."
+/>
+
+</Quiz>
 
 → Next: [Communities and conferences](./03-communities-and-conferences.md) — where production AI engineers actually congregate.

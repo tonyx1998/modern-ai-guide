@@ -233,6 +233,46 @@ flowchart LR
 - **Using a VLM where OCR is cheaper and more exact** — high-volume fixed forms, character-perfect fields, anything needing bounding-box provenance.
 :::
 
+<Quiz id="mm-vision-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Your invoice-extraction pipeline keeps hallucinating values from the fine print at the bottom of scanned documents. Based on how VLMs see, what is the likely root cause?"
+  options={[
+    { text: "The model's training data lacked invoices, so it guesses from context" },
+    { text: "The text is smaller than what a patch can resolve after downsampling — the model literally cannot read it, so it fills the gap; send dense documents at higher resolution (~1568-2048px)" },
+    { text: "The schema is too strict, forcing creative answers" },
+    { text: "Base64 encoding corrupts fine details in the image" }
+  ]}
+  correct={1}
+  explanation="The model never sees the raw file — it sees a downsampled, patchified version, and text below patch resolution is invisible to it. The training-data explanation is the tempting generic answer for any hallucination, but this failure has a mechanical cause with a mechanical fix: keep more pixels for dense documents (while still resizing photos aggressively)."
+/>
+
+<Question
+  prompt="Your extraction schema marks invoice_number as a required string, and the model keeps inventing plausible-looking numbers for documents that don't have one. Why?"
+  options={[
+    { text: "The model was trained to always produce invoice numbers" },
+    { text: "Temperature is too high; lowering it will stop the invention" },
+    { text: "Schema-constrained output is broken for vision inputs" },
+    { text: "A required field the model can't find forces a hallucination — allow null for genuinely-missing fields and tell the model to use it" }
+  ]}
+  correct={3}
+  explanation="Constrained decoding guarantees the shape, so if the schema demands a value, the model must produce one — found or not. Lowering temperature is the tempting knob since invention feels like randomness, but the schema leaves no abstention path at any temperature; the fix is making null a legal answer, plus a confidence/needs_review flag for routing."
+/>
+
+<Question
+  prompt="Your VLM extracts an invoice's line items and a total field. How should you handle the total, per this page?"
+  options={[
+    { text: "Compute the total from the extracted line items in code and compare it against the model's number — VLMs are excellent readers but mediocre arithmetic engines" },
+    { text: "Trust the model's total — it can see the printed total on the page" },
+    { text: "Ask the model to double-check its own arithmetic in a second call" },
+    { text: "Drop the total field entirely since it can't be verified" }
+  ]}
+  correct={0}
+  explanation="A cross-check in deterministic code catches both extraction errors and arithmetic slips: if the summed line items disagree with the read total, something is wrong and the document routes to review. 'It can see the printed total' is half-true — it might read it correctly, but you can't distinguish a correct read from a plausible guess without the independent computation."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Image generation](./03-image-generation.md)

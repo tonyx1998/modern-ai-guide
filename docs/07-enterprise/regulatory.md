@@ -10,6 +10,10 @@ description: EU AI Act, sector-specific rules (HIPAA, GLBA, NYDFS, SR 11-7, FDA 
 
 > **In one line:** In 2026 an enterprise AI team plans for the EU AI Act (enforcement ramping through 2025–2026), a stack of US sector-specific rules (HIPAA, GLBA, SR 11-7, FDA AI/ML), a growing patchwork of US state laws (NYC LL144, Colorado AI Act), and the NIST AI RMF as a de-facto contractual framework — and audit-readiness is a continuous operational state, not a launch event.
 
+:::tip[In plain English]
+Governments around the world now have rules about how companies can use AI, and the rules differ by industry and place. A bank, a hospital, and a hiring platform each face a different stack of laws, and a company serving EU users faces the strictest one of all — with fines that can reach 7% of worldwide revenue. The good news: if your engineering habits are sound (testing, record-keeping, human review), most of the paperwork these laws demand falls out of work you are already doing. This page maps which rules apply to whom and what each one asks for.
+:::
+
 :::tip[Where this fits]
 The [Security & Compliance page](./12-security-compliance.md) covered the regimes and the artifacts they want. This page is the deeper read on the regimes themselves: what each one requires, who it affects, what the realistic 2026 enforcement posture looks like, and how enterprise AI teams operationalize compliance into their day-to-day work.
 :::
@@ -146,6 +150,46 @@ This shapes vendor evaluation: a vendor that gives you good documentation, evalu
 - **Underestimating EU AI Act technical documentation work.** The package per High-risk system is substantial. Start the artifact pipeline at the beginning of the feature lifecycle, not the end.
 - **No documented human-oversight design.** "There's a human in the loop somewhere" isn't a design. The human-oversight design has to be specific: who, with what UI, with what training, with what override authority.
 :::
+
+<Quiz id="enterprise-regulatory-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the maximum penalty under the EU AI Act for prohibited-use violations?"
+  options={[
+    { text: "A fixed fine of 1 million euros" },
+    { text: "Up to 3% of EU-only revenue" },
+    { text: "Suspension of the company's AI licenses" },
+    { text: "Up to 7% of global annual revenue" }
+  ]}
+  correct={3}
+  explanation="Prohibited-use violations carry penalties up to 7% of global annual revenue, with 3% for other violations — and it is global revenue, not EU-only, which is what makes the exposure board-level. The 3% figure is the tempting near-miss; it applies to the lesser violation category."
+/>
+
+<Question
+  prompt="When an enterprise deploys a vendor's model in an EU AI Act High-risk use, who carries most of the High-risk obligations?"
+  options={[
+    { text: "The model vendor, as the provider" },
+    { text: "The enterprise, as the deployer" },
+    { text: "The EU AI Office directly" },
+    { text: "Whichever party the contract assigns them to" }
+  ]}
+  correct={1}
+  explanation="The conformity assessment, the use-specific technical documentation, the human-oversight design, and the post-market monitoring all fall on the deployer — you. The vendor's model card and documentation are inputs to your work, not substitutes for it. 'The vendor handles it' is the common surprise the page warns about, and contracts cannot simply reassign statutory obligations."
+/>
+
+<Question
+  prompt="Why can't a company ignore the EU AI Act just because it does not sell into the EU?"
+  options={[
+    { text: "The Act has extraterritorial reach — if EU users can reach your AI, you are in scope" },
+    { text: "US regulators enforce the EU AI Act domestically" },
+    { text: "It only applies to companies headquartered in Europe" },
+    { text: "Ignoring it voids SOC 2 certification" }
+  ]}
+  correct={0}
+  explanation="Scope follows the users, not your sales territory: if any EU user can use your AI feature, you are in scope. The headquarters answer is the intuitive misreading — and the page lists 'we don't sell into the EU' as a common mistake precisely because teams use it to skip readiness work they actually need."
+/>
+
+</Quiz>
 
 ## What's next
 

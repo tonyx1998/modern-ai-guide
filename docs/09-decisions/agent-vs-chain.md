@@ -98,6 +98,46 @@ They rebuild it as a 4-step chain: query rewrite → web search → read top 5 �
 The "agent" was solving a fixed-shape problem. The chain solved it 10x cheaper, 7x faster, and 4x more reliably. Multi-agent didn't add value — it added cost and unreliability.
 :::
 
+<Quiz id="agent-vs-chain-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the 2026 default architecture for an AI feature?"
+  options={[
+    { text: "Multi-agent, since hard problems need multiple specialists" },
+    { text: "Single agent, since flexibility is king" },
+    { text: "Whatever the chosen framework supports best" },
+    { text: "Chain by default; promote to single agent on evidence; multi-agent rarely" }
+  ]}
+  correct={3}
+  explanation="Chains are predictable, debuggable, and cheap to evaluate — a chain in production is worth ten agents in a demo. Agents have an exploding state space where one bad LLM decision can blow up the workflow, so you escalate only with proof the simpler shape isn't enough."
+/>
+
+<Question
+  prompt="When is a single agent justified over a chain?"
+  options={[
+    { text: "When the architecture should feel sophisticated" },
+    { text: "When the needed actions vary meaningfully per request and you can give the model 3-10 well-described tools" },
+    { text: "When you can supply the agent with 50 tools" },
+    { text: "When the first version of the chain had bugs" }
+  ]}
+  correct={1}
+  explanation="The agent's dynamic decisions must be worth more than the chain's predictability, and you must afford the harder multi-turn eval surface. A 30-tool agent is called a 30-tool nightmare, and 'sophisticated-feeling' architecture is named the most expensive vanity in AI engineering."
+/>
+
+<Question
+  prompt="In the worked example, what happened when the 5-agent research system was rebuilt as a 4-step chain?"
+  options={[
+    { text: "Cost dropped to $0.30, latency to 12 seconds, and the failure rate fell from 25% to 6%" },
+    { text: "Quality collapsed because agents were essential" },
+    { text: "Nothing changed measurably" },
+    { text: "It became more expensive but more reliable" }
+  ]}
+  correct={0}
+  explanation="The task had a fixed shape — query rewrite, search, read, summarize — so the multi-agent setup was adding cost and unreliability, not capability. The chain solved it roughly 10x cheaper, 7x faster, and 4x more reliably, and every step became individually testable."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Closed vs open](./closed-vs-open.md).

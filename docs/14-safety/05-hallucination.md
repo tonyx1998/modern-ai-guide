@@ -161,6 +161,46 @@ Each gate is a chance to *not* show a confident lie. Tune how many gates you enf
 - **Evaluating only on questions that have answers.** Add fixtures with *no* answer in the context and assert the model abstains — that's the test most teams skip. (See [safety evals](./08-red-teaming.md).)
 :::
 
+<Quiz id="safety-hallucination-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Why does a language model produce a confident wrong answer instead of saying 'I don't know', according to this page's first-principles explanation?"
+  options={[
+    { text: "Providers fine-tune models to never admit uncertainty for product reasons" },
+    { text: "It optimizes for plausible-sounding completions and has no internal flag separating 'I know this' from 'I'm pattern-matching'" },
+    { text: "Its training data contained no examples of people saying 'I don't know'" },
+    { text: "Hallucination only happens when the context window overflows" }
+  ]}
+  correct={1}
+  explanation="Confabulation is the default behavior of next-token prediction: a fluent guess often sounds more 'likely' than an admission of ignorance, and nothing in the architecture marks interpolated facts as guesses. The provider-conspiracy answer is tempting because RLHF can indeed reward confident answers — but the root cause is structural, which is why it can be reduced, not patched out."
+/>
+
+<Question
+  prompt="Your RAG bot answers strictly from a retrieved policy document and passes every faithfulness check — but the document is two years out of date and the policy changed. What does this page call this situation?"
+  options={[
+    { text: "Faithful but not true — faithfulness means matching the source, truth means matching the world, and you must defend both" },
+    { text: "A hallucination, since the answer is wrong" },
+    { text: "A grounding failure, since retrieval returned the wrong chunk" },
+    { text: "An acceptable outcome, since the pipeline worked as designed" }
+  ]}
+  correct={0}
+  explanation="Faithfulness and factuality are distinct: you can be faithful to a wrong source or unfaithful to a right one. Calling it 'hallucination' is the tempting label since the user got a falsehood, but the model invented nothing — the fix is keeping sources current and authoritative, not adding more faithfulness checks."
+/>
+
+<Question
+  prompt="You want to gate answers on confidence, and the model writes 'I am 95% confident' when asked. How should you treat that number?"
+  options={[
+    { text: "Use it as the gate — verbalized confidence is the most direct measurement available" },
+    { text: "Show it to users so they can calibrate their own trust" },
+    { text: "Treat it as generated text, not a measurement — prefer signals like self-consistency across samples, token logprobs, and retrieval scores" },
+    { text: "Average it with the temperature setting to get a calibrated score" }
+  ]}
+  correct={2}
+  explanation="A model's stated confidence is itself often a confabulation — LLMs are poorly calibrated, so '95%' is just plausible-sounding text. Verbalized confidence feels like the obvious gate because it's explicit, but the page allows it only as a soft input; disagreement across samples is the most reliable cheap proxy, and showing users a precise percentage implies calibration you don't have."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Bias & fairness](./06-bias-fairness.md)

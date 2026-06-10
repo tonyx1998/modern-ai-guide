@@ -7,6 +7,13 @@ description: OpenAI Realtime, Gemini Live, Vapi, Retell, ElevenLabs, Cartesia, D
 
 # Voice infrastructure
 
+:::info[Dated content — June 2026]
+This page names specific tools, models, and prices, which rotate quarterly. The *selection
+logic* is durable; the names are a snapshot. Cross-check the
+[Model snapshot](/docs/model-snapshot) for current model names and pricing.
+:::
+
+
 > **In one line:** Voice AI shipped from "research demo" to "shipping product" between 2024 and 2026. The stack splits into end-to-end speech-to-speech models, STT/TTS components, and the real-time media plumbing underneath.
 
 :::tip[In plain English]
@@ -113,6 +120,46 @@ Voice agents are typically **the most expensive feature per active user** in you
 - **No call recording / transcript log.** When the user complains, you have nothing to debug. Always record (with consent + a compliant retention policy).
 - **Ignoring jitter and packet loss.** A perfect demo on your office wifi falls apart on a 3G mobile connection. Test on a throttled network.
 - **No spend cap per call.** A stuck voice agent in a loop can rack up 30 minutes. Cap call duration server-side.
+
+<Quiz id="voice-infra-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="You are replacing a call-center IVR with an AI that answers a real phone number. Which layer does the page point you to first?"
+  options={[
+    { text: "ElevenLabs for the voice quality" },
+    { text: "LiveKit on its own" },
+    { text: "OpenAI Realtime API on its own" },
+    { text: "A hosted voice-agent platform like Vapi or Retell that bundles telephony" }
+  ]}
+  correct={3}
+  explanation="Phone-number products need SIP trunks, DTMF, recording, and number provisioning — the hosted voice-agent platforms include all of it. OpenAI Realtime is the default for IN-APP voice but leaves the telephony plumbing to you, and ElevenLabs is just the TTS component, not an agent stack."
+/>
+
+<Question
+  prompt="What is the trade-off between an end-to-end speech-to-speech model and an STT-LLM-TTS pipeline?"
+  options={[
+    { text: "End-to-end is always cheaper per minute" },
+    { text: "Pipelines cannot handle tool calls at all" },
+    { text: "End-to-end is lower latency and simpler but locks your model choice; the pipeline lets you pick each component but stacks latency and puts turn-taking on you" },
+    { text: "End-to-end models cannot be interrupted by the user" }
+  ]}
+  correct={2}
+  explanation="One API call versus three glued components is the whole architecture decision: end-to-end saves the STT and TTS hops and the turn-taking glue, but you ride whichever speech model that vendor ships. The pipeline's per-hop latency adds up — roughly 600ms before the user hears anything — which is the price of control."
+/>
+
+<Question
+  prompt="Why is Whisper the wrong STT choice for a live voice agent?"
+  options={[
+    { text: "Its accuracy is too low for production use" },
+    { text: "Whisper is a batch model — great for recordings, wrong for live streams; use a streaming STT instead" },
+    { text: "It only supports English" },
+    { text: "It cannot run self-hosted" }
+  ]}
+  correct={1}
+  explanation="Whisper transcribes completed audio, not a rolling stream, so a real-time conversation would wait on it constantly; streaming engines like Deepgram, AssemblyAI, or Soniox exist for the live case. Accuracy and multilingual support are actually Whisper strengths — the mismatch is purely batch versus streaming."
+/>
+
+</Quiz>
 
 ---
 

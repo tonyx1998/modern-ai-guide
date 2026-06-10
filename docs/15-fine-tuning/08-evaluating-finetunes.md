@@ -109,6 +109,46 @@ Production also feeds your *next* fine-tune: the cases where the model failed be
 - **Skipping the production A/B.** Offline wins don't always hold up live. Ramp behind an A/B with a rollback ready.
 :::
 
+<Quiz id="ft-evaluating-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="A teammate reports 'our fine-tune scores 82% on the held-out set' and wants to ship. What's missing, per this page?"
+  options={[
+    { text: "Nothing — 82% on held-out data is a complete result" },
+    { text: "The base-model baseline — 82% is meaningless until you know the base model scores, say, 61% on the same cases; without the comparison it's noise" },
+    { text: "A larger fine-tune; 82% suggests undertraining" },
+    { text: "The training loss curve, which is the real verdict" }
+  ]}
+  correct={1}
+  explanation="A fine-tune is a hypothesis that the model got better — 'better' requires a comparison on the same eval set. If the base already scores 80%, the expensive fine-tune bought almost nothing. The standalone-number instinct is common because 82% sounds concrete; but a score with nothing to compare against can't justify shipping."
+/>
+
+<Question
+  prompt="Your fine-tune jumped from 61% to 82% on the target task, but the model now emits JSON even when asked for prose and scores 17 points lower on instruction-following. What happened?"
+  options={[
+    { text: "The eval set is contaminated with training data" },
+    { text: "The learning rate was too low, so the model undertrained" },
+    { text: "Normal specialization — losing other abilities is the price of any fine-tune and needs no action" },
+    { text: "Catastrophic forgetting — narrow training degraded off-task abilities; mitigate with lower LR, fewer epochs, LoRA, or mixing in general replay data" }
+  ]}
+  correct={3}
+  explanation="This is the check beginners skip: hard training on a narrow task can erode general instruction-following, safety behaviour, and flexibility — which is why a regression/capability suite runs alongside the task eval. 'Normal price of specialization' is the dangerous shrug; the page lists concrete mitigations precisely because this degradation is fixable, not inevitable."
+/>
+
+<Question
+  prompt="The fine-tune beats the base model on every offline eval and the regression suite passes. What does this page say to do before fully replacing the incumbent model?"
+  options={[
+    { text: "A/B test it on a small traffic slice (5-10%) keyed on stable user ids, compare real outcome metrics, and keep rollback ready" },
+    { text: "Ship to 100% — passing both offline suites is the full bar" },
+    { text: "Re-run the offline evals three times to confirm stability" },
+    { text: "Merge the adapter into the base model first for performance" }
+  ]}
+  correct={0}
+  explanation="Offline evals approximate reality; production tells the truth — resolution rates, escalations, and regenerations on live traffic can diverge from lab scores. 'Both suites passed, ship it' is the efficient-sounding shortcut, but the ramp-with-rollback pattern is what turns a surprise regression from an outage into a config flip."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Serving fine-tuned models](./09-serving-finetunes.md)

@@ -115,6 +115,46 @@ The pattern: **the eval suite grows roughly with the blast radius**. Solo doesn'
 - **Confusing a feature flag with a kill switch.** A flag that nobody on-call knows how to flip in production at 3am is not a kill switch — it's a config option. Make it explicit, document it, and drill it.
 - **Treating the eval suite as static.** An eval suite that doesn't grow after every real-world failure is decaying — the bugs you've already shipped will keep recurring. Every post-incident review should add at least one eval case.
 
+<Quiz id="comparison-workflow-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="If a startup adopts exactly one enterprise-style practice early, which one does the page recommend?"
+  options={[
+    { text: "A 5,000-case eval battery" },
+    { text: "A risk-tier classification for every change" },
+    { text: "The cohort rollout — 5% to 25% to 100% with a kill switch ready" },
+    { text: "A formal prompt registry" }
+  ]}
+  correct={2}
+  explanation="The cohort rollout costs almost nothing — a feature flag and a metric to watch — yet catches most 'looked great in eval, looks awful in prod' regressions and gives a clean rollback story. The page calls it the highest-leverage process import from enterprise to startup; RFCs, risk tiers, and registries cost far more per unit of risk reduced."
+/>
+
+<Question
+  prompt="A prompt tweak takes 90 seconds solo, 30 minutes at a startup, and 1-2 weeks at an enterprise. What does the page say accounts for the difference?"
+  options={[
+    { text: "Almost none of it is the work itself — it is the waiting for nods, evals, deploy windows, and rollout soaks, choreography that absorbs risk the lower scales don't carry" },
+    { text: "Enterprise codebases are larger, so edits take longer to write" },
+    { text: "Enterprise CI pipelines run far slower than startup ones" },
+    { text: "Startups skip evals entirely to save time" }
+  ]}
+  correct={0}
+  explanation="The edit is the same everywhere; the delta is choreography — reviews, extended eval batteries, deploy windows, canary soaks. That choreography exists to absorb risk, and the page names both failure modes: keeping a step after the risk it absorbs is gone, and skipping a step before you have earned the speed. Startups do run evals; theirs block merges in CI."
+/>
+
+<Question
+  prompt="According to the page, when is a feature flag NOT a kill switch?"
+  options={[
+    { text: "When it is implemented in a third-party flag service" },
+    { text: "When nobody on-call knows how to flip it in production at 3am — then it is just a config option; make it explicit, document it, and drill it" },
+    { text: "When it controls more than one feature at a time" },
+    { text: "When it was created after the feature shipped" }
+  ]}
+  correct={1}
+  explanation="A kill switch is defined by operational readiness, not by the mechanism: if the on-call cannot confidently flip it during a 3am incident, it provides no protection. The page pairs this with 'no kill switch at any scale' as a universal mistake — even solo devs need one answer to 'what do you do if the model starts saying something it shouldn't?': flip this thing."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Economics comparison](./economics.md).

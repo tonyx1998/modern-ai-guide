@@ -33,7 +33,7 @@ This chapter is the deep, self-contained treatment of evaluation. By the end you
 
 Read it in order the first time — each page builds on the last. Pages 2–3 give you the mental model, 4–5 give you the raw materials (data and metrics), 6–7 cover the two ways to *grade* hard-to-grade outputs (an LLM or a human), and 8–9 put it all on autopilot (CI gates and production monitoring). If you've already shipped something, you can jump straight to [datasets](./04-datasets.md) and [metrics](./05-metrics.md) and use the rest as reference.
 
-This chapter consolidates and deepens material you may have met earlier — the [lifecycle eval-design page](/docs/lifecycle/lifecycle-evals), the [evals-as-a-product pattern](/docs/patterns/pattern-evals), [eval-driven development](/docs/patterns/pattern-eval-driven-development), and the [eval tooling page](/docs/stack/eval-tools). We re-teach every concept from scratch here, but those pages are good "see also" companions.
+This chapter consolidates and deepens material you may have met earlier — the [eval mindset](/docs/roadmap/part-3-beyond/eval-mindset) and [Stage 6: your first eval](/docs/roadmap/part-1-from-zero/stage-6-evals) from the roadmap (the on-ramps to this chapter), the [lifecycle eval-design page](/docs/lifecycle/lifecycle-evals), the [evals-as-a-product pattern](/docs/patterns/pattern-evals), [eval-driven development](/docs/patterns/pattern-eval-driven-development), and the [eval tooling page](/docs/stack/eval-tools). We re-teach every concept from scratch here, but those pages are good "see also" companions.
 
 ---
 

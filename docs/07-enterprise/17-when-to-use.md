@@ -114,6 +114,46 @@ The shape: each addition was justified by a concrete signal, not a master plan. 
 - **Treating "we need a platform" as evidence we need a CoE, Responsible AI lead, and Risk Review board on day one.** Those come later, in response to the signals (regulated workload, 100+ engineers, EU exposure). Build the technical platform first; the governance bodies follow.
 :::
 
+<Quiz id="enterprise-ai-when-to-use-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What does the page call the most reliable single signal that you need a real AI platform?"
+  options={[
+    { text: "Annual AI spend crossing one million dollars" },
+    { text: "Hiring your first dedicated AI engineer" },
+    { text: "A board member asking about AI strategy" },
+    { text: "Five AI features in production owned by different teams" }
+  ]}
+  correct={3}
+  explanation="Below five features, conventions, a shared library, and a Slack channel mostly hold things together. Above five, inconsistencies bite, cross-cutting changes need forty PRs, and audit questions become unanswerable in reasonable time. Spend and headcount matter as signals too, but the five-feature mark is the one the page singles out — and it says to start building when the fifth feature is visible on the roadmap."
+/>
+
+<Question
+  prompt="What should be built first when standing up an AI platform?"
+  options={[
+    { text: "A standard SDK and a single enforced point of egress for all AI calls" },
+    { text: "A full Responsible AI function with a risk review board" },
+    { text: "A custom-built gateway tuned to your infrastructure" },
+    { text: "Adversarial and fairness suites for every feature" }
+  ]}
+  correct={0}
+  explanation="Getting every AI call behind one wrapper is the foundation everything else builds on — even if 'the platform' is one engineer and a Slack channel. Governance bodies and full compliance pipelines are phases 9 and 10, arriving with regulated workloads. And the custom gateway is explicitly premature: try Portkey, Kong, or a thin wrapper first."
+/>
+
+<Question
+  prompt="Below the platform threshold, what should you invest in instead?"
+  options={[
+    { text: "Enforcement tooling that blocks non-standard choices" },
+    { text: "Convention — shared libraries and opinionated reference patterns" },
+    { text: "A 10-person platform team to get ahead of growth" },
+    { text: "Multi-region gateway infrastructure" }
+  ]}
+  correct={1}
+  explanation="Convention scales until roughly five features; enforcement is what you need beyond that. Building enforcement early — or a platform team that outnumbers its users — is premature centralization that slows your one feature down without delivering the benefits the machinery is designed for."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [When You're "Too Big"](./18-too-big.md) — the failure mode at the *other* end of the spectrum, when central AI platforms ossify.

@@ -7,6 +7,13 @@ description: Vercel AI SDK, native provider SDKs, Pydantic AI, LiteLLM, Portkey 
 
 # LLM SDKs
 
+:::info[Dated content — June 2026]
+This page names specific tools, models, and prices, which rotate quarterly. The *selection
+logic* is durable; the names are a snapshot. Cross-check the
+[Model snapshot](/docs/model-snapshot) for current model names and pricing.
+:::
+
+
 > **In one line:** The thinnest abstraction in the stack — a typed client that wraps "send messages, get tokens (and maybe tool calls)." Not RAG, not agents. Just the call.
 
 :::tip[In plain English]
@@ -113,6 +120,46 @@ If your SDK doesn't give you these, you'll end up reinventing them.
 - **No retries on `529 Overloaded`.** Anthropic and OpenAI both throw these under load. A 3-attempt exponential backoff is table stakes.
 - **Trusting `provider-agnostic` to mean "identical behavior."** Tool-call JSON, content blocks, refusal phrasing — these vary. Always run your eval suite when you swap providers, even through a "unified" SDK.
 - **Mixing SDK versions across services.** Two services on different `@ai-sdk/anthropic` versions can produce subtly different output shapes. Pin and update on purpose.
+
+<Quiz id="llm-sdks-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="When does the page say to skip multi-provider abstraction SDKs and use a provider's native SDK directly?"
+  options={[
+    { text: "Whenever you build in TypeScript" },
+    { text: "When you need streaming responses" },
+    { text: "When you only ever call one provider and want every brand-new feature on day one" },
+    { text: "When you route traffic through a gateway" }
+  ]}
+  correct={2}
+  explanation="Native SDKs expose provider-specific features — like new caching or realtime capabilities — the moment they ship, while abstraction layers lag. Streaming is a red herring: virtually every SDK on the list handles streaming well, so it doesn't differentiate the choice."
+/>
+
+<Question
+  prompt="Your entire feature is extracting validated JSON from messy documents. Which tool does the page single out?"
+  options={[
+    { text: "LiteLLM" },
+    { text: "Instructor" },
+    { text: "LangChain" },
+    { text: "Helicone" }
+  ]}
+  correct={1}
+  explanation="Instructor is built for exactly this: it retries on schema violations and hands you a validated Pydantic model. LiteLLM is about cheap multi-provider routing, and LangChain is a heavy framework — using it as a plain extraction SDK is one of the page's named pitfalls."
+/>
+
+<Question
+  prompt="Why is it risky to trust a 'provider-agnostic' SDK to mean identical behavior when you swap models?"
+  options={[
+    { text: "Unified SDKs silently downgrade you to older model versions" },
+    { text: "Provider abstraction always disables tool calling" },
+    { text: "Swapping providers voids your rate-limit increases" },
+    { text: "Tool-call JSON, content blocks, and refusal phrasing still vary by provider, so you must re-run your evals after a swap" }
+  ]}
+  correct={3}
+  explanation="The SDK unifies the calling shape, not the model's behavior — formatting, tool-call compliance, and refusal styles all shift between providers. The fix is running your eval suite on every swap, even through a unified SDK. Nothing about abstraction layers downgrades versions or disables tools; the danger is subtler than that."
+/>
+
+</Quiz>
 
 ---
 

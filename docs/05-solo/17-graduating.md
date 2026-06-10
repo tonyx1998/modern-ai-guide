@@ -147,6 +147,46 @@ Self-check:
 - If you're on the stable-indie track, have you written down the maintenance ritual?
 - If you're past the bottleneck, have you decided between hire / co-founder / commit?
 
+<Quiz id="solo-graduating-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="The project has outgrown one person. What does the page suggest as the cheaper, lower-risk FIRST move?"
+  options={[
+    { text: "Find an equity-bearing co-founder immediately" },
+    { text: "Raise a seed round to fund a small team" },
+    { text: "Grind harder on weekends until the backlog clears" },
+    { text: "Bring in a part-time contractor for the non-core surface like support, marketing copy, and light frontend" }
+  ]}
+  correct={3}
+  explanation="A contractor on the non-core work relieves the bottleneck without splitting equity — the page warns that a co-founder is a marriage and you should not propose on the first date. Grinding harder is explicitly called the wrong answer in the worked example: it ends in burnout or breaking the product worse."
+/>
+
+<Question
+  prompt="What is the page's default answer to taking VC money for a growing indie AI tool?"
+  options={[
+    { text: "Always raise — capital is the main constraint on AI products" },
+    { text: "Not yet, possibly never — unless the product is defensible, the market is $100M+, and you want to spend 5-7 years on it as the only thing in your life" },
+    { text: "Raise only from investors who cold-DM you first" },
+    { text: "Never under any circumstances" }
+  ]}
+  correct={1}
+  explanation="The default is no because VC math expects 30%+ monthly growth, the raised path is huge-or-bust, and investors dislike the tighter margins of AI wrappers — but the page carves out a real exception when ALL three conditions hold. 'Never under any circumstances' is the tempting overcorrection; the page is a diagnostic, not a dogma."
+/>
+
+<Question
+  prompt="You have decided to walk away from a tool. What does the page say a graceful shutdown looks like?"
+  options={[
+    { text: "Announce it, give users 30+ days notice, refund annual plans, open-source the repo, and write a what-I-learned post" },
+    { text: "Stop deploying and let the tool quietly stop working" },
+    { text: "Sell the user list to a competitor to recoup costs" },
+    { text: "Keep the tool online indefinitely but stop answering support" }
+  ]}
+  correct={0}
+  explanation="Walking away with grace — notice, refunds, open-sourcing, a public retrospective — is more respected than ghosting, and the common-mistakes list notes that quiet deaths erode trust in indie tools generally. Letting it quietly degrade is the path of least resistance, which is exactly why the page names it as the failure mode to avoid."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [Chapter 9 Checkpoint](./18-checkpoint.md) to self-test the whole chapter before moving to startup-scale AI in [Chapter 10](/docs/startup).

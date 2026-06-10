@@ -153,6 +153,46 @@ Rule of thumb: **if no human is waiting on the result, use batch.** Streaming is
 - **Treating a transcript as ground truth.** WER is never zero. For high-stakes flows (medical, legal, finance), keep a human in the loop and surface confidence.
 :::
 
+<Quiz id="mm-audio-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="You're building a feature that transcribes uploaded meeting recordings overnight. A teammate starts wiring up a WebSocket streaming pipeline. What does this page say?"
+  options={[
+    { text: "Good call — streaming is the modern default for all audio" },
+    { text: "Streaming is required because meeting files are too large for one API call" },
+    { text: "Either works; the choice is purely stylistic" },
+    { text: "Use batch — no human is waiting on the result, and batch is simpler, cheaper per minute, and more accurate because the model sees full context" }
+  ]}
+  correct={3}
+  explanation="The rule of thumb is explicit: if no human is waiting, use batch. Streaming is strictly more complexity and slightly lower accuracy — it earns its cost only when latency is the product (live captions, voice agents). 'Streaming is the modern default' is the habit the page calls out: people reach for WebSockets when a single file upload would do."
+/>
+
+<Question
+  prompt="Your call-center transcripts keep mangling product SKUs and customer names, spiking the word error rate. What is the cheapest fix this page offers?"
+  options={[
+    { text: "Vocabulary biasing — feed expected jargon, names, and SKUs via the prompt/custom-vocabulary field; it's free accuracy" },
+    { text: "Switch to a much larger transcription model" },
+    { text: "Have an LLM post-correct the transcript from context" },
+    { text: "Record calls at a higher sample rate" }
+  ]}
+  correct={0}
+  explanation="Domain jargon is exactly where WER spikes, and the hint prompt exists to bias the model toward expected spellings — no extra cost, no new infrastructure. A bigger model or LLM post-correction might help but costs real money and adds a stage; the page's point is that the free lever is the first one to pull."
+/>
+
+<Question
+  prompt="A product manager wants to know how frustrated each support caller sounded, not just what they said. Which primitive fits, and why?"
+  options={[
+    { text: "STT with word timestamps, so you can measure speaking speed" },
+    { text: "Diarization, which labels emotional state per speaker" },
+    { text: "Audio understanding — a multimodal model reasoning directly over the sound captures tone, hesitation, and who sounds upset, which a plain transcript loses" },
+    { text: "TTS with an expressive voice to replay the call dramatically" }
+  ]}
+  correct={2}
+  explanation="Frustration lives in tone, pace, and hesitation — information the transcription step throws away — so you hand the audio itself to a multimodal model. Diarization is the tempting distractor because it's also 'about speakers', but it only answers who spoke when, not how they felt; the two compose well (transcribe for the record, understand for the analysis)."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Realtime voice agents](./05-realtime-voice.md)

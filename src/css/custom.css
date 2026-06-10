@@ -430,6 +430,31 @@ html {
   }
 }
 
+/* ============================================================
+   Quiz-gated progression.
+   The Quiz component (src/components/Quiz) toggles
+   `quiz-required-pending` on <body> while any required quiz on
+   the page is unpassed. While pending, the Next pagination link
+   is locked: non-interactive, dimmed, with an unlock hint.
+   ============================================================ */
+body.quiz-required-pending .pagination-nav__link--next {
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.5;
+  filter: grayscale(0.9);
+  border-color: var(--ifm-color-emphasis-300);
+  background: var(--ifm-background-surface-color);
+}
+body.quiz-required-pending .pagination-nav__link--next .pagination-nav__sublabel::after {
+  content: ' · 🔒 pass the checkpoint to unlock';
+  text-transform: none;
+  letter-spacing: normal;
+}
+body.quiz-required-pending .pagination-nav__link--next .pagination-nav__sublabel,
+body.quiz-required-pending .pagination-nav__link--next .pagination-nav__label {
+  color: var(--ifm-color-emphasis-600);
+}
+
 /* --- Mermaid diagrams: keep them legible --- */
 /* Paired with `useMaxWidth: false` in docusaurus.config.ts. On desktop, diagrams
    render at full, readable size and a wide one scrolls horizontally inside its own

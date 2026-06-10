@@ -119,6 +119,46 @@ The 4-point gap doesn't justify the 3-month training project — especially beca
 The lesson: prompt engineering is more powerful than its reputation. Fine-tuning is for the cases where you've genuinely hit the wall and can prove it.
 :::
 
+<Quiz id="prompt-engineering-vs-fine-tuning-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Which set of conditions must ALL be true before fine-tuning is the right answer?"
+  options={[
+    { text: "The team has read about fine-tuning and wants to try it" },
+    { text: "A narrow stable task, 200+ clean examples, and evals showing prompts hit a real ceiling" },
+    { text: "The feature feels important enough to deserve the serious option" },
+    { text: "A new base model was just released" }
+  ]}
+  correct={1}
+  explanation="Fine-tuning also requires high enough volume to matter and willingness to retrain every time the base model changes. The 'serious option' instinct is exactly the trap: 90% of supposed fine-tuning problems are prompt-engineering problems in disguise — vague instructions, missing few-shot, no structured output."
+/>
+
+<Question
+  prompt="The team says 'the model doesn't know our product.' What kind of problem is that?"
+  options={[
+    { text: "A fine-tuning problem" },
+    { text: "A model-size problem" },
+    { text: "A RAG problem" },
+    { text: "A temperature problem" }
+  ]}
+  correct={2}
+  explanation="Missing knowledge is fixed by injecting context at request time, not by training. Knowledge changes; weights don't — a fine-tuned fact goes stale instantly. 'Fine-tuning instead of RAG' is one of the listed common mistakes, alongside format problems (structured output) and tone problems (few-shot)."
+/>
+
+<Question
+  prompt="What is the rough cost relationship between the steps of the escalation ladder?"
+  options={[
+    { text: "Each step is about 10x cheaper than the next" },
+    { text: "All steps cost roughly the same" },
+    { text: "Fine-tuning is the cheapest, which is why it is last" },
+    { text: "Costs vary too much to generalize" }
+  ]}
+  correct={0}
+  explanation="A prompt edit is hours; a fine-tune is months — data collection, training, evaluation, retraining when the base model changes, and ongoing drift monitoring. That 10x-per-step gradient is why you stop at the first rung that passes evals instead of skipping ahead."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Fine-tuning — the decision walkthrough](./fine-tuning-walkthrough.md).

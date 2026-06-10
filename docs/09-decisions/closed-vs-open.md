@@ -94,6 +94,46 @@ The math is clear — but only because the task was narrow, stable, and high-vol
 The rule: self-host the narrow, high-volume things. Pay the closed-API tax for the things where the model is doing real work.
 :::
 
+<Quiz id="closed-vs-open-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the default model-sourcing choice, and what flips it?"
+  options={[
+    { text: "Always open-weight, since the weights are free" },
+    { text: "Self-hosted from day one, to avoid lock-in" },
+    { text: "Closed-source APIs by default; open-weight when residency, scale economics, customization, or latency demand it" },
+    { text: "Train your own model from scratch" }
+  ]}
+  correct={2}
+  explanation="Closed APIs win on raw quality and operational simplicity — you make a call and you're done. The four flip conditions are real constraints, not preferences: data that legally can't leave your network, a cost wall at scale, needing to own fine-tuned weights, or a latency floor closed APIs can't hit."
+/>
+
+<Question
+  prompt="What is the 2026 norm for how mature teams actually deploy models?"
+  options={[
+    { text: "Tiered routing: frontier closed for hard tasks, mid-tier closed for workhorse tasks, hosted open for high-volume narrow tasks" },
+    { text: "One model for everything, for simplicity" },
+    { text: "Open-weight everywhere, to maximize savings" },
+    { text: "Switching entirely to whichever provider is cheapest each quarter" }
+  ]}
+  correct={0}
+  explanation="Most teams end up using both closed and open, routed by feature — self-hosted open only where scale plus sensitivity justify the ops cost. A single model for everything either overpays on easy tasks or underdelivers on hard ones; the decision is feature-by-feature, not company-wide."
+/>
+
+<Question
+  prompt="Which of these is a hidden cost of OPEN weights rather than closed APIs?"
+  options={[
+    { text: "Rate limits that throttle you during traffic spikes" },
+    { text: "Silent model upgrades that change behavior" },
+    { text: "Provider outages taking your product down" },
+    { text: "Inference-server tuning and a re-tuning project on every new model release" }
+  ]}
+  correct={3}
+  explanation="vLLM, TGI, and SGLang each have a learning curve, and every new Llama release is a re-tuning project, not a config change — plus GPU redundancy and 2am on-call. The other three are the listed hidden costs of CLOSED APIs, which makes them tempting but reversed answers."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Build vs buy](./build-vs-buy.md).

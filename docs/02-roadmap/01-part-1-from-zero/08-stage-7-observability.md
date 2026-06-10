@@ -331,6 +331,44 @@ Wrap the RAG from Stage 5 with the `logged_completion` function above (or sign u
 
 ## Page checkpoint
 
+<Quiz id="stage-7-observability-quick-check" variant="micro" title="Quick check">
 
+<Question
+  prompt="To save storage, a teammate suggests logging only the user's message instead of the full messages array. Why does this page call that a near-fatal cut?"
+  options={[
+    { text: "Partial logs violate the OpenTelemetry GenAI spec" },
+    { text: "Debugging and replay need the EXACT model input — system prompt, retrieved chunks, prior turns — and stripping any of it makes the log near-useless" },
+    { text: "The user message alone cannot be stored as JSONB" },
+    { text: "Token counts cannot be computed without the full prompt" }
+  ]}
+  correct={1}
+  explanation="When a user reports 'the bot said something weird', the only useful artifact is the exact input the model saw — which includes the system prompt version, the RAG context, and earlier assistant turns, not just what the user typed. Replay, the fastest debugging loop in AI engineering, depends on reproducing that input verbatim. Storage concerns are real but solved with retention policies and sampling, not by gutting the one field the whole workflow depends on. Token counts come from the API's usage object regardless."
+/>
+
+<Question
+  prompt="One user question in your RAG triggers a query-rewrite call, then an answer-generation call. What does the trace_id give you that per-call logs alone do not?"
+  options={[
+    { text: "Automatic retries when any sub-call fails" },
+    { text: "Lower latency, since traced calls share a connection" },
+    { text: "Deduplication of identical prompts across users" },
+    { text: "The ability to see the full chain for one user action — every sub-call, in order, with its cost — instead of disconnected rows" }
+  ]}
+  correct={3}
+  explanation="A shared trace_id links all the LLM calls one user action triggered, so you can click a trace and replay the whole story: what the rewrite produced, what got retrieved, what the answer call saw. Without it, multi-step flows — and especially agents, where one task spawns many calls — are a pile of unrelated log rows, and debugging becomes guesswork. It is pure correlation metadata: it does not retry, speed up, or dedupe anything."
+/>
+
+<Question
+  prompt="What is the recommended weekly practice for keeping your eval set in sync with reality once you have call logs?"
+  options={[
+    { text: "Re-run the full eval set against the week's production traffic" },
+    { text: "Delete eval cases that have passed for four straight weeks" },
+    { text: "Sample interesting production calls — thumbs-down, slow, expensive, refusals — review them, and turn the ones that should have gone differently into new eval cases" },
+    { text: "Ask the model to generate new synthetic eval cases from the logs" }
+  ]}
+  correct={2}
+  explanation="A simple SQL query surfaces the week's suspicious calls; human review decides which represent real failures; those become permanent eval cases. This loop is what keeps your eval set covering the actual usage distribution instead of the one you imagined when you wrote it. Re-running evals on traffic conflates testing with sampling, deleting passing cases throws away your regression protection, and synthetic generation skips the step that gives the loop its value — real failures from real users."
+/>
+
+</Quiz>
 
 → [Next: Stage 8 — A simple agent](./09-stage-8-agent.md) · [Back to Part I overview](./index.md)

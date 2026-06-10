@@ -138,6 +138,46 @@ At Acme, the internal cohort (8 support agents for a week) caught: a markdown-re
 - [ ] Nightly prod-data eval running.
 - [ ] On-call rotation knows where the runbook is.
 
+<Quiz id="lifecycle-deploy-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Why does the page say AI features should roll out in cohorts instead of a big-bang launch?"
+  options={[
+    { text: "Cohorts reduce the cost of feature-flag tooling" },
+    { text: "Providers rate-limit new features, so traffic must ramp slowly" },
+    { text: "The first small cohorts surface failures the eval set never covered, before they hit everyone" },
+    { text: "Big-bang launches are impossible with streaming endpoints" }
+  ]}
+  correct={2}
+  explanation="The first 1% of users teaches you what evals did not catch — hallucinations on uncovered cases, injection attempts, silent provider-side behavior shifts. The page's numbers: roughly 40% of issues show up in the internal cohort, 30% at 5%, and 30% only at 100%. Cohorts let you learn cheaply; the flag lets you stop bleeding instantly."
+/>
+
+<Question
+  prompt="In the nightly 'production data eval', how does the judge score outputs when there is no reference answer?"
+  options={[
+    { text: "It compares each output to the closest case in the cold eval set" },
+    { text: "It asks the user to rate the response with thumbs up or down" },
+    { text: "It re-runs the same input through a bigger model and diffs the answers" },
+    { text: "It scores against rubrics — did the output address the question, is it grounded in cited sources, is the tone appropriate" }
+  ]}
+  correct={3}
+  explanation="Production data has no reference answers, so the LLM-as-judge scores on rubrics instead: addressed the question, grounded in citations, appropriate tone. The point of the pipeline is the comparison — cold-eval scores tell you what you knew, prod scores tell you what you didn't, and divergence between the two is a red flag for overfitting to the eval set."
+/>
+
+<Question
+  prompt="Why does the page warn against using all free-tier users as the first real-user cohort?"
+  options={[
+    { text: "Free users generate too little traffic to produce a signal" },
+    { text: "Free users can carry more reputational risk — loud complaints — for less upside, and they are real users with real expectations" },
+    { text: "Free tiers are usually excluded from feature-flag tooling" },
+    { text: "Free users skew the A/B test because they are all power users" }
+  ]}
+  correct={1}
+  explanation="Free-tier users are not automatically a safe guinea-pig pool: their complaints are loud (reputational risk) while less revenue is at stake (less upside). The page's preferred sequence is internal team first — forgiving and good at finding weird bugs — then friendly customers like design partners who are tolerant of bumps and reachable."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Monitor](./09-monitor.md)

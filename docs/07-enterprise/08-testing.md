@@ -185,6 +185,46 @@ For banks, an AI feature that influences decisions is a "model" under SR 11-7 an
 - **Forgetting to test the kill switch.** A gateway kill switch that hasn't been exercised in 6 months might be broken. Quarterly game-days that flip the switch and verify the user-facing behavior keep it real.
 :::
 
+<Quiz id="enterprise-ai-testing-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What are the four testing layers for enterprise AI?"
+  options={[
+    { text: "Smoke, regression, load, and chaos" },
+    { text: "Unit, integration, end-to-end, and manual QA" },
+    { text: "Prompt, model, retrieval, and UI" },
+    { text: "Unit, eval, adversarial, and fairness" }
+  ]}
+  correct={3}
+  explanation="Each layer exists for a different reason: unit for engineering quality, eval for behavioral quality, adversarial for security posture, and fairness for regulatory defensibility. The unit-integration-e2e answer is the classic software testing pyramid — which covers only the first layer of what AI features need."
+/>
+
+<Question
+  prompt="What does the page say auditors actually care about regarding your tests?"
+  options={[
+    { text: "That every test passes with zero failures" },
+    { text: "That you ran them, recorded the results, and addressed the failures" },
+    { text: "That the test suite uses an approved vendor tool" },
+    { text: "That tests were written before the code" }
+  ]}
+  correct={1}
+  explanation="The artifact is the deliverable: auditors want evidence you measured, triaged, and handled what you found. 'Every test passes' is the engineer's instinct, but a clean dashboard with no record of triage is worth less to an auditor than documented findings with documented responses."
+/>
+
+<Question
+  prompt="How should a fairness-slice score delta above the acceptable threshold be handled?"
+  options={[
+    { text: "Treated as a hard CI failure that blocks all merges" },
+    { text: "Ignored unless a customer complains" },
+    { text: "Opened as a finding and triaged by a human reviewer" },
+    { text: "Fixed automatically by re-running with a different random seed" }
+  ]}
+  correct={2}
+  explanation="Deltas above threshold open a finding reviewed by a human — some are real bias, some are sampling noise, some reveal a prompt that needs locale-aware phrasing. The hard-CI-failure answer is tempting because it feels rigorous, but over-tight automatic thresholds create noise teams learn to ignore, which is worse than not measuring."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [CI/CD for AI](./09-ci-cd.md) — how all this testing wires into a release pipeline.

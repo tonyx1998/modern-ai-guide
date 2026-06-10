@@ -210,6 +210,46 @@ Concretely:
 Treat the LLM like an untrusted user. Build the same defenses you'd build against a determined human attacker.
 :::
 
+<Quiz id="pattern-safety-privacy-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the cardinal rule of this page?"
+  options={[
+    { text: "Always tell the model to ignore malicious instructions in the data" },
+    { text: "Use the largest model available so it can recognize attacks" },
+    { text: "Never let the LLM be the security boundary — authorization runs in deterministic code" },
+    { text: "Encrypt all prompts before sending them to the provider" }
+  ]}
+  correct={2}
+  explanation="If a user should not read row X, the database enforces that; if an action needs permission, application code checks it — the model is treated like an untrusted user. The 'tell the model to ignore bad instructions' option is the security theatre the page explicitly calls out: it stops lazy attempts and nothing else."
+/>
+
+<Question
+  prompt="Why is indirect prompt injection more dangerous than a user typing 'ignore your instructions'?"
+  options={[
+    { text: "The model cannot distinguish developer instructions from instructions hidden in retrieved docs, emails, or PDFs it processes" },
+    { text: "Indirect injection uses stronger encryption" },
+    { text: "Direct injection is always blocked by provider safety filters" },
+    { text: "Indirect injection only affects open-source models" }
+  ]}
+  correct={0}
+  explanation="Any sentence anywhere in the input pipeline — a retrieved chunk, an email body, a PDF — can hijack the model, because to the model it all looks like text. That is why the defenses are structural: input segregation, authorization in code, output validation, human confirmation on writes. Provider filters do not reliably block direct injection either, but the distinguishing danger of the indirect form is that the attacker never needs to talk to your app directly."
+/>
+
+<Question
+  prompt="A RAG assistant summarizes a document the asking user has no permission to see. What is the fix?"
+  options={[
+    { text: "Add a system prompt rule telling the model not to reveal restricted documents" },
+    { text: "Post-filter the answer to remove forbidden document URLs" },
+    { text: "Use a smaller context window so fewer documents fit" },
+    { text: "Filter by ACL tags in the SQL WHERE clause before the vector search runs" }
+  ]}
+  correct={3}
+  explanation="Filter-before-retrieve means the forbidden chunk never reaches the model, so it cannot be leaked by any clever query — and it is faster than post-filtering too. Post-filtering URLs is the tempting wrong answer: the failure mode described on the page is the model leaking the content of the doc without ever citing its URL."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Fallbacks & graceful degradation](./12-fallbacks.md).

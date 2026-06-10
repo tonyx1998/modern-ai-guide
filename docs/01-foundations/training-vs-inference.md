@@ -18,7 +18,7 @@ Think of training as building the recipe book and inference as cooking from it. 
 Updates the model's weights using examples. Three flavors:
 
 - **Pre-training** — Building a foundation model from scratch on trillions of tokens. Done by a handful of labs (OpenAI, Anthropic, Google, Meta, Mistral, DeepSeek, xAI). Costs tens of millions to billions of dollars. You will almost certainly never do this.
-- **Fine-tuning** — Continuing training on a smaller, task-specific dataset to specialize a model. Now affordable (~$10s–$1000s) for narrow domains. Useful, but not your first move — see [chapter 9](/docs/decisions).
+- **Fine-tuning** — Continuing training on a smaller, task-specific dataset to specialize a model. Now affordable (~$10s–$1000s) for narrow domains. Useful, but not your first move — see [chapter 13](/docs/decisions).
 - **RLHF / preference tuning / DPO** — Aligning a model to human preferences. The technique that turned raw pre-trained models into ChatGPT-style assistants. Increasingly accessible via tools like TRL, OpenAI's preference fine-tuning, Anthropic's Constitutional AI.
 
 ```mermaid
@@ -124,6 +124,46 @@ Most teams that "need fine-tuning" find the answer in B, D, or F.
 | **vLLM / SGLang / TGI / Ollama** | Self-hosting OSS                           |
 
 Most production apps end up multi-provider: a frontier API for hard requests, a workhorse for the bulk, sometimes a small self-hosted model for high-volume tasks.
+
+<Quiz id="training-vs-inference-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Your model keeps giving outdated answers about your product's features. Should you fine-tune it on your docs?"
+  options={[
+    { text: "Yes — fine-tuning is how you teach the model product knowledge" },
+    { text: "Yes, but only once you have 100 labeled examples" },
+    { text: "No — missing or stale knowledge is a RAG problem; fine-tuning teaches style and behavior, not facts" },
+    { text: "No — you should pre-train a new model on your docs" }
+  ]}
+  correct={2}
+  explanation="Fine-tuning shapes tone, format, and behavior; it is a poor and expensive way to inject knowledge, and it goes stale the moment your docs change. Retrieval (RAG) supplies current facts at request time. Confusing the two sends teams down the wrong rabbit hole for weeks — it is the page's headline warning. Pre-training costs tens of millions and is done by a handful of labs."
+/>
+
+<Question
+  prompt="As an AI engineer building product features, which of these will you actually do every day?"
+  options={[
+    { text: "Pre-training foundation models" },
+    { text: "Inference — calling a trained model via an API" },
+    { text: "RLHF preference tuning" },
+    { text: "Writing GPU kernels for training runs" }
+  ]}
+  correct={1}
+  explanation="Pre-training happens once per model release at a handful of labs; your daily work is inference — sending requests and handling responses. Even fine-tuning and RLHF are occasional, evidence-driven moves, not routine. That is why your performance budget, cost model, and tooling all revolve around per-call latency and per-token price."
+/>
+
+<Question
+  prompt="In the worked example, a 500-token question gets a 1,000-token answer at 3 dollars per million input and 15 dollars per million output. What dominates the bill?"
+  options={[
+    { text: "Input tokens, because the prompt includes the system prompt" },
+    { text: "Training amortization fees from the provider" },
+    { text: "A fixed per-request charge" },
+    { text: "Output tokens — 1.5 cents of the 1.65-cent total" }
+  ]}
+  correct={3}
+  explanation="Output tokens cost 5 times more per token here and the answer is twice as long as the question, so output is roughly 90 percent of the cost. There is no training line and no fixed per-request fee — you pay per token in and per token out, which is why capping and shortening outputs is the first cost lever to pull."
+/>
+
+</Quiz>
 
 ---
 

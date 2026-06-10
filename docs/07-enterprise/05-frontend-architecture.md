@@ -153,6 +153,46 @@ Standardizing this shape across the company is what makes cross-feature analysis
 - **Treating the AI disclosure badge as cosmetic.** It's legally required in several jurisdictions (and the EU AI Act tightens this through 2026). Mishandling it can cost regulatory standing. Treat it like a privacy notice — non-optional, reviewed by Legal, consistent across the product.
 :::
 
+<Quiz id="enterprise-ai-frontend-architecture-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Why do enterprises ship AI UI as a small set of design-system components instead of letting teams build bespoke interfaces?"
+  options={[
+    { text: "Bespoke UIs are slower to render" },
+    { text: "Design tokens cannot be shared across teams otherwise" },
+    { text: "Frontend frameworks limit the number of chat components" },
+    { text: "Dozens of slightly-different UIs would wreck accessibility, brand consistency, internationalization, and analytics" }
+  ]}
+  correct={3}
+  explanation="With 60 product surfaces owned by different teams, 60 bespoke chat UIs would be a disaster for accessibility, i18n, and telemetry. Each canonical component bakes in WCAG conformance, translation, and standard events — and every consuming feature inherits the audit. The other options sound technical but are not the page's argument."
+/>
+
+<Question
+  prompt="What makes A/B testing AI features different from conventional A/B testing, per the page?"
+  options={[
+    { text: "Eval scores must be wired in as guardrail metrics, not just observed business metrics" },
+    { text: "AI experiments cannot use holdout groups" },
+    { text: "AI variants must always run for exactly one week" },
+    { text: "Conversion metrics do not apply to AI features" }
+  ]}
+  correct={0}
+  explanation="A treatment that lifts CSAT 4% but drops groundedness from 0.91 to 0.78 is shipping more hallucinations — the business metric looks good while reputational debt accrues. That is why eval scores are guardrails that can block a ship decision. The one-week answer inverts the page: AI tests should run 4–8 weeks because of model and prompt drift."
+/>
+
+<Question
+  prompt="How should streaming AI output be handled for screen readers?"
+  options={[
+    { text: "Announce every token as it arrives, for maximum fidelity" },
+    { text: "Disable streaming entirely when a screen reader is detected" },
+    { text: "Batch tokens into semantic chunks like sentences or clauses before announcing" },
+    { text: "Show the output only after the user presses a key" }
+  ]}
+  correct={2}
+  explanation="Naive token-by-token streaming spams screen readers with partial words. Mature components batch output into sentence or clause chunks before announcing. Announcing every token sounds like the most faithful option — that is the trap — but it produces an unusable experience for screen-reader users."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [The Internal AI Platform](./06-developer-experience.md) — the developer experience the AI Platform team builds on top of this architecture.

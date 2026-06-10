@@ -162,4 +162,44 @@ A single week of work is barely visible on your AI portfolio. A year of weeks is
 - **Picking the management track because it sounds like promotion.** EM at year 5 is a great move *if* you actually want the daily life of 1:1s, hiring, planning, no code. It's a bad move if you took it because the title sounded bigger. Senior IC / Staff IC is a real, well-paid destination.
 :::
 
+<Quiz id="career-multi-year-path-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the Year 1 goal on the multi-year path?"
+  options={[
+    { text: "Ship one real LLM feature with an eval suite, deployed publicly" },
+    { text: "Land a role at a frontier lab" },
+    { text: "Pick a specialization and publish about it" },
+    { text: "Complete a major certification or degree program" }
+  ]}
+  correct={0}
+  explanation="Year 1 is concrete: a deployed streaming chat app with at least one tool call and 20-plus eval cases, a blog post on one design decision, and one merged OSS PR. The shipped-with-evals discipline built here is what compounds into Staff-level work years later."
+/>
+
+<Question
+  prompt="What does the page say about consistency versus intensity in building an AI career?"
+  options={[
+    { text: "Intensity wins - compressed sprints are how outliers reach senior fast" },
+    { text: "Either works as long as total hours match" },
+    { text: "Consistency beats intensity at every stage - showing up most weeks for years beats a three-month sprint" },
+    { text: "Intensity matters early, consistency matters only after senior" }
+  ]}
+  correct={2}
+  explanation="A two-week 80-hour grind followed by three months of nothing nets less than 10 sustained hours per week. Compound interest is the real model: a single week is barely visible, but a year of weeks is a transformation."
+/>
+
+<Question
+  prompt="How does the page characterize the Engineering Manager track relative to Staff or Principal IC?"
+  options={[
+    { text: "EM is the promotion above Staff IC and the natural next step" },
+    { text: "Staff IC exists only at frontier labs, so most people must choose EM" },
+    { text: "EM pays substantially more than IC at every level" },
+    { text: "EM is a parallel track, not a promotion - choose it only if you want the daily life of 1:1s, hiring, and planning instead of code" }
+  ]}
+  correct={3}
+  explanation="EM and Staff IC are parallel, comparably paid tracks at major AI employers. Picking management because the title sounds bigger is a named mistake; Senior and Staff IC are real, well-paid destinations for people who want to keep building."
+/>
+
+</Quiz>
+
 → Next: [Where to find work](./13-jobs.md).

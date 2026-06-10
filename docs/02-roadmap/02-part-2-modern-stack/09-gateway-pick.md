@@ -8,7 +8,18 @@ description: AI gateways add rate limiting, caching, fallbacks, and observabilit
 
 # Gateway Pick — Do You Need One, and Which?
 
+:::info[Dated content — June 2026]
+This page names specific tools, models, and prices, which rotate quarterly. The *selection
+logic* is durable; the names are a snapshot. Cross-check the
+[Model snapshot](/docs/model-snapshot) for current model names and pricing.
+:::
+
+
 > **In one line:** An AI gateway is middleware between your app and providers — adding rate limiting, caching, fallbacks, and observability. Worth it as soon as you have multiple providers, multi-tenant cost attribution, or care about resilience.
+
+:::tip[In plain English]
+A gateway is a middleman that sits between your app and the AI companies you call. Instead of talking to each provider directly, your app talks to the gateway, which quietly adds useful services on the way through: remembering repeat answers so you don't pay twice, switching to a backup provider when one goes down, and keeping tabs on who spent what. This page decides whether you need that middleman at all — a small personal project usually doesn't — and which one to pick when you do. The trade is simple: a tiny bit of added delay in exchange for resilience, savings, and bookkeeping you'd otherwise build yourself.
+:::
 
 ## What an AI gateway does
 
@@ -161,5 +172,45 @@ The catch: fallback to a different model means responses can vary in style. For 
 - **Skipping the gateway's free tier.** Cloudflare's free tier is generous. Start there; pay only when you're past it.
 - **Two gateways stacked.** "Cloudflare in front of LiteLLM in front of providers" is two layers of debugging surface for no gain. Pick one.
 :::
+
+<Quiz id="gateway-pick-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Which situation clearly justifies adding an AI gateway?"
+  options={[
+    { text: "A hobby project making a few hundred calls per month" },
+    { text: "A latency-critical feature with one provider and one tenant" },
+    { text: "A multi-tenant SaaS that needs per-tenant cost attribution and automatic fallback when a provider has an outage" },
+    { text: "Any project that uses an LLM at all" }
+  ]}
+  correct={2}
+  explanation="Gateways earn their keep with multi-tenancy, provider redundancy, heavy caching opportunity, or compliance routing. For a solo project on one provider, direct SDK calls are simpler — and gateways add 20 to 100 milliseconds, which matters when the latency budget is tight."
+/>
+
+<Question
+  prompt="What is the recommended order for adopting gateway caching strategies?"
+  options={[
+    { text: "Start with exact-prompt caching; adopt semantic caching only when you can afford to verify it with evals" },
+    { text: "Start with semantic caching since it has higher hit rates" },
+    { text: "Cache every request by default and remove exceptions later" },
+    { text: "Avoid caching entirely, since responses should always be fresh" }
+  ]}
+  correct={0}
+  explanation="Exact-prompt caching is simple and safe — identical prompt, identical response. Semantic caching returns answers for 'close enough' prompts, which raises hit rates but risks subtly wrong responses, so it needs eval verification. And some prompts should never be cached, like ones with the current date or user-specific context."
+/>
+
+<Question
+  prompt="What is the catch with automatic fallback chains between providers?"
+  options={[
+    { text: "Fallbacks double the cost of every request" },
+    { text: "Providers prohibit routing the same prompt to a competitor" },
+    { text: "Fallbacks only work for streaming responses" },
+    { text: "A different model can respond in a different style or lack features the prompt depends on, so fallback paths must be tested" }
+  ]}
+  correct={3}
+  explanation="Falling back to another model keeps you online during outages, but the replacement may vary in style or fail on provider-specific features like particular tool-calling or structured-output behavior. Test the fallback path; do not assume prompt compatibility."
+/>
+
+</Quiz>
 
 → Next: [Trends](./10-trends.md) — six 2026 directional shifts to recognize.

@@ -152,4 +152,44 @@ Rough 2026 premium over generalist AI engineer at the same level:
 - **Refusing to negotiate.** First offers in AI engineering are routinely 10–25% below what the company will pay. Companies expect a counter; not countering is the single most common $30K+ mistake junior engineers make.
 :::
 
+<Quiz id="career-compensation-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the page's recommended way to compare two offers, such as a scaleup package versus a Big Tech package?"
+  options={[
+    { text: "Compare headline total comp, since that is what recruiters quote" },
+    { text: "Compare base salaries only, since equity is unpredictable everywhere" },
+    { text: "Compare cash-equivalent Year-1 value, with illiquid pre-IPO equity discounted toward zero" },
+    { text: "Compare the four-year totals on each offer letter" }
+  ]}
+  correct={2}
+  explanation="In the worked example, a 360K headline scaleup offer becomes about 260K cash-equivalent once illiquid equity is discounted - while a Big Tech offer with liquid RSUs is worth its face value. Always do this math before negotiating: headline TC and realistic Year-1 value can differ by 200K or more."
+/>
+
+<Question
+  prompt="How does the page say to value equity at a pre-IPO AI scaleup?"
+  options={[
+    { text: "At the company's last-round 409A valuation, as quoted in the offer" },
+    { text: "At double the quoted value, since AI valuations keep rising" },
+    { text: "As guaranteed income spread over the four-year vest" },
+    { text: "As roughly zero expected value until a liquidity event - discount aggressively and negotiate in dollars, not percentages" }
+  ]}
+  correct={3}
+  explanation="The same startup cohort produced both Cursor-level appreciation and dozens of companies whose equity is now under strike price. Never accept weak base for 'equity upside' unless you can afford to be wrong about the company - it is a lottery ticket attached to the offer, not part of it."
+/>
+
+<Question
+  prompt="What does the page call the single most common 30K-plus mistake junior engineers make?"
+  options={[
+    { text: "Not countering the first offer, even though companies routinely open 10 to 25 percent below what they will pay" },
+    { text: "Choosing a scaleup over a frontier lab" },
+    { text: "Negotiating too aggressively and losing the offer" },
+    { text: "Taking sign-on bonuses instead of higher base" }
+  ]}
+  correct={0}
+  explanation="Companies expect a counter; not making one leaves real money on the table. Pair this with quarterly benchmarking on levels.fyi - comp moves fast enough that a two-year-old anchor is already below current junior bands."
+/>
+
+</Quiz>
+
 → Next: [Continuous Learning](./09-continuous-learning.md).

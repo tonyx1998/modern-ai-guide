@@ -185,6 +185,46 @@ A team's first instinct on "improve search" is "add an LLM." It's usually backwa
 Once that works, *then* you decide whether you want an LLM in the loop — to rewrite the query, to rerank, to summarize results. Most apps don't need it.
 :::
 
+<Quiz id="pattern-embeddings-search-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Why is the 'embeddings without the chat model' pattern so attractive for features like search, recommendations, and dedup?"
+  options={[
+    { text: "Embeddings are more accurate than any LLM at answering questions" },
+    { text: "It avoids needing a vector index entirely" },
+    { text: "Query time needs no LLM call, so it is cheap, fast, and has no hallucination surface" },
+    { text: "It removes the need for labelled data in every case" }
+  ]}
+  correct={2}
+  explanation="Once every item has a pre-computed vector, a whole family of features collapses into 'find the closest neighbours' — sub-cent embedding cost plus a vector lookup, no LLM bill, nothing to hallucinate. Embeddings are not 'more accurate than an LLM'; they solve a different problem (similarity), and k-NN classification still depends on labelled examples."
+/>
+
+<Question
+  prompt="According to the page, when does keyword search beat embeddings?"
+  options={[
+    { text: "Exact-string lookups like product SKUs, error codes, and version strings" },
+    { text: "Synonym and paraphrase matching such as 'refund' vs 'money back'" },
+    { text: "Cross-language matching with multilingual content" },
+    { text: "Concept queries like 'billing problems'" }
+  ]}
+  correct={0}
+  explanation="Embeddings shine on synonyms, paraphrases, cross-language matches, and concept queries — but lose to keyword/BM25 on exact tokens like SKUs and error codes, which is why production search is almost always hybrid (BM25 plus vector, fused). The other three options are precisely where embeddings win, so they make tempting but wrong answers."
+/>
+
+<Question
+  prompt="What goes wrong if you store vectors from two different embedding models in the same index?"
+  options={[
+    { text: "The index gets slower but results stay correct" },
+    { text: "Distances across the two models are meaningless, so similarity results are garbage" },
+    { text: "Nothing, as long as both models output the same dimensionality" },
+    { text: "The database rejects the inserts automatically" }
+  ]}
+  correct={1}
+  explanation="Vectors from different models live in different spaces, so comparing them is comparing apples to oranges — the page says to tag every row with model name and version and never query across them. Matching dimensionality is the tempting trap: same vector length does not mean same space, and the database has no idea which model produced a vector."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Multimodal patterns](./10-multimodal-patterns.md).

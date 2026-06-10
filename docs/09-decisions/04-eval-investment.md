@@ -112,6 +112,46 @@ Three months later, when they try the next model upgrade, the regression is caug
 The investment that would have prevented the two-week regression: about 4 hours of engineer time, one time. Most teams pay this cost eventually — the question is whether they pay it before or after the bad week.
 :::
 
+<Quiz id="eval-investment-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Roughly what share of AI engineering time should go to evals once a feature is in mature production?"
+  options={[
+    { text: "About 5%" },
+    { text: "About 10%" },
+    { text: "About 25%" },
+    { text: "About 40%" }
+  ]}
+  correct={3}
+  explanation="The ladder is roughly 10% at prototype, 25% in early production, 40% in mature production, and 50%+ for critical or regulated features. 10% is correct early but under-investment once real users depend on the feature — and under-investment is the leading cause of silent quality decay."
+/>
+
+<Question
+  prompt="Which of these is a sign you are UNDER-investing in evals?"
+  options={[
+    { text: "You discovered a regression because a user complained" },
+    { text: "Eval CI takes longer than the feature work" },
+    { text: "You have 50,000 eval examples" },
+    { text: "You are building a custom eval platform" }
+  ]}
+  correct={0}
+  explanation="Learning about regressions from user complaints means you have no measurement loop. The other three are tempting picks because they sound bad — but they are listed as signs of OVER-investing, the rarer failure where eval infrastructure starves product work."
+/>
+
+<Question
+  prompt="What is the recommended way to start if you are at 0% eval investment?"
+  options={[
+    { text: "Buy a hosted eval platform first" },
+    { text: "Wait until after launch to add evals" },
+    { text: "Collect about 30 real examples and score them in a pytest file" },
+    { text: "Hand evals to a dedicated QA team" }
+  ]}
+  correct={2}
+  explanation="The minimum viable setup is one Saturday: 30 real examples, a pytest file with an LLM-as-judge scorer, re-run on every prompt or model change. It catches 80% of what a fancy platform would. 'We'll add evals after launch' is the classic mistake — later never comes — and evals belong to the engineers who own the prompts, not QA."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Cost of inaction](./05-cost-of-inaction.md).

@@ -278,6 +278,44 @@ Write three small scripts in a `stage-0/` folder: (a) `verify_openai.py` (or `.t
 
 ## Page checkpoint
 
+<Quiz id="stage-0-setup-quick-check" variant="micro" title="Quick check">
 
+<Question
+  prompt="You just signed up for OpenAI and Anthropic and are eager to write your first script. According to this stage, what should you do before writing any code?"
+  options={[
+    { text: "Install LangChain so you have framework support ready" },
+    { text: "Set up both Python and TypeScript environments to keep options open" },
+    { text: "Set a hard spend cap and email alerts on every provider dashboard" },
+    { text: "Memorize each provider's pricing table" }
+  ]}
+  correct={2}
+  explanation="Every horror story about a $5,000 surprise bill shares one cause: a leaked key with no hard cap. Setting the cap takes two minutes and protects you from your own mistakes forever after. Installing LangChain is explicitly an anti-pattern at this stage — learning LLMs through a framework hides exactly what you are trying to learn — and installing both languages is how you make zero progress in two languages instead of real progress in one."
+/>
+
+<Question
+  prompt="Why does this stage insist on using the raw provider SDK instead of starting with a framework like LangChain?"
+  options={[
+    { text: "Frameworks hide the underlying mechanics, so when they fail you will have no mental model of what is happening" },
+    { text: "Frameworks are too slow for production use" },
+    { text: "LangChain does not support OpenAI models" },
+    { text: "Raw SDKs are cheaper per API call" }
+  ]}
+  correct={0}
+  explanation="The guide compares learning LLMs through a framework to learning to drive on a self-driving car: it works until it fails, and then you have no model for debugging it. Frameworks become valuable at Stage 5+ once you have raw-SDK experience to compare against. Cost per call is identical either way — the framework is just code around the same HTTP request — and LangChain supports every major provider, so those distractors fail on facts."
+/>
+
+<Question
+  prompt="You run git status after your first commit and see .env listed as a tracked file. What is the correct response?"
+  options={[
+    { text: "Delete the file from the repo and move on" },
+    { text: "Add .env to .gitignore and amend the commit" },
+    { text: "Nothing — the providers scan GitHub and will revoke leaked keys for you" },
+    { text: "Rotate the API key on every provider dashboard immediately" }
+  ]}
+  correct={3}
+  explanation="Once a key has been committed, treat it as compromised — deleting the file does not remove it from git history, and scraper bots often grab leaked keys within minutes, before a provider's own scanning revokes them. Rotating the key is the only fix that actually closes the hole. Fixing .gitignore is necessary too, but only rotation protects you from the copy that may already be in someone else's hands."
+/>
+
+</Quiz>
 
 → [Next: Stage 1 — First API call](./02-stage-1-first-call.md) · [Back to Part I overview](./index.md)

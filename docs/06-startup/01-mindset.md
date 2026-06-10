@@ -94,6 +94,46 @@ A team that asks these three questions reflexively will avoid the majority of pi
 - **Believing the model is your moat.** Six months from now, your customer can buy your competitor's app that uses the same model and costs 30% less. Differentiate on data, taste, UX, and speed — not on model brand.
 :::
 
+<Quiz id="startup-ai-mindset-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What are the two opposite failure modes for AI quality at startup scale?"
+  options={[
+    { text: "Too much TypeScript and too much Python" },
+    { text: "Over-hiring researchers and under-hiring engineers" },
+    { text: "Vibes-driven AI with no evals, and AI-by-committee where every change waits a week for review" },
+    { text: "Fine-tuning too early and fine-tuning too late" }
+  ]}
+  correct={2}
+  explanation="The dual traps are shipping prompt changes on vibes (silent regressions your top customers find first) and burying a 12-person team under a 14-step review process (velocity drops to zero). The balance is eval-gated changes that run in about 8 minutes of CI — speed and discipline are not opposites if the tooling is right."
+/>
+
+<Question
+  prompt="According to this page, what IS your moat at startup scale?"
+  options={[
+    { text: "Your eval set, retrieval index, prompt library, and iteration speed" },
+    { text: "Exclusive access to the best frontier model" },
+    { text: "Your fine-tuned custom model weights" },
+    { text: "Patents on your prompt engineering techniques" }
+  ]}
+  correct={0}
+  explanation="Anyone can call the same API you do, so the model is explicitly NOT the moat — the durable assets are curated evals from real customer traces, a domain-tuned retrieval index, a battle-tested prompt library, and the speed to ship-evaluate-iterate in weeks. Exclusive model access is the seductive wrong answer because it feels like the obvious advantage, but your competitor buys the same API tomorrow."
+/>
+
+<Question
+  prompt="When the team says 'the model is wrong', what does the page say is usually true?"
+  options={[
+    { text: "The provider is having an outage" },
+    { text: "About 80% of the time the real problem is retrieval, the prompt, or the evaluation — swap the model last, not first" },
+    { text: "The model genuinely needs to be replaced with a larger one" },
+    { text: "The temperature setting is too high" }
+  ]}
+  correct={1}
+  explanation="The common-mistakes list is blunt: most 'model wrong' diagnoses are actually mistakes in your own pipeline, so a model swap should be the last lever pulled, not the first. 'We need a better model' is the tempting conclusion because it requires no self-examination — which is exactly why the page calls it out."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [Team Structure](./02-team-structure.md) where we cover the first AI hire, the AI engineer + PM + designer triad, and when to add a platform person.

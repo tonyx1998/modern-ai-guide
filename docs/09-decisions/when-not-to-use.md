@@ -87,6 +87,46 @@ The fix: ship a better keyword search with typo tolerance and an "ask AI" button
 The lesson: "we're adding AI to search" wasn't wrong, but the framing was. "We're adding AI to the 5% of search queries keyword can't handle" is the right framing — and it falls out of asking "when *not* to use AI" honestly.
 :::
 
+<Quiz id="when-not-to-use-ai-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="According to this page, when is AI the right tool?"
+  options={[
+    { text: "Whenever the demo is impressive" },
+    { text: "When the input is open-ended and a wrong answer is recoverable" },
+    { text: "When latency must stay under 100ms at scale" },
+    { text: "When the input is already structured" }
+  ]}
+  correct={1}
+  explanation="Both conditions matter: open-ended input and recoverable failure. Structured input calls for a query or rules engine, sub-100ms latency budgets kill the LLM round-trip, and impressive demos run on cherry-picked inputs while production runs on whatever users actually type."
+/>
+
+<Question
+  prompt="What does the page recommend for fraud detection on structured tabular data?"
+  options={[
+    { text: "A frontier LLM call per transaction" },
+    { text: "A multi-agent review pipeline" },
+    { text: "RAG over historical fraud cases" },
+    { text: "Gradient-boosted models on the structured data" }
+  ]}
+  correct={3}
+  explanation="Tabular fraud detection is one of the listed 'looks like an AI problem but isn't' cases — gradient-boosted models still beat LLMs there and are about 10,000x cheaper per call. The LLM options are tempting because fraud feels like reasoning, but the input is structured, so classical ML wins."
+/>
+
+<Question
+  prompt="In the worked example, what was the fix for the slow, expensive AI-powered docs search?"
+  options={[
+    { text: "Better keyword search with typo tolerance, plus an opt-in 'ask AI' button for the roughly 5% of conceptual queries" },
+    { text: "Running full RAG on every query with a bigger model" },
+    { text: "Removing search from the product entirely" },
+    { text: "Caching every possible RAG answer in advance" }
+  ]}
+  correct={0}
+  explanation="The data showed about 80% of queries were exact-match and 15% were typos — only 5% genuinely needed semantic answering. Scoping AI to that 5% dropped latency 90% and cost 95%. The lesson: 'add AI to search' wasn't wrong, but asking when NOT to use AI produced the right framing."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Eval investment](./04-eval-investment.md).

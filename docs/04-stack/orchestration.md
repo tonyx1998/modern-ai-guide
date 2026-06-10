@@ -7,6 +7,13 @@ description: Inngest, Temporal, Trigger.dev, Restate, Hatchet — running long-r
 
 # Orchestration
 
+:::info[Dated content — June 2026]
+This page names specific tools, models, and prices, which rotate quarterly. The *selection
+logic* is durable; the names are a snapshot. Cross-check the
+[Model snapshot](/docs/model-snapshot) for current model names and pricing.
+:::
+
+
 > **In one line:** Durable, resumable, observable execution engines. LLM workflows can take minutes (agents, batch jobs, long-context generation); a single HTTP request can't survive that. Workflow engines can.
 
 :::tip[In plain English]
@@ -133,6 +140,46 @@ Orchestration cost is almost always trivial compared to LLM token cost. The savi
 - **No `start_to_close_timeout`.** A hung LLM call hangs the workflow until heat-death of the universe.
 - **Mixing dev and prod workflow IDs.** Re-deploying a workflow definition with the same ID but different code is the classic Temporal footgun. Use versioning.
 - **Orchestration for what should be a function call.** A 200ms LLM call doesn't need durable execution. Don't reach for the heavy hammer.
+
+<Quiz id="orchestration-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Which workload does NOT need a workflow engine, according to the page?"
+  options={[
+    { text: "A single-request streaming chatbot" },
+    { text: "An agent that researches over an hour" },
+    { text: "Nightly batch embedding of 100k documents" },
+    { text: "A flow that pauses for human approval" }
+  ]}
+  correct={0}
+  explanation="A streaming chat response fits comfortably inside one HTTP request, so durable execution is the heavy hammer the page warns against reaching for. The other three are the canonical triggers: long-running work, fan-out batch jobs, and human-in-the-loop pauses all need state that outlives a request."
+/>
+
+<Question
+  prompt="Why do long-running AI flows need durable execution instead of a plain HTTP request?"
+  options={[
+    { text: "HTTP cannot carry responses larger than 10MB" },
+    { text: "Steps are checkpointed to durable storage, so deploys, crashes, and provider 429s resume the flow instead of losing the tokens you already paid for" },
+    { text: "Workflow engines make LLM calls faster" },
+    { text: "Providers require batch submission for long jobs" }
+  ]}
+  correct={1}
+  explanation="The economic argument is the key one: a container restart at minute 8 of a 10-minute agent run throws away real token spend unless state was persisted. Workflow engines don't speed up the calls themselves — they make the work survivable and resumable, which is a different kind of win."
+/>
+
+<Question
+  prompt="A workflow retried after a crash sends the same email four times. What rule was violated?"
+  options={[
+    { text: "Workflows must never include email steps" },
+    { text: "Each step needs a start-to-close timeout" },
+    { text: "Large blobs must not be stored in workflow state" },
+    { text: "Activities must be idempotent, because workflow engines retry steps by design" }
+  ]}
+  correct={3}
+  explanation="Retries are the whole mechanism of durable execution, so any side-effecting step must tolerate being run again — for example by checking whether the email was already sent. Timeouts and blob hygiene are real rules too, but they cause hangs and bloated state, not duplicate side effects."
+/>
+
+</Quiz>
 
 ---
 

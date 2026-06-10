@@ -8,7 +8,18 @@ description: Claude Haiku 4.5, GPT-5-mini, Gemini Flash — the tier where you s
 
 # Cheap Tier — Start Here, Climb Only When Forced
 
+:::info[Dated content — June 2026]
+This page names specific tools, models, and prices, which rotate quarterly. The *selection
+logic* is durable; the names are a snapshot. Cross-check the
+[Model snapshot](/docs/model-snapshot) for current model names and pricing.
+:::
+
+
 > **In one line:** Start every new feature here. If the eval passes, you're done — and you saved your future self 10–30x the bill.
+
+:::tip[In plain English]
+This page is about the budget shelf of AI models — the ones that cost pennies where the premium ones cost dollars. The surprise is how good they've gotten: today's cheap models are roughly as capable as the very best models from just two years ago. The habit this page teaches is simple but counterintuitive — build every new feature on the cheapest model first, test it properly, and only pay for a fancier one if the tests prove the cheap one fails. Most people assume cheap means prototype-only, and that assumption quietly costs their companies enormous amounts of money.
+:::
 
 ## What's in this tier (as of 2026)
 
@@ -126,5 +137,45 @@ Note: very few features end at "always use frontier." Most end at "router + chea
 - **Using cheap for tasks they fail at.** Throwing a 12-step reasoning chain at GPT-5-mini and concluding "the cheap tier doesn't work." Use the right tier for the task; cheap isn't for everything.
 - **Ignoring Groq for latency-sensitive cheap work.** Groq runs open-weights models at ~10x the speed of OpenAI/Anthropic for the same models. For chat UIs where TTFT matters, this is a free latency win.
 :::
+
+<Quiz id="cheap-tier-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the cardinal rule this page gives for moving up a model tier?"
+  options={[
+    { text: "Upgrade as soon as the feature reaches production" },
+    { text: "Upgrade whenever a newer model is released in the tier above" },
+    { text: "No upgrade without a failed eval case forcing the climb" },
+    { text: "Upgrade once monthly spend crosses a fixed budget threshold" }
+  ]}
+  correct={2}
+  explanation="If you swap to a pricier tier and your evals do not move, you wasted money; if they move on specific cases, you got real value. The eval numbers — not intuition, release announcements, or budget milestones — decide when a climb is justified."
+/>
+
+<Question
+  prompt="Which of these tasks is the WORST fit for a cheap-tier model?"
+  options={[
+    { text: "Classifying incoming support emails by category and priority" },
+    { text: "A reasoning chain with 12 dependent steps" },
+    { text: "Extracting structured fields from well-formed input" },
+    { text: "First-pass routing of requests to downstream handlers" }
+  ]}
+  correct={1}
+  explanation="Cheap models handle classification, extraction, and routing very well, but their reasoning breaks down around step five of a long chain — they start hallucinating or contradicting earlier steps. Long dependent reasoning is exactly where you climb tiers."
+/>
+
+<Question
+  prompt="A teammate says cheap models are only for prototypes and production always needs a better tier. What does this page say?"
+  options={[
+    { text: "Correct — production traffic should never run on the cheap tier" },
+    { text: "Correct for user-facing features, but background jobs can stay cheap" },
+    { text: "It depends entirely on which provider you use" },
+    { text: "Backwards — modern cheap models pass the evals for a large share of production features, so eval rather than assume" }
+  ]}
+  correct={3}
+  explanation="The page calls this the most consistent mistake AI engineers make. Modern cheap-tier models are roughly 2024-frontier quality, and many production features run on them permanently. The eval, not the tier label, tells you what is production-ready."
+/>
+
+</Quiz>
 
 → Next: [Embedding tier](./04-embedding-tier.md) — the picks for the vectors under your RAG.

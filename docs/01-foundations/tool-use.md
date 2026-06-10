@@ -164,6 +164,46 @@ Pre-2023 LLMs could only emit text. Tools turned them from "fancy autocomplete" 
 
 **→ Going deeper:** For the production discipline — tight tool sets, description craft, parallel execution, structured errors, and human confirmation on destructive actions — see [Tool use done right](../10-patterns/tool-use.md).
 
+<Quiz id="tool-use-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="The model responds with a tool_calls entry for get_weather. What must happen before the user gets a final answer?"
+  options={[
+    { text: "Nothing — the provider executes the function on its servers and returns the answer" },
+    { text: "Your code executes the function, appends the result as a tool role message, and calls the model again" },
+    { text: "You re-send the same request with tool_choice set to none" },
+    { text: "You parse the arguments and show them to the user as the answer" }
+  ]}
+  correct={1}
+  explanation="The model only emits a structured request — it never runs anything. Your code presses the button: execute the function, send the result back referencing the tool_call_id, and make a second model call so it can produce the final answer. The first option is the classic beginner assumption, but the provider has no access to your functions; tools live entirely in your code."
+/>
+
+<Question
+  prompt="The model keeps picking the wrong tool from your list of five. According to the page, the highest-impact fix is usually to:"
+  options={[
+    { text: "Switch to a larger model" },
+    { text: "Lower the temperature to zero" },
+    { text: "Rename all the tools with version numbers" },
+    { text: "Rewrite each tool's description to explain when to use it and when not to" }
+  ]}
+  correct={3}
+  explanation="The description is called out as the most important field — written like a docstring for a junior dev, it's the difference between 60% and 95% selection accuracy. A bigger model is the tempting reach, but the model can only choose well based on what you told it about each tool; vague descriptions fail on any model."
+/>
+
+<Question
+  prompt="A tool call throws an exception because the city wasn't found. What should your code do?"
+  options={[
+    { text: "Return the error as a structured tool result so the model can recover" },
+    { text: "Crash the request so the user sees the failure immediately" },
+    { text: "Silently retry the same call until it succeeds" },
+    { text: "Remove the tool from the list and call the model again" }
+  ]}
+  correct={0}
+  explanation="Errors returned as tool results (like an error field with a suggestion) let the model try a corrected spelling, retry later, or ask the user for clarification. Letting it crash turns a recoverable hiccup into a 500 for the user — and silently swallowing the failure is worse: the model fills the gap by hallucinating a plausible-looking result."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Function calling, deep](./function-calling-deep.md)

@@ -166,6 +166,46 @@ The user-facing pattern: submit → return a job ID → poll or websocket for co
 - **Mixing eval platforms.** Don't run half on Braintrust and half on Langfuse. The mental overhead of two tools eats the benefit of either.
 :::
 
+<Quiz id="startup-ai-architecture-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Why does the page call the LLM gateway the one non-negotiable piece of dedicated AI infra?"
+  options={[
+    { text: "It makes responses faster by routing to the nearest data center" },
+    { text: "It buys provider failover, unified logging, per-tenant cost attribution, and rate-limit pooling — and pays for itself on the first provider outage" },
+    { text: "Providers require gateways for production API access" },
+    { text: "It eliminates the need for an observability stack" }
+  ]}
+  correct={1}
+  explanation="When Anthropic had a 4-hour incident, gateway-less startups lost their entire AI surface for the morning while gateway users saw a 12-second blip before OpenAI fallback took over — and the fallback is one line of YAML. The latency option is plausible because gateways do sit in the request path, but routing speed is not among the listed benefits; resilience and visibility are."
+/>
+
+<Question
+  prompt="When should a startup migrate off pgvector to a dedicated vector database?"
+  options={[
+    { text: "When vector count nears ~10M with degrading latency, hybrid search outgrows Postgres tooling, or multi-region serving is required" },
+    { text: "As soon as the product uses RAG at all" },
+    { text: "At around 100K vectors, before performance becomes a problem" },
+    { text: "Never — pgvector scales indefinitely" }
+  ]}
+  correct={0}
+  explanation="pgvector keeps vectors and metadata in one database with one backup story and free transactions, which the page says covers most startups until real limits appear. The 100K-vectors option is named as a specific mistake — migrating 'because Pinecone scales better' wastes a quarter for no measurable gain; migrate when latency actually hurts."
+/>
+
+<Question
+  prompt="What is the default answer to 'should we split the monolith?' and what justifies an exception?"
+  options={[
+    { text: "Split early — microservices are easier to set up before the codebase grows" },
+    { text: "Split whenever a second engineer joins the team" },
+    { text: "Split as soon as you add a second AI feature" },
+    { text: "Don't split by default — only when a feature has wildly different scaling needs, a distinct compliance boundary, or a team needing its own release cadence" }
+  ]}
+  correct={3}
+  explanation="The monolith plus managed services carries a startup roughly from 0 to $5M ARR, and when you do split, you extract one service with the clearest boundary first to prove the pattern. The split-early option reflects conventional microservices advice the page explicitly rejects at this scale — the worked example grew 10x on the same stack with no rewrite."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [Environment Setup](./06-env-setup.md) where we cover the shared prompt library, eval scripts in CI, gateway config, and secrets management.

@@ -107,6 +107,46 @@ They pivot to hosted-open (Together AI running Llama 3 70B). Cost: $9k/month. Qu
 Two years later, when they're at 200M documents/month, self-hosting finally makes sense. They build the platform team then, with a real cost target. The lesson: hosted-open is almost always the right intermediate step. Self-host is the destination, not the starting point.
 :::
 
+<Quiz id="on-prem-vs-cloud-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the default deployment choice for a team without dedicated ML ops?"
+  options={[
+    { text: "Self-host Llama on a single H100" },
+    { text: "Hosted cloud model APIs" },
+    { text: "Build a small GPU cluster first" },
+    { text: "An air-gapped on-prem deployment" }
+  ]}
+  correct={1}
+  explanation="Hosted cloud is the default — the expensive part of self-hosting is not the GPU bill but the serving stack tuning, redundancy, capacity planning, upgrade cycle, and on-call. A single H100 running Llama is explicitly called a demo, not a production service."
+/>
+
+<Question
+  prompt="Below roughly what monthly hosted spend does self-hosting usually NOT pay back?"
+  options={[
+    { text: "About $1k per month" },
+    { text: "About $5k per month" },
+    { text: "About $500k per month" },
+    { text: "About $30-50k per month" }
+  ]}
+  correct={3}
+  explanation="A realistic all-in self-hosting cost is 2-4 ML engineers plus GPU spend, so below roughly $30-50k/month of hosted spend you'd be spending more to self-host. The low figures are tempting because GPU rental looks cheap — that comparison ignores everything except the hardware."
+/>
+
+<Question
+  prompt="What middle path gets open-model economics without owning GPU operations?"
+  options={[
+    { text: "Hosted-open providers like Together, Fireworks, or Groq" },
+    { text: "Renting one spot-priced GPU" },
+    { text: "Negotiating a bigger closed-API discount" },
+    { text: "Quantizing the model to run in the browser" }
+  ]}
+  correct={0}
+  explanation="Hosted-open gives open-weight cost economics (often 5-10x cheaper than frontier closed) with no ops, and since it runs the same weights, the eventual self-hosted migration stays real. In the worked example it cost $9k/month versus roughly $70k/month all-in for self-hosting the same model."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Framework vs raw SDK](./10-framework-vs-raw-sdk.md).

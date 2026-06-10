@@ -1,6 +1,6 @@
 # Modern AI Engineer Guide
 
-A comprehensive, beginner-friendly 2026 guide to how AI systems and LLM-powered applications are actually built, paired with a step-by-step roadmap for getting there from zero. **17 chapters in 7 parts**, written so a complete beginner can read it front to back and finish job-ready — while still being useful to working engineers. *Last reviewed: May 2026.*
+A comprehensive, beginner-friendly 2026 guide to how AI systems and LLM-powered applications are actually built, paired with a step-by-step roadmap for getting there from zero. **18 chapters in 7 parts**, written so a complete beginner can read it front to back and finish job-ready — while still being useful to working engineers. *Last reviewed: May 2026.*
 
 > **Live site:** https://tonyx1998.github.io/modern-ai-engineer-guide/
 

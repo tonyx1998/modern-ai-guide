@@ -170,6 +170,46 @@ Teams that have eval-on-production catch regressions within hours. Teams that do
 - **AI SLOs without auto-paging.** A dashboard that shows eval drift but doesn't page on burn-rate alerts is just a poster. Make the AI SLOs first-class with the same paging story as latency SLOs.
 :::
 
+<Quiz id="enterprise-ai-observability-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Why does enterprise AI telemetry fan out to four different sinks?"
+  options={[
+    { text: "Redundancy in case one vendor has an outage" },
+    { text: "Four audiences — engineers, AI engineers, security analysts, and auditors — and no single tool serves all of them well" },
+    { text: "Regulations require exactly four copies of every log" },
+    { text: "It reduces total storage costs" }
+  ]}
+  correct={1}
+  explanation="Application observability, LLM-specific traces, SIEM correlation, and immutable audit logs each serve a different consumer with different needs. The redundancy answer is tempting because multi-sink looks like a backup strategy — but the page is explicit that it is about audience fit, and making one tool do all four fails on cost, retention, or compliance."
+/>
+
+<Question
+  prompt="What should be sent to the SIEM, according to the page?"
+  options={[
+    { text: "Full prompt and response bodies for every call" },
+    { text: "Only failed or blocked requests" },
+    { text: "Structured metadata, with full bodies fetched from the audit store on demand" },
+    { text: "A daily summary report" }
+  ]}
+  correct={2}
+  explanation="The SIEM needs identity, classification, and pattern metadata for correlation — sending full bodies doubles the SIEM bill for no analytic value. Full-bodies-everywhere feels safer, which is the trap; the audit store keeps the complete content, and investigators fetch it when an incident requires it."
+/>
+
+<Question
+  prompt="What does the page call the single highest-leverage observability investment for enterprise AI?"
+  options={[
+    { text: "Eval-on-production — scoring a sample of live calls with the same scorers used in CI" },
+    { text: "Real-time dashboards for executive reporting" },
+    { text: "Doubling log retention across all sinks" },
+    { text: "Alerting on token usage spikes" }
+  ]}
+  correct={0}
+  explanation="Eval-on-production catches what CI cannot: silent quality degradation from model-version drift, retrieval-index decay, or real-world inputs the eval set never covered. Teams that have it catch regressions within hours; teams that do not find out weeks later from customer complaints — or a Reddit post."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [Security & Compliance Artifacts](./12-security-compliance.md) — the documents the observability and testing work feeds into.

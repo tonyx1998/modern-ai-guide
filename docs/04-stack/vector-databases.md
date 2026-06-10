@@ -7,6 +7,13 @@ description: pgvector, Pinecone, Weaviate, Qdrant, Chroma, Turbopuffer, Milvus, 
 
 # Vector databases
 
+:::info[Dated content — June 2026]
+This page names specific tools, models, and prices, which rotate quarterly. The *selection
+logic* is durable; the names are a snapshot. Cross-check the
+[Model snapshot](/docs/model-snapshot) for current model names and pricing.
+:::
+
+
 > **In one line:** Storage with a nearest-neighbor index over high-dimensional vectors. Pick mostly on your team's ops appetite and your corpus size — the algorithms are commoditized.
 
 :::tip[In plain English]
@@ -114,6 +121,46 @@ At 10M+ vectors the picture flips: hosted Pinecone/Weaviate get expensive, and s
 - **No re-embedding plan.** Six months in, you'll want to swap embedding models. Without an `embedding_model_id` column, you can't tell which rows are which.
 - **Treating Chroma as production.** Chroma is a fantastic prototype DB. It is not where you put your million-document corpus.
 - **Not measuring recall.** A vector DB with 70% recall@10 *looks* fine in demos and breaks subtly in production. Build a small labeled set and measure.
+
+<Quiz id="vector-databases-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="You already run Postgres and are shipping your first RAG feature. Which vector store does the page recommend starting with?"
+  options={[
+    { text: "Pinecone" },
+    { text: "pgvector" },
+    { text: "Milvus" },
+    { text: "Chroma" }
+  ]}
+  correct={1}
+  explanation="pgvector means one service to back up, one mental model, and SQL filters for free — the right start until you have a measured reason to leave. Pinecone is the zero-ops upgrade path later, and Chroma is a prototype DB the page explicitly warns against treating as production."
+/>
+
+<Question
+  prompt="Why does the consensus approach combine BM25 keyword search with vector search?"
+  options={[
+    { text: "Vector search misses exact-match strings like error codes, while BM25 misses paraphrases — fusing both covers each one's blind spot" },
+    { text: "BM25 is needed to compress the vector index" },
+    { text: "Vector search cannot return more than ten results" },
+    { text: "BM25 makes embeddings unnecessary for most queries" }
+  ]}
+  correct={0}
+  explanation="The two methods fail in opposite directions: semantic search can't reliably find 'error code E-417' verbatim, and keyword search can't connect 'reset my password' to 'rotate credentials.' Hybrid fuses the rankings to get both. Neither replaces the other — that's exactly why fusion beats either alone."
+/>
+
+<Question
+  prompt="A multi-tenant SaaS has thousands of small, mostly-cold corpora. Which option is purpose-built for this shape?"
+  options={[
+    { text: "pgvector" },
+    { text: "Pinecone" },
+    { text: "Chroma" },
+    { text: "Turbopuffer" }
+  ]}
+  correct={3}
+  explanation="Turbopuffer's object-storage backing makes cold data dirt cheap and is designed for many small tenants. pgvector and Pinecone both struggle with index-per-tenant economics at that count — that's the page's specific reason to deviate from the usual defaults here."
+/>
+
+</Quiz>
 
 ---
 

@@ -117,6 +117,46 @@ Higher coding/eval ratio, lower cross-functional ratio. The platform team is the
 - **Skipping the eval clinic to ship one more feature.** The eval clinic is leverage — an hour there unblocks weeks of work elsewhere. Protect that hour.
 :::
 
+<Quiz id="enterprise-ai-day-in-life-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Roughly what fraction of a senior enterprise AI platform engineer's day goes to writing code?"
+  options={[
+    { text: "About 30%" },
+    { text: "About 80%" },
+    { text: "Under 5%" },
+    { text: "About 60%" }
+  ]}
+  correct={0}
+  explanation="The work mix is roughly 25–35% coding, with the rest spent on reviews, eval clinics, cross-functional work with Risk and Privacy, and incident response. Engineers joining from startups expect the 80% answer — which is exactly the mid-career surprise the page describes: 'I joined to do AI, and now I'm in a prompt review committee meeting.'"
+/>
+
+<Question
+  prompt="How is a senior IC's output measured on an AI platform team?"
+  options={[
+    { text: "Pull requests merged per quarter" },
+    { text: "By leverage — how much better the work of every AI engineer in the company becomes" },
+    { text: "Number of meetings attended" },
+    { text: "Lines of SDK code shipped" }
+  ]}
+  correct={1}
+  explanation="A staff engineer who shipped one SDK feature but unblocked four teams through eval clinics and reviews delivered more than one who shipped four features nobody adopted. PR count is the metric people carry over from feature work — grading yourself on it in a platform role makes you skip the work that is actually your job."
+/>
+
+<Question
+  prompt="Which hour does the example day call the highest-leverage of the day?"
+  options={[
+    { text: "The 2:30 PM coding block on the SDK" },
+    { text: "The morning on-call triage" },
+    { text: "The eval-clinic office hour pairing with a new feature team" },
+    { text: "The prompt review committee meeting" }
+  ]}
+  correct={2}
+  explanation="One hour pairing on eval-case design left the Internal Tools team with 18 starter cases, a clear path to 50, and roughly two weeks of unblocked work. The coding block feels most productive in the moment — that is the trap — but the clinic hour multiplies across another team's entire effort."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [When to Use an Org-Wide AI Platform](./17-when-to-use.md) — which of these enterprise practices make sense at your scale, and which to skip.

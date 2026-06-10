@@ -137,6 +137,46 @@ Self-check:
 - Have you picked one model — Claude Sonnet 4.5 or GPT-5 mini — and committed to it for v0?
 - Did you spend less than 30 minutes on this decision?
 
+<Quiz id="solo-stack-selection-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="According to this page, when should you pick the Python-first stack (Stack B) over the TypeScript-first stack (Stack A)?"
+  options={[
+    { text: "Whenever you want the cheapest possible hosting" },
+    { text: "When the project centers on data work, vision or audio, or background and batch jobs" },
+    { text: "Whenever the project involves calling an LLM at all" },
+    { text: "When you need streaming chat UI with minimal config" }
+  ]}
+  correct={1}
+  explanation="Stack B (FastAPI + Modal) is for PDF parsing, chunking, image or audio work, cron, and batch processing — the numpy-shaped problems where Python's ecosystem wins. Streaming chat UI is the signature use case for Stack A with the Vercel AI SDK, so that option inverts the page's advice."
+/>
+
+<Question
+  prompt="You have spent more than 30 minutes torn between Stack A and Stack B. What does the page tell you to do?"
+  options={[
+    { text: "Prototype both stacks for a day each and compare" },
+    { text: "Pick whichever stack you most want to learn" },
+    { text: "Default to Stack A, since it has the lowest infra ceiling and shortest time to a deployed URL" },
+    { text: "Post in a community and ask which stack is better" }
+  ]}
+  correct={2}
+  explanation="The 'I can't decide' rule is explicit: past 30 minutes of deliberation, default to TypeScript / Next.js / Vercel, and bolt on Modal sidecars later if data-heavy parts appear. Prototyping both sounds rigorous but doubles the cost of a decision the page says barely matters — analysis-paralysis, not the wrong stack, is the actual project killer."
+/>
+
+<Question
+  prompt="Why does the page recommend pgvector over a dedicated vector database like Pinecone for v0?"
+  options={[
+    { text: "pgvector has better retrieval quality than any dedicated vector DB" },
+    { text: "Dedicated vector DBs cannot store more than a few thousand vectors" },
+    { text: "Pinecone does not offer any free tier" },
+    { text: "pgvector handles up to millions of rows for free, and outgrowing it means you have a real product" }
+  ]}
+  correct={3}
+  explanation="The argument is about scale-appropriate cost: pgvector inside Supabase covers solo-scale corpora for $0, and if you ever outgrow it you have revenue and real workload data to fund the upgrade. The quality claim is the tempting distractor — the page never says pgvector retrieves better, only that dedicated clusters are premature at this scale."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [Environment Setup](./05-env-setup.md) where we'll open the seven free-tier accounts and get your `.env.local` populated in under an hour.

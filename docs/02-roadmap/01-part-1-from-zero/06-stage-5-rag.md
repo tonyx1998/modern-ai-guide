@@ -329,6 +329,44 @@ Point this RAG at something you actually use: your notes folder, a company wiki 
 
 ## Page checkpoint
 
+<Quiz id="stage-5-rag-quick-check" variant="micro" title="Quick check">
 
+<Question
+  prompt="Why does this page call the instruction to say 'I don't know' THE most important line in a RAG system prompt?"
+  options={[
+    { text: "It reduces output tokens and therefore cost" },
+    { text: "Without it, the model answers confidently from its own training data when retrieval misses — hallucinating instead of admitting the context lacks the answer" },
+    { text: "Providers require a refusal clause for compliance reasons" },
+    { text: "It improves the quality of the retrieved chunks" }
+  ]}
+  correct={1}
+  explanation="Retrieval will miss sometimes — that is a ranking problem, not a rare event. When it does, a model without the escape hatch fills the gap from its own (public, frozen) training knowledge and presents it as if it came from your docs. With the line, you get an honest non-answer you can route to a human or a 'no results' UI. The instruction shapes generation behavior only; it cannot change what got retrieved."
+/>
+
+<Question
+  prompt="Your RAG returns nonsense similarity matches after a teammate 'upgraded' the query embedding to text-embedding-3-large while the docs stay indexed with text-embedding-3-small. What went wrong?"
+  options={[
+    { text: "The larger model is too slow, so queries time out before retrieval finishes" },
+    { text: "The vector DB needs its index rebuilt whenever any model changes" },
+    { text: "Queries and documents must be embedded with the SAME model — vectors from different models live in different spaces, so similarity scores become meaningless" },
+    { text: "text-embedding-3-large only works for documents, not queries" }
+  ]}
+  correct={2}
+  explanation="Embedding similarity only means something when both vectors come from the same model: each model defines its own vector space (different dimensions, different geometry). Mix models and you are comparing coordinates from two unrelated maps — the failure is silent garbage, not an error. The fix is either reverting the query model or re-indexing all docs with the new one. Speed is irrelevant, and both models embed queries and documents equally well — just not interchangeably."
+/>
+
+<Question
+  prompt="A user searches for 'token error in line 42' and your pure-vector RAG fails to retrieve the chunk containing that exact phrase. What is the recommended fix?"
+  options={[
+    { text: "Hybrid retrieval — combine vector search with BM25 keyword scoring and merge results with reciprocal rank fusion" },
+    { text: "Increase K so more chunks are retrieved per query" },
+    { text: "Lower the chunk size so each chunk is more specific" },
+    { text: "Switch to a larger LLM that can infer the missing context" }
+  ]}
+  correct={0}
+  explanation="Pure vector search finds meaning-similar text, which is exactly wrong for exact-match terms like error strings and identifiers — the semantically-closest chunk may not contain the literal phrase. BM25 keyword scoring catches those, and fusing both rankings with RRF is a roughly 50-line change that typically lifts retrieval quality 10-20 points on real corpora. Raising K or shrinking chunks just shuffles the same vector ranking, and a bigger LLM cannot answer from context it never received."
+/>
+
+</Quiz>
 
 → [Next: Stage 6 — Your first eval set](./07-stage-6-evals.md) · [Back to Part I overview](./index.md)

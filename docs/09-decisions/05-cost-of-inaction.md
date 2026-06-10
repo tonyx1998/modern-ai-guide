@@ -97,6 +97,46 @@ The mistake wasn't "we shouldn't have shipped." It was "we didn't do the inactio
 The new rule on the team: every "let's not do AI here" gets a one-pager with both columns of cost. Half the deferrals reverse once people see the numbers.
 :::
 
+<Quiz id="cost-of-inaction-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Why is 'not shipping AI' rarely the safe option, per this page's math?"
+  options={[
+    { text: "AI features almost never fail in production" },
+    { text: "The downside of shipping is bounded while the cost of not shipping compounds" },
+    { text: "Competitors usually fail at AI too" },
+    { text: "Inference costs are effectively zero" }
+  ]}
+  correct={1}
+  explanation="Shipping badly costs a bounded quarter of cleanup; not shipping compounds the other way — competitors capture the workflow, sales loses on the 'do you have AI?' question, and your team falls behind on tooling. The asymmetry, not AI reliability, is the argument."
+/>
+
+<Question
+  prompt="Where is the cost of inaction LOW?"
+  options={[
+    { text: "Workflows customers spend hours on weekly" },
+    { text: "Sales surfaces where buyers ask about AI" },
+    { text: "Stable, narrow features that already work" },
+    { text: "Internal tooling for the engineering team" }
+  ]}
+  correct={2}
+  explanation="Don't AI-ify a working invoice processor for the sake of it — the page lists stable working features, high-stakes regulated features, and 5-user niche tools as the low-inaction-cost cases. The other three options are where the inaction cost is highest, which makes them tempting wrong answers."
+/>
+
+<Question
+  prompt="What does the page say about the 'wait for the AI space to stabilize' strategy?"
+  options={[
+    { text: "It is a trap — the space won't stabilize on a useful timescale and your team's muscle stays at zero" },
+    { text: "It is prudent and generally recommended" },
+    { text: "It works as long as competitors also wait" },
+    { text: "It only applies to early-stage startups" }
+  ]}
+  correct={0}
+  explanation="Waiting sounds prudent but means your engineers never develop the muscle, eval discipline stays at zero, and you start 18 months behind. The right move is shipping cheap, low-risk AI features that teach you — not shipping everything, and not waiting for certainty."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [When to rebuild](./06-when-to-rebuild.md).

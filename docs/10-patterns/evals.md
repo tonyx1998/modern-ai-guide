@@ -27,13 +27,9 @@ flowchart TB
 - **Middle: LLM-as-judge.** Subjective quality, faithfulness, helpfulness. Slower, costs money; run on every prompt/model change.
 - **Top: human review.** Sampling-based; for high-stakes features, adversarial cases, and for calibrating the LLM-as-judge.
 
-## LLM-as-judge best practices
+## LLM-as-judge, in one production rule
 
-- Use a **different (often cheaper)** model than the one being judged. Self-preference bias is real.
-- Give the judge a clear rubric and the ground-truth answer when available.
-- Force structured output (`{score: int, reasoning: str}`).
-- Beware positional bias (in comparisons), verbosity bias, self-preference bias. Randomize and replicate.
-- Periodically check judge–human agreement on a small sample. If agreement drops, the judge prompt needs work.
+Use a **different (often cheaper)** model than the one being judged, give it a rubric and structured output, and calibrate it against human labels. The full judge discipline — pairwise vs pointwise, the bias catalog, calibration workflow — is taught in [Chapter 5: LLM-as-judge](/docs/evaluation/eval-llm-as-judge); this page only needs the production shape.
 
 ## Worked example — eval suite for the support assistant
 
@@ -118,15 +114,7 @@ Track score-per-PR in CI; alert on regressions of more than 5%. The Python equiv
 
 ## Eval set composition
 
-Aim for *representative* with *intentional* coverage:
-
-- **Easy cases** (sanity checks).
-- **Hard cases** (the kind you've seen fail).
-- **Edge cases** (unusual inputs — empty, very long, multilingual).
-- **Adversarial cases** (prompt injection, jailbreak).
-- **Regression cases** (anything that ever broke in prod).
-
-Aim for 30–50 cases at the start, growing toward 200–500. More important than size is *that the cases are real* — pulled from actual production traffic, not invented at a whiteboard.
+Start at 30–50 cases mixing easy / hard / edge / adversarial / regression, growing toward 200–500 — and keep them *real* (pulled from production traffic, not invented at a whiteboard). Dataset design in depth — golden sets, slices, sizing, versioning — is [Chapter 5: Building eval datasets](/docs/evaluation/eval-datasets).
 
 ## Prod sampling
 
@@ -186,6 +174,46 @@ After: a 40-case eval set, run on every prompt change, with 5 random prod traces
 
 **An eval set is not a one-time deliverable. It is the discipline that compounds.**
 :::
+
+<Quiz id="pattern-evals-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="In the eval pyramid, which checks run on every single PR?"
+  options={[
+    { text: "LLM-as-judge scoring of helpfulness" },
+    { text: "Human review of sampled responses" },
+    { text: "Deterministic checks — schema validity, citations in the retrieved set, correct tool called" },
+    { text: "All three layers run on every PR equally" }
+  ]}
+  correct={2}
+  explanation="The pyramid is tiered by cost: deterministic checks are cheap and fast so they gate every PR, LLM-as-judge runs on prompt and model changes, and human review samples weekly. Running everything on every commit is the tempting 'thorough' answer the page rejects — you do not pay 50 dollars in judge calls for a docs typo."
+/>
+
+<Question
+  prompt="What is the one production rule for LLM-as-judge given on this page?"
+  options={[
+    { text: "Use a different (often cheaper) model than the one being judged, and calibrate it against human labels" },
+    { text: "Use the same model that generated the output, since it knows its own intent" },
+    { text: "Always use the largest available model as the judge" },
+    { text: "Run the judge three times and average" }
+  ]}
+  correct={0}
+  explanation="Self-judging invites self-preference bias, and an uncalibrated judge is just a vibe with a rubric — so the rule is: different model family, structured rubric, validated against humans. Using the generating model 'because it knows its intent' is exactly the bias trap; the judge needs distance from the thing it scores."
+/>
+
+<Question
+  prompt="What makes prod sampling a compounding loop rather than just monitoring?"
+  options={[
+    { text: "The sample size grows automatically with traffic" },
+    { text: "The rolling score is plotted on a dashboard" },
+    { text: "Sampled responses are stored for compliance audits" },
+    { text: "The worst-rated production responses get promoted into permanent eval cases that run on every PR" }
+  ]}
+  correct={3}
+  explanation="Monitoring alone tells you quality dropped; the compounding step is feeding the worst real cases back into the eval set, so each production failure becomes a regression test that can never silently return. The dashboard option is the passive half — useful, but it is the promotion of failures into fixtures that makes quality compound."
+/>
+
+</Quiz>
 
 ---
 

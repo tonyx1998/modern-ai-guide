@@ -155,6 +155,46 @@ Five stages: filter → retrieve → blend → rerank → generate. Each adds a 
 You're never going to ship "vector search" as a feature. You're going to ship "answers my support docs questions," "finds relevant past tickets," "recommends related products." Vector search is the cheap, semantic primitive underneath. Master it and dozens of features become afternoons of work.
 :::
 
+<Quiz id="vector-search-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="You store chunks for many tenants in one table. A query for tenant 'acme' should:"
+  options={[
+    { text: "Run the vector search over everything, then filter the top 100 results by tenant" },
+    { text: "Filter to acme's rows first, then run the vector search on that subset" },
+    { text: "Skip filtering — embeddings naturally separate tenants in vector space" },
+    { text: "Run one vector search per tenant and merge the results" }
+  ]}
+  correct={1}
+  explanation="Post-filtering can silently return zero rows: if no acme chunks happen to land in the global top 100, the filter removes everything. Pre-filtering shrinks the candidate set first, which is both faster and more accurate. The idea that embeddings separate tenants is wishful thinking — similarity is about meaning, not ownership, and relying on it is also a data-leak risk."
+/>
+
+<Question
+  prompt="You have 5,000 vectors in a prototype. Should you build an HNSW index now?"
+  options={[
+    { text: "Yes — ANN indexes are always faster than brute force" },
+    { text: "Yes — HNSW improves recall as well as speed" },
+    { text: "No — HNSW stops working below 1 million vectors" },
+    { text: "No — brute force is fine at this scale; add an index when latency actually hurts" }
+  ]}
+  correct={3}
+  explanation="Brute-force exact search is fine up to about 100K vectors; at 5,000 an index is overhead, not optimization. The second option is backwards in a subtle way: ANN indexes trade a tiny bit of recall FOR speed — they never improve recall. The page's advice is to start brute-force and reach for HNSW when the numbers say you need it."
+/>
+
+<Question
+  prompt="Your top-10 vector results look topically related, but final answers are still wrong. The page says top-K results should be treated as:"
+  options={[
+    { text: "Final answers ready to show the user" },
+    { text: "Ground truth for fine-tuning" },
+    { text: "Candidates that still need reranking and LLM synthesis" },
+    { text: "Proof that the embedding model is broken" }
+  ]}
+  correct={2}
+  explanation="Top-K is the start of the pipeline, not the end: production systems pre-filter, retrieve a wide candidate set, rerank, and let the LLM synthesize with citations. Blaming the embedding model first is the reflex, but without a small eval set measuring recall you can't even tell whether retrieval or a later stage is failing."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Hybrid search](./hybrid-search.md)

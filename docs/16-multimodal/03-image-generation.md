@@ -137,6 +137,46 @@ Generated images are a real liability surface; treat safety as a feature, not an
 - **Ignoring likeness/IP risk** because "the model let me." The model's permissiveness is not your legal defense.
 :::
 
+<Quiz id="mm-image-gen-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="A user loves an image your app generated last week and wants the exact same one again with a tiny prompt tweak — but you can't reproduce it. What did you fail to log?"
+  options={[
+    { text: "The model's internal weights at generation time" },
+    { text: "The user's session id" },
+    { text: "The seed (plus model, steps, and guidance) — same seed, prompt, and settings reproduce the same image; without the seed every generation is unrepeatable" },
+    { text: "The C2PA content credentials" }
+  ]}
+  correct={2}
+  explanation="The seed is the random starting noise that determinism hangs on: log seed, model, steps, guidance, and prompt for every image, and you can reproduce or A/B any generation. C2PA is the tempting near-miss since it's also metadata — but it records provenance for verification, not the sampling inputs needed to regenerate."
+/>
+
+<Question
+  prompt="Generations keep ignoring parts of your prompt, so a teammate cranks the guidance scale (CFG) way up. What does this page predict?"
+  options={[
+    { text: "Oversaturated, artifact-heavy 'fried' images — guidance trades adherence against quality, and the right fix is a better prompt" },
+    { text: "Perfect prompt adherence with no downside" },
+    { text: "Slower generation but otherwise identical output" },
+    { text: "The model will refuse the prompt as unsafe" }
+  ]}
+  correct={0}
+  explanation="CFG pushes the denoising harder toward the prompt, and past a point the push distorts the image itself — the characteristic fried, oversaturated look. 'More adherence knob = more adherence' is the intuitive read, but the knob has a quality cost; restructuring the prompt (subject + setting + style + lighting) is the fix without the side effect."
+/>
+
+<Question
+  prompt="Your pipeline resizes and re-compresses every generated image before serving it, and you discover this strips the C2PA metadata and provenance signals. Why does this page treat that as a real problem?"
+  options={[
+    { text: "Stripped metadata makes files larger and slower to serve" },
+    { text: "You're destroying the provenance that identifies the image as AI-generated — which you're increasingly legally expected to preserve and disclose" },
+    { text: "Images without metadata can't be displayed in modern browsers" },
+    { text: "It's not a problem — invisible watermarks like SynthID always survive processing anyway" }
+  ]}
+  correct={1}
+  explanation="C2PA Content Credentials are signed metadata about how an image was made, and disclosure requirements for AI-generated media are spreading across jurisdictions and platforms. The SynthID answer is the subtle trap: pixel watermarks are designed to be robust, but relying on someone else's watermark while destroying the standard provenance chain in your own pipeline is not a compliance strategy."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Audio & speech](./04-audio-speech.md)

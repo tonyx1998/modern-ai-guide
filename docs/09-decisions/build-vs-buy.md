@@ -108,6 +108,46 @@ The post-mortem: the gateway felt like the kind of thing they "should" own. In r
 The rule: own the layer that makes you you. Buy the rest.
 :::
 
+<Quiz id="build-vs-buy-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the default at every layer of the AI stack?"
+  options={[
+    { text: "Buy or use OSS; build only when the layer IS your differentiator" },
+    { text: "Build everything in-house for maximum flexibility" },
+    { text: "Build the infrastructure, buy the prompts" },
+    { text: "Always self-host to control your data" }
+  ]}
+  correct={0}
+  explanation="Engineering effort should go to the things that make you different — your prompts, your eval set, your retrieval corpus — not undifferentiated plumbing. 'Flexibility' is the tempting wrong answer: flexibility you don't yet need is just another product you have to maintain."
+/>
+
+<Question
+  prompt="Why did the worked example's homegrown LLM gateway fail the math?"
+  options={[
+    { text: "Portkey turned out to be too expensive" },
+    { text: "The team was too large to coordinate" },
+    { text: "A real gateway is about a year of work, while a vendor charges $99 per month" },
+    { text: "Gateways are not allowed by providers" }
+  ]}
+  correct={2}
+  explanation="The 'two weeks to build' estimate covered only the happy path; the real version needs retries, per-vendor token counting, streaming, caching coordination, and cost attribution. Worse, the team's actual differentiator got LESS attention because the gateway ate the engineer-weeks."
+/>
+
+<Question
+  prompt="When is building a layer yourself justified?"
+  options={[
+    { text: "Whenever a framework makes it easy to build" },
+    { text: "When the layer is your differentiator, or no vendor honestly fits after evaluation" },
+    { text: "When you want flexibility you might need later" },
+    { text: "When you have already sunk three months into it" }
+  ]}
+  correct={1}
+  explanation="Build when it IS the moat, when no vendor fits, or when data sensitivity rules vendors out. The distractors are all listed mistakes: framework-made-it-easy building, speculative flexibility, and sunk cost — the page says to throw away the half-done platform and adopt the vendor, because the next three months are worth more than the last three."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [When *not* to use AI](./when-not-to-use.md).

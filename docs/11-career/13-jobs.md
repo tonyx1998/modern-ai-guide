@@ -171,4 +171,44 @@ A referred application to an AI-native scaleup converts to a first-round intervi
 - **Skipping the community step.** In 2026, the highest-yield career move under "first AI job" is often "join one community, ship one post a month, answer two questions a week." Six months of that builds the referral surface that powers the job search.
 :::
 
+<Quiz id="career-jobs-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What does the page describe as the highest-yield 2026 AI job-search strategy?"
+  options={[
+    { text: "Applying broadly to several hundred postings via quick-apply to maximize volume" },
+    { text: "A focused list of 15 to 30 named target companies plus consistent presence in 2 or 3 communities" },
+    { text: "Waiting for recruiters to reach out once your LinkedIn is optimized" },
+    { text: "Attending every conference and collecting recruiter contacts" }
+  ]}
+  correct={1}
+  explanation="Spray-and-pray converts under 2 percent in 2026; a 30-application focused search with warm threads out-yields a 300-application spray roughly tenfold. Most senior roles fill via referral or direct outreach, so the strategy is being a knowable person in a small number of places."
+/>
+
+<Question
+  prompt="According to the page, what makes a cold DM or email to a hiring manager actually convert?"
+  options={[
+    { text: "Sending it to multiple people at the company simultaneously" },
+    { text: "A long message detailing your full background and resume" },
+    { text: "Referencing a specific shipped artifact relevant to their team, in about four sentences" },
+    { text: "Following up daily until you receive a reply" }
+  ]}
+  correct={2}
+  explanation="An artifact-free 'can we chat about AI jobs' message has a near-zero response rate, while 'I shipped X over your tool Y and wrote it up here' converts at 20-plus percent to an interview. Short, specific, and anchored to work they can click."
+/>
+
+<Question
+  prompt="How does the page say referrals actually get built for someone who 'doesn't know anyone'?"
+  options={[
+    { text: "Paying for introductions through recruiting marketplaces" },
+    { text: "Asking for referrals in cold DMs to employees at target companies" },
+    { text: "Listing target-company employees as LinkedIn connections" },
+    { text: "Showing up helpfully in one community for a couple of months, then asking - referrals come from being a known good contributor" }
+  ]}
+  correct={3}
+  explanation="Referred applications convert to first-round interviews at roughly 5 to 10 times the cold rate. 'I don't know anyone' usually means 'I haven't shown up in a community long enough' - pick one Discord or meetup, be helpful for two months, then ask."
+/>
+
+</Quiz>
+
 → Next: [Chapter 15 Checkpoint](./99-checkpoint.md).

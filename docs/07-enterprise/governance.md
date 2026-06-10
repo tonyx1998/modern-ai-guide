@@ -10,6 +10,10 @@ description: Model registry, prompt registry, risk tiering, prompt review commit
 
 > **In one line:** Working enterprise AI governance produces a continuous stream of artifacts — model cards, risk-tier assignments, prompt registry entries, eval results, prompt-review records, AI Risk Review sign-offs — that map directly to the controls auditors and regulators look for.
 
+:::tip[In plain English]
+Think of governance as the paper trail that proves your AI is being run carefully. Every model, every prompt, and every risky feature gets a record: what it is, who approved it, how well it scored on tests, and what could go wrong. When an auditor or regulator shows up, the team that kept these records answers in minutes; the team that didn't spends weeks reconstructing history. This page walks through what those records are and the day-to-day routines that produce them.
+:::
+
 :::tip[Where this fits]
 The [Mindset](./01-mindset.md) page argued that governance *is* the work, not overhead. The [Security & Compliance](./12-security-compliance.md) page covered the formal regimes (SOC 2, HIPAA, EU AI Act). This page is the operational view: what the governance function does day-to-day, what artifacts it produces, what its rituals look like, and how to keep it from sliding into theater.
 :::
@@ -143,6 +147,46 @@ See the [Pitfalls page](./15-pitfalls.md) for the longer treatment. The short ve
 - **Letting the model card lag the feature.** A model card written at launch and never updated drifts from reality. Tie model-card freshness to prompt promotions.
 - **Forgetting that risk tiering is dynamic.** A Medium feature that adds a decisional capability is now High and needs the full review. Build the re-tiering moment into your change-management process.
 :::
+
+<Quiz id="enterprise-governance-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What does the page call the most important governance decision made for each AI feature?"
+  options={[
+    { text: "Which model provider to use" },
+    { text: "Which team owns the on-call rotation" },
+    { text: "The risk tier assigned at intake" },
+    { text: "The prompt template style" }
+  ]}
+  correct={2}
+  explanation="The tier — Low, Medium, or High — drives review depth, reviewer staffing, model choice, deployment topology, and audit retention for everything downstream. Getting it wrong at intake creates weeks of rework, which is why the page says to spend the 30 minutes up front. Model choice matters, but it is itself constrained by the tier."
+/>
+
+<Question
+  prompt="What reject rate indicates a healthy prompt review committee?"
+  options={[
+    { text: "0% — a good pipeline means nothing needs rejection" },
+    { text: "Roughly 10–25% of submissions sent back with concrete changes" },
+    { text: "At least 50%, to demonstrate rigor" },
+    { text: "100% on first submission, by design" }
+  ]}
+  correct={1}
+  explanation="A committee that approves everything inside 5 minutes per item is theater — it generates an audit record without doing risk-management work. Real committees send 10–25% back with concrete refinements and defer items with incomplete artifacts. The 0% answer is tempting because rejections feel like process failure; the page treats them as the health metric."
+/>
+
+<Question
+  prompt="What does the model registry feed, beyond serving as a list of approved models?"
+  options={[
+    { text: "The gateway's policy engine, the CI policy-lint, and the compliance artifact pipeline" },
+    { text: "The company's public marketing site" },
+    { text: "The HR system for engineer skill tracking" },
+    { text: "Nothing — it is purely documentation" }
+  ]}
+  correct={0}
+  explanation="The registry is enforcement infrastructure: the gateway only routes to registry-approved models, PRs referencing unregistered models fail CI, and model cards are generated per registry entry per feature. 'Purely documentation' is the trap — a registry nothing depends on drifts from reality and becomes exactly the kind of artifact auditors see through."
+/>
+
+</Quiz>
 
 ## What's next
 

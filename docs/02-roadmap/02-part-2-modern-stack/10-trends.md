@@ -8,7 +8,18 @@ description: Six directional shifts reshaping how 2026 AI is built — context e
 
 # Trends — Six 2026 Shifts
 
+:::info[Dated content — June 2026]
+This page names specific tools, models, and prices, which rotate quarterly. The *selection
+logic* is durable; the names are a snapshot. Cross-check the
+[Model snapshot](/docs/model-snapshot) for current model names and pricing.
+:::
+
+
 > **In one line:** Six directional shifts that reshape how 2026 AI apps are built. Not tools to adopt — patterns to recognize.
+
+:::tip[In plain English]
+Every previous page in this part picked a specific tool; this one is different — it describes six broad directions the whole field is moving in. Think of it as a weather forecast rather than a shopping list: you don't need to act on any of it today, but recognizing these patterns helps you make choices that age well. Knowing the currents also protects you from hype — you'll be able to tell when a trend genuinely fits a problem you have versus when it's just the loud thing this quarter. The page ends with the most useful advice of all: adopt at most one of these at a time, and only against a pain you can name.
+:::
 
 ## 1. Context engineering replaces "prompt engineering"
 
@@ -133,6 +144,46 @@ flowchart TB
 - **Adding MCP servers before they're needed.** MCP shines when you have many tools or many AI clients; on a single agent with 5 hand-coded tools, it adds ceremony.
 - **Eval-as-CI without enough cases.** A 5-case CI eval is theater. Build the eval set first (Stage 6); then automate it.
 :::
+
+<Quiz id="trends-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="How does this page say you should respond to these six trends?"
+  options={[
+    { text: "Rewrite your stack now so you are not left behind" },
+    { text: "Treat them as patterns to recognize, adopting roughly one per quarter against a specific painpoint" },
+    { text: "Ignore them until they appear in vendor marketing" },
+    { text: "Adopt all six at once since they reinforce each other" }
+  ]}
+  correct={1}
+  explanation="Trends are directional, not to-do lists. The failure mode is treating 'trend' as 'rewrite now' — the page recommends adopting one at a time, each tied to a painpoint you can actually name, not a wholesale migration."
+/>
+
+<Question
+  prompt="According to this page, what kind of agent products genuinely work in 2026?"
+  options={[
+    { text: "General-purpose autonomous agents that handle any request" },
+    { text: "Agents with as many tools as possible, to maximize coverage" },
+    { text: "Narrow agents with a small set of well-designed tools, rich observability, and human confirmation on irreversible actions" },
+    { text: "Agents that run fully unattended with no tracing, to reduce overhead" }
+  ]}
+  correct={2}
+  explanation="The agents that work share a pattern: one class of task done very well, 5 to 15 carefully described tools, every step traceable, eval-driven development, and a human in the loop on writes. The general-purpose do-anything agent remains hype ahead of reality."
+/>
+
+<Question
+  prompt="What distinguishes a mature team's approach to evals, per the eval-as-CI trend?"
+  options={[
+    { text: "Evals run constantly — smoke evals on every PR, full runs nightly, and regressions block deploys" },
+    { text: "Evals run once before each major release" },
+    { text: "Evals are replaced by monitoring production complaints" },
+    { text: "A 5-case eval wired into CI is sufficient to claim maturity" }
+  ]}
+  correct={0}
+  explanation="The maturity signal is evals treated like tests: per-PR smoke runs, nightly full runs, production samples graded and folded back into the eval set, and regressions blocking deploys. A tiny CI eval is theater — build a real eval set first, then automate it."
+/>
+
+</Quiz>
 
 ---
 

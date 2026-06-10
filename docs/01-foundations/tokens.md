@@ -124,6 +124,46 @@ n = genai.Client().models.count_tokens(model="gemini-2.5-pro", contents=text).to
 
 Three lines per provider. Worth keeping a `count_tokens(text, provider)` helper in your codebase so cost estimates are always one call away.
 
+<Quiz id="tokens-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="You send a 199,000-token prompt to a model with a 200,000-token context window. What happens to the response?"
+  options={[
+    { text: "The model can generate at most about 1,000 tokens, because input and output share the window" },
+    { text: "The model can still respond at full length — the window only limits input" },
+    { text: "The request is rejected because prompts must leave half the window free" },
+    { text: "The model automatically compresses the prompt to make room" }
+  ]}
+  correct={0}
+  explanation="Most providers count input and output against the same context window, so a 199K prompt leaves only about 1K tokens of room for the answer. Beginners often assume the window caps only the input — that assumption produces mysteriously truncated responses in production."
+/>
+
+<Question
+  prompt="Why does the same message often cost more in Japanese than in English?"
+  options={[
+    { text: "Providers charge a surcharge for non-English requests" },
+    { text: "Japanese characters take more bytes, and billing is per byte" },
+    { text: "Japanese tokenizes into more tokens per character, and billing is per token" },
+    { text: "The model has to translate internally, which doubles the work" }
+  ]}
+  correct={2}
+  explanation="Billing is per token, and tokenizers trained mostly on English split Japanese into many small pieces — close to one token per character, versus about four characters per token for English prose. There is no language surcharge and no per-byte billing; the cost difference is purely a tokenization effect."
+/>
+
+<Question
+  prompt="Your UI shows only the first paragraph of each answer, but your bill shows responses regularly burning 4,000 output tokens. What is the most reliable fix?"
+  options={[
+    { text: "Lower the temperature so answers get shorter" },
+    { text: "Switch to a model with a smaller context window" },
+    { text: "Ask the model politely to be brief in the system prompt" },
+    { text: "Set max_tokens explicitly — the model has no idea your UI truncates" }
+  ]}
+  correct={3}
+  explanation="Without a cap, the model happily generates long answers you never display, and output tokens are the expensive kind. Temperature controls randomness, not length, and a smaller context window limits what fits in, not how much comes out. A prompt nudge can help, but max_tokens is the hard guarantee."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Tokenizers](./tokenizers.md)

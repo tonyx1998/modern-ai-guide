@@ -154,6 +154,46 @@ A typical week for an AI feature engineer:
 - **Running red-team exercises only before launch.** Threats evolve weekly; one launch red-team is a snapshot. Make it a recurring ritual, not an event.
 :::
 
+<Quiz id="enterprise-ai-development-practices-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="According to the page, what is the real contract for what an AI feature does?"
+  options={[
+    { text: "The eval suite — a set of inputs producing graded outcomes" },
+    { text: "The system prompt, carefully version-controlled" },
+    { text: "The feature's product requirements document" },
+    { text: "The model card filed with governance" }
+  ]}
+  correct={0}
+  explanation="The eval suite, not the prompt, is the contract. A prompt is a means to an end and stays free to evolve — newer model, new technique, new safety wording — as long as the suite still passes. Treating the prompt as the contract is the trap: it produces sacred prompts nobody dares change because nobody can prove a change is safe."
+/>
+
+<Question
+  prompt="A typical enterprise AI pull request touches five things that CI gates on. Which list matches the page?"
+  options={[
+    { text: "Code, screenshots, design specs, prompts, and release notes" },
+    { text: "Prompt, model weights, GPU config, datasets, and dashboards" },
+    { text: "Code change, prompt change, eval cases, eval results, and manifest change" },
+    { text: "Code, unit tests, documentation, changelog, and deploy script" }
+  ]}
+  correct={2}
+  explanation="The standard AI PR shape is: the code integration, a new prompt version in the registry surfaced as a diff, eval cases covering the new behavior, CI-posted eval results, and any manifest change (tier, model, regions). The docs-and-changelog answer describes a conventional PR — the page's point is that AI PRs carry eval and registry artifacts too."
+/>
+
+<Question
+  prompt="Who reviews a production prompt promotion for a Medium-tier feature, beyond the code reviewers?"
+  options={[
+    { text: "Nobody — code review covers prompts too" },
+    { text: "A standing committee including an AI engineer from outside the team and a domain expert" },
+    { text: "The company's external auditors" },
+    { text: "The model provider's safety team" }
+  ]}
+  correct={1}
+  explanation="Prompt review is a separate step from code review for Medium and High tier: a rotating committee with at least one AI engineer and a domain SME (plus an AI Risk partner for High tier) reviews queued promotions twice a week. 'Code review covers it' is the tempting answer — and exactly the practice the committee exists to upgrade."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [Testing AI in Regulated Environments](./08-testing.md) — what testing looks like when FedRAMP/HIPAA artifacts are part of the deliverable.

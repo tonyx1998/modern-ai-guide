@@ -174,4 +174,44 @@ You retain ~10% of what you read passively, ~50% of what you discuss, ~90% of wh
 - **Chasing every new framework.** In 2024 it was DSPy; in 2025 it was CrewAI; in 2026 it'll be something else. The primitives (prompts, embeddings, evals, tools, observability) change slowly; frameworks come and go.
 :::
 
+<Quiz id="career-continuous-learning-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the page's core claim about how to stay current in AI engineering for years?"
+  options={[
+    { text: "Block one intensive study month per year and skip the rest" },
+    { text: "A small sustained cadence - 20 minutes daily, 90 minutes weekly, quarterly deep-dives - beats any intensive burst" },
+    { text: "Follow every major newsletter so nothing slips past you" },
+    { text: "Read every frontier-lab paper within a week of release" }
+  ]}
+  correct={1}
+  explanation="The field moves too fast to read everything, so engineers who last treat learning like exercise - small, regular, sustainable - not like cramming for a final. The full cadence is daily scan, weekly deep read plus hands-on plus writing, monthly half-day, quarterly full day, yearly audit."
+/>
+
+<Question
+  prompt="Which step in the weekly 90-minute slot does the page call the magic one?"
+  options={[
+    { text: "Reading one paper or long-form post properly" },
+    { text: "Trying one new tool hands-on with a tiny example" },
+    { text: "Archiving the newsletter backlog" },
+    { text: "Writing something about what you learned, which forces skim-comprehension into actual understanding" }
+  ]}
+  correct={3}
+  explanation="You retain roughly 10 percent of what you read passively and 90 percent of what you teach - and writing is the cheapest way to teach. If you cannot summarize something in your own words in three paragraphs, you do not actually know it yet."
+/>
+
+<Question
+  prompt="Why does the page warn against a paper-a-week reading habit with zero implementation?"
+  options={[
+    { text: "Papers are usually wrong and not worth reading at all" },
+    { text: "Reading too much slows down your day-job velocity" },
+    { text: "Implementation surfaces what the paper did not tell you - one built technique a month beats four unbuilt reads" },
+    { text: "Hiring managers check your reading list against your commit history" }
+  ]}
+  correct={2}
+  explanation="Pure consumption looks like productivity and is not. Building even a small working version of one technique reveals the gaps, assumptions, and gotchas the paper glossed over - and that is where durable understanding comes from."
+/>
+
+</Quiz>
+
 → Next: [Career Pitfalls](./10-pitfalls.md).

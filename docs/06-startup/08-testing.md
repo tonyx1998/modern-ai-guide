@@ -165,6 +165,46 @@ This is the single most important investment an AI startup makes.
 - **Judge model = subject model.** Asking GPT-5 to judge GPT-5's output produces systematic bias. Use a different family, or a stronger model.
 :::
 
+<Quiz id="startup-ai-testing-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What are the four layers of the AI testing stack, all of which run in CI and block merge?"
+  options={[
+    { text: "Unit tests, integration tests, the eval suite, and the adversarial suite" },
+    { text: "Smoke tests, load tests, chaos tests, and penetration tests" },
+    { text: "Linting, type-checking, unit tests, and end-to-end tests" },
+    { text: "Manual QA, beta testing, A/B testing, and canary releases" }
+  ]}
+  correct={0}
+  explanation="Unit tests cover deterministic code, integration tests cover the plumbing, the eval suite scores prompt quality across realistic cases, and the adversarial suite verifies attacks fail safely. The lint/types/unit/e2e option describes a conventional web stack — which is the point: AI products need the two extra layers that conventional testing cannot provide."
+/>
+
+<Question
+  prompt="What practices keep an LLM-as-judge honest, according to this page?"
+  options={[
+    { text: "Run the judge twice and average the scores" },
+    { text: "Let the judge model update automatically so it stays state-of-the-art" },
+    { text: "Use a stronger model than the one being evaluated, pin the judge's version, and sample about 10% of judge calls for human review" },
+    { text: "Use the same model as judge and subject so the comparison is fair" }
+  ]}
+  correct={2}
+  explanation="The worked example shows why: a judge gradually became lenient on summary length, inflating scores for weeks until human sampling caught it — judges drift, so you pin them, sample them, and cross-check with deterministic checks. Same-model judging is the tempting 'fairness' answer, but it produces systematic self-bias; the page says use a different family or a stronger model."
+/>
+
+<Question
+  prompt="A startup says 'we don't need the adversarial suite — we have no malicious users yet.' What is the page's response?"
+  options={[
+    { text: "Correct — add adversarial tests only after the first attack" },
+    { text: "Yes you do — you just don't know about them; prompt injection is among the top real attack vectors against LLM apps" },
+    { text: "Adversarial testing only matters for consumer apps, not B2B" },
+    { text: "The provider's safety filters make adversarial suites redundant" }
+  ]}
+  correct={1}
+  explanation="The adversarial suite is small (30-50 attack prompts covering injection, jailbreaks, PII extraction, and system-prompt extraction) but blocks merge on ANY failure for Tier 0/1 features. Relying on provider safety filters is the comfortable distractor — the suite tests YOUR system's behavior per YOUR spec, which provider-side filtering cannot guarantee."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [CI/CD](./09-cicd.md) where we cover the full pipeline shape: lint → test → eval → preview → cohort deploy.

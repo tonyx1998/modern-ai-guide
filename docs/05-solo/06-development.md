@@ -218,6 +218,46 @@ Self-check:
 - Can you go from "prompt edit" → "deployed change" in under 5 minutes?
 - Is your model string pinned to an exact version?
 
+<Quiz id="solo-development-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What does the four-file v0 codebase for a solo AI project consist of?"
+  options={[
+    { text: "A prompt registry, a vector DB schema, a CI pipeline, and an agent config" },
+    { text: "A frontend app, a backend app, a shared types package, and a test suite" },
+    { text: "A Dockerfile, a docker-compose file, a Makefile, and a deploy script" },
+    { text: "A prompt markdown file, an eval CSV, an eval script, and one production route" }
+  ]}
+  correct={3}
+  explanation="V0 is prompts/main.md, eval.csv, eval.py (or .ts), and a single production endpoint — explicitly no nested prompt directories or abstract prompt classes. The frontend/backend/tests option describes a conventional web project, which is exactly the structure the page says solo AI work does not need at v0."
+/>
+
+<Question
+  prompt="Why does the page say to keep prompts in markdown files instead of multi-line strings in code?"
+  options={[
+    { text: "You iterate them more freely, git diffs read as plain English, and you can update without fighting code escaping" },
+    { text: "Markdown files are the only format the Anthropic SDK accepts" },
+    { text: "Prompts in code strings are stripped out by the bundler in production" },
+    { text: "It lets the model read the file directly from disk at inference time" }
+  ]}
+  correct={0}
+  explanation="The three stated reasons are iteration speed (no TS escaping fights), readable diffs, and the ability to ship prompt updates cleanly. The SDK-format option is the tempting one since the examples do read main.md from disk — but that's a convenience your own code provides, not an SDK requirement; the SDK just takes a string."
+/>
+
+<Question
+  prompt="When should a solo builder add LLM-as-judge evaluation, according to this page?"
+  options={[
+    { text: "From day one, on every row of the eval CSV" },
+    { text: "Never — string matching is always sufficient" },
+    { text: "Only after shipping, when real quality drift appears that substring matching cannot catch — and then only on a few key rows" },
+    { text: "As soon as the eval script exceeds 40 lines of code" }
+  ]}
+  correct={2}
+  explanation="For v0 the answer is don't: string matching catches about 80% of regressions and eyeballing failures catches the rest. LLM-as-judge comes later, for one or two important rows, because judge calls double your eval cost. 'From day one on every row' is tempting because judging sounds more rigorous, but it adds cost and complexity before there's evidence you need it."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [Auth](./07-auth.md) where we'll lock the endpoint down before strangers find it.

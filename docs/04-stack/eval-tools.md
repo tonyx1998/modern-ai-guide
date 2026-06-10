@@ -7,6 +7,13 @@ description: Braintrust, Langfuse, Promptfoo, Ragas, DeepEval, Vellum, Inspect A
 
 # Eval tools
 
+:::info[Dated content — June 2026]
+This page names specific tools, models, and prices, which rotate quarterly. The *selection
+logic* is durable; the names are a snapshot. Cross-check the
+[Model snapshot](/docs/model-snapshot) for current model names and pricing.
+:::
+
+
 > **In one line:** Platforms that store your eval cases, run them on every prompt or model change, score the outputs, and track quality over time — the unit tests of your AI stack.
 
 :::tip[In plain English]
@@ -132,6 +139,46 @@ The bigger spend is **LLM-as-judge tokens**. A 200-case eval that runs an Opus j
 - **Evals only in the UI.** They can't be diffed in a PR; they rot. Code first, UI second.
 - **No threshold gates in CI.** If the eval score drops 10% and the PR still merges, you don't have evals — you have telemetry.
 - **Not promoting prod traces to evals.** Your best eval cases come from real users hitting unexpected paths. Build the "send this trace to evals" button.
+
+<Quiz id="eval-tools-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Your eval score drops 10% but the PR merges anyway. What does the page say you actually have?"
+  options={[
+    { text: "Telemetry, not evals — without threshold gates in CI the suite does not protect quality" },
+    { text: "A healthy process, since evals are advisory by design" },
+    { text: "A judge-model problem that a bigger model would fix" },
+    { text: "Proof that the eval set is too large" }
+  ]}
+  correct={0}
+  explanation="The point of an eval suite is to block regressions before they ship; scores that merely get recorded are observability, not protection. Treating evals as advisory feels pragmatic but recreates the exact 'tuning by vibes' problem evals exist to solve."
+/>
+
+<Question
+  prompt="What is wrong with scoring every eval case with LLM-as-judge alone?"
+  options={[
+    { text: "Judges are too slow to run in CI pipelines" },
+    { text: "Judges hallucinate too — mix deterministic checks like regex and JSON validation with judges for the fuzzier dimensions" },
+    { text: "LLM judges cannot output numeric scores" },
+    { text: "Judge usage violates most provider terms" }
+  ]}
+  correct={1}
+  explanation="A judge model is itself an LLM with failure modes, so cheap deterministic assertions — does the JSON parse, does the latency clear the threshold — should carry the load they can, with judges reserved for qualities only a model can assess. Speed isn't the blocker; reliability is."
+/>
+
+<Question
+  prompt="Why does the page default to Promptfoo plus DeepEval rather than a hosted, UI-first platform?"
+  options={[
+    { text: "Hosted platforms cannot run LLM-as-judge metrics" },
+    { text: "UI-first tools are always more expensive" },
+    { text: "Eval cases live version-controlled in your repo, runs are reproducible, and there is no vendor lock-in" },
+    { text: "They are the only tools that support RAG metrics" }
+  ]}
+  correct={2}
+  explanation="Code-first evals diff in PRs, replay identically, and survive a vendor change — 'evals only in the UI' is a named pitfall because they rot there. Hosted platforms run judges just fine and several have free tiers; the durable argument is where the cases live, not capability or price."
+/>
+
+</Quiz>
 
 ---
 

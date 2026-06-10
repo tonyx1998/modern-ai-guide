@@ -7,6 +7,13 @@ description: Anthropic, OpenAI, Google, xAI — the API-only foundation model pr
 
 # Closed-source providers
 
+:::info[Dated content — June 2026]
+This page names specific tools, models, and prices, which rotate quarterly. The *selection
+logic* is durable; the names are a snapshot. Cross-check the
+[Model snapshot](/docs/model-snapshot) for current model names and pricing.
+:::
+
+
 > **In one line:** Hosted, API-only foundation models. You POST messages, you get tokens. Lowest operational burden, highest frontier quality, and what 90% of teams ship on in 2026.
 
 :::tip[In plain English]
@@ -100,6 +107,46 @@ Tools that abstract the "many providers" problem: **Portkey**, **OpenRouter**, *
 - **Putting the API key in a frontend env var.** `NEXT_PUBLIC_OPENAI_API_KEY` is a way to get your account drained. Always proxy through your backend.
 - **Trusting marketing benchmarks.** Vendor leaderboards are gamed. Run your own eval suite — see [eval tools](./eval-tools.md) — before you bet your roadmap on a model.
 - **Ignoring rate limits until production.** New accounts have low TPM caps. Request increases *before* launch day, not during the outage.
+
+<Quiz id="closed-providers-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="A team needs to process multi-hour transcripts that blow past a 400k-token context in a single call. Which provider does the page point to?"
+  options={[
+    { text: "Anthropic Claude Opus" },
+    { text: "OpenAI GPT-5.1" },
+    { text: "Google Gemini 2.5 Pro" },
+    { text: "xAI Grok 4" }
+  ]}
+  correct={2}
+  explanation="Gemini is the only major option competing at the 1M-plus context end, which is why the page swaps it in as the workhorse for whole books, full codebases, and multi-hour transcripts. Opus and GPT-5.1 are stronger picks for hard reasoning, but their context windows top out well below Gemini's."
+/>
+
+<Question
+  prompt="Why does the page advise against picking one provider and forgetting it?"
+  options={[
+    { text: "Provider SDKs are interchangeable, so switching costs nothing anyway" },
+    { text: "Outages, model drift, cost arbitrage, and capability gaps all reward having a second provider wired up" },
+    { text: "Closed providers contractually require customers to use multiple vendors" },
+    { text: "Single-provider accounts cannot access prompt caching or batch APIs" }
+  ]}
+  correct={1}
+  explanation="Every provider has had multi-hour outages, behaviors drift between versions, tier routing across providers can cut spend dramatically, and each vendor has unique capabilities. The first option is the tempting trap: SDKs are NOT interchangeable at the response shape, which is exactly why the page says to abstract that once."
+/>
+
+<Question
+  prompt="What is the safe way to call a closed provider from a web application?"
+  options={[
+    { text: "Put the API key in a public frontend env var so the browser can call the provider directly" },
+    { text: "Embed the key in the mobile app binary where users cannot see it" },
+    { text: "Share one key across dev, staging, and prod for simplicity" },
+    { text: "Proxy every request through your backend so the key never reaches the client" }
+  ]}
+  correct={3}
+  explanation="A key shipped to the browser is readable by anyone with DevTools and is a way to get your account drained. Proxying through your backend keeps the credential server-side where you can also enforce auth, rate limits, and spend caps. App binaries are just as extractable as frontend env vars."
+/>
+
+</Quiz>
 
 ---
 

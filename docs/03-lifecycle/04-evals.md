@@ -193,6 +193,46 @@ Total time: 1 day from the support lead, half a day from the engineer. They late
 - [ ] Per-category and per-slice breakdowns are visible, not just the aggregate.
 - [ ] At least one domain expert has reviewed the case set for coverage.
 
+<Quiz id="lifecycle-evals-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Why does the page recommend a cheap model for LLM-as-judge grading?"
+  options={[
+    { text: "Cheap models are inherently less biased than flagship models" },
+    { text: "Judging requires a different provider for compliance reasons" },
+    { text: "Flagship models refuse to grade outputs from other models" },
+    { text: "The judge's job — scoring a string against a rubric — is simple, so a flagship judge is expensive and rarely worth it" }
+  ]}
+  correct={3}
+  explanation="The judge only has to score a string against a rubric, which a cheap model handles fine — just sanity-check that it agrees with humans on ~30 cases. Separately, the page warns against judging with the same model being tested, because you get correlated errors; using a different, cheaper model solves both problems at once."
+/>
+
+<Question
+  prompt="An eval run shows the aggregate score up 3% overall. According to the page, why is that not enough to ship?"
+  options={[
+    { text: "Aggregate scores are statistically meaningless below 1,000 cases" },
+    { text: "The aggregate can hide slice regressions — for example +8% on easy cases while hard cases drop 7%" },
+    { text: "Eval scores only matter once the product is in production" },
+    { text: "A 3% gain is always within the noise of LLM-as-judge graders" }
+  ]}
+  correct={1}
+  explanation="A single aggregate hides regressions: the page's example is a '+3% overall' change that is really +8% on easy cases and -7% on hard ones — a regression for the cases that matter. That is why the cycle says don't ship if any per-category slice drops more than 5%, even when the aggregate is up. The other options are not claims the page makes."
+/>
+
+<Question
+  prompt="In the eval cycle the page describes, what should happen when you spot a wrong answer in real production traffic?"
+  options={[
+    { text: "File a bug and wait for the next model upgrade to fix it" },
+    { text: "Patch the prompt immediately in production" },
+    { text: "Add it to the eval set as a new case with the correct expected output" },
+    { text: "Remove similar cases from the eval set so scores stay comparable" }
+  ]}
+  correct={2}
+  explanation="Real production failures become regression eval cases — a pile that 'grows forever.' This keeps the eval set relevant and prevents the same failure from shipping twice. A frozen eval set is a named anti-pattern, and patching prompts directly in production skips the eval re-run that tells you whether the fix actually helped."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Build (v0)](./05-build.md)

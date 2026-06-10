@@ -10,6 +10,10 @@ description: The signals that your current AI approach has hit its ceiling. When
 
 > **In one line:** The pivot signal isn't a feeling — it's an eval curve that's flat across three real iterations. When you've hit your approach's ceiling, switch architectures (prompt → RAG, RAG → fine-tune, single-call → agent) instead of grinding.
 
+:::tip[In plain English]
+Knowing when to abandon an approach is its own skill, and feelings are a terrible guide for it. The reliable signal is a flat eval curve: three genuine improvement attempts in a row that move your scores nowhere. When that happens, you've hit the ceiling of your current architecture, and the answer is to step up the ladder — add retrieval, add tools, add an agent loop, or upgrade the model — rather than keep grinding. This page lays out that ladder and the signals for each rung.
+:::
+
 ## 1. Why pivot-decisions matter
 
 The most expensive failure mode in AI engineering isn't picking the wrong approach. It's *staying with* the wrong approach too long.
@@ -176,6 +180,46 @@ After a year, these notes are gold. They calibrate your pivot timing for the nex
 - **Waiting for the next model release.** It almost never solves your specific problem. Pivot now.
 - **No postmortem after a pivot.** You lose the learning. One-page note. Five minutes. Decades of compounding value.
 :::
+
+<Quiz id="when-to-pivot-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What does the page give as the robust signal that you've hit your approach's ceiling?"
+  options={[
+    { text: "The work starts to feel slow and unsatisfying" },
+    { text: "A teammate suggests a newer framework" },
+    { text: "Three real iterations with substantive effort and no eval improvement" },
+    { text: "The next model release is only two weeks away" }
+  ]}
+  correct={2}
+  explanation="A 'real iteration' is a meaningful change - a new edge case handled, a new chunking strategy - not a wording tweak. Three flat ones in a row mean the ceiling is real. Vibes lie; the eval doesn't."
+/>
+
+<Question
+  prompt="What does the page say about waiting for the next model release instead of pivoting?"
+  options={[
+    { text: "It's almost never the right call - pivot now using current models" },
+    { text: "It's wise whenever the release is under a month away" },
+    { text: "It works well for frontier-tier features" },
+    { text: "It's the correct move once the eval curve is flat" }
+  ]}
+  correct={0}
+  explanation="The next model is rarely the silver bullet for your specific cases, '2 weeks' becomes 2 months, and momentum decays. Pivot now - if the new model helps later, you'll benefit anyway."
+/>
+
+<Question
+  prompt="When is a pivot actually complete, according to the page?"
+  options={[
+    { text: "When the team agrees the new approach is better" },
+    { text: "When the new approach ships and the old one is decommissioned" },
+    { text: "When the prototype works in a notebook" },
+    { text: "When the postmortem note is written" }
+  ]}
+  correct={1}
+  explanation="Half-done pivots leave new code coexisting with old and the team confused about what's canonical. Build the new, eval it, migrate, kill the old - anything less is the worst of both worlds."
+/>
+
+</Quiz>
 
 ---
 

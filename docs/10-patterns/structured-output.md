@@ -190,6 +190,46 @@ Mode names differ; the concept is the same.
 
 For TS, Vercel AI SDK papers over most differences. For Python, Instructor or Pydantic AI do the same.
 
+<Quiz id="pattern-structured-output-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Why does this page say structured output should be the DEFAULT, even for chat-like features?"
+  options={[
+    { text: "Structured output is always faster than free text" },
+    { text: "Providers charge less for JSON responses" },
+    { text: "Users prefer reading JSON" },
+    { text: "Typed objects compose with code, validate before business logic, render cleanly, and make evals deterministic — prose can still live in one field" }
+  ]}
+  correct={3}
+  explanation="Free-form text is a debugging tax you pay forever: every regex over model prose is a future bug. Even a chat answer benefits from being one field of an object alongside confidence and citations. Structured output is actually slightly slower (constrained sampling costs 5-20 percent), which is why the speed option is the trap."
+/>
+
+<Question
+  prompt="How does the schema itself become prompt-engineering surface?"
+  options={[
+    { text: "Longer schemas always produce better outputs" },
+    { text: "Field order, field names, and per-field descriptions all steer the model — a reasoning field before a decision field measurably improves the decision" },
+    { text: "The schema replaces the system prompt entirely" },
+    { text: "Schemas only matter for extraction tasks" }
+  ]}
+  correct={1}
+  explanation="Models fill fields top-down and read names and descriptions as instructions, so ordering reasoning before decision, and describing 'urgent is for outages only' on an enum, measurably change behavior. The schema complements the system prompt rather than replacing it — and the page warns that if the two conflict, the model picks one non-deterministically."
+/>
+
+<Question
+  prompt="You already use the provider's strict structured-output mode. Why re-validate with Zod or Pydantic at your boundary?"
+  options={[
+    { text: "Constrained decoding is excellent but not a guarantee — providers ship bugs, models change, and the reparse turns a silent failure into a metric" },
+    { text: "Strict mode only works on the first request of a session" },
+    { text: "Re-validation makes the response arrive faster" },
+    { text: "Provider schemas cannot express enums" }
+  ]}
+  correct={0}
+  explanation="Validation is defense-in-depth: the reparse is microsecond-cheap, and tracking an invalid-output metric per schema catches provider model changes you did not know about. Trusting strict mode alone is the tempting wrong answer — it is excellent, but schema translation across providers is imperfect and edge cases still slip through."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Tool use done right](./tool-use.md).

@@ -128,4 +128,44 @@ If you do nothing else from this page, do these two: deploy one project to `your
 - **Going quiet between projects.** A blog with one post from 2024 reads worse than no blog. If you can't sustain writing, delete the link.
 :::
 
+<Quiz id="career-portfolio-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What does the page identify as the number-one portfolio signal among 2026 AI hiring managers?"
+  options={[
+    { text: "A GitHub repository with over 1,000 stars" },
+    { text: "A polished personal portfolio website" },
+    { text: "Contributions to a famous open-source model" },
+    { text: "Having an eval suite - an evals directory with config and a results table" }
+  ]}
+  correct={3}
+  explanation="A repo with an evals directory is rarer than a repo with 1K stars in 2026, and surveys put 'has an eval suite' at the top of hiring-manager signals. It is also the cheapest gap to close: a Braintrust or Promptfoo config plus 20 test cases takes an afternoon."
+/>
+
+<Question
+  prompt="How does the page rank a live deployed URL against GitHub stars?"
+  options={[
+    { text: "A working custom-domain link is worth more than 1,000 stars on a demo repo" },
+    { text: "Stars matter more because they show community validation" },
+    { text: "They are equivalent signals and either one suffices" },
+    { text: "Neither matters - only blog posts move recruiters" }
+  ]}
+  correct={0}
+  explanation="The weighting is shipped things first: live URLs, then stars, then forks, then READMEs. Recruiters skim for evidence you shipped LLM features end-to-end, and a deployed artifact they can click is the strongest version of that evidence."
+/>
+
+<Question
+  prompt="What open-source contribution tier does the page suggest reaching by your first AI job?"
+  options={[
+    { text: "Maintainer of a widely-used library with over 1K stars" },
+    { text: "One merged bug-fix PR to a serious AI tool" },
+    { text: "Forking a major repo and completing its tutorial" },
+    { text: "A merged docs-only PR" }
+  ]}
+  correct={1}
+  explanation="The tiers run from forked-a-repo (no signal) up to maintainer of a widely-used library (hire-yourself signal). Tier 3 - a merged bug fix to a tool like Langfuse, Promptfoo, or LangGraph - is the first solid positive, with tier 4 the target by Year 3."
+/>
+
+</Quiz>
+
 → Next: [The "defend your portfolio" drill](./defend-portfolio-drill.md).

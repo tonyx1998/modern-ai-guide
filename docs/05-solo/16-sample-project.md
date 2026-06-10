@@ -285,6 +285,46 @@ Self-check:
 - Do you know the cost-per-use for your own project?
 - Have you written your project's one-pager in the same shape as the one at the top of this page?
 
+<Quiz id="solo-sample-project-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Where does the differentiating effort live in the Standup.notes sample project?"
+  options={[
+    { text: "In the custom React component architecture" },
+    { text: "In the choice of hosting platform and database" },
+    { text: "In the prompt, the eval, and the audience you launch to — the rest is the boring stack repeating itself" },
+    { text: "In a proprietary fine-tuned model" }
+  ]}
+  correct={2}
+  explanation="The actual prompt is about 15 lines and the domain insight (EMs hate recap emails) is one sentence — everything else is reusable boilerplate, which is the point of the boring stack. The infrastructure options are tempting because they consume the most lines on the page, but the try-it-yourself note says 90% of the code stays identical when you swap projects."
+/>
+
+<Question
+  prompt="Why does the project use generateObject with a schema instead of freeform text output?"
+  options={[
+    { text: "Freeform output looks impressive in demos but is useless to wire into downstream tools like Slack" },
+    { text: "Freeform output costs more tokens than JSON" },
+    { text: "Claude cannot produce freeform prose reliably" },
+    { text: "Schemas are required by the Vercel AI SDK" }
+  ]}
+  correct={0}
+  explanation="The output is meant to be consumed programmatically — pasted into Slack as-is, or sent via webhook later — so a typed object with summary, action items, and decisions beats prose. The token-cost option sounds plausible because JSON is compact, but the page's argument is about downstream usability, not cost."
+/>
+
+<Question
+  prompt="What does the tier math reveal about a worst-case heavy Indie user (50 summaries/day, every day)?"
+  options={[
+    { text: "They remain profitable because of caching" },
+    { text: "Their cost (~$45/mo) exceeds the $10/mo price, flipping the margin negative — the answer is upselling them to Pro" },
+    { text: "The rate limiter makes this usage level impossible" },
+    { text: "They cost about the same as a typical user" }
+  ]}
+  correct={1}
+  explanation="A maxed-out Indie user costs roughly $45 against $10 of revenue, which is why heavy users get moved to a $30/mo Pro tier — and why the page insists on computing cost-per-use BEFORE setting prices. The rate-limiter option is the trap: the 50/day cap is exactly what the Indie tier permits, so the limiter allows precisely this worst case."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [Graduating Beyond Solo](./17-graduating.md) where we'll cover when to bring on a co-founder, when to convert to a real company, and when to keep it indie.

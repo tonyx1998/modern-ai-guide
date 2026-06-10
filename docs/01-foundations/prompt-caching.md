@@ -159,6 +159,46 @@ Cache *doesn't* pay off when:
 Refactoring a production prompt to be cache-friendly is annoying. Designing for it from the start costs nothing. Put stable content first, mark caching boundaries on the providers that need them, and monitor `cache_read` ratios. It's the cheapest 5–10× cost win you'll ever ship.
 :::
 
+<Quiz id="prompt-caching-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="You add 'Current time: 14:30:11' to the top of your system prompt and your cache hit rate drops to zero. Why?"
+  options={[
+    { text: "Caching is disabled when timestamps are detected" },
+    { text: "Time-sensitive prompts are routed to a different model" },
+    { text: "The cache TTL expires every second" },
+    { text: "Caching requires an exactly identical prefix — a changing timestamp invalidates it on every call" }
+  ]}
+  correct={3}
+  explanation="The provider reuses the KV cache only when the first N tokens match exactly; even one different token invalidates everything from that point on. A per-request timestamp at the top guarantees a unique prefix every single call. There is no timestamp detection or special routing — it is pure prefix matching, which is why stable content must come first and variable content last."
+/>
+
+<Question
+  prompt="Prompt caching gives you a big discount on which part of the request?"
+  options={[
+    { text: "Output tokens, since the model can reuse previous answers" },
+    { text: "The cached input prefix — the prefill work the provider already did" },
+    { text: "The whole request, input and output alike" },
+    { text: "Network transfer costs between you and the provider" }
+  ]}
+  correct={1}
+  explanation="Caching reuses the KV cache computed during prefill for a previously seen prefix, so you pay a fraction — 10 to 50 percent depending on provider — for those input tokens. Output tokens are never cached; the model still generates every answer fresh. That is why the win scales with how large and how stable your prompt prefix is."
+/>
+
+<Question
+  prompt="Your prompts are cache-friendly on OpenAI, but after switching to Anthropic you see no cache savings. What did you most likely miss?"
+  options={[
+    { text: "Anthropic requires explicit cache_control breakpoints — caching is not automatic" },
+    { text: "Anthropic does not support prompt caching" },
+    { text: "Anthropic only caches prompts over 100K tokens" },
+    { text: "You must re-register your API key for caching access" }
+  ]}
+  correct={0}
+  explanation="OpenAI caches automatically for prefixes of 1024 tokens or more, but Anthropic makes you mark cache boundaries explicitly with cache_control annotations — in exchange for a much deeper discount (10 percent of normal input price versus OpenAI's 50 percent). Same concept, different activation. Check cache_read_input_tokens in the usage stats to confirm your cache is actually hitting."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Sampling](./sampling.md)

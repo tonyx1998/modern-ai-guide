@@ -173,7 +173,8 @@ const config: Config = {
             {label: '14. Production Patterns', to: '/docs/patterns'},
             {label: '15. Career', to: '/docs/career'},
             {label: '16. Case Studies', to: '/docs/case-studies'},
-            {label: '17. Glossary', to: '/docs/glossary'},
+            {label: '17. Cutting Edge', to: '/docs/cutting-edge/'},
+            {label: '18. Glossary', to: '/docs/glossary'},
           ],
         },
         {

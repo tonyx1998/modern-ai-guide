@@ -196,6 +196,46 @@ If step 5 is the culprit, your **regression eval set** wasn't catching it — th
 Every weird LLM bug you debug, write down: symptom, root cause, fix, and which check caught it. A team of three engineers with a year of these notes catches new bugs in minutes instead of hours. The notes also become the seed for your eval suite — each fixed bug becomes a regression case.
 :::
 
+<Quiz id="pattern-debugging-playbook-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="An AI feature is misbehaving. What does this page say to do FIRST?"
+  options={[
+    { text: "Tweak the prompt and re-run to see if it improves" },
+    { text: "Swap to a different model version" },
+    { text: "Open the trace — see what the model actually received and actually emitted" },
+    { text: "Add more examples to the system prompt" }
+  ]}
+  correct={2}
+  explanation="Half the time the bug is not in the prompt — it is in what your code sent to the model, and only the trace shows that. Prompt tweaking first is the instinct the page explicitly warns against: you are iterating blind on the wrong layer."
+/>
+
+<Question
+  prompt="Why pin temperature to 0 and fix the seed when reproducing a flaky LLM bug?"
+  options={[
+    { text: "You cannot bisect a stochastic function — pin the sampler so the only changes between runs are the ones you make" },
+    { text: "Temperature 0 makes the model smarter" },
+    { text: "Providers charge less for deterministic calls" },
+    { text: "It prevents the content filter from triggering" }
+  ]}
+  correct={0}
+  explanation="A bug that reproduces 20 percent of the time cannot be debugged by re-running and shrugging; pinning the sampler turns it into a deterministic function you can bisect. Temperature 0 does not improve capability — it just removes sampling variance, which is exactly what you want while investigating."
+/>
+
+<Question
+  prompt="JSON output breaks intermittently. What is the first thing the playbook says to check?"
+  options={[
+    { text: "Whether the model is too small for the task" },
+    { text: "Whether you are using the provider's enforced structured-output mode, or just asking for JSON in the prompt" },
+    { text: "Whether the user's input contains special characters" },
+    { text: "Whether the context window is full" }
+  ]}
+  correct={1}
+  explanation="Asking for JSON in prose is unreliable by design; enforced schema modes constrain the output at decode time. The 'model is too small' answer is the expensive misdiagnosis — teams upgrade models to fix what a response_format flag would have fixed for free. The other two checks on the list are mid-stream parsing and markdown fences, not input characters."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Safe model swaps & canary deploys](./model-swaps.md)

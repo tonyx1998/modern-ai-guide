@@ -10,6 +10,10 @@ description: The four deployment patterns — public direct, public via gateway,
 
 > **In one line:** Enterprise AI runs on four deployment patterns simultaneously — public direct (rare), public via gateway (common for internal), private endpoint via hyperscaler (the default for customer-facing), and self-hosted on internal GPUs (the most sensitive workloads) — and the gateway is what makes the hybrid coherent.
 
+:::tip[In plain English]
+"Deployment topology" is just a fancy way of asking: where does the AI model actually run, and how does your data get to it? There are four options, ranging from calling a public website (easy, least control) to running the model on your own computers (hard, total control). Most big companies use a mix of all four at once, picking per workload based on how sensitive the data is. The central gateway is what keeps that mix manageable instead of chaotic.
+:::
+
 :::tip[Where this fits]
 The [Architecture page](./04-architecture.md) covered the central gateway + policy + telemetry pattern. This page is the deeper look at the model-provider layer: which deployment pattern fits which workload, what the trade-offs really look like, and how a typical enterprise ends up with a hybrid of all four patterns behind a single gateway.
 :::
@@ -175,6 +179,46 @@ Short version: self-host saves money only at very high volume on narrow tasks, o
 - **Skipping the gateway "for performance."** Gateway overhead is single-digit milliseconds. The arguments are almost always wrong; the audit cost of having bypasses is enormous.
 - **Forgetting that Pattern 3 EOLs faster than Pattern 4.** Hyperscaler model EOLs hit on the provider's schedule. Self-hosted models EOL on yours. For workloads where stability matters more than freshness, self-host is sometimes the operational win even if the cost is similar.
 :::
+
+<Quiz id="enterprise-deployment-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the default deployment pattern for customer-facing AI at enterprise scale?"
+  options={[
+    { text: "Pattern 1 — calling the provider's public API directly" },
+    { text: "Pattern 2 — public API routed through the gateway" },
+    { text: "Pattern 4 — self-hosted open models on internal GPUs" },
+    { text: "Pattern 3 — private endpoints via a hyperscaler like Bedrock, Azure OpenAI, or Vertex" }
+  ]}
+  correct={3}
+  explanation="Private endpoints keep data in your VPC, come with contractual residency and BAA/DPA commitments, and often inherit FedRAMP, HIPAA, and SOC 2 from the hyperscaler — the page calls this the most common enterprise choice in 2026. Public-via-gateway is fine for internal non-sensitive tools, but it is the on-ramp, not the customer-facing default."
+/>
+
+<Question
+  prompt="When is self-hosting (Pattern 4) the right choice?"
+  options={[
+    { text: "Data sovereignty that contracts cannot satisfy, or very-high-volume narrow tasks with favorable unit economics" },
+    { text: "Whenever the Bedrock bill looks expensive" },
+    { text: "For every workload, since open weights are free" },
+    { text: "Only for prototyping before moving to a hyperscaler" }
+  ]}
+  correct={0}
+  explanation="A serious self-host needs about two FTEs to operate, capex, a redundancy multiplier for peak load, and acceptance of a model-quality gap — so it wins only where control is mandatory or the task is narrow and enormous in volume. 'Bedrock is expensive' is the recurring proposal the page says fails once the real costs are added up."
+/>
+
+<Question
+  prompt="Why does the page say the central gateway is what makes the four-pattern hybrid manageable?"
+  options={[
+    { text: "It caches responses so fewer patterns are needed" },
+    { text: "Switching a feature between providers becomes a policy YAML change in a PR instead of a per-team re-implementation" },
+    { text: "It eliminates the need for private endpoints" },
+    { text: "It converts all traffic to a single provider automatically" }
+  ]}
+  correct={1}
+  explanation="Without a gateway, every feature team writes its own provider switching, auth, observability, and failover — hundreds of independent re-implementations across patterns and features. With it, moving a feature from Bedrock to self-hosted Llama is a reviewed config change. That is the biggest architectural reason mature enterprises all converge on a gateway."
+/>
+
+</Quiz>
 
 ## What's next
 

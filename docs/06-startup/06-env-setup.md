@@ -175,6 +175,46 @@ The number-one cause of "we spent $8,000 in an afternoon" is an engineer's local
 - **No smoke eval in onboarding.** Day one of every new hire should include a successful eval run against their own dev key. If it doesn't work, *that* engineer's onboarding gets stuck on real production incidents two weeks later.
 :::
 
+<Quiz id="startup-ai-env-setup-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What does the page identify as the single biggest predictor of an AI startup's iteration speed?"
+  options={[
+    { text: "How many engineers are dedicated to AI features" },
+    { text: "Which frontier model the team has standardized on" },
+    { text: "Whether prompt changes are first-class code — versioned, reviewed, and evaluated on every change" },
+    { text: "Whether the team uses a monorepo or polyrepo" }
+  ]}
+  correct={2}
+  explanation="Prompts living in random files, Notion docs, or hardcoded strings means silent regressions and painful review; the worked example shows a prompt buried in a route file shipping un-evaled and breaking the assistant for three days. Headcount is the intuitive answer, but the page's comparison teams show discipline beats size — the structure of the prompt workflow is the lever."
+/>
+
+<Question
+  prompt="Why is the CI eval runtime budget set at 8 minutes?"
+  options={[
+    { text: "GitHub Actions bills by 10-minute increments" },
+    { text: "Faster than that and engineers will actually wait for it; slower and they will skip it" },
+    { text: "Eval platforms time out after 10 minutes" },
+    { text: "Provider rate limits make longer runs impossible" }
+  ]}
+  correct={1}
+  explanation="The budget is behavioral, not technical: a 25-minute suite gets skipped under deadline pressure, fails on main, and the alert gets ignored — so you subset aggressively to only the affected suites per PR, with the full suite running nightly. The billing and timeout options sound like plausible technical constraints, but the page's reasoning is entirely about engineer behavior."
+/>
+
+<Question
+  prompt="Why should each engineer have a personal dev LLM key separate from production?"
+  options={[
+    { text: "So a developer's runaway local loop bills a small capped personal key instead of the company production account" },
+    { text: "Providers prohibit key sharing between developers" },
+    { text: "Personal keys get faster rate limits than shared ones" },
+    { text: "It lets each engineer pick their own favorite model" }
+  ]}
+  correct={0}
+  explanation="The page names the number-one cause of 'we spent $8,000 in an afternoon': a local script in a runaway loop using the production key. Doppler serving different secrets to dev and prod environments contains the blast radius. The rate-limit option is the tempting technical justification, but the motivation is purely financial isolation."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [Development Loop](./07-development.md) where we cover the daily prompt iteration rhythm, PR review for AI changes, and preview deploys.

@@ -263,6 +263,44 @@ Build a small command-line tool: it takes a question (from stdin or argv), sends
 
 ## Page checkpoint
 
+<Quiz id="stage-1-first-call-quick-check" variant="micro" title="Quick check">
 
+<Question
+  prompt="You ask the model 'What is the capital of France?' and it answers Paris. You run the script again and ask 'What is its population?' — and the model has no idea what 'it' means. Why?"
+  options={[
+    { text: "The model's session expired between the two runs" },
+    { text: "The API is stateless — the model only sees the messages you send on each call, so you must re-send the prior turns yourself" },
+    { text: "Temperature was set too high, making the model forget context" },
+    { text: "The second question exceeded the context window" }
+  ]}
+  correct={1}
+  explanation="The model is a pure function: messages in, message out. There is no session and nothing to expire — ChatGPT.com remembers because the website re-sends history for you; the raw API does not. To continue a conversation you append each turn to a list and re-send the whole list every call, which is also why long conversations get more expensive each turn. Temperature affects randomness, not memory."
+/>
+
+<Question
+  prompt="The model's answer cuts off mid-sentence. What should you check first?"
+  options={[
+    { text: "Whether your API key has expired" },
+    { text: "Whether the provider is having an outage" },
+    { text: "The finish_reason field on the response" },
+    { text: "Whether temperature is set above 1" }
+  ]}
+  correct={2}
+  explanation="finish_reason tells you exactly why generation stopped: 'stop' means a natural end, while 'length' means you hit max_tokens — by far the most common cause of mid-sentence cutoffs, fixed by raising the cap or shortening the prompt. Beginners ignore this field and then debug for hours, often blaming the model or the provider. An expired key or outage would produce an error, not a truncated-but-successful response."
+/>
+
+<Question
+  prompt="Why is 'ask the model to be concise' described as the single most effective cost optimization for chat apps?"
+  options={[
+    { text: "Output tokens cost roughly 4-10x more than input tokens, so shorter answers cut the expensive side of the bill" },
+    { text: "Concise answers use a cheaper model tier automatically" },
+    { text: "Shorter responses are cached by the provider and become free" },
+    { text: "It reduces the number of API calls your app makes" }
+  ]}
+  correct={0}
+  explanation="Across every pricing tier, output is several times more expensive than input — the cheap tier charges around $0.25 per million input tokens but up to $2 per million output tokens. Trimming the model's verbosity directly attacks the costlier half of every call. Providers do not switch model tiers or cache responses for free based on length, and conciseness does not change how many calls you make — just how much each one costs."
+/>
+
+</Quiz>
 
 → [Next: Stage 2 — Streaming chatbot](./03-stage-2-chatbot.md) · [Back to Part I overview](./index.md)

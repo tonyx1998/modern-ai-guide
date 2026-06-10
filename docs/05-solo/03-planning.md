@@ -130,6 +130,46 @@ Self-check:
 - Could you read your `eval.csv` to a friend and have them say "yeah, that's what success looks like"?
 - Did you write down the failure mode you're most worried about — and the specific guardrail for it?
 
+<Quiz id="solo-planning-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What are the three planning artifacts this page says you need before writing any code?"
+  options={[
+    { text: "A one-pager, a pre-mortem, and a 20-row eval CSV" },
+    { text: "A Notion workspace, a roadmap, and a backlog" },
+    { text: "A pitch deck, a landing page, and a waitlist" },
+    { text: "A system architecture diagram, a data model, and an API spec" }
+  ]}
+  correct={0}
+  explanation="The entire planning phase is three artifacts produced in one afternoon: a six-section README one-pager, a pre-mortem listing the top five failure modes with guardrails, and a hand-curated 20-row eval CSV. The Notion/roadmap/backlog option is exactly what the page says planning is NOT — that apparatus simulates a team process a solo builder does not need."
+/>
+
+<Question
+  prompt="What order of work does the page recommend for a solo AI project?"
+  options={[
+    { text: "Code first, then prompts, then evals once users complain" },
+    { text: "Prompts first, then code, then evals before launch" },
+    { text: "Evals first, then prompts, then code" },
+    { text: "Code and prompts in parallel, evals only if quality problems appear" }
+  ]}
+  correct={2}
+  explanation="The highlight states the right order is evals then prompts then code, because most launch-week quality bugs would have been caught by eval rows written up front — 20 rows take an hour, skipping them costs days of debugging. Code-first feels natural because building is the fun part, which is exactly why the page calls out that most builders skip the CSV and regret it."
+/>
+
+<Question
+  prompt="How long should the entire planning phase take, according to this page?"
+  options={[
+    { text: "One to two weeks of research and validation" },
+    { text: "A full sprint with a written roadmap" },
+    { text: "As long as it takes to interview ten potential users" },
+    { text: "One afternoon — if it takes longer, the idea is not crisp enough yet" }
+  ]}
+  correct={3}
+  explanation="The page sets a hard time-box: one afternoon for all three artifacts, and planning that bleeds into a week is a sign you are avoiding the build. The week-of-research option is tempting because it sounds diligent, but for a solo project the friction of producing three small artifacts quickly IS the validation."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [Stack Selection](./04-stack-selection.md) where we'll lock in the concrete TypeScript or Python stack you'll spend the rest of the weekend on.

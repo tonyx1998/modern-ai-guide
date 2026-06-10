@@ -184,6 +184,46 @@ For internal apps the MCP overhead isn't worth it — define tools inline as in 
 Conceptually, a tool call is structured output (`{name, arguments}`) that your code reacts to. Everything you learned in [structured output](./structured-output.md) — descriptions matter, validate at the boundary, prefer flat shapes, stream partials — applies. The new piece is the *loop*: model calls a tool, your code answers, model calls another. That loop is the [agent loop](./agent-loop.md).
 :::
 
+<Quiz id="pattern-tool-use-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What does the model actually use to decide which tool to call?"
+  options={[
+    { text: "The order tools appear in the array" },
+    { text: "The tool's name alone" },
+    { text: "The tool description — which is why descriptions are prompt engineering, not documentation" },
+    { text: "The return type of the tool" }
+  ]}
+  correct={2}
+  explanation="The model picks by description, so 'Use to look up an item by its SKU when the user pastes one' beats 'Returns a paginated list of items' every time. Names matter as a tiebreaker (overlapping verbs like search, lookup, and find make the model coin-flip), but the description carries the selection — write when-to-use and when-not-to-use into it."
+/>
+
+<Question
+  prompt="A tool call fails with a rate limit. What should the tool return to the model?"
+  options={[
+    { text: "A structured error object with an error enum, retry timing, and a suggested fallback" },
+    { text: "The raw exception string, like 'Error: 429 Too Many Requests'" },
+    { text: "Nothing — silently retry inside the tool until it succeeds" },
+    { text: "A success object with empty fields, to keep the loop moving" }
+  ]}
+  correct={0}
+  explanation="A model can reason about a structured error — it can wait, use the suggested fallback tool, or tell the user. Faced with a raw exception string it usually apologizes and gives up. Silent internal retries hide the failure from both the model and your observability, and fake successes poison the model's working memory."
+/>
+
+<Question
+  prompt="Why is the model's request to call a write or destructive tool not sufficient to execute it?"
+  options={[
+    { text: "Write tools are slower, so batching is needed first" },
+    { text: "The model's tool call is not the user's approval — render a confirmation card and run the side effect only after the user confirms" },
+    { text: "Providers prohibit side-effecting tools in their terms" },
+    { text: "Write tools cannot be expressed in JSON Schema" }
+  ]}
+  correct={1}
+  explanation="Any tool that writes, deletes, sends, or charges defaults to deny: the agent loop interprets the call, shows a confirmation card, and executes only on an explicit user click — the example even omits execute on the scheduling tool so the SDK physically cannot run it. Given enough traffic, an unconfirmed agent will eventually do the wrong thing; the confirmation step is the structural defense, not politeness."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [The RAG pattern in production](./rag-prod.md).

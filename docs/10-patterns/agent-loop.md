@@ -200,6 +200,46 @@ When an agent loops, hallucinates a tool name, or fails to make progress, the fi
 Fix the tools first. The agent loop almost always follows.
 :::
 
+<Quiz id="pattern-agent-loop-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="According to this page, when do you actually need an agent instead of a deterministic pipeline?"
+  options={[
+    { text: "Whenever the task involves calling more than one tool" },
+    { text: "Whenever a single retrieve-then-answer flow is too slow" },
+    { text: "Whenever you want the model to feel more autonomous to users" },
+    { text: "When the next step genuinely depends on what the previous step found, in non-obvious ways" }
+  ]}
+  correct={3}
+  explanation="The heuristic: if you can sketch the flow as a flowchart with fixed boxes before writing code, write the orchestrator in code and skip the agent. Multiple tool calls in a known order is the tempting wrong answer — that is exactly the 'fixed N steps' case where a deterministic orchestrator wins on cost, failure modes, and evaluability."
+/>
+
+<Question
+  prompt="Which guardrail does the page call non-negotiable before shipping an agent loop?"
+  options={[
+    { text: "A hard max_steps cap, typically 5 to 10" },
+    { text: "A planner step that outlines the approach first" },
+    { text: "A reflection step every N tool calls" },
+    { text: "Checkpoint-and-resume orchestration" }
+  ]}
+  correct={0}
+  explanation="Without a step cap, a confused agent burns hundreds of dollars in a single request — that is why max_steps is listed under required guardrails. Planner, reflection, and checkpointing are all listed too, but explicitly as 'optional but high-value'; they improve quality, they do not bound the blast radius."
+/>
+
+<Question
+  prompt="An agent keeps looping and hallucinating tool names. Where does the page say to look first?"
+  options={[
+    { text: "Swap to a larger model" },
+    { text: "Rewrite the system prompt to demand more care" },
+    { text: "The tool surface — too many tools, fuzzy descriptions, or opaque errors" },
+    { text: "Lower the temperature to zero" }
+  ]}
+  correct={2}
+  explanation="Most 'agent' problems are tool-design problems: fix the tools and the loop usually follows. Swapping models or tweaking the prompt is the first instinct the page warns against — it treats the symptom while the actual cause (a tool surface the model cannot reason about) stays in place."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Coding agents](./coding-agents.md).
