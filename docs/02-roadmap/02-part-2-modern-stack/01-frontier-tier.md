@@ -8,7 +8,18 @@ description: GPT-5, Claude Opus 4.x, Gemini 2.x Ultra — the models you reach f
 
 # Frontier Tier — Use When Nothing Else Passes
 
+:::info[Dated content — June 2026]
+This page names specific tools, models, and prices, which rotate quarterly. The *selection
+logic* is durable; the names are a snapshot. Cross-check the
+[Model snapshot](/docs/model-snapshot) for current model names and pricing.
+:::
+
+
 > **In one line:** The most capable, most expensive models — for the small fraction of features where the eval forces you up the cost curve.
+
+:::tip[In plain English]
+AI models come in rough price-and-quality tiers, a bit like economy, business, and first class on a plane. This page is about first class: the smartest models that also cost the most — often 50 to 100 times the price of the budget options. The decision this page teaches is *when that price is actually worth paying*, and the answer is: far less often than you'd guess. Most teams waste money by reaching for the top shelf "just to be safe," when a cheaper model would have done the job equally well. Learning to climb the price ladder only when your tests prove you have to is one of the biggest money-saving habits in this field.
+:::
 
 ## What's in this tier (as of 2026)
 
@@ -107,5 +118,45 @@ For non-eval-driven choices ("which feels best for our use case"), run a side-by
 - **Using reasoning models for non-reasoning tasks.** They're slow and expensive. For chat, structured output, RAG answer-gen — regular frontier or workhorse is better.
 - **Locking in on one provider.** Frontier model rankings shuffle every 6–12 months. Architect your code with a provider-abstraction layer (Vercel AI SDK, LiteLLM) so you can swap when the leaderboard moves.
 :::
+
+<Quiz id="frontier-tier-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="When is climbing to the frontier tier actually justified?"
+  options={[
+    { text: "At the start of every project, so quality is never a question" },
+    { text: "Whenever a new frontier model tops the public leaderboards" },
+    { text: "When a specific eval case fails at the workhorse tier and you cannot engineer around it" },
+    { text: "Whenever a feature is user-facing" }
+  ]}
+  correct={2}
+  explanation="The durable rule is that each tier climb must be justified by a specific failed eval case, not by vibes or caution. Starting at frontier 'to be safe' burns money and latency, and it lets you skip the prompt and retrieval engineering that actually compounds."
+/>
+
+<Question
+  prompt="Reasoning-focused models (the o-series style) are the right pick when..."
+  options={[
+    { text: "The problem is genuinely multi-step reasoning, latency tolerance is high, and you cannot decompose it into shorter steps" },
+    { text: "You need the fastest possible chat responses" },
+    { text: "You are generating answers in a RAG pipeline where retrieval does the heavy lifting" },
+    { text: "You need structured output that follows a schema" }
+  ]}
+  correct={0}
+  explanation="Reasoning models trade extra cost and latency for better performance on hard multi-step logic. For most app-shaped work — chat, RAG answers, structured output — a regular frontier or workhorse model is the better trade because those tasks do not need long internal reasoning chains."
+/>
+
+<Question
+  prompt="What is the main argument against defaulting to the frontier tier for everything?"
+  options={[
+    { text: "Frontier models are less accurate than cheaper models on routine tasks" },
+    { text: "It costs and delays far more, and it lets you skip the engineering discipline that actually improves your system" },
+    { text: "Frontier models cannot call tools or produce structured output" },
+    { text: "Providers rate-limit frontier models so heavily they are unusable in production" }
+  ]}
+  correct={1}
+  explanation="The page calls this the most expensive failure mode in AI engineering: cost scales linearly with volume, latency suffers, and 'the big model fixes it' stops you from improving prompts, retrieval, and chunking — the things that compound over time."
+/>
+
+</Quiz>
 
 → Next: [Workhorse tier](./02-workhorse-tier.md) — the default for most real AI work.

@@ -322,6 +322,44 @@ Pick a task that's annoying enough to want automated but bounded enough to be sa
 
 ## Page checkpoint
 
+<Quiz id="stage-8-agent-quick-check" variant="micro" title="Quick check">
 
+<Question
+  prompt="Strip away the marketing — what is an 'agent' underneath, according to this page?"
+  options={[
+    { text: "A fine-tuned model trained to plan multi-step tasks" },
+    { text: "Tool calling (Stage 4) run in a loop until the goal is reached, with caps, budgets, and confirmation guardrails" },
+    { text: "Multiple specialized models negotiating with each other" },
+    { text: "A model with persistent long-term memory across sessions" }
+  ]}
+  correct={1}
+  explanation="The agent loop is: ask the LLM what to do next, execute the tool it picks, feed the result back, repeat until it answers without tool calls. No special model, no built-in memory — the same stateless API from Stage 1, just called repeatedly with guardrails embedded in the loop. Knowing this demystifies agents: every failure is debuggable as a sequence of ordinary tool-calling turns, which is exactly what the Stage 7 traces show you."
+/>
+
+<Question
+  prompt="Your agent's task genuinely needs more than 20 iterations to finish. What does this page say to do?"
+  options={[
+    { text: "Remove the iteration cap — it was only for early development" },
+    { text: "Switch to a multi-agent architecture so each agent stays under the cap" },
+    { text: "Set max_iters to a very large number like 1000 as a practical infinity" },
+    { text: "Raise the cap deliberately and document why, or split the work into two agent runs — never just remove the cap" }
+  ]}
+  correct={3}
+  explanation="The caps exist because the failure mode is real: a confused model re-listing the same issues 200 times, $30 spent, nothing produced. The page's advice is to raise caps with intent (and a documented reason), split tasks that need 20+ iterations into smaller ones, or add no-progress early exits. Removing the cap — or setting it so high it might as well not exist — reintroduces the unbounded failure, and multi-agent adds complexity without fixing the underlying runaway-loop risk."
+/>
+
+<Question
+  prompt="Why does this page insist that evals (Stage 6) and observability (Stage 7) come BEFORE building your first agent?"
+  options={[
+    { text: "Without traces every failed run is the same opaque 'it didn't work', and without evals you cannot tell whether a fix actually helped" },
+    { text: "Agent frameworks refuse to run without a logging backend configured" },
+    { text: "Providers require eval results before granting tool-calling access" },
+    { text: "Evals automatically generate the agent's tool definitions" }
+  ]}
+  correct={0}
+  explanation="An agent run is many LLM calls chained together; when it fails, the trace is the only way to see which step went wrong — same tool called five times, an ignored error, a blown budget. And because agents are nondeterministic, only an eval can tell you whether your fix improved completion rates or just changed the failure. The page notes most production agent failures come from teams that built the loop first. Nothing technically blocks you — that is exactly the trap."
+/>
+
+</Quiz>
 
 → [Next: Stage 9 — Ship it](./10-stage-9-ship.md) · [Back to Part I overview](./index.md)

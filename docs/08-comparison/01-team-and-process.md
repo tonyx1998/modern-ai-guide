@@ -109,6 +109,46 @@ The stakeholder count is the cleanest single predictor of calendar time. Each ad
 - **Confusing AI CoE with AI velocity.** A Center of Excellence is a *coordination* function for an org with dozens of independent AI efforts. At one or two efforts, calling a Slack thread a CoE doesn't speed anything up — it just adds meetings.
 - **Hiring a head of AI before the second AI engineer.** A "head of AI" with no team is a job title looking for a problem; for the first one or two AI engineers, the right manager is whoever is already managing the relevant product team. Add the dedicated leadership role when the coordination cost across multiple AI engineers actually exceeds one engineering manager's attention.
 
+<Quiz id="comparison-team-and-process-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="According to the page, what is the cleanest single predictor of how long an AI change takes to go live?"
+  options={[
+    { text: "The number of humans who have to approve — each stakeholder adds roughly a day of wait at startup scale and a week at enterprise scale" },
+    { text: "Which model provider the team uses" },
+    { text: "The size of the eval suite" },
+    { text: "Which cloud the team deploys on" }
+  ]}
+  correct={0}
+  explanation="The page opens with it: the cleanest predictor of ship speed is how many humans have to nod before a change goes live, and every nod is also a wait. Solo needs zero nods, startup one or two, enterprise eight or more. Model, framework, and cloud are explicitly ruled out as the predictor — the trick is matching the number of nods to the actual blast radius of being wrong."
+/>
+
+<Question
+  prompt="The page calls one artifact 'the dividing line' between startup and enterprise AI work. Which one, and why?"
+  options={[
+    { text: "The eval suite, because enterprises run more cases" },
+    { text: "The cost dashboard, because enterprises do per-team chargeback" },
+    { text: "The ADR, because enterprises require written decisions" },
+    { text: "The prompt registry — at smaller scales the git log is the registry, but enterprises need prompts discoverable, attributable, auditable, and changeable without a deploy" }
+  ]}
+  correct={3}
+  explanation="At solo and startup scale, prompts live in code and the git log is the registry. Enterprises need prompts discoverable across teams, attributable to owners, auditable for compliance, and changeable without a code deploy — a whole platform, sometimes 5+ engineers' full-time job. The page's test for startups tempted to build one 'to be ready': name the specific customer or regulator requiring it. Usually there is none."
+/>
+
+<Question
+  prompt="In the worked example, the same one-sentence prompt tweak takes 5 minutes solo, a day at a startup, and 1-2 weeks at an enterprise. What does the page conclude?"
+  options={[
+    { text: "Enterprises should adopt the solo workflow for low-risk changes" },
+    { text: "The actual thinking took the same 5 minutes everywhere; everything else is risk-absorption process, priced against the cost of being wrong" },
+    { text: "Startups have found the optimal balance for all teams" },
+    { text: "Enterprise engineers are less productive than solo developers" }
+  ]}
+  correct={1}
+  explanation="The intellectual work — 'add this sentence' — is identical across all three orgs. What differs is the process wrapped around it: reviews, registries, risk-tier checks, canary rollouts. The page frames that overhead not as waste but as risk absorption sized to the blast radius; none of the columns is presented as the right answer for everyone."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Stack comparison](./stack.md).

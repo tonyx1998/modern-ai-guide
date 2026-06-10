@@ -134,6 +134,46 @@ For that, the canonical path is: the [3Blue1Brown deep-learning series](https://
 
 The point of this appendix isn't to make you an ML engineer — it's to give you enough vocabulary to *decide* whether you want to become one, without months of detour.
 
+<Quiz id="math-primer-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Why does doubling the context length roughly quadruple the cost of attention?"
+  options={[
+    { text: "Every token computes a similarity score against every other token, so the number of pairs grows quadratically" },
+    { text: "The model's parameter count doubles with the context length" },
+    { text: "Longer contexts require a higher learning rate" },
+    { text: "Each token's embedding doubles in dimension" }
+  ]}
+  correct={0}
+  explanation="Attention computes a Q dot K score for every pair of tokens — n squared pairs for n tokens — so 2x the tokens means 4x the pairs. This is the root cause of long-context expense and the reason flash attention, paged attention, and prefix caching exist. The parameter count is fixed at training time and doesn't change with how much context you send."
+/>
+
+<Question
+  prompt="Mechanically, what does the temperature knob actually do?"
+  options={[
+    { text: "Adds random noise to the model's weights" },
+    { text: "Changes which tokens are in the vocabulary" },
+    { text: "Scales the logits before softmax — low temperature sharpens the distribution so the top option dominates" },
+    { text: "Controls how many tokens the model reads from the prompt" }
+  ]}
+  correct={2}
+  explanation="Softmax turns logits into probabilities, and scaling the logits first changes how peaked the result is: low temperature exaggerates differences so the winner takes most, high temperature flattens toward uniform. Nothing about the model changes — no weights are touched, no noise is injected into them; temperature only reshapes the probability distribution you sample the next token from."
+/>
+
+<Question
+  prompt="In the 'rolling downhill' picture of training, what is the gradient used for?"
+  options={[
+    { text: "It measures the model's accuracy on the test set" },
+    { text: "It points toward the steepest INCREASE in loss, so you step in the opposite direction to reduce it" },
+    { text: "It counts the number of training examples per batch" },
+    { text: "It directly sets the model's final weights in one step" }
+  ]}
+  correct={1}
+  explanation="The gradient is the direction of steepest loss increase; gradient descent flips the sign and takes a small step (scaled by the learning rate), then repeats — that's the whole 'rolling downhill' picture. It's a direction, not a destination: no single step sets the final weights, and the loss it descends is computed on training data, not a measure of test accuracy."
+/>
+
+</Quiz>
+
 ---
 
 → Back to: [Foundations checkpoint](./foundations-checkpoint.md)

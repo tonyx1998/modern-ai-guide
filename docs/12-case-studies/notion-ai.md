@@ -9,6 +9,10 @@ description: AI inside a productivity app. Per-block actions, document-aware con
 
 > **In one line:** Notion AI is the contrast case to "everything is a chatbot" — instead of one big chat surface, AI shows up as *contextual actions* attached to blocks and pages (summarize, translate, rewrite, generate, ask), each with the surrounding document as automatic context, and that design is why it feels less novel but works in more places.
 
+:::tip[In plain English]
+Notion AI is the counter-example to 'every AI product is a chatbot' — instead of a chat window, AI shows up as small actions attached to whatever you're editing: summarize this, translate that, fill in this table column. Because Notion documents are built from structured blocks, the AI always knows what kind of content it's acting on and what surrounds it, with no copy-pasting of context. Study this page because embedded AI actions — single model calls woven into an existing workflow — are often the right design, and this is the cleanest public example of it.
+:::
+
 ## The product
 
 AI features layered onto Notion's existing block-based document/database system:
@@ -101,12 +105,59 @@ The lesson: not everything needs to be an agent. Most editor-embedded AI is a si
 - **Multi-step agent orchestration for simple actions.** Over-engineering kills the latency and the simplicity that make embedded AI feel good.
 - **Ignoring ACL on workspace Q&A.** Pages have permissions; respect them.
 
+:::caution[What people get wrong when copying this]
+- **Copying the embedded-actions pattern into a product with no structured content model.** The block structure is what makes context assembly automatic; without an equivalent, you're just hiding a chatbot behind buttons.
+- **Over-engineering simple actions into agent loops.** Most editor actions are one templated model call — adding orchestration adds latency and failure modes to interactions that should feel instant.
+- **Skipping permission checks on workspace Q&A because the inline actions didn't need them.** The retrieval surface has a completely different security profile from acting on the user's own selection.
+- **Assuming embedded actions replace chat entirely.** Notion consciously cedes open-ended exploration to other tools; copying the pattern means accepting that trade, not pretending it doesn't exist.
+:::
+
 ## Sources
 
 - Notion's product blog and engineering posts.
 - AI Engineer Summit talks by Notion's AI team.
 - Public design discussions of "AI in the editor" patterns.
 - Customer interviews and use-case write-ups in product newsletters (Lenny's, etc.).
+
+<Quiz id="case-notion-ai-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What structural advantage does Notion's pre-AI block architecture give its AI features?"
+  options={[
+    { text: "Blocks make documents smaller, so more content fits in the context window" },
+    { text: "Blocks let the AI run locally on the user's device" },
+    { text: "Every piece of content is a typed structured atom, so an action knows what kind of thing it is acting on and can preserve structure like tables and lists" },
+    { text: "Blocks allow multiple models to edit the same page simultaneously" }
+  ]}
+  correct={2}
+  explanation="Because every paragraph, list, and table is a block with type metadata, 'translate this table' can preserve table structure instead of flattening to text. The transferable lesson: if your product has structured content, feed the structure to the model rather than flat strings."
+/>
+
+<Question
+  prompt="How are most Notion AI actions like summarize, translate, and rewrite implemented under the hood?"
+  options={[
+    { text: "A multi-agent system that plans, drafts, and reviews each output" },
+    { text: "As a single model call with a templated prompt - no agent loops or multi-step orchestration" },
+    { text: "A fine-tuned model per action trained on user documents" },
+    { text: "A retrieval pipeline that searches the workspace before every action" }
+  ]}
+  correct={1}
+  explanation="The vast majority of usage is one user input, one model call, one output back to the cursor. Heavy orchestration is reserved for the few features that need it. Not everything needs to be an agent - over-engineering kills the latency and simplicity that make embedded AI feel good."
+/>
+
+<Question
+  prompt="What trade-off does Notion accept by choosing per-block actions over a chat-first design?"
+  options={[
+    { text: "Higher per-request costs in exchange for better answers" },
+    { text: "Slower feature development because each action needs its own UI" },
+    { text: "Weaker data privacy because actions see the whole document" },
+    { text: "Less open-ended exploration - users who want to brainstorm freely go to a general chatbot instead" }
+  ]}
+  correct={3}
+  explanation="Attaching actions to content gives near-zero cognitive overhead - users click 'summarize' like they click 'format as heading' - but gives up the open-ended exploration a chat surface offers. Notion accepts that trade deliberately; the lesson is to match the AI surface to the workflow."
+/>
+
+</Quiz>
 
 ---
 

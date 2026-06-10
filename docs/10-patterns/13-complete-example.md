@@ -375,6 +375,46 @@ authorize → retrieve → bounded generate → validate → cache → log → r
 That shape is **every production AI feature**. Email summary, voice agent, code generator, billing assistant. The boxes are filled differently; the wiring is the same. Once you build it once, you reuse it forever.
 :::
 
+<Quiz id="pattern-complete-example-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Strip away the tools, schema, and cache from the support-assistant handler. What recurring shape remains?"
+  options={[
+    { text: "Prompt, generate, return — everything else is optional polish" },
+    { text: "Retrieve, generate, retrieve again, generate again until confident" },
+    { text: "Authorize, retrieve, bounded generate, validate, cache, log, respond or fall back" },
+    { text: "Classify, route to a specialist model, merge the outputs" }
+  ]}
+  correct={2}
+  explanation="The page closes on exactly this: that shape is every production AI feature — email summary, voice agent, code generator — with different boxes but the same wiring. 'Prompt, generate, return' is the demo shape; the whole chapter exists because production needs the authorization, bounds, validation, and fallback layers around it."
+/>
+
+<Question
+  prompt="Why do the kill switch, rate limit, and tenant budget checks run BEFORE retrieval and the model call?"
+  options={[
+    { text: "Because providers require rate limiting on their side of the API" },
+    { text: "So no expensive work happens for a request that would be refused anyway" },
+    { text: "Because retrieval cannot run without a budget token" },
+    { text: "To make the trace ID available earlier in the request" }
+  ]}
+  correct={1}
+  explanation="The guards are ordered cheapest-first: a killed feature or an over-budget tenant exits in microseconds without paying for retrieval, reranking, or tokens. The trace ID option is plausible noise — the trace ID is generated independently and has nothing to do with guard ordering."
+/>
+
+<Question
+  prompt="After generation, the handler filters cited_chunk_ids against the retrieved set. What failure does this prevent?"
+  options={[
+    { text: "The model inventing a citation ID, which would make users trust a fabricated fact" },
+    { text: "The retrieval pipeline returning too many chunks" },
+    { text: "Duplicate chunks appearing in the context window" },
+    { text: "The cache returning answers from the wrong tenant" }
+  ]}
+  correct={0}
+  explanation="The model is told to cite only retrieved chunks, but it will obey only mostly — validating in code means an invented ID is dropped (and logged) instead of lending false authority to a hallucination. The wrong-tenant option is a real risk, but it is prevented earlier by ACL-filtered retrieval, not by citation validation."
+/>
+
+</Quiz>
+
 ---
 
 → Final check: [Chapter checkpoint](./14-checkpoint.md).

@@ -143,6 +143,46 @@ Procurement-led negotiations rarely include the engineering input that matters m
 - **Engineering not at the procurement table.** Procurement-only negotiations get list-minus-30%; engineering input on actual load shape, model mix, and migration plans gets list-minus-50%. Be in the room.
 :::
 
+<Quiz id="enterprise-ai-cost-picture-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What does the page call the single most important AI FinOps metric?"
+  options={[
+    { text: "Cost per thousand tokens" },
+    { text: "Total monthly model spend" },
+    { text: "Cost per AI engineer" },
+    { text: "Commit utilization — the fraction of committed capacity actually used" }
+  ]}
+  correct={3}
+  explanation="Enterprise spend is dominated by committed-capacity contracts billed whether you use them or not, so utilization determines whether the contract was sized right: 70–95% is healthy, under 50% is a hard conversation with finance. Per-token cost matters at startups paying on demand — the cost structure changes once you commit."
+/>
+
+<Question
+  prompt="According to the honest math, when is self-hosting open models the right call?"
+  options={[
+    { text: "Whenever the monthly Bedrock bill exceeds the amortized GPU cost" },
+    { text: "For data-sovereignty requirements or very-high-volume narrow tasks — control, not general cost savings" },
+    { text: "Whenever an open model matches the closed model on public benchmarks" },
+    { text: "Never — enterprises should always use managed endpoints" }
+  ]}
+  correct={1}
+  explanation="Once you add peak-load redundancy, roughly two FTEs to run the cluster, the model-quality gap, and capex tie-up, the spreadsheet saving usually shrinks to a rounding error or goes negative. The naive bill comparison is the trap the page works through in detail. Self-host wins on control and on narrow high-volume tasks, not on 'Llama is free.'"
+/>
+
+<Question
+  prompt="What does the page identify as the surprise line item in enterprise AI budgets?"
+  options={[
+    { text: "Internal developer-productivity tools like Cursor, Copilot Enterprise, and Claude Code at company scale" },
+    { text: "Vector database licensing" },
+    { text: "Prompt registry hosting" },
+    { text: "Eval platform seats" }
+  ]}
+  correct={0}
+  explanation="AI coding tools across a couple thousand engineers easily exceed a million dollars a year — one of the largest AI line items, and often treated as someone else's budget problem. The infrastructure answers are real costs but smaller and expected; the page's point is the category that deserves model-spend-level scrutiny and rarely gets it."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [Enterprise-Specific Pitfalls](./15-pitfalls.md) — what still goes wrong even with all this investment.

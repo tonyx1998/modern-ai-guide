@@ -10,6 +10,10 @@ description: Time to first token (TTFT) vs total time. Why streaming changes eve
 
 > **In one line:** Users care about *time to first token* far more than total time — and streaming makes a slow model feel fast as long as the first token shows up quickly.
 
+:::tip[In plain English]
+There are two clocks on every AI response: how long until the first word appears (time to first token, or TTFT), and how long until the whole answer is done. Users judge almost entirely by the first clock. A reply that starts appearing in a fraction of a second feels fast even if it streams for several more seconds, while the same answer dumped all at once after a long pause feels broken. That's why streaming is the single biggest UX win — and why this page measures everything in TTFT first.
+:::
+
 ## 1. The two latencies
 
 | Metric | What it measures | What users feel |
@@ -192,5 +196,45 @@ Latency is a UX decision, not a model decision. Architect around it.
 - **No latency dashboards.** "It feels fast on my machine" is not data. P95 TTFT broken down by feature is data.
 - **Treating "the API is slow" as the model being slow.** Often it's your network, region, prompt length, or queue. Decompose before fixing.
 :::
+
+<Quiz id="latency-intuition-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="For a streaming chat response, which metric dominates user perception?"
+  options={[
+    { text: "Total time until the last token renders" },
+    { text: "Inter-token time during the stream" },
+    { text: "Time to first token (TTFT)" },
+    { text: "Tokens per second on the provider's status page" }
+  ]}
+  correct={2}
+  explanation="A 200ms TTFT followed by 4 seconds of streaming feels instant; a 4-second TTFT followed by a single dump feels broken - even when total time is identical. Users feel the first token."
+/>
+
+<Question
+  prompt="Which optimization does the page rank as the single biggest UX win for latency?"
+  options={[
+    { text: "Streaming the response instead of waiting for completion" },
+    { text: "Dropping to a smaller, faster model" },
+    { text: "Shortening prompts" },
+    { text: "Geographic routing to a closer provider region" }
+  ]}
+  correct={0}
+  explanation="Streaming is often a 5-10x perceived speedup: tokens appear in ~300ms and the user starts reading immediately. If your UI shows model output to a human, stream - almost always."
+/>
+
+<Question
+  prompt="Besides saving money, what does the page say caching stable prompt prefixes also does?"
+  options={[
+    { text: "Increases output quality" },
+    { text: "Speeds up time to first token" },
+    { text: "Raises your provider rate limits" },
+    { text: "Makes streaming unnecessary" }
+  ]}
+  correct={1}
+  explanation="First-token compute scales with input size, so cached input doesn't just cut cost - it also reduces TTFT. A bloated uncached system prompt costs you latency and money at once."
+/>
+
+</Quiz>
 
 → Next: [Safety mindset](./07-safety-mindset.md) — prompt injection, data exfiltration, the defense-in-depth that actually works.

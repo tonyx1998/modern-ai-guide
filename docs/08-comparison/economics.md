@@ -114,6 +114,46 @@ The infra bill is **20% of the AI team's payroll**. Optimizing it from $190K to 
 - **Optimizing the bill before measuring what you're paying for.** Without per-feature, per-tenant cost attribution, a "we need to cut AI spend" project becomes a fishing trip. Wire up attribution first; optimize second.
 - **Believing infra-as-percent-of-revenue is the right metric.** It anchors leadership on the wrong lever. The right metric is *AI-cost-per-successful-user-outcome* — if it's flat or falling, you're winning; if it's rising, you have a cost problem regardless of total bill size.
 
+<Quiz id="comparison-economics-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What does the page identify as the dominant AI cost at every scale?"
+  options={[
+    { text: "Model inference, especially output tokens" },
+    { text: "Vector database and observability subscriptions" },
+    { text: "Self-hosted GPU capital expenditure" },
+    { text: "People — payroll dwarfs the infra bill, so optimizing the inference bill before engineer time-to-ship is almost always the wrong order" }
+  ]}
+  correct={3}
+  explanation="Infrastructure is a small percentage of total AI spend at every scale; people costs dominate. The worked example makes it concrete: a startup's ~$190K/year infra bill is about 20% of a 3-engineer team's $750K payroll, and a heroic 20% infra cut saves only ~5 weeks of one engineer's loaded cost — better spent shipping the next feature."
+/>
+
+<Question
+  prompt="What does the highlight 'the cheapest token is almost never the cheapest total' mean in practice?"
+  options={[
+    { text: "The cheapest total cost is usually the option that consumes the least engineering attention, even if its per-token price is higher" },
+    { text: "Output tokens always cost more than input tokens" },
+    { text: "Caching makes every token effectively free at scale" },
+    { text: "Providers hide fees that make cheap tokens more expensive" }
+  ]}
+  correct={0}
+  explanation="The page's examples: don't burn a Saturday self-hosting Llama to save $30/month; don't build a custom caching layer that takes a sprint and is yours to maintain forever to save $2K/month; don't migrate to a 10% cheaper provider if it costs a 30-engineer quarter. Engineering attention is the scarce resource, so the lowest-attention option usually wins on total cost."
+/>
+
+<Question
+  prompt="Which cost metric does the page say leadership should actually track?"
+  options={[
+    { text: "Infrastructure spend as a percent of revenue" },
+    { text: "Total monthly token volume" },
+    { text: "AI cost per successful user outcome — flat or falling means you are winning; rising means a cost problem regardless of the total bill" },
+    { text: "Cost per thousand API calls, normalized by provider" }
+  ]}
+  correct={2}
+  explanation="Infra-as-percent-of-revenue is called out as the wrong metric because it anchors leadership on the wrong lever. AI-cost-per-successful-user-outcome ties spend to the value it produces: a growing bill is fine if each successful outcome costs the same or less, and a shrinking bill can still hide a cost problem if outcomes are shrinking faster."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Tradeoffs](./06-tradeoffs.md).

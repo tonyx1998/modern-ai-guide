@@ -7,6 +7,13 @@ description: PromptLayer, Braintrust prompts, Vellum, Pezzo, Latitude, Helicone 
 
 # Prompt management
 
+:::info[Dated content — June 2026]
+This page names specific tools, models, and prices, which rotate quarterly. The *selection
+logic* is durable; the names are a snapshot. Cross-check the
+[Model snapshot](/docs/model-snapshot) for current model names and pricing.
+:::
+
+
 > **In one line:** Tools that treat prompts like code (or like content) — versioning, diffs, A/B tests, environment-specific deploys, and a non-engineer-friendly UI for the people who actually write the prompts.
 
 :::tip[In plain English]
@@ -124,6 +131,46 @@ Cost is usually small relative to the API spend — measured in tens to low hund
 - **Templating with naive `str.replace`.** Variables containing the literal `{{` or user-supplied formatting tokens will bite you. Use a real templater (Jinja, Handlebars, Mustache).
 - **Hot-reloading prompts in a long-running agent mid-conversation.** The model's tool-use state is tied to the prompt it saw; swap it mid-flight and tool-call IDs stop matching. Snapshot the prompt for the life of a session.
 - **No audit log.** "Who changed the system prompt at 2am?" is a real incident response question. The registry should answer it.
+
+<Quiz id="prompt-management-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the core trade-off of the registry-as-product approach compared with git-for-prompts?"
+  options={[
+    { text: "Instant publishing without a deploy, at the cost of prompts living outside your repo and adding a runtime dependency" },
+    { text: "Lower cost, but no web UI for editing" },
+    { text: "Better version history, but authors must learn git" },
+    { text: "Full PR review support, but slower iteration" }
+  ]}
+  correct={0}
+  explanation="Registries let authors hit publish and go live in seconds, but the prompt now lives outside the repo where PR review can't see it, and your app depends on a fetch at runtime. The git model is the one that demands git knowledge and a redeploy per change — that's the opposite side of the split."
+/>
+
+<Question
+  prompt="When should a team graduate from plain git plus YAML files to a hosted prompt registry?"
+  options={[
+    { text: "As soon as they have more than one prompt" },
+    { text: "When CI starts taking longer than five minutes" },
+    { text: "When a non-engineering prompt author needs an editor and instant publishing" },
+    { text: "Only after reaching enterprise scale with SOC2 requirements" }
+  ]}
+  correct={2}
+  explanation="Git plus files plus eval tooling covers engineering teams indefinitely with zero new vendors. The forcing function is a human one: a PM or content person who writes prompts but can't push code. Prompt count alone doesn't trigger the switch — git handles hundreds of files just fine."
+/>
+
+<Question
+  prompt="Why is hot-reloading a prompt in the middle of a long-running agent conversation dangerous?"
+  options={[
+    { text: "It invalidates the provider's prompt cache and doubles cost" },
+    { text: "The model's tool-use state is tied to the prompt it originally saw, so swapping mid-flight breaks tool-call matching" },
+    { text: "Registries rate-limit fetches during active sessions" },
+    { text: "Templating engines cannot re-render after a session starts" }
+  ]}
+  correct={1}
+  explanation="The conversation's tool-call IDs and behavior are anchored to the prompt the model has been working with; replacing it mid-session desynchronizes that state. The fix is snapshotting the prompt for the life of a session. Cache invalidation costs money but doesn't break correctness — this does."
+/>
+
+</Quiz>
 
 ---
 

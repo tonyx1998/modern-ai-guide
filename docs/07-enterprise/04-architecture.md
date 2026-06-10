@@ -163,6 +163,46 @@ RAG features add their own layer of complexity:
 - **Choosing the vendor before designing the architecture.** "We're going to use Portkey" should be the answer to a designed-for-our-stack question, not the first decision. Sketch the layers above, then evaluate vendors against them.
 :::
 
+<Quiz id="enterprise-ai-architecture-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What does the page say is the deepest reason every enterprise eventually builds a central AI gateway?"
+  options={[
+    { text: "It reduces model latency through caching" },
+    { text: "It lowers token costs through smart routing" },
+    { text: "Audit defensibility — one place that can answer exactly what happened on every model call" },
+    { text: "It removes the need for feature teams to write SDKs" }
+  ]}
+  correct={2}
+  explanation="When an auditor asks for every model call made for EU customers in a date range, the answer must be a single query against gateway logs. If half the calls bypass the gateway, the answer is 'we cannot tell you' — and that fails the audit. Cost and observability benefits are real but are not the load-bearing reason."
+/>
+
+<Question
+  prompt="In the reference architecture, what is the policy engine's role?"
+  options={[
+    { text: "A separate decision layer the gateway consults on every call, enforcing allowlists, redaction, geo routing, and kill switches as config" },
+    { text: "A code library compiled into each feature service" },
+    { text: "A monthly review board that approves model choices" },
+    { text: "The component that generates embeddings for RAG" }
+  ]}
+  correct={0}
+  explanation="The policy engine (typically OPA or Cedar) is deliberately separate from gateway code so policies are config, not deploys. The 'compiled into each service' answer is tempting because that is how startups enforce rules — but hard-coded policy is exactly what the page says does not survive contact with reality."
+/>
+
+<Question
+  prompt="What must RAG retrieval respect, per the architecture notes?"
+  options={[
+    { text: "A single company-wide embedding pipeline" },
+    { text: "The same document-level access controls the source system enforces" },
+    { text: "A maximum of one vector database per company" },
+    { text: "Only documents created in the last 12 months" }
+  ]}
+  correct={1}
+  explanation="A user who cannot see a document in SharePoint must not see it through a RAG endpoint — each chunk carries the source document's ACL fingerprint, and the retriever filters by requester identity before the model sees results. The single-pipeline answer is a trap: the page explicitly recommends a central embedding platform but not a central pipeline."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [AI in Enterprise Frontends](./05-frontend-architecture.md) — what changes when your AI features ship inside a design system and on a regulated UI.

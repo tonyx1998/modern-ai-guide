@@ -154,6 +154,46 @@ Self-check:
 - Is your `.env.local` populated and gitignored?
 - Did you deploy an empty app to production *before* writing features?
 
+<Quiz id="solo-env-setup-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="When should you set a spend cap on your LLM provider account, and what kind of cap should it be?"
+  options={[
+    { text: "After your first real bill arrives, as a soft warning email" },
+    { text: "Once you have paying users, as a warning threshold" },
+    { text: "Before the first prompt is ever sent, as a hard ceiling rather than a warning" },
+    { text: "Only when you add an agent loop to the product" }
+  ]}
+  correct={2}
+  explanation="The page calls spend caps non-negotiable: set a hard monthly cap (around $20 for v0) before any code runs, because the most common quit-moment is a surprise bill from an uncapped endpoint. A warning threshold is the tempting half-measure — the page explicitly says you want a real ceiling, since 429 errors are better than a scary bank statement."
+/>
+
+<Question
+  prompt="Why must you never put a model API key in a NEXT_PUBLIC_* environment variable?"
+  options={[
+    { text: "Variables with that prefix are shipped to the browser, so anyone can find the key via View Source" },
+    { text: "Next.js refuses to load variables with that prefix at build time" },
+    { text: "The prefix makes the variable unavailable to API routes" },
+    { text: "Anthropic and OpenAI reject keys stored under that name" }
+  ]}
+  correct={0}
+  explanation="NEXT_PUBLIC_ (and VITE_) prefixes mark variables for client-side bundling, which means the key becomes publicly readable — so all model calls must go through your backend with a server-only key. The build-time option is tempting because it sounds like a framework rule, but the danger is the opposite: the variable loads fine and silently leaks."
+/>
+
+<Question
+  prompt="What is the point of deploying an empty app to production in hour zero, before writing any feature code?"
+  options={[
+    { text: "It reserves your project name on the hosting platform" },
+    { text: "It proves the whole deploy pipeline works in isolation, so you never face five interacting deploy errors at once later" },
+    { text: "It warms up the CDN cache for launch day" },
+    { text: "Hosting providers require an initial deploy to activate env vars" }
+  ]}
+  correct={1}
+  explanation="The page calls the empty deploy the highest-ROI step of the weekend: deferring deployment to right before launch means hitting several deploy errors simultaneously with no idea which to debug first. The env-var option is a plausible distractor because you do add env vars right after the empty deploy — but that's part of the verification, not a platform requirement."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [The Development Loop](./06-development.md) where we'll set up the prompt → eval → commit rhythm that's the actual day-to-day of solo AI work.

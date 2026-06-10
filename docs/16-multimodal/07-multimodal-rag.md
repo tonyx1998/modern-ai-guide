@@ -97,6 +97,46 @@ def hybrid_retrieve(query, k=5):
 - **Skipping the rerank/VLM-read step.** Top-k page images are *candidates*; let a VLM actually read them and cite, rather than returning the raw nearest page as the "answer."
 :::
 
+<Quiz id="mm-rag-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Why can a plain text query like 'red sneakers' retrieve matching photos from an image index at all?"
+  options={[
+    { text: "Contrastive training (CLIP-style) puts image and text vectors in one shared space, so a caption and its matching photo land near each other and cosine similarity works across modalities" },
+    { text: "The search engine OCRs every image and matches the extracted text" },
+    { text: "The vector database translates text vectors into image vectors at query time" },
+    { text: "Image filenames and alt-text are indexed alongside the pixels" }
+  ]}
+  correct={0}
+  explanation="Training on millions of (image, caption) pairs pulls real pairs close and pushes mismatches apart, producing one space where modality stops mattering — the rest is ordinary nearest-neighbor search. The OCR/metadata answers describe older keyword approaches; the breakthrough is that the meaning of the pixels themselves is searchable, no text on or about the image required."
+/>
+
+<Question
+  prompt="You embed your image corpus with model A, then later embed queries with multimodal model B because it benchmarks better. Search quality collapses. Why?"
+  options={[
+    { text: "Model B requires higher-resolution input images" },
+    { text: "Vectors from different models live in different, incomparable spaces — query and corpus must come from the same model and version, so switching means re-embedding everything" },
+    { text: "The vector database needs reindexing after any model release" },
+    { text: "Model B produces vectors of a different length, which the database rejects" }
+  ]}
+  correct={1}
+  explanation="There is no universal embedding space: each model learns its own geometry, so distances between vectors from different models are meaningless even when dimensions happen to match. The dimension-mismatch answer is the tempting technicality — sometimes the dims do differ and you get a loud error, but the dangerous case is matching dims with silently garbage similarities."
+/>
+
+<Question
+  prompt="Your RAG system OCRs financial-report PDFs into text chunks, and users complain it can't answer questions about the charts and table structures. What does this page recommend?"
+  options={[
+    { text: "Better OCR — modern engines can extract chart data reliably" },
+    { text: "Ask users to rephrase questions to target the prose instead" },
+    { text: "Larger text chunks so tables stay intact within one chunk" },
+    { text: "Add visual document retrieval (ColPali-style) — embed rendered page images directly so layout, tables, and figures are searchable, and fuse with the text index" }
+  ]}
+  correct={3}
+  explanation="Documents carry meaning in their layout, and OCR-flattening destroys it — visual document embedders skip OCR and retrieve whole page images that a VLM then reads. 'Better OCR' is the natural incremental fix, but charts and figure positions resist text extraction in principle; the hybrid of text chunks plus page images is the pattern that ships."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Evaluating multimodal](./08-evaluating-multimodal.md)

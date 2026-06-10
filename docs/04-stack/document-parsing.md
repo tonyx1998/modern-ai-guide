@@ -7,6 +7,13 @@ description: Turning PDFs, HTML, Word, slide decks, and scanned images into clea
 
 # Document parsing
 
+:::info[Dated content — June 2026]
+This page names specific tools, models, and prices, which rotate quarterly. The *selection
+logic* is durable; the names are a snapshot. Cross-check the
+[Model snapshot](/docs/model-snapshot) for current model names and pricing.
+:::
+
+
 > **In one line:** The unglamorous, quality-defining prerequisite to every RAG system. Bad parsing → bad chunks → bad retrieval → bad answers. Spend more time here than you think you should.
 
 :::tip[In plain English]
@@ -116,6 +123,46 @@ For a *one-million-page* enterprise corpus, parsing alone is often the biggest l
 - **Re-parsing on every retrieval.** Parse at ingest, store the result, never re-parse at query time.
 - **Trusting one parser for every file type.** A PDF parser does not parse Excel well; an HTML parser does not parse PowerPoint. Route by mime type.
 - **No quality canary.** Build a small labeled set of "we know what should come out of these 10 docs" and run it on every parser upgrade — catches silent regressions.
+
+<Quiz id="document-parsing-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Why does the page call document parsing the quality-defining prerequisite of every RAG system?"
+  options={[
+    { text: "Parsing is the most expensive API call in the stack" },
+    { text: "Embedding models only accept Markdown input" },
+    { text: "Bad parsing produces bad chunks, which cascade into bad retrieval and bad answers" },
+    { text: "Vector databases reject documents that have not been parsed" }
+  ]}
+  correct={2}
+  explanation="Every downstream RAG decision operates on the chunks parsing produced; broken inputs cannot be fixed by better embeddings or prompts. Parsing CAN become the biggest cost line at enterprise scale, but that's a budgeting concern — the durable reason to care is the quality cascade."
+/>
+
+<Question
+  prompt="Your corpus is regulatory filings dense with financial tables. Which tools does the page steer you toward?"
+  options={[
+    { text: "pypdf or pdfplumber" },
+    { text: "LlamaParse, Reducto, or a vision LLM" },
+    { text: "Marker with default settings" },
+    { text: "A plain HTML parser routed by mime type" }
+  ]}
+  correct={1}
+  explanation="Heavily tabular documents are where the specialized parsers and vision models reliably beat general-purpose extraction — tables are where dollars, dates, and SKUs live. pypdf and pdfplumber are the right call for mostly-clean text PDFs, which is the opposite of this workload."
+/>
+
+<Question
+  prompt="Why must you store the source page reference alongside every chunk?"
+  options={[
+    { text: "Vector databases require a page field in the schema" },
+    { text: "Page numbers improve embedding quality" },
+    { text: "Reranking models use page position as a feature" },
+    { text: "Users want citations like 'page 12 of report.pdf', and you cannot show what you never stored" }
+  ]}
+  correct={3}
+  explanation="Provenance is a non-negotiable UX feature: when the system answers, users need to verify where the claim came from. None of the infrastructure technically requires it — which is exactly why it's easy to skip at ingest and impossible to retrofit at query time."
+/>
+
+</Quiz>
 
 ---
 

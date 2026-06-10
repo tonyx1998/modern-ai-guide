@@ -82,3 +82,43 @@ Use them as a diagnosis: weak **faithfulness** means fix the **prompt / generati
 Pick one AI feature. Read 25 real outputs. Write down every failure in a sentence. Cluster them into 3 modes. Write 3 binary judges and 20 test cases, and put them in CI. You now do eval-driven development.
 
 **Further reading:** Hamel Husain — [LLM Evals FAQ](https://hamel.dev/blog/posts/evals-faq/); Chip Huyen — *AI Engineering* (the evaluation chapters).
+
+<Quiz id="pattern-eval-driven-development-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the first step of eval-driven development — the one this page says everyone skips?"
+  options={[
+    { text: "Pick a quality metric like helpfulness on a 1-10 scale" },
+    { text: "Read 20-50 real outputs end to end and write down what actually went wrong" },
+    { text: "Set up an eval framework and a CI pipeline" },
+    { text: "Hire annotators to label a large dataset" }
+  ]}
+  correct={1}
+  explanation="You cannot measure what you have not looked at — error analysis on real outputs is the 30-minute habit the whole methodology builds on. Starting with a metric is the tempting wrong answer the page opens by rejecting: a dashboard saying 'helpfulness 7.2 / 10' tells you nothing about what to fix."
+/>
+
+<Question
+  prompt="How should judges be designed, per this methodology?"
+  options={[
+    { text: "One comprehensive judge scoring overall quality from 1 to 5" },
+    { text: "Five judges that vote, averaging their scores" },
+    { text: "Judges only for objective facts; skip subjective failures" },
+    { text: "One binary pass/fail judge per named failure mode" }
+  ]}
+  correct={3}
+  explanation="Narrow plus binary equals reliable and actionable: each judge checks exactly one named failure mode and tells you precisely what regressed. The single mega-judge with a 1-5 scale is the seductive option because it feels comprehensive — but it is noisy and tells you nothing about what to fix."
+/>
+
+<Question
+  prompt="Why do the evals belong in CI rather than a notebook?"
+  options={[
+    { text: "Evals in a notebook rot and nobody trusts them; CI gates every change against the suite, like unit tests" },
+    { text: "CI machines run evals faster than laptops" },
+    { text: "Notebooks cannot call LLM judge APIs" },
+    { text: "CI is required for LLM-as-judge to be statistically valid" }
+  ]}
+  correct={0}
+  explanation="The discipline that compounds is running the checks on every prompt tweak, model swap, or code change — and blocking merges that regress. The speed and API options are mechanical distractions; the real difference is enforcement: a check that does not run automatically eventually does not run at all."
+/>
+
+</Quiz>

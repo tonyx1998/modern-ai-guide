@@ -9,6 +9,10 @@ description: Terminal-native coding agent. MCP-first tool design, tight agent lo
 
 > **In one line:** Claude Code is Anthropic's CLI coding agent — a terminal interface plus an MCP-native tool system plus an agent loop tuned for "edit files, run commands, verify with tests" — and the interesting architecture is how it constrains the agent to *demonstrably correct* edits rather than plausible-looking ones.
 
+:::tip[In plain English]
+Claude Code is an AI coding assistant that lives in your terminal instead of your editor — you describe what you want, and it reads files, edits code, runs commands, and checks its own work with tests. The design philosophy worth studying is restraint: a deliberately tiny set of sharp tools, strict permission rules for anything with side effects, and edits that must match the existing code exactly before they apply. Study this page because it's the cleanest public example of how to make an autonomous agent trustworthy enough to touch real codebases.
+:::
+
 ## The product
 
 A coding agent you talk to in the terminal. You can ask it to:
@@ -117,6 +121,13 @@ It's a small thing that quietly fixes the "agent declared victory but didn't act
 - **Treating every tool as equally safe.** Reads can run free; writes need policy.
 - **One giant `do_software_engineering` tool.** That's the failure mode this design exists to refute.
 
+:::caution[What people get wrong when copying this]
+- **Copying the agent loop but skipping the permission layer.** "We'll add approvals later" is how an agent ends up running destructive commands unattended. The permission policies are load-bearing, not polish.
+- **Adding a tool for every model mistake.** The design's power comes from a small set of composable primitives; a 40-tool agent recreates exactly the confused-selection problem this architecture exists to avoid.
+- **Letting the agent rewrite whole files because exact-match edits sometimes fail.** The strict matching is the feature — it forces the model to read before it writes and prevents unrequested "improvements."
+- **Hand-rolling one-off integrations instead of adopting a standard extension boundary like MCP**, which throws away the uniform auth, patterns, and observability story.
+:::
+
 ## Sources
 
 - Anthropic's Claude Code documentation: docs.anthropic.com/claude-code.
@@ -124,6 +135,46 @@ It's a small thing that quietly fixes the "agent declared victory but didn't act
 - Public conference talks (AI Engineer Summit, Code with Claude events).
 - The published MCP spec: modelcontextprotocol.io.
 - Public discussions on the design philosophy (Anthropic team interviews).
+
+<Quiz id="case-claude-code-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Why does Claude Code deliberately keep its built-in tool set small, with primitives like Read, Edit, Bash, and Grep?"
+  options={[
+    { text: "Tight, composable primitives are easier to debug than a large set of vague tools the model picks between confusedly" },
+    { text: "Anthropic's API limits how many tools can be registered per session" },
+    { text: "Fewer tools reduce the token cost of every request to near zero" },
+    { text: "Most users only ever need to read files, so other tools were cut" }
+  ]}
+  correct={0}
+  explanation="The small-sharp-tools choice is the opposite of 'give the model 50 tools and let it figure it out'. Forcing the model to compose primitives produces behavior that is easier to debug than confused selections among vague meta-tools like a do_thing catch-all."
+/>
+
+<Question
+  prompt="The Edit tool refuses to apply a change when the old string does not match the file exactly. What behavior is this designed to force?"
+  options={[
+    { text: "It forces the user to approve every single edit manually" },
+    { text: "It forces the model to read the file first and anchor edits to real current content, instead of rewriting whole files with unrequested changes" },
+    { text: "It forces all edits to go through version control before applying" },
+    { text: "It forces the model to use shorter responses to save tokens" }
+  ]}
+  correct={1}
+  explanation="Strict search-and-replace matching means the model must have actually read the current file contents. The alternative - writing the whole file - was found to cause 'improvements' the user never asked for. The refusal error also feeds back to the model so it can correct course."
+/>
+
+<Question
+  prompt="How does Claude Code let the agent do real work without the user approving every step, while still keeping the user in control?"
+  options={[
+    { text: "It runs everything in a sandbox so no action can have side effects" },
+    { text: "It limits sessions to read-only operations unless the user upgrades" },
+    { text: "It asks the user to confirm each tool call, including file reads" },
+    { text: "Permission policies let safe reads run freely while side-effecting operations like rm or git push require approval or are denied" }
+  ]}
+  correct={3}
+  explanation="The design splits operations by risk: always-allow for safe commands, ask-first for side effects, always-deny for dangerous patterns - encoded in settings, not vibes. Reads run free; writes need policy. That asymmetry is what makes an agent both useful and safe."
+/>
+
+</Quiz>
 
 ---
 

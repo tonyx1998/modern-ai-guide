@@ -114,6 +114,46 @@ Standup catches collisions. Async messaging in a dedicated `#ai-feature-x` chann
 - **Ignoring dashboards because "the eval suite covers it."** Eval suite is the in-CI line of defense. Prod dashboards are the in-production line. Both, always.
 :::
 
+<Quiz id="startup-ai-day-in-life-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="How does the AI engineer's daily time split compare with typical web engineering?"
+  options={[
+    { text: "Roughly half deep code work and half AI-specific rituals like trace triage, eval-gated prompt iteration, and dashboard review" },
+    { text: "Almost entirely deep code work, like any backend role" },
+    { text: "Mostly meetings, with coding delegated to junior engineers" },
+    { text: "Entirely prompt writing, with no conventional coding at all" }
+  ]}
+  correct={0}
+  explanation="The ratio (40-50% deep work, 50-60% rituals) surprises people coming from pure backend or frontend roles — you write less code but make more decisions: model swaps, eval cases to add, features to kill. The all-coding option is the expectation the page exists to correct; the all-prompts option is the opposite caricature, since the day includes real feature implementation."
+/>
+
+<Question
+  prompt="The page says 'the dashboards are the office.' What mistake is this correcting?"
+  options={[
+    { text: "Engineers spending too much time in Figma" },
+    { text: "Engineers checking dashboards so often they never write code" },
+    { text: "Engineers treating Langfuse, the cost dashboard, and the trace explorer as side tools instead of keeping them open all day" },
+    { text: "Companies buying too many monitoring tools" }
+  ]}
+  correct={2}
+  explanation="Engineers who live in the trace and cost dashboards catch issues early and ship the right things; relatedly, 'the eval suite covers it' is called out as a mistake because CI evals and prod dashboards are different lines of defense — both, always. The too-much-dashboard option inverts the warning; the page's concern is under-use, not over-use."
+/>
+
+<Question
+  prompt="In the worked day, prompt iteration round 1 scored +2 overall but -3 on indemnification cases. What did the engineer do?"
+  options={[
+    { text: "Shipped it, since the overall score improved" },
+    { text: "Iterated again with an indemnification-specific instruction, and shipped only when round 2 improved every category" },
+    { text: "Removed the indemnification cases from the eval suite" },
+    { text: "Escalated to the PM for a judgment call" }
+  ]}
+  correct={1}
+  explanation="Round 2 reached +5 overall with gains on both nested-list and indemnification cases — the loop is small change, eval run, read the trade-off, iterate. Shipping on the net-positive overall score is the tempting shortcut, but it ships a regression to every customer relying on indemnification extraction; the eval breakdown by case class exists precisely to expose that."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [Common Pitfalls](./16-pitfalls.md) where we cover the startup-AI failure modes you'll face: launching without evals, agent runaway, fine-tuning too early, framework lock-in.

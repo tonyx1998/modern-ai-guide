@@ -322,6 +322,46 @@ Self-check:
 - Could you explain the auth + rate-limit flow in your chosen template line by line?
 - Did you delete the parts you don't need before adding the parts you do?
 
+<Quiz id="solo-templates-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="How are the four starter templates on this page meant to be used?"
+  options={[
+    { text: "Installed via npm and extended with features until they become the product" },
+    { text: "Deployed unchanged to production as a v0" },
+    { text: "Used only as documentation — never copied into a real project" },
+    { text: "Read and understood, then copied as patterns into your own repo and pruned to what you need" }
+  ]}
+  correct={3}
+  explanation="Templates here are patterns to read, steal from, and prune — not products to install blindly; the rule is never adopt a template you cannot follow end-to-end. Deploying unchanged is the trap option: the page explicitly says the templates omit error handling, retries, and observability for clarity, so they are not production-ready as-is."
+/>
+
+<Question
+  prompt="In the narrow-agent template, what makes an infinite loop impossible?"
+  options={[
+    { text: "The system prompt politely asks the model to use at most 3 tool calls" },
+    { text: "The maxSteps cap in code, plus size-capped tool outputs like slicing fetched HTML to 8,000 characters" },
+    { text: "The Vercel AI SDK detects loops automatically and aborts" },
+    { text: "The search tool only ever returns 5 results" }
+  ]}
+  correct={1}
+  explanation="The hard guarantees live in code: maxSteps: 4 means one initial call plus at most three tool-result loops, and capped tool outputs stop unbounded pages from ballooning context. The system-prompt option is the classic mistake — the prompt does say 'at most 3 tool calls', but instructions are suggestions to a model; only the code-level cap is enforcement."
+/>
+
+<Question
+  prompt="In the structured-output classifier template, what happens when the model returns malformed JSON?"
+  options={[
+    { text: "The generateObject call retries, feeding the validation error back to the model" },
+    { text: "The route returns a 500 error and the user must resubmit" },
+    { text: "The raw text is returned to the client for manual parsing" },
+    { text: "The Zod schema silently coerces the output into the right shape" }
+  ]}
+  correct={0}
+  explanation="generateObject pairs the Zod schema with automatic retry-on-validation-failure, which is what makes the output reliable enough to wire into other code. Silent coercion is the tempting wrong answer because Zod CAN coerce types — but here Zod's job is validation, and the recovery mechanism is a retry with the error message, not a lossy coercion."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [Sample Project](./16-sample-project.md) where we'll walk through one end-to-end build — code, costs, deploy, and first users — for an "AI meeting-notes summarizer."

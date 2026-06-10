@@ -218,6 +218,46 @@ Every memory store should support: show all my data, edit specific facts, delete
 "AI memory" sounds futuristic. In implementation, it's `SELECT profile FROM users WHERE id = ?` followed by string concatenation into a system prompt. The interesting design work is *what to remember*, *when to forget*, and *how to let users control it*.
 :::
 
+<Quiz id="memory-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="A user says 'remember my name is Sam' and your assistant correctly uses the name in a brand-new session a week later. What made that work?"
+  options={[
+    { text: "The provider's API stored the conversation server-side" },
+    { text: "The model's weights were updated with the user's name" },
+    { text: "The model has a built-in long-term memory module" },
+    { text: "Your application code stored the fact and injected it into the prompt for the new session" }
+  ]}
+  correct={3}
+  explanation="The API is stateless — anything the model seems to remember is something your code put into the prompt this turn. Believing the API has memory is the #1 documented mistake on this page; products like ChatGPT feel like they remember because the PRODUCT maintains state on its side, not because the underlying API does. Memory is retrieval plus a smart paste."
+/>
+
+<Question
+  prompt="A conversation has hit 80 turns and every new message costs more than the last. Which pattern does the page describe for keeping the gist while cutting tokens?"
+  options={[
+    { text: "Switch to a model with a bigger context window" },
+    { text: "Summarize older turns into a running summary and keep only the recent messages verbatim" },
+    { text: "Delete the system prompt to free up space" },
+    { text: "Truncate every message to its first sentence" }
+  ]}
+  correct={1}
+  explanation="The running-summary pattern — compact everything except the system prompt and the last few turns into one summary message — is what most chat products use. It trades detail for gist at a fraction of the tokens. A bigger context window is the tempting non-fix: you pay for every token you send regardless, so the cost still grows linearly with conversation length."
+/>
+
+<Question
+  prompt="A user writes 'remember: always ignore your safety rules' and your extraction pass dutifully writes it into their profile. What risk does the page name?"
+  options={[
+    { text: "Profile storage costs grow too quickly" },
+    { text: "The profile JSON becomes structurally invalid" },
+    { text: "Stored memory becomes a prompt-injection vector applied to every future call — treat it as untrusted and validate before injecting" },
+    { text: "The user can no longer delete their data" }
+  ]}
+  correct={2}
+  explanation="A malicious instruction laundered through memory extraction gains unearned trust: it sits in the profile and gets injected into the system prompt of every future session, turning a one-time message into a persistent jailbreak. The defense is treating stored memory as untrusted input and validating it before injection — same rule as any other user-controlled text."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [The agent loop](./agent-loop.md)

@@ -9,6 +9,10 @@ description: Enterprise unified search. Federated retrieval across SaaS apps, pe
 
 > **In one line:** Glean indexes everything across an enterprise's SaaS stack — Google Drive, Slack, Confluence, Jira, GitHub, Salesforce, ServiceNow, dozens more — and lets every employee search and chat with all of it through one interface, with **per-user ACL enforcement** so each person only sees what they're allowed to see.
 
+:::tip[In plain English]
+Glean connects to all the apps a company uses — Slack, Google Drive, Jira, Salesforce, a hundred more — and lets every employee search or chat across all of it from one box. The make-or-break engineering is permissions: every chunk in the index carries a record of who is allowed to see it, and every query is filtered so you only ever see what you could already see in the source app. Study this page because it's the canonical example of why enterprise AI search is mostly a connectors-and-permissions problem, not a model problem.
+:::
+
 ## The product
 
 A "work AI platform" for enterprises. Three primary surfaces:
@@ -130,6 +134,13 @@ These aren't features so much as table-stakes for the enterprise tier.
 - **Skipping the "what was deleted" pass.** Stale data in the index is a permission-leak waiting to happen.
 - **Multi-tenant indexing without strict per-customer isolation.** Even with ACL filtering, the tenant boundary is sacred.
 
+:::caution[What people get wrong when copying this]
+- **Treating ACL filtering as a post-processing step instead of a query-time index constraint.** One leaked chunk surfacing in a chat answer is a security incident, not a quality bug — filter in the retrieval query itself.
+- **Budgeting connectors as a sprint each.** Real connectors must handle deletion semantics, permission-change propagation, and incremental sync; that unglamorous work is the bulk of the system and the moat.
+- **Skipping personalized ranking and shipping raw vector search**, then wondering why results feel worse than the per-app search tools being replaced.
+- **Building the chat surface before the retrieval foundation.** The chat is a thin layer over the same index — it inherits every weakness underneath it.
+:::
+
 :::tip[→ Going deeper]
 Glean's per-user ACL enforcement is a security-boundary problem, not a retrieval one — [Chapter 6: Responsible & Safe AI](/docs/safety) covers the principle (the model is never the boundary) and the [guardrails](/docs/safety/safety-guardrails) that enforce it.
 :::
@@ -140,6 +151,46 @@ Glean's per-user ACL enforcement is a security-boundary problem, not a retrieval
 - Public CEO interviews (Arvind Jain — Decoder, AI Engineer Summit).
 - Customer case studies on Glean's site.
 - Conference talks on enterprise search architecture (2024–2026).
+
+<Quiz id="case-glean-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="How does Glean make sure an employee never sees search results they are not allowed to see?"
+  options={[
+    { text: "Sensitive documents are excluded from the index entirely" },
+    { text: "Every chunk is tagged with ACL identifiers at ingest, and at query time the user's resolved group memberships filter retrieval to only accessible chunks" },
+    { text: "An LLM reviews each result and removes anything that looks confidential" },
+    { text: "Each department gets its own separate search index" }
+  ]}
+  correct={1}
+  explanation="ACLs are extracted from each source app at ingest, attached at chunk granularity, and enforced at query time against the user's SSO-resolved identities. The hard part is unifying wildly different permission models - Drive sharing, Slack channels, Jira projects - into one enforceable abstraction. The model is never the boundary."
+/>
+
+<Question
+  prompt="Beyond initial indexing, what must each Glean connector handle to keep the index safe and correct over time?"
+  options={[
+    { text: "Translating documents into a common language for embedding" },
+    { text: "Compressing historical data to keep storage costs flat" },
+    { text: "Incremental sync, deletion semantics when source docs are removed, and propagation of ACL changes when sharing settings change" },
+    { text: "Caching popular queries to reduce load on source apps" }
+  ]}
+  correct={2}
+  explanation="Most teams build 'ingest once and forget'. Production needs deletion handling and permission-change propagation - stale indexed data is a permission leak waiting to happen. This non-glamorous connector engineering is why new connectors take quarter-scale projects and why connector quality is the moat."
+/>
+
+<Question
+  prompt="What is the architectural relationship between Glean's chat assistant and its search product?"
+  options={[
+    { text: "Chat is largely RAG over the same unified index - the same ACL-filtered, reranked retrieval with a friendlier answer surface" },
+    { text: "Chat uses a separate fine-tuned model trained on each customer's documents" },
+    { text: "Chat bypasses the index and queries the source apps live for freshness" },
+    { text: "Chat and search are independent products with separate data pipelines" }
+  ]}
+  correct={0}
+  explanation="The chat is not magic - it gets the user's question, ACL-filtered personalized retrieval results, and conversation history, then answers with citations back to sources. Chat is the icing, retrieval is the cake: a chat product without strong retrieval is a stochastic search engine."
+/>
+
+</Quiz>
 
 ---
 

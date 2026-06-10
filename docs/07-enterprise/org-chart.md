@@ -10,6 +10,10 @@ description: A deeper look at the AI Platform team, feature teams, Center of Exc
 
 > **In one line:** Working enterprise AI orgs split into five functions — Platform, Feature teams, CoE, Responsible AI, and named Risk/Legal/Privacy partners — each with a distinct charter, reporting line, and OKR shape; mixing any two of them under one leader usually breaks both.
 
+:::tip[In plain English]
+This page is about who does what when a big company does AI. One team builds the shared tools, many teams use those tools to ship features, a small council writes the standards, a watchdog group keeps the risky work in check, and a few named people from Legal, Privacy, and Security join reviews when needed. The key insight: each group has a different boss and a different scorecard, and that separation is deliberate. Put two of them under the same boss and one of them usually stops doing its job well.
+:::
+
 :::tip[Where this fits]
 The [Team Structure page](./02-team-structure.md) introduced the five functions and a staffing model. This page is the deeper read: what each function's charter actually says, what reports where, what the typical failure mode for each function looks like, and how the functions coordinate during normal work and during incidents.
 
@@ -186,6 +190,46 @@ Plus monthly: AI engineering all-hands; quarterly: AI risk review (portfolio lev
 - **Forgetting Internal AI Productivity exists.** Cursor + Copilot Enterprise + Claude Code rollouts are their own program. Bolting them onto the Platform team starves both functions.
 - **Embedded AI engineers reporting into the AI org rather than the product team.** They lose product context; the product team loses ownership. Solid line to product, dotted line to the AI community of practice.
 :::
+
+<Quiz id="enterprise-org-chart-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Why should Responsible AI not report to the same VP as the AI Platform team?"
+  options={[
+    { text: "Their incentives oppose — ship versus review — and one leader will systematically favor one side" },
+    { text: "Compliance regulations forbid shared reporting lines" },
+    { text: "The platform team is too large to share a leader" },
+    { text: "Responsible AI must report directly to the CEO" }
+  ]}
+  correct={0}
+  explanation="The platform team wants adoption and shipping; the governance function wants careful review. Concentrating both under one leader produces either over-shipping or over-blocking. The regulation answer is the tempting one because so much in this chapter is compliance-driven — but this is an incentive-design argument, not a legal requirement."
+/>
+
+<Question
+  prompt="Where should an embedded AI engineer in a feature team report?"
+  options={[
+    { text: "Solid line to the AI Platform team, dotted line to the product team" },
+    { text: "Directly to the Responsible AI function" },
+    { text: "Solid line to the product team, dotted line to the AI community of practice" },
+    { text: "To the Center of Excellence chair" }
+  ]}
+  correct={2}
+  explanation="Embedded engineers belong to their product team — that is where product context and ownership live — with a dotted-line connection to the AI org for norms and community. Reversing it (solid line to the AI org) makes them lose product context while the product team loses ownership, which the page lists as a common mistake."
+/>
+
+<Question
+  prompt="What is the relationship between the Internal AI Productivity team and the AI Platform team?"
+  options={[
+    { text: "They are the same team under two names" },
+    { text: "Internal AI Productivity is a customer of the platform, and should stay a separate function" },
+    { text: "Internal AI Productivity manages the platform team's budget" },
+    { text: "The platform team reports to Internal AI Productivity" }
+  ]}
+  correct={1}
+  explanation="Internal AI Productivity rolls out AI tools (Cursor, Copilot Enterprise, internal assistants) to the company's own employees — it consumes the platform rather than building it. Merging them is the tempting efficiency move, but the page says mixing the two starves one or the other, even when both are small."
+/>
+
+</Quiz>
 
 ## What's next
 

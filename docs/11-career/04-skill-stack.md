@@ -153,4 +153,44 @@ A common 2026 failure mode: candidates who have used every framework once (LangC
 - **Letting framework choice substitute for understanding.** LangChain vs LlamaIndex vs DSPy is a much smaller decision than "do I understand what's actually happening in each LLM call." The frameworks come and go; the primitives don't.
 :::
 
+<Quiz id="career-skill-stack-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="According to the page, what distinguishes junior, mid-level, and senior on the three AI-specific disciplines of prompting, retrieval, and evals?"
+  options={[
+    { text: "Junior knows the theory, mid-level knows the tools, senior knows the math" },
+    { text: "Junior is solid on only one, mid-level is solid on all three, senior teaches them" },
+    { text: "Junior uses frameworks, mid-level writes frameworks, senior avoids frameworks" },
+    { text: "Junior does prompting, mid-level does retrieval, senior does evals" }
+  ]}
+  correct={1}
+  explanation="The three disciplines form a ladder of breadth and depth: being solid on one is junior, all three is mid-level, and being able to teach them is senior. Depth comes from shipping projects that force you to use each, not from study."
+/>
+
+<Question
+  prompt="What does a resume listing seven orchestration frameworks and seven eval tools signal to a 2026 hiring manager?"
+  options={[
+    { text: "Broad adaptability and rapid learning ability" },
+    { text: "Readiness for a platform-engineering role" },
+    { text: "That the candidate is collecting frameworks instead of solving problems - one of each, used substantively, reads better" },
+    { text: "Seniority, since juniors rarely touch that many tools" }
+  ]}
+  correct={2}
+  explanation="The common failure mode is using every framework once but never building an eval suite. Hiring managers screen for substantive depth: one orchestration framework and one eval platform used in anger beats a long tool list every time."
+/>
+
+<Question
+  prompt="What is the page's advice on choosing a vector database?"
+  options={[
+    { text: "Always start with a dedicated vector DB so you never need to migrate" },
+    { text: "Use whichever vector DB your orchestration framework defaults to" },
+    { text: "Self-host an open-source vector DB to avoid lock-in" },
+    { text: "Most teams under about 1M documents are best served by pgvector - do not add a dedicated vector DB until data size or latency forces it" }
+  ]}
+  correct={3}
+  explanation="Picking Pinecone or Weaviate before you have a real retrieval problem adds operational complexity with no payoff. PostgreSQL with pgvector is the safe 2026 default; reach for specialized stores when the workload actually demands them."
+/>
+
+</Quiz>
+
 → Next: [Specialization tracks](./05-specializations.md).

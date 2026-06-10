@@ -7,6 +7,13 @@ description: LangChain, LlamaIndex, Haystack, DSPy, Llmware — and when to skip
 
 # RAG frameworks
 
+:::info[Dated content — June 2026]
+This page names specific tools, models, and prices, which rotate quarterly. The *selection
+logic* is durable; the names are a snapshot. Cross-check the
+[Model snapshot](/docs/model-snapshot) for current model names and pricing.
+:::
+
+
 > **In one line:** Libraries that bundle the RAG pipeline — parsing, chunking, embedding, indexing, retrieving, reranking, prompting, and answering — into reusable abstractions.
 
 :::tip[In plain English]
@@ -116,6 +123,46 @@ All major RAG frameworks are open-source and free at the code layer. The cost is
 - **No evals.** A RAG framework with no eval set is a black box you tune by vibes. Wire in Promptfoo or Ragas from day one.
 - **Mixing frameworks.** LangChain orchestrating LlamaIndex inside a Haystack pipeline is a debugging nightmare. Pick one.
 - **Using LangChain as your LLM SDK.** It's heavy; you pay a 50MB+ dependency for what `@ai-sdk/anthropic` does in 200KB. Use a real SDK for plain LLM calls and reach for LangChain only when the higher-level primitives earn their keep.
+
+<Quiz id="rag-frameworks-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Why does the page recommend building your first RAG feature raw, before adopting any framework?"
+  options={[
+    { text: "Frameworks charge license fees for the first project" },
+    { text: "Building it once teaches you why retrieval misses what it misses, and you cannot judge which abstractions help until you have" },
+    { text: "pgvector is incompatible with the major frameworks" },
+    { text: "Frameworks do not support reranking yet" }
+  ]}
+  correct={1}
+  explanation="A raw v0 is only 100 to 200 lines and gives you the mental model you'll reuse forever; adopt a framework afterward and you'll know which knobs matter. The frameworks are free and integrate with pgvector — the real cost of adopting one early is opacity, debugging the framework instead of your data."
+/>
+
+<Question
+  prompt="Your project must ingest documents from Notion, Confluence, Slack, and S3 at scale. Which framework does the page steer you toward?"
+  options={[
+    { text: "txtai" },
+    { text: "DSPy" },
+    { text: "Haystack" },
+    { text: "LlamaIndex" }
+  ]}
+  correct={3}
+  explanation="LlamaIndex has the cleanest connector library for exactly these sources plus the most thoughtful chunking primitives — connectors are the main value a framework buys you. DSPy's strength is compiling prompts against an eval set, and Haystack shines when you need branching DAG pipelines, not ingestion breadth."
+/>
+
+<Question
+  prompt="Why does the page insist you must always be able to print the final prompt a framework constructs?"
+  options={[
+    { text: "If you cannot see the prompt that actually reaches the LLM, you cannot debug bad answers" },
+    { text: "Providers require prompt logging for compliance" },
+    { text: "Printed prompts are needed to calculate token costs" },
+    { text: "Frameworks encrypt prompts by default" }
+  ]}
+  correct={0}
+  explanation="Every RAG framework ultimately assembles context and instructions into one prompt; when answers go wrong, that prompt is where the evidence lives. Hiding it is the page's named pitfall. Cost accounting is handled by usage metadata, not prompt inspection — debuggability is the real stake."
+/>
+
+</Quiz>
 
 ---
 

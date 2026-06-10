@@ -150,6 +150,46 @@ Before building any AI feature, fill this in. It takes minutes and catches most 
 - **Doing it once.** A threat model is a living document. Every new tool, data source, or integration adds an untrusted input channel; re-run the ritual.
 :::
 
+<Quiz id="safety-threat-model-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="A teammate says 'we don't need authorization checks on the refund tool — the model's safety training makes it refuse abusive requests.' What does this page's cardinal rule say?"
+  options={[
+    { text: "That's fine, as long as the refusal behavior is covered by evals" },
+    { text: "Safety training is sufficient if you also add a system-prompt instruction" },
+    { text: "The LLM is never the security boundary — the gate must be deterministic code the model can't talk its way around" },
+    { text: "Refusal training only needs reinforcement for high-risk domains" }
+  ]}
+  correct={2}
+  explanation="The model treats all text as potential instructions, so if the model is the gate, an attacker just writes text that opens the gate. Authorization must run in plain code against the authenticated session. 'Refusals plus evals' is tempting because it feels measurable — but it is testing a default behavior adversaries route around, not enforcing a rule."
+/>
+
+<Question
+  prompt="An un-hackable medical chatbot with perfect authorization confidently invents a drug dosage for an ordinary user. How does this page classify that system?"
+  options={[
+    { text: "Secure but unsafe — security handles adversaries, while safety is about harm in normal use with no attacker at all" },
+    { text: "Unsafe and insecure, since hallucination is a security breach" },
+    { text: "Safe but insecure, since the user wasn't attacked" },
+    { text: "Both safe and secure, since no rule was violated" }
+  ]}
+  correct={0}
+  explanation="Security asks 'what can an attacker cause?'; safety asks 'how can normal use still hurt someone?' — a hallucinated dosage is a malfunction harm needing grounding and abstention, not authz. Calling hallucination a 'security breach' is the common conflation this page warns against: the defenses for the two problems are different, and you need both."
+/>
+
+<Question
+  prompt="A team hardens the chat input box against injection but lets their agent freely read retrieved RAG documents and tool outputs. What pitfall is this?"
+  options={[
+    { text: "Over-engineering — the user message is the only channel attackers can reach" },
+    { text: "Confusing misuse with malfunction harms" },
+    { text: "Skipping the stakeholder enumeration step" },
+    { text: "Forgetting the indirect inputs — retrieved docs, tool outputs, even image alt-text are untrusted text the model will obey" }
+  ]}
+  correct={3}
+  explanation="Any string anywhere in the prompt pipeline can contain instructions the model tries to follow — a sentence planted in a document is, to the model, the same kind of thing as your system prompt. 'Only the input box matters' is the intuitive trap, because that's the only channel where the attacker visibly talks to your app."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Prompt injection & jailbreaks](./03-prompt-injection.md)

@@ -188,6 +188,46 @@ Rules for synthetic data that doesn't backfire:
 - **Leaving PII/secrets in.** Once it's in the weights, you can't grep it out. Redact before training.
 :::
 
+<Quiz id="ft-data-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="You can ship either 500 hand-checked, consistent examples or 50,000 scraped, inconsistent ones. Which does this page say wins, and why?"
+  options={[
+    { text: "The 500 clean examples — the model is a mirror of its data and faithfully learns your mistakes, so a small curated set beats a large messy one (the LIMA finding)" },
+    { text: "The 50,000 — more data always wins; noise averages out during training" },
+    { text: "Neither — you need at least 100,000 examples for any fine-tune to work" },
+    { text: "The 50,000, but only if you train for fewer epochs" }
+  ]}
+  correct={0}
+  explanation="Quality beats quantity by a lot: inconsistent examples literally train inconsistency in, while ~a thousand curated examples produced better behaviour than tens of thousands of scraped ones. 'Noise averages out' is the tempting big-data intuition — but the model learns the noise as faithfully as the signal."
+/>
+
+<Question
+  prompt="In chat-format training data, half your examples format dates one way and half another. What will the fine-tuned model do?"
+  options={[
+    { text: "Learn the more common format and ignore the rarer one" },
+    { text: "Refuse to output dates due to the conflict" },
+    { text: "Behave inconsistently — you trained the confusion in, since two conventions for similar inputs teach the model to be random" },
+    { text: "Average the two formats into a hybrid" }
+  ]}
+  correct={2}
+  explanation="The model imitates whatever distribution you show it; contradictory conventions on similar inputs make the output a coin flip. 'It learns the majority' is tempting because models do follow frequency, but at 50/50 there is no majority — inconsistency is named the #1 silent killer, and the fix is picking one convention and enforcing it across the set."
+/>
+
+<Question
+  prompt="A team trains without a validation split. Training loss drops beautifully and they ship. What risk did they take, per this page?"
+  options={[
+    { text: "None — falling training loss is the definition of a successful run" },
+    { text: "The job may have crashed silently without a validation file" },
+    { text: "The model may train slower without validation batches" },
+    { text: "They can't tell learning from memorizing — training loss always falls, and only validation loss reveals whether the model generalizes" }
+  ]}
+  correct={3}
+  explanation="Training loss can hit zero by pure memorization, so it tells you nothing about behaviour on new inputs; the validation set — examples never trained on — is the only honest signal. 'Falling loss = success' is the exact trap: you'll happily ship a model that memorized 300 examples and generalizes to nothing."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Supervised fine-tuning (SFT) from scratch](./04-sft.md)

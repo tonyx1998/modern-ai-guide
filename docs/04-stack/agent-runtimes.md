@@ -7,6 +7,13 @@ description: E2B, Modal sandboxes, Daytona, CodeSandbox, Anthropic's code execut
 
 # Agent runtimes & sandboxes
 
+:::info[Dated content — June 2026]
+This page names specific tools, models, and prices, which rotate quarterly. The *selection
+logic* is durable; the names are a snapshot. Cross-check the
+[Model snapshot](/docs/model-snapshot) for current model names and pricing.
+:::
+
+
 > **In one line:** Isolated, ephemeral environments where an agent can execute code, install packages, browse files, and run a shell — safely. When tool-use isn't enough and the agent needs a real machine.
 
 :::tip[In plain English]
@@ -129,6 +136,46 @@ For a typical "agent runs a 5-second script" call, sandbox cost is < $0.001. The
 - **Putting secrets in env vars inside the sandbox.** The model can `printenv`. Inject only the secrets that specific operation needs.
 - **Treating the sandbox as durable storage.** Files inside ephemeral VMs disappear on teardown. Persist intentionally to S3 or a DB.
 - **No audit log of what the sandbox ran.** When something weird happens, you want the full command/output history. Most providers expose this — turn it on.
+
+<Quiz id="agent-runtimes-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Why must agent-generated code never run on your application server?"
+  options={[
+    { text: "The agent will eventually produce something destructive, and a disposable sandbox contains the blast radius" },
+    { text: "Application servers lack the Python libraries agents need" },
+    { text: "Agent code runs too slowly outside a dedicated VM" },
+    { text: "Providers forbid executing model output on shared infrastructure" }
+  ]}
+  correct={0}
+  explanation="The model can emit anything from a destructive shell command to a malware download; an ephemeral VM with network and resource caps makes that survivable. Installing libraries on your server would be easy — which is exactly why this is tempting and exactly why isolation, not convenience, is the deciding factor."
+/>
+
+<Question
+  prompt="Which task belongs in a sandbox rather than a pre-defined tool?"
+  options={[
+    { text: "Fetching the weather for a city" },
+    { text: "Sending a templated email" },
+    { text: "Open-ended data analysis where the agent writes code you did not anticipate" },
+    { text: "Querying a database with a fixed schema" }
+  ]}
+  correct={2}
+  explanation="Tools cover deterministic, narrow, well-typed actions you wrote in advance; a sandbox exists for the computation surface you cannot enumerate — ad-hoc scripts, new libraries, weird user files. Weather, email, and DB queries are the textbook tool examples because you control the function and the agent only picks arguments."
+/>
+
+<Question
+  prompt="Why is loading all your secrets as env vars inside the sandbox a mistake?"
+  options={[
+    { text: "Env vars are wiped when the sandbox is torn down" },
+    { text: "Sandboxes cap env var storage at 1KB" },
+    { text: "Secrets in env vars slow down sandbox boot time" },
+    { text: "The model can simply run printenv — inject only the secrets that specific operation needs" }
+  ]}
+  correct={3}
+  explanation="Anything in the sandbox's environment is readable by the code the model writes, so a full secret set is one curious command away from exfiltration. Wiping on teardown doesn't help — the leak happens while the session is live. Least-privilege injection per operation is the fix."
+/>
+
+</Quiz>
 
 ---
 

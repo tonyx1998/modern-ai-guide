@@ -91,4 +91,4 @@ When you read these case studies, the architecture diagrams are the load-bearing
 
 ## What's next
 
-This is the last content chapter. When you've worked through the case studies that interest you, the [Glossary](/docs/glossary) is your standing reference for any term in the guide — and you're ready to go build. Re-read the [Introduction](/) and notice how much more of it lands now.
+When you've worked through the case studies that interest you, the optional **[Cutting Edge](/docs/cutting-edge/)** chapter (Chapter 17) maps emerging themes — agent harnesses, agentic RAG, trajectory evals — without requiring them to ship today. Then take the **[Final capstone](/docs/capstone)** or keep the **[Glossary](/docs/glossary)** open as your standing reference.

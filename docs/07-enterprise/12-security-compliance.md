@@ -190,6 +190,46 @@ If the answer is "we can pull that together in a few days," you're failing. If t
 - **HIPAA BAAs not refreshed when models change versions.** A BAA with Anthropic covers a specific service scope; switching to a new model variant may require an addendum. Procurement-to-platform handoff has to flag these.
 :::
 
+<Quiz id="enterprise-ai-security-compliance-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the auditor's most common question, and what does a passing answer look like?"
+  options={[
+    { text: "'Why did you choose this model?' — answered with a benchmark comparison" },
+    { text: "'Who approved this?' — answered with an org chart" },
+    { text: "'What is your AI strategy?' — answered with a slide deck" },
+    { text: "'Show me' — answered with a link, not a multi-day scavenger hunt" }
+  ]}
+  correct={3}
+  explanation="Auditors ask 'show me': the model card, the eval results before and after a change, the access logs, the deletion process. If the answer is 'we can pull that together in a few days,' you are failing. The artifact pipeline exists to make every show-me a link."
+/>
+
+<Question
+  prompt="For EU AI Act High-risk systems, what does the page say the technical documentation work mostly consists of?"
+  options={[
+    { text: "Writing entirely new documents from scratch for the regulator" },
+    { text: "Integrating documents you already have — model card, eval results, risk assessment — into one submission package" },
+    { text: "Translating your codebase into legal language" },
+    { text: "Hiring an external firm to certify the model weights" }
+  ]}
+  correct={1}
+  explanation="Most of the Annex IV package draws from artifacts a sound practice already produces; the heavy lift is the integration, not net-new creation. The from-scratch answer is the intimidating assumption that stops teams from starting — the page's point is that good engineering generates most of the evidence as a side effect."
+/>
+
+<Question
+  prompt="What is the recommended pattern for compliance evidence tooling like Vanta or Drata?"
+  options={[
+    { text: "Engineers manually attest to each control quarterly" },
+    { text: "Each artifact is duplicated into every tool that might need it" },
+    { text: "Each artifact has one system of record, and the compliance tool pulls evidence from it automatically" },
+    { text: "Compliance evidence is assembled in the two weeks before each audit" }
+  ]}
+  correct={2}
+  explanation="One system of record per artifact, with automated evidence pulls, is what makes continuous compliance possible. Duplication is the tempting shortcut — but if the model card lives in three places, two of them will be wrong. And the pre-audit scramble is exactly what the continuous pipeline replaces."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [Release Management](./13-release-management.md) — how the trains of changes coordinate across many teams.

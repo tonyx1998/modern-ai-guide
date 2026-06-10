@@ -122,6 +122,46 @@ Most startups get steps 1–3 right and skip 4–5, then are surprised when thei
 - **Counting on the provider's status page.** Provider status pages lag reality by 20–90 minutes. Your synthetic prompts will catch a degradation before they do.
 - **A runbook nobody has read.** A 40-page incident runbook last updated 18 months ago is worse than nothing — it gives false confidence and sends the on-call down dead paths. Trim ruthlessly, rehearse quarterly, or delete.
 
+<Quiz id="comparison-ops-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Why does the page say 'uptime green + latency green' is not enough for an AI feature?"
+  options={[
+    { text: "Uptime metrics ignore the cost of GPU reservations" },
+    { text: "Latency dashboards cannot track streaming responses" },
+    { text: "Quality drift hides behind 200s — the model keeps returning successes while the answers get worse, which only continuous evals on live traffic catch" },
+    { text: "Provider status pages already cover uptime, making it redundant" }
+  ]}
+  correct={2}
+  explanation="AI ops adds failure modes traditional monitoring misses: quality drift, cost blowups, safety regressions, and provider degradation. The sneakiest is drift — every call still returns a 200 while the answers quietly degrade, so uptime and latency dashboards stay green. Catching it requires evals running against live traffic, which is why 'treating LLM ops like web-app ops' heads the mistakes list."
+/>
+
+<Question
+  prompt="What does the page say about a kill switch that has never been flipped in production?"
+  options={[
+    { text: "It probably doesn't work — schedule a quarterly drill: flip it on purpose during business hours, confirm the fallback, flip it back" },
+    { text: "It is fine as long as the code path is unit-tested" },
+    { text: "It should be removed to reduce configuration complexity" },
+    { text: "Only enterprises need to test their kill switches" }
+  ]}
+  correct={0}
+  explanation="Step 1 of the adoption order is 'a kill switch you've actually flipped in production — if you've never flipped it, it doesn't work.' A switch untouched for six months gives false confidence, so the page prescribes a deliberate quarterly fire drill. Unit tests don't prove the production fallback path works end to end, and the drill advice applies at every scale, not just enterprise."
+/>
+
+<Question
+  prompt="In the ops adoption order, which steps does the page say most startups skip — and then regret during their first real incident?"
+  options={[
+    { text: "The kill switch and the cost cap" },
+    { text: "The nightly eval and per-feature switches" },
+    { text: "Audit-grade logging and continuous evals" },
+    { text: "Documented runbooks and a real on-call rotation with a paging tool" }
+  ]}
+  correct={3}
+  explanation="Most startups get steps 1-3 right — kill switch, cost alerts, nightly eval — and skip steps 4-5: runbooks per known failure mode and a genuine paging rotation. Then the first real incident arrives with no runbook and an on-call who doesn't know what to do. Slack notifications everyone mutes after three false positives explicitly don't count as on-call."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Workflow comparison](./workflow.md).

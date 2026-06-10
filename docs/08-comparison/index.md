@@ -3,7 +3,7 @@ id: comparison
 title: 12. Comparison — Solo vs Startup vs Enterprise AI
 sidebar_position: 1
 sidebar_label: Comparison intro
-description: The three AI workflows from chapters 5, 6, 7 side-by-side across team, stack, ops, governance, economics.
+description: The three AI workflows from chapters 9, 10, 11 side-by-side across team, stack, ops, governance, economics.
 ---
 
 # Part 12: Comparison
@@ -13,7 +13,7 @@ description: The three AI workflows from chapters 5, 6, 7 side-by-side across te
 > **In one line:** Same primitives — different practices. Whether a prompt change ships in 90 seconds or 90 days depends entirely on which column you're in.
 
 :::tip[In plain English]
-Chapters 5, 6, and 7 each built out one column in detail. This chapter is the **reference card** that puts those three columns next to each other so you can see the shape of the differences at a glance.
+Chapters 9, 10, and 11 each built out one column in detail. This chapter is the **reference card** that puts those three columns next to each other so you can see the shape of the differences at a glance.
 
 **The big takeaway in advance:** there is no single "correct" way to build with LLMs. Promptfoo-in-CI is the right eval strategy for a solo builder and a disaster for a regulated bank. A prompt-registry-with-approval-gates is right for the bank and an extinction-level event for the solo builder.
 

@@ -7,6 +7,13 @@ description: OpenAI Batch, Anthropic Message Batches, Gemini batch — half-pric
 
 # Batch inference
 
+:::info[Dated content — June 2026]
+This page names specific tools, models, and prices, which rotate quarterly. The *selection
+logic* is durable; the names are a snapshot. Cross-check the
+[Model snapshot](/docs/model-snapshot) for current model names and pricing.
+:::
+
+
 > **In one line:** Submit a JSONL file of requests; come back hours later for the responses; pay roughly half. The single biggest cost lever in your stack for anything that doesn't need to be interactive.
 
 :::tip[In plain English]
@@ -151,6 +158,46 @@ The savings are linear and meaningful at scale. For a startup spending $10k/mo o
 - **No retry strategy for failed lines.** Batches return per-line success/failure. Handle the failures.
 - **Doing batch by hand-rolling concurrency to the realtime API.** You'll hit rate limits and pay full price. Use the actual batch endpoint.
 - **Not tagging spend.** Without a metadata field, you can't tell batch vs realtime in your billing dashboard.
+
+<Quiz id="batch-inference-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the core trade that batch APIs offer?"
+  options={[
+    { text: "Higher accuracy in exchange for longer prompts" },
+    { text: "Roughly half the price in exchange for results arriving within a window, typically up to 24 hours" },
+    { text: "Unlimited rate limits in exchange for a monthly fee" },
+    { text: "Free input tokens in exchange for paid output tokens" }
+  ]}
+  correct={1}
+  explanation="Batch is the provider running your requests on spare capacity: same models, same quality, about 50% off, with a completion window instead of an instant response. Nothing about the outputs changes — the only thing you give up is interactivity, which is why it's the biggest pure cost lever in the stack."
+/>
+
+<Question
+  prompt="Which job is a BAD fit for a batch API?"
+  options={[
+    { text: "Embedding a million-chunk corpus" },
+    { text: "Nightly enrichment of the day's signups" },
+    { text: "Re-running a 500-case eval suite against three models" },
+    { text: "Generating a response a user is actively waiting on" }
+  ]}
+  correct={3}
+  explanation="The completion window includes a worst case of many hours, so anything with a human waiting is disqualified — that's the page's hard line. Corpus embedding, nightly jobs, and eval runs are the canonical good fits precisely because nobody is staring at a spinner while they finish."
+/>
+
+<Question
+  prompt="Why must every request in a batch include a custom_id?"
+  options={[
+    { text: "Results come back per line, and the custom_id is how you map each output to its input row" },
+    { text: "Providers reject batches without IDs" },
+    { text: "The custom_id determines processing priority" },
+    { text: "It enables the 50% discount to apply" }
+  ]}
+  correct={0}
+  explanation="Batch results are not guaranteed to come back in submission order, so without the ID you have thousands of answers and no idea which question each one belongs to. It has nothing to do with priority or pricing — it's purely your bookkeeping thread back to the source row."
+/>
+
+</Quiz>
 
 ---
 

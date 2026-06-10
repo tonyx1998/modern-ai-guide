@@ -155,6 +155,46 @@ The form fields fill in as the model emits them. Used by tools like the Vercel A
 A non-streaming AI chat in 2026 feels broken. Users have been trained by ChatGPT, Claude, Gemini, and every clone to expect tokens flowing in real time. Anything else feels slow even when it's fast.
 :::
 
+<Quiz id="streaming-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Streaming does not make the model generate any faster. Why does it still transform the user experience?"
+  options={[
+    { text: "It compresses tokens for faster network transfer" },
+    { text: "It lets the provider skip the prefill phase" },
+    { text: "The user sees the first token within a few hundred milliseconds instead of waiting seconds for the full response" },
+    { text: "It reduces the total number of output tokens generated" }
+  ]}
+  correct={2}
+  explanation="Total generation time is the same — streaming just ships each token as soon as it exists, so perceived latency drops by about 80 percent, and a long streamed answer feels faster than a shorter blocking one. Nothing about prefill, compression, or token count changes; the win is purely about when the user starts reading."
+/>
+
+<Question
+  prompt="You set stream=true on the provider call, but users still stare at a blank screen for 10 seconds and then see the whole answer at once. What is the likely cause?"
+  options={[
+    { text: "A hop in the middle — your server, a proxy, or a CDN — is buffering the stream" },
+    { text: "The model does not actually support streaming" },
+    { text: "The browser cannot render Server-Sent Events" },
+    { text: "stream=true only applies to responses under 200 tokens" }
+  ]}
+  correct={0}
+  explanation="Streaming must survive every hop: provider to server to proxy to browser to DOM. One buffering link — Nginx or a CDN flushing every 16KB, a framework that collects the full response, a logger holding chunks — silently turns the stream back into a blocking response. The provider side was fine; check headers like X-Accel-Buffering and your middleware."
+/>
+
+<Question
+  prompt="In which case does this page say you should NOT bother streaming?"
+  options={[
+    { text: "A consumer chat product" },
+    { text: "A coding assistant generating long answers" },
+    { text: "Any feature where users watch the response appear" },
+    { text: "A background batch job no one is watching" }
+  ]}
+  correct={3}
+  explanation="Streaming is product UX — its entire value is a human watching tokens arrive, so batch jobs with no audience make the SSE plumbing pure overhead. The same logic covers very short fast responses and outputs you must validate in full before showing. For anything user-facing and chat-like, though, streaming is effectively mandatory in 2026."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Structured output](./structured-output.md)

@@ -125,6 +125,46 @@ You can solve almost any "I need more context" problem with better retrieval, su
 
 If you can't check all six, retrieval beats raw context for this workload.
 
+<Quiz id="context-window-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="You place a critical fact in the middle of a 150K-token prompt and the model keeps missing it. What is happening?"
+  options={[
+    { text: "The 'lost in the middle' effect — recall drops for facts buried mid-context" },
+    { text: "The model silently truncated your prompt" },
+    { text: "Middle tokens are billed but not processed" },
+    { text: "The fact exceeded a per-paragraph token limit" }
+  ]}
+  correct={0}
+  explanation="Long-context models recall the start and end of the context reliably, but accuracy on mid-context facts drops 20 to 40 percent. Nothing was truncated, and every token was processed and billed — attention just favors the edges. The fix: rules at the start, the question at the end, and repeat critical facts in both places."
+/>
+
+<Question
+  prompt="Your team wants to send a user's whole 100K-token document on every call because 'the window fits it'. What is the strongest objection from this page?"
+  options={[
+    { text: "The provider will throttle accounts that use full windows" },
+    { text: "Long prompts disable streaming" },
+    { text: "Every token is billed every call — about 30 cents per call at 3 dollars per million — and retrieval usually wins on both cost and quality" },
+    { text: "Documents over 50K tokens must be uploaded as separate files" }
+  ]}
+  correct={2}
+  explanation="Fitting is not the same as free: a 100K-token prompt at 3 dollars per million input is 30 cents per call, which at 100K queries a day is 30,000 dollars a month — and quality starts dipping past 50 to 80K tokens anyway. RAG with a strong retriever usually beats whole-document stuffing on cost and quality. The window is a limit, not a target."
+/>
+
+<Question
+  prompt="Which workload is a genuinely good fit for a 1M-token context window?"
+  options={[
+    { text: "A high-volume chatbot that hauls full history every turn" },
+    { text: "One-off analysis of a 500-page contract for every liability clause" },
+    { text: "Classifying short support tickets at scale" },
+    { text: "Any task — more context always improves answers" }
+  ]}
+  correct={1}
+  explanation="Giant windows earn their cost on one-shot cross-document tasks — analyzing a whole contract, comparing 50 PDFs for contradictions, question-answering over a small repo — where the model truly needs everything at once. Chatbots and high-volume production are the anti-pattern: you would pay for huge inputs on every call when recent history or retrieval would do."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Prompt caching](./prompt-caching.md)

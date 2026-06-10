@@ -8,7 +8,18 @@ description: Claude Sonnet 4.x, GPT-5 family, Gemini Pro — the tier where most
 
 # Workhorse Tier — The Default for Real Work
 
+:::info[Dated content — June 2026]
+This page names specific tools, models, and prices, which rotate quarterly. The *selection
+logic* is durable; the names are a snapshot. Cross-check the
+[Model snapshot](/docs/model-snapshot) for current model names and pricing.
+:::
+
+
 > **In one line:** The model tier where most production AI features live — capable enough for serious work, cheap enough to run at scale.
+
+:::tip[In plain English]
+If frontier models are first class and cheap models are economy, this page is about business class — the comfortable middle where most real products actually run. These models are smart enough for serious work like chat, document answering, and tool use, but cost a fraction of the top tier. The decision this page teaches is when the middle tier is the right home for a feature, when to splurge upward, and when to save by dropping down. Most working AI engineers spend most of their time right here, so knowing this tier's trade-offs pays off daily.
+:::
 
 ## What's in this tier (as of 2026)
 
@@ -139,5 +150,45 @@ For a chat app that re-sends a 5k-token system prompt + tool definitions on ever
 - **Optimizing prompts before evals.** Tweaking prompts without measuring is fortune-telling. Build the eval first (Stage 6), then iterate prompts against it.
 - **Treating "workhorse" as one model.** Sonnet behaves differently from GPT-5 in subtle ways — tone, refusal patterns, tool-call shapes. Switching providers may require prompt adjustments. Test, don't assume.
 :::
+
+<Quiz id="workhorse-tier-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="According to the rule of thumb on this page, how does spend typically distribute across tiers in a healthy production AI app?"
+  options={[
+    { text: "Mostly frontier, with workhorse for prototypes only" },
+    { text: "Roughly equal thirds across cheap, workhorse, and frontier" },
+    { text: "Mostly cheap tier, with frontier handling all user-facing traffic" },
+    { text: "Around 80 percent workhorse, 15 percent cheap, and 5 percent frontier" }
+  ]}
+  correct={3}
+  explanation="The 80/15/5 rule of thumb: most dollars go to workhorse calls, high-volume low-stakes work goes to cheap, and only a sliver of hard edge cases justifies frontier. If your distribution looks very different, it is worth interrogating why."
+/>
+
+<Question
+  prompt="Your workhorse model passes the eval suite with a 97 percent pass rate and a wide margin. What does this page say to do next?"
+  options={[
+    { text: "Try the same feature on the cheap tier and see if the evals still pass" },
+    { text: "Lock in the workhorse model so nothing changes" },
+    { text: "Upgrade to frontier to push the pass rate to 100 percent" },
+    { text: "Reduce the size of the eval set since it is clearly too easy" }
+  ]}
+  correct={0}
+  explanation="A comfortable pass with a large margin is the signal to try dropping a tier. Often the cheap model still passes, and the savings are 5 to 10 times. Tier moves in both directions should be driven by eval results, not habit."
+/>
+
+<Question
+  prompt="What is the recommended way to choose between models within the workhorse tier?"
+  options={[
+    { text: "Pick whichever model tops the public benchmarks this quarter" },
+    { text: "Run a head-to-head comparison on your own top eval cases" },
+    { text: "Pick the model with the largest context window" },
+    { text: "Stay with whichever provider your team already has an account with" }
+  ]}
+  correct={1}
+  explanation="The page is emphatic: benchmark on your problem, not on Twitter or leaderboards. Models differ in subtle ways — tone, refusal patterns, tool-call shapes — so the only trustworthy signal is a head-to-head run on your own eval cases."
+/>
+
+</Quiz>
 
 → Next: [Cheap tier](./03-cheap-tier.md) — where you should actually be starting.

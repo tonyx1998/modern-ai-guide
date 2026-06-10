@@ -155,6 +155,46 @@ This is a representative cross-cutting release: small change, big coordination s
 - **No Comms partnership for customer-impact emergencies.** When the patch goes out and a customer's AI feature briefly behaves differently, customer support needs the talking points before the calls come in. Bake Comms into the emergency war-room from the start.
 :::
 
+<Quiz id="enterprise-ai-release-management-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Which change belongs on a release train rather than shipping independently?"
+  options={[
+    { text: "An SDK upgrade requiring code changes across many feature services" },
+    { text: "A single team's prompt-clarity edit" },
+    { text: "A bug fix in one feature's retrieval filter" },
+    { text: "A new feature on one product surface" }
+  ]}
+  correct={0}
+  explanation="Trains are for cross-cutting changes that many teams must coordinate on — SDK upgrades, gateway policy changes, model EOLs, scorer re-baselines. Per-feature changes ship continuously; forcing them onto trains kills the agility AI work needs. The line the page draws: cross-cutting coordinates, everything else ships independently."
+/>
+
+<Question
+  prompt="What does a high rate of emergency patches (above roughly one per month) signal?"
+  options={[
+    { text: "The security team is doing its job well" },
+    { text: "Something is wrong — the train may be too slow, testing too shallow, or threat modeling lagging" },
+    { text: "The company should hire more release managers" },
+    { text: "Nothing — emergencies are random and unmeasurable" }
+  ]}
+  correct={1}
+  explanation="Emergency-patch rate is a platform-health signal reviewed monthly. The goal is not zero — some emergencies are genuine — but a high rate usually means urgent-but-not-emergency changes are being force-fit into the emergency path because the standard one is too slow. 'Security doing its job' misreads the metric: frequent emergencies indicate upstream failure, not vigilance."
+/>
+
+<Question
+  prompt="What happens on EOL day to features still using a deprecated model?"
+  options={[
+    { text: "Their AI features simply stop working" },
+    { text: "The deprecated model keeps running until each team migrates" },
+    { text: "The registry blocks the old model and remaining traffic auto-routes to the migration target" },
+    { text: "The platform team rewrites the lagging features itself" }
+  ]}
+  correct={2}
+  explanation="The auto-route is the platform's safety net for teams that genuinely miss the deadline — the feature keeps working, on the recommended replacement, with a notification. 'It keeps running' is the trap: the provider controls the EOL date, not your roadmap, which is exactly why the six-month escalation playbook exists."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [A Realistic AI Cost Picture](./14-cost-picture.md) — what all of this actually costs.

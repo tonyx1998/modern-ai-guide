@@ -160,6 +160,46 @@ Storing cases as **JSONL** (one JSON object per line) makes git diffs readable �
 - **Not versioning.** A score you can't tie to a specific, committed set version can't be compared to last week's. Version everything.
 :::
 
+<Quiz id="eval-datasets-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="After a change, your eval goes from 0.82 to 0.84 overall, but the 'hard (high-value)' slice drops from 0.65 to 0.51. What does this page say you should do?"
+  options={[
+    { text: "Ship it — the overall number is the agreed metric and it went up" },
+    { text: "Ship it, but add more easy cases to stabilize the hard slice" },
+    { text: "Reject the change — gate on 'overall up AND no important slice down', because the aggregate is lying" },
+    { text: "Remove the hard slice from the set since it is dragging down the average" }
+  ]}
+  correct={2}
+  explanation="A +2% aggregate that hides a 14-point collapse on your hardest, highest-value cases is a disaster dressed up as a win — the page's rule is to never ship on the aggregate alone. 'Ship it, the metric went up' is exactly the trap slices exist to catch; and deleting inconvenient slices is moving the goalposts."
+/>
+
+<Question
+  prompt="A regression case keeps failing after a prompt change, so an engineer edits the case's expected output until it passes. Why does this page forbid that?"
+  options={[
+    { text: "It's cheating the test — expected behavior should only change deliberately, in a reviewed commit with a reason" },
+    { text: "Eval cases are stored in a database and can't be edited directly" },
+    { text: "Editing cases invalidates the embedding index used by the grader" },
+    { text: "Regression cases must always be deleted, never edited" }
+  ]}
+  correct={0}
+  explanation="Editing a case to make a failure pass is moving the goalposts — the case stops protecting you from the exact failure it was created to catch. The tempting rationalization is 'the expected answer was just outdated', and sometimes it genuinely is — but then the fix is a reviewed, explained commit, not a silent in-place edit."
+/>
+
+<Question
+  prompt="Your 'refund' slice has 3 cases and its score jumped from 0.67 to 1.0 after a change. How should you read that?"
+  options={[
+    { text: "A 33-point gain is huge — the change clearly improved refund handling" },
+    { text: "It's mostly noise — with 3 cases, one flipped result moves the slice 33%, so the slice needs ~20+ cases before you can trust it" },
+    { text: "The slice should be merged into 'billing' to make the number meaningful" },
+    { text: "Per-slice scores are unreliable in general, so only the overall score matters" }
+  ]}
+  correct={1}
+  explanation="Per-slice size matters more than total size: a 3-case slice swings wildly because each case is worth 33 points, so the 'improvement' may be a single lucky flip. The big-number-must-be-real instinct is the trap — the page's guidance is to add cases to slices you actually want to judge, not to abandon slicing."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Metrics](./05-metrics.md)

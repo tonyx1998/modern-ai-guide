@@ -205,6 +205,46 @@ ANSWER: {answer}"""
 - **Averaging scores across mismatched slices.** A mean over wildly different sub-tasks hides which one regressed. Report per-slice (see [datasets](./04-datasets.md)).
 :::
 
+<Quiz id="eval-metrics-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="You're tuning a spam filter where a false positive means a real email lands in spam. Which metric should you favor, per this page's cost-of-error logic?"
+  options={[
+    { text: "Recall, because missing spam is the worst outcome" },
+    { text: "Accuracy, because it balances all error types automatically" },
+    { text: "BLEU, because the filter outputs text labels" },
+    { text: "Precision, because false positives (real mail flagged) are the costly error" }
+  ]}
+  correct={3}
+  explanation="Precision asks 'of what you flagged, how much was actually spam?' — exactly the error that hurts when real mail gets buried. Recall is the tempting flip because 'catching all spam' sounds like the goal, but the page's rule is to favor the metric that punishes your costliest error; recall-first is for cases like cancer screening, where misses are catastrophic."
+/>
+
+<Question
+  prompt="A model produces a perfect paraphrase of the reference summary using almost entirely different vocabulary. What happens to its ROUGE score, and why?"
+  options={[
+    { text: "High — ROUGE measures meaning, so paraphrases score well" },
+    { text: "Low — ROUGE counts n-gram overlap, so different words mean low overlap even when the meaning is identical" },
+    { text: "Exactly 1.0 — ROUGE normalizes for vocabulary differences" },
+    { text: "Undefined — ROUGE only works on translations, not summaries" }
+  ]}
+  correct={1}
+  explanation="ROUGE (and BLEU) are surface metrics: they count shared word sequences, so a perfect paraphrase with new vocabulary scores poorly. The 'measures meaning' answer is the common misconception — capturing meaning is what embedding similarity does, which is why the page recommends it (or an LLM-judge) over ROUGE/BLEU for most generative tasks today."
+/>
+
+<Question
+  prompt="Your RAG bot retrieves the right documents (recall@5 is high) but the answer confidently states a 'fact' that appears nowhere in the retrieved context. Which metric is designed to catch this?"
+  options={[
+    { text: "MRR, since it checks the rank of the first relevant document" },
+    { text: "precision@k, since it checks whether retrieved docs are relevant" },
+    { text: "Faithfulness, since it checks whether every claim in the answer is supported by the retrieved context" },
+    { text: "Exact match, since the invented fact won't equal the gold answer" }
+  ]}
+  correct={2}
+  explanation="Faithfulness (groundedness) breaks the answer into claims and checks each against the context — it is the page's single most important guard against RAG hallucination. The retrieval metrics (MRR, precision@k) are tempting because this is a RAG system, but they grade the retrieval step, which in this scenario worked fine; the failure happened in generation."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [LLM-as-judge](./06-llm-as-judge.md)

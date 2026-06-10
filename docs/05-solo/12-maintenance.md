@@ -139,6 +139,46 @@ Self-check:
 - Is the model string pinned explicitly in your code?
 - Do you run `eval.py` weekly? Add real-user-input rows monthly?
 
+<Quiz id="solo-maintenance-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the primary defense against a model deprecation breaking your tool one morning?"
+  options={[
+    { text: "Pin the exact model string, watch provider announcements, and schedule the bump within a month of any deprecation warning" },
+    { text: "Use a model alias like claude-latest so you always get the newest version automatically" },
+    { text: "Self-host an open model so no provider can deprecate it" },
+    { text: "Keep two providers wired in production and load-balance between them" }
+  ]}
+  correct={0}
+  explanation="Pinning an explicit version plus subscribing to announcements means deprecations arrive as scheduled work, not 3am outages — and every bump goes through a fresh eval run. The claude-latest alias is the tempting opposite: it avoids the hard cutoff but lets quality move under you silently, which the page treats as worse."
+/>
+
+<Question
+  prompt="What is the monthly eval-drift habit the page calls the single most valuable one?"
+  options={[
+    { text: "Rewrite the system prompt from scratch each month" },
+    { text: "Double the size of the eval CSV with synthetic LLM-generated cases" },
+    { text: "Pull 20 random recent traces from Langfuse, judge each output, and add eval rows for any that fall short" },
+    { text: "Switch to whichever model tops the public benchmarks that month" }
+  ]}
+  correct={2}
+  explanation="Real user inputs are weirder than your hand-curated 20 rows, so the eval set grows from production traces — which means the prompt improves at handling reality, not hypotheticals. Synthetic case generation is the plausible-sounding distractor, but the page's whole point is that the valuable rows come from REAL traffic, not generated approximations."
+/>
+
+<Question
+  prompt="You bump the model version in your config. What must happen before that change merges?"
+  options={[
+    { text: "Nothing extra for a minor version — only major versions need review" },
+    { text: "A fresh eval run, since quality can regress silently even on a small version change" },
+    { text: "A one-week canary period with 1% of traffic" },
+    { text: "Notifying all users by email about the upcoming change" }
+  ]}
+  correct={1}
+  explanation="The rule is absolute: every model string change requires re-running the evals before merge, because 'it's just a minor version, should be fine' is exactly how silent regressions land — like the worked example where a prompt-injection eval row started failing after a quiet snapshot update. The canary option sounds professional but is team-scale machinery the 30-second eval run replaces."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [Realistic Time Investment](./13-time-investment.md) where we'll calibrate weekend-MVP, month-to-100-users, and three-months-to-$100-MRR expectations.

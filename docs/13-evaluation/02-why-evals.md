@@ -169,6 +169,46 @@ Notice that one product has *many* qualities, each with its own metric. A real e
 - **Confusing "ran an eval once" with "have an eval discipline."** The value is in running it on *every* change, automatically.
 :::
 
+<Quiz id="eval-why-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="You tweak a prompt, run the two examples you were debugging in the playground, both look great, and you ship. According to this page, what is the most likely failure mode?"
+  options={[
+    { text: "The model provider will reject the new prompt as invalid" },
+    { text: "Latency will increase because the prompt is longer" },
+    { text: "Cases you never re-checked silently regress, and users hit them in production" },
+    { text: "The playground results will not reproduce because of rate limits" }
+  ]}
+  correct={2}
+  explanation="Vibe-checking only inspects the cases you remember to look at — fixing case A can break cases B through Z invisibly, which is exactly the silent-regression loop in the diagram. Latency or rate limits might be real concerns sometimes, but they are not the structural problem with vibes: the structural problem is unmeasured coverage."
+/>
+
+<Question
+  prompt="A new model just topped MMLU and several public leaderboards. What does this page say should decide whether you switch your product to it?"
+  options={[
+    { text: "How the model scores on your own eval set built from your data" },
+    { text: "The leaderboard ranking, since it aggregates many tasks" },
+    { text: "Whether the model is newer than your current one" },
+    { text: "Community sentiment from early adopters" }
+  ]}
+  correct={0}
+  explanation="Public benchmarks measure generic capability, not your task — a leaderboard-topping model can lose to a 'worse' model on your actual support tickets. The leaderboard answer is tempting because rankings feel objective, but the only benchmark that decides your product is the one built from your own data."
+/>
+
+<Question
+  prompt="Your eval reports '+3% overall' after a change. Why does this page insist on also checking per-slice breakdowns before shipping?"
+  options={[
+    { text: "Slices make the report look more thorough to stakeholders" },
+    { text: "The overall number is statistically invalid without slices" },
+    { text: "Slices are needed to compute the overall average correctly" },
+    { text: "An aggregate gain can hide a large regression on your hardest, highest-value cases" }
+  ]}
+  correct={3}
+  explanation="A +3% overall can coexist with −10% on the cases that matter most — easy cases improving can mask hard cases collapsing. The aggregate is not 'statistically invalid'; it is just incomplete, which is why the page says to always break the score down rather than ship on one number."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Types of evaluation](./03-eval-types.md)

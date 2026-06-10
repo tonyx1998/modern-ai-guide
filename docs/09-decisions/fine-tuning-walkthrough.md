@@ -184,6 +184,46 @@ This page is the *decision* layer. For the full how-to — data preparation, tra
 Five years ago, fine-tuning was the obvious next step for any quality improvement. Today, with strong frontier models, prompt caching, RAG, reasoning models, and tool use, fine-tuning's place is narrower: serving cost reduction, domain shift, narrow-task speed. If your case isn't one of those three, you're probably better off iterating on prompt and retrieval.
 :::
 
+<Quiz id="fine-tuning-walkthrough-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Which gates must you pass BEFORE fine-tuning, per the decision tree?"
+  options={[
+    { text: "None — fine-tuning is the recommended first move" },
+    { text: "A strong model with a good prompt, then RAG or tool use, then a reasoning model" },
+    { text: "Just provisioning a bigger GPU" },
+    { text: "A vendor demo of a fine-tuning platform" }
+  ]}
+  correct={1}
+  explanation="The tree has five 'have you tried' gates, each cheaper than the next — and even after them, the task must be narrow and repetitive with at least 500 high-quality examples. Every team that fine-tunes before walking these gates wastes weeks solving a problem a prompt or RAG would have fixed."
+/>
+
+<Question
+  prompt="A team says 'I want the model to know about my company.' What does the page prescribe?"
+  options={[
+    { text: "Continued pretraining on company documents" },
+    { text: "DPO on preference pairs" },
+    { text: "RFT with a custom reward function" },
+    { text: "RAG — fine-tuning bakes facts in poorly and they go stale instantly" }
+  ]}
+  correct={3}
+  explanation="Knowledge injection is a retrieval problem, not a training problem. Continued pretraining tempts because it sounds like 'teaching the model,' but it needs millions of tokens, risks degrading general capability, and is rare in production by 2026 — most teams use RAG instead."
+/>
+
+<Question
+  prompt="You can rank two outputs as better or worse, but you cannot write 'the right answer.' Which technique fits?"
+  options={[
+    { text: "DPO — it trains directly on preference triples" },
+    { text: "SFT — supervised pairs always work" },
+    { text: "Continued pretraining on raw text" },
+    { text: "No fine-tuning technique handles preferences" }
+  ]}
+  correct={0}
+  explanation="DPO trains on (input, preferred, less-preferred) triples and became the 2024-2026 winner over PPO/RLHF for preference tuning — tone, helpfulness, refusal calibration. SFT is the tempting default, but it requires explicit right-answer demonstrations, which is exactly what this scenario lacks."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [What would actually hurt us](./12-what-would-hurt.md)

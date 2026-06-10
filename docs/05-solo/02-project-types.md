@@ -120,6 +120,46 @@ Self-check:
 - What's the *single sentence* describing your tool, in noun-verb form? Less than 12 words.
 - Which distribution channel will the first 10 users come from? If you can't name one, see [launching](./11-launching.md).
 
+<Quiz id="solo-project-types-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Which of these is one of the four solo AI project shapes that consistently finish?"
+  options={[
+    { text: "A platform for building AI agents" },
+    { text: "A multimodal multi-agent assistant" },
+    { text: "A single-prompt tool: one prompt, one input, one output" },
+    { text: "A foundation-model-agnostic LLM gateway with cost routing" }
+  ]}
+  correct={2}
+  explanation="The four shapes that work are the single-prompt tool, niche RAG over a specific corpus, a narrow agent with one to three hand-wired tool calls, and AI-augmenting a tool you already built. The other three options are all listed as anti-patterns — 'platform' projects in particular mean you spend 12 weekends on auth, billing, and dashboards before anyone uses the actual feature."
+/>
+
+<Question
+  prompt="Why does the page say 'ChatGPT but for [vertical]' fails as a solo project?"
+  options={[
+    { text: "Vertical markets are too small to be worth serving" },
+    { text: "If the only differentiator is a system prompt, users can just paste that prompt into ChatGPT themselves" },
+    { text: "ChatGPT's terms of service forbid vertical competitors" },
+    { text: "Vertical chat tools require fine-tuned models that solo builders cannot afford" }
+  ]}
+  correct={1}
+  explanation="The page's objection is about defensibility: when the entire product is a system prompt wrapped around the same model, the user can replicate it in ChatGPT directly. The fine-tuning option is a plausible-sounding distractor, but this guide explicitly argues solo builders should not fine-tune — the problem is the missing moat, not the model."
+/>
+
+<Question
+  prompt="A builder wants to start with a narrow agent (Shape 3) for their very first v0. What does the page recommend instead?"
+  options={[
+    { text: "Go ahead — agents are the fastest shape to debug" },
+    { text: "Build the agent but skip rate limits to move faster" },
+    { text: "Build a platform first so the agent has infrastructure" },
+    { text: "Ship a single-prompt tool first, learn the auth, rate-limit, and cost discipline, then try an agent" }
+  ]}
+  correct={3}
+  explanation="The common-mistakes section warns that agents are the most fun to demo and the most expensive to debug, so Shape 1 should come first to build operational discipline. The first option is tempting because narrow agents ARE one of the four working shapes — but the page distinguishes between a shape that works and the right shape for your first v0."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [Planning a Solo AI Project](./03-planning.md) where we'll turn the chosen shape into a one-pager spec — including eval criteria *before* you write code.

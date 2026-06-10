@@ -104,4 +104,44 @@ A senior AI Engineer at Decagon who runs SFT/DPO on fine-tuned customer-support 
 - **Refusing AI Platform Engineer roles because "they're not building product."** Platform roles often have the highest impact-per-engineer at an org with 100+ AI engineers. They also tend to be the route to Staff/Principal in big-tech AI orgs.
 :::
 
+<Quiz id="career-roles-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the headline-defining task of an AI Engineer, as distinct from an ML Engineer?"
+  options={[
+    { text: "Train, fine-tune, and serve ML models at production scale" },
+    { text: "Ship and operate an LLM-powered feature in production, end-to-end, with evals" },
+    { text: "Build the training infrastructure that capability researchers use" },
+    { text: "Write and maintain the prompts for a company's chatbots" }
+  ]}
+  correct={1}
+  explanation="The AI Engineer owns prompts, retrieval, agents, evals, observability, and cost - but not usually model training or inference kernels. That is the ML Engineer's territory. It is the dominant LLM-application role of 2026 and the natural shape for software engineers adding LLMs to their toolkit."
+/>
+
+<Question
+  prompt="What happened to the Prompt Engineer title by 2026?"
+  options={[
+    { text: "It became the highest-paid specialization at frontier labs" },
+    { text: "It was renamed Context Engineer at most companies" },
+    { text: "It disappeared because prompting stopped mattering" },
+    { text: "It was absorbed into AI Engineer as a skill, and as a primary job title it is now a yellow flag about a company's maturity" }
+  ]}
+  correct={3}
+  explanation="Prompting is essential as a skill - everyone shipping LLM features must prompt well. But companies hiring 'prompt engineers' as a primary discipline in 2026 are often less mature than ones hiring AI Engineers and expecting strong prompting from them."
+/>
+
+<Question
+  prompt="In the worked example where one person hears back under three different titles, what was the signal that opened all three doors?"
+  options={[
+    { text: "The shipped artifact - the RAG project and platform work - not the title on their LinkedIn" },
+    { text: "Listing all three titles in their resume header" },
+    { text: "A referral from a frontier-lab employee" },
+    { text: "Holding an ML certification recruiters searched for" }
+  ]}
+  correct={0}
+  explanation="The same person was pattern-matched into AI Engineer, ML Platform Engineer, and Forward-Deployed Engineer roles based on what they had shipped. The lesson: optimize for shipped work, not for picking the right title in advance."
+/>
+
+</Quiz>
+
 → Next: [The skill stack](./04-skill-stack.md).

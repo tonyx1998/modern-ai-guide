@@ -114,6 +114,46 @@ The two deferred BUs aren't happy. The portfolio doc explains the trade-off in w
 - **Annual planning that doesn't survive Q1.** A portfolio that's untouched between January and December is a fiction. The quarterly refresh is the part that makes annual planning real.
 :::
 
+<Quiz id="enterprise-ai-planning-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="According to the page, what is usually the binding capacity constraint on an enterprise AI portfolio?"
+  options={[
+    { text: "Engineering headcount" },
+    { text: "Committed model spend" },
+    { text: "GPU availability" },
+    { text: "Governance review capacity for High-tier features" }
+  ]}
+  correct={3}
+  explanation="The page's central point: you can have committed spend and platform headcount to spare and still ship nothing this quarter because all the High-tier review slots are used. Engineering headcount is the tempting answer because it is the constraint at startups — and that shift is exactly what the page is teaching."
+/>
+
+<Question
+  prompt="Roughly how many High-tier features can a healthy enterprise AI governance function deeply review per quarter?"
+  options={[
+    { text: "3 to 6" },
+    { text: "10 to 20" },
+    { text: "1 at most" },
+    { text: "As many as the portfolio demands" }
+  ]}
+  correct={0}
+  explanation="The page gives 3–6 deep High-tier reviews per quarter as realistic capacity. If your portfolio has 20, you must sequence them or add reviewers. 'As many as the portfolio demands' is the trap — treating review capacity as elastic is how portfolios end up with 80 features in flight and none shipped."
+/>
+
+<Question
+  prompt="Why does the page insist every feature in the portfolio has written kill criteria?"
+  options={[
+    { text: "Regulators require kill criteria for all AI systems" },
+    { text: "Without them, half-built features become zombies that consume platform attention indefinitely" },
+    { text: "They let finance forecast committed spend precisely" },
+    { text: "They make quarterly portfolio reviews shorter" }
+  ]}
+  correct={1}
+  explanation="Features without explicit kill criteria never officially die — they linger half-built, eating platform-team attention forever. The regulatory answer is tempting because so much else in the chapter is compliance-driven, but kill criteria are a portfolio-discipline tool: a written clause, agreed before work starts, that says which eval result, cost overrun, or risk finding ends the work."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [Enterprise AI Reference Architecture](./04-architecture.md) — the technical shape of the stack you're planning into.

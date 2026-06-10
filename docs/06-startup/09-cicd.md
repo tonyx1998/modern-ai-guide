@@ -161,6 +161,46 @@ The teams that resist this rule (usually because their suite is slow or flaky) e
 - **Deploying Tier-0 changes on Friday at 4pm.** Just don't.
 :::
 
+<Quiz id="startup-ai-cicd-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="During an urgent production hotfix, an engineer says evals are slowing them down and should be skipped. What does the page say?"
+  options={[
+    { text: "Skip evals for hotfixes — speed matters more during an incident" },
+    { text: "Run only the unit tests and skip the rest" },
+    { text: "No — the full required suite runs with no shortcuts; if evals are the bottleneck, the suite is too slow and that gets fixed separately" },
+    { text: "Skip evals but require two senior reviewers instead" }
+  ]}
+  correct={2}
+  explanation="The hotfix path keeps every gate: CI runs the full required suite, a reviewer approves, and the only concession is deploying straight to 100% instead of canary (because the alternative is staying broken). Skipping evals under pressure is the culture-killer the page warns about — once one engineer bypasses the gate, the discipline collapses."
+/>
+
+<Question
+  prompt="What two rules keep CI eval costs sane?"
+  options={[
+    { text: "Run affected suites only on PRs (full suite nightly), and set a daily spend cap on the CI gateway key" },
+    { text: "Run evals only on release branches, and use the cheapest model for all eval calls" },
+    { text: "Cache all eval results forever, and run evals weekly instead of per-PR" },
+    { text: "Mock the LLM in CI, and run real evals only before major releases" }
+  ]}
+  correct={0}
+  explanation="Affected-only scoping keeps per-PR runs fast and cheap, while the spend cap (e.g. $50/day) means a runaway PR loop fails fast with a budget error instead of ballooning to thousands. The mocking option is the seductive zero-cost answer, but mocked evals measure nothing — typical real cost is only $100-500/month, which is cheap insurance."
+/>
+
+<Question
+  prompt="In the worked example, a prompt change passed the eval suite but was still rolled back. What does this demonstrate?"
+  options={[
+    { text: "Eval suites are unreliable and should be replaced with manual review" },
+    { text: "The canary should have run for a week instead of 24 hours" },
+    { text: "Auto-rollback fires too aggressively and needs tuning" },
+    { text: "The eval set and the canary catch different failures — the canary found an input pattern hitting 12% of real users that the 30-case eval set never covered" }
+  ]}
+  correct={3}
+  explanation="The eval suite can only test cases it contains; the canary's LLM-as-judge on real traffic caught the 8-point quality drop, auto-rollback fired, and 15 new eval cases were added before reattempting. 'Evals are unreliable' is the cynical overreaction — the lesson is that both layers exist because each covers the other's blind spot."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [Deployment](./10-deployment.md) where we cover feature flags, cohort rollouts, kill switches, and the AI-as-change-management reality.

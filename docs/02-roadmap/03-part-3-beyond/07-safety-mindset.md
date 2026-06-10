@@ -10,6 +10,10 @@ description: Prompt injection (the AI SQL-injection), data exfiltration, supply-
 
 > **In one line:** Treat user input as untrusted at every layer — there's no prompt phrasing that stops prompt injection, just like there's no string-escape that stops SQL injection. Architecture is the defense.
 
+:::tip[In plain English]
+Prompt injection is the AI version of SQL injection: the model can't tell the difference between instructions you wrote and instructions an attacker smuggled in through a pasted email or a retrieved document. No clever wording in your system prompt fixes that, the same way no amount of asking nicely fixes SQL injection. The real defenses are structural — keep user data clearly separated from instructions, filter what the model is even allowed to see, sandbox what tools can do, and check outputs before acting on them. This page builds that habit of layered defense.
+:::
+
 ## 1. The new attack surface
 
 Three categories of risk specific to AI features:
@@ -209,6 +213,46 @@ Apply normal web-security thinking to AI features. They're not magic; they're a 
 - **Trust the provider's safety to handle everything.** Built-in safety classifiers are starting points, not complete solutions. Your domain has specific policies; build the eval for them.
 - **Pinning model strings loosely.** `"gpt-5-mini"` gets silently updated. Pin to `"gpt-5-mini-YYYY-MM-DD"`.
 :::
+
+<Quiz id="safety-mindset-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Why doesn't 'just tell the model not to do harmful things' work against prompt injection?"
+  options={[
+    { text: "The model has no concept of which instructions are real versus user-supplied" },
+    { text: "Models ignore system prompts entirely" },
+    { text: "Safety instructions make prompts too long to process" },
+    { text: "Providers strip safety language before inference" }
+  ]}
+  correct={0}
+  explanation="Whatever is in the context, the model might follow - it can't distinguish your instructions from injected ones. That's why layered structural defenses are required, not cleverer prompt phrasing."
+/>
+
+<Question
+  prompt="Where does the page say access permissions should be enforced in a RAG system?"
+  options={[
+    { text: "In the system prompt, by telling the model which documents not to reveal" },
+    { text: "At generation time, with output checks only" },
+    { text: "At retrieval time, so restricted chunks never reach the model at all" },
+    { text: "Nowhere - the provider's safety classifiers handle it" }
+  ]}
+  correct={2}
+  explanation="Generation-time filtering ('don't tell the user about HR docs') is fragile. Retrieval-time filtering is structural: apply user permissions to the retrieval query so the model never sees chunks the asker shouldn't."
+/>
+
+<Question
+  prompt="What does the page recommend to guard against a provider silently updating a model under the same name?"
+  options={[
+    { text: "Switch providers every quarter" },
+    { text: "Use only open-weights models" },
+    { text: "Re-run red-teaming weekly" },
+    { text: "Pin model versions to explicit dated strings" }
+  ]}
+  correct={3}
+  explanation="Pin explicitly - 'gpt-5-mini-2025-08-07', not 'gpt-5-mini' - and run your eval set whenever anything provider-related changes. Loose model strings get silently updated and your evals regress."
+/>
+
+</Quiz>
 
 ---
 

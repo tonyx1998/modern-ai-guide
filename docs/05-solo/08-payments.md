@@ -185,6 +185,46 @@ Self-check:
 - Do you handle `customer.subscription.deleted` and `.updated` events?
 - Do you know your gross margin per tier on a typical-user assumption?
 
+<Quiz id="solo-payments-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Where should you grant a user paid-tier access after a Stripe checkout?"
+  options={[
+    { text: "On the success_url redirect, since that proves payment completed" },
+    { text: "In the webhook handler for checkout.session.completed — the redirect is UX, not proof" },
+    { text: "In the frontend, by checking for the upgraded=1 query parameter" },
+    { text: "By polling the Stripe API from the client every minute" }
+  ]}
+  correct={1}
+  explanation="Only the signed webhook event proves payment happened; the success redirect is just navigation, and users can bookmark a URL like /app?upgraded=1 to fake an upgrade forever. The redirect option is tempting precisely because it FEELS like proof — Stripe did send the user there — but anyone can type that URL without paying."
+/>
+
+<Question
+  prompt="Why does the page recommend flat-rate pricing over usage-based pricing at v0?"
+  options={[
+    { text: "Users hate surprise bills, Stripe Checkout handles flat subscriptions natively, and a capped tier limits your own per-user cost exposure" },
+    { text: "Usage-based pricing is illegal for AI products in most jurisdictions" },
+    { text: "Stripe does not support metered billing at all" },
+    { text: "Flat-rate pricing always produces higher revenue per customer" }
+  ]}
+  correct={0}
+  explanation="The three reasons given are predictability for users, one-URL simplicity for you, and cost certainty on both sides. The higher-revenue option is the tempting distractor — the page actually describes the opposite scenario as the switch signal: when a heavy $20/mo user consumes like a $500/mo one, usage-based starts earning MORE, which is when you migrate."
+/>
+
+<Question
+  prompt="For most solo AI tools, should you mark up the LLM cost or pass it through transparently?"
+  options={[
+    { text: "Pass it through, because users always demand cost transparency" },
+    { text: "Neither — keep the tool free until you reach 10,000 users" },
+    { text: "Mark it up — your prompt is the product, and users pay for the outcome, not the API call underneath" },
+    { text: "Itemize the API cost on every invoice so users can verify it" }
+  ]}
+  correct={2}
+  explanation="The page says most solo tools should use standard SaaS markup: a user paying $15/mo to summarize meetings cares about the hour saved, not the $0.40 API cost. Pass-through is a real pattern, but it fits the narrower case where the interface itself is the value — and even then the page says don't itemize; sell the outcome."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [Deployment](./09-deployment.md) where we'll lock in the `git push → live` pipeline and avoid the most common preview-env disaster.

@@ -112,6 +112,46 @@ A platform built right in 2024 can be a millstone by 2026 if no one has pruned i
 - **Treating "the answer is more process" as the default.** When something goes wrong, the instinct is to add a checkpoint. After enough of those, the process is what's wrong. Periodically prune checkpoints with the same rigor with which you add them.
 :::
 
+<Quiz id="enterprise-ai-too-big-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the right test of whether an enterprise AI platform is earning its cost?"
+  options={[
+    { text: "Whether the platform team shipped its roadmap this year" },
+    { text: "Whether governance reviews are completed on schedule" },
+    { text: "Whether a new AI feature is easier to build correctly on the paved road than off it" },
+    { text: "Whether the platform supports every model provider" }
+  ]}
+  correct={2}
+  explanation="If engineers find it easier to route around the platform than to use it, the platform has become a tax regardless of how well-engineered it is. Shipping the roadmap is the tempting internal metric — and exactly the self-referential measure that lets ossified platforms look healthy while adoption quietly collapses."
+/>
+
+<Question
+  prompt="When a shadow platform emerges with more adoption than the official one, what is usually the right response?"
+  options={[
+    { text: "Absorb and officially bless the shadow toolkit" },
+    { text: "Shut it down to protect standardization" },
+    { text: "Ignore it until the next reorg" },
+    { text: "Require its authors to transfer to the platform team" }
+  ]}
+  correct={0}
+  explanation="Shadow platforms exist because the official one is not meeting some real need; absorbing the toolkit usually improves both. Fighting it is justified only for genuine security issues — suppressing it without fixing the gap drives it underground. In the worked example, blessing the shadow toolkit was part of the fix."
+/>
+
+<Question
+  prompt="In the worked example, what happened to platform adoption during the year of pruning?"
+  options={[
+    { text: "It dropped temporarily and recovered after two years" },
+    { text: "It went up — the platform became smaller and more useful at the same time" },
+    { text: "It stayed flat because teams had already migrated away" },
+    { text: "It became impossible to measure" }
+  ]}
+  correct={1}
+  explanation="Deprecating the custom multi-agent framework, retiring the eval DSL with 11 users, and shrinking the team made the platform more useful, and adoption rose during the pruning. The temporary-drop answer matches intuition about removals — the page's counterintuitive point is that cutting unused machinery increases trust and usage."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [Chapter checkpoint](./19-checkpoint.md) to self-test the core ideas in this chapter.

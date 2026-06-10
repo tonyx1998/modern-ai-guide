@@ -101,6 +101,46 @@ Total time: 6 weeks of engineering. Saves $12k/month. The gateway tax (latency +
 The lesson: single-provider was right for 2 years. Multi-provider became right when the cost math flipped. The team made the right call at each step by waiting for a real reason — not by hedging from day one.
 :::
 
+<Quiz id="single-vs-multi-provider-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the default provider strategy for most teams?"
+  options={[
+    { text: "One provider, with a thin internal client so you are prepared to switch" },
+    { text: "Two providers from day one, for resilience" },
+    { text: "Three providers behind a gateway" },
+    { text: "Whatever each engineer prefers per feature" }
+  ]}
+  correct={0}
+  explanation="One provider means one SDK, prompts tuned once, one dashboard — and outages are rare enough that paying a daily tax to prevent them isn't worth it. The recommended hedge is 'prepared to switch, not actively running both': a thin client, prompts in code, and an annual sanity check, costing a couple of days a year."
+/>
+
+<Question
+  prompt="Which of these is a GOOD reason to add a second provider?"
+  options={[
+    { text: "What if they raise prices someday?" },
+    { text: "It feels prudent to not be locked in" },
+    { text: "A specific capability lives only on another provider and a feature needs it" },
+    { text: "What if their model quietly gets worse?" }
+  ]}
+  correct={2}
+  explanation="The real reasons are: repeated harmful outages, pricing that breaks unit economics, a capability gap, or a customer/regulator mandate. The hypotheticals are listed as bad reasons because they unfold slowly enough to react — price changes show up at renewal, quality drift shows up in evals."
+/>
+
+<Question
+  prompt="What does the page suggest as the actual answer to 'we need resilience' for many teams?"
+  options={[
+    { text: "Build your own gateway" },
+    { text: "Multi-region routing within a single provider" },
+    { text: "Add a third provider as backup" },
+    { text: "Self-host an open model as fallback" }
+  ]}
+  correct={1}
+  explanation="Routing across regions of the same provider captures most of the resilience benefit without the cross-provider tax: no gateway hop latency, no new critical dependency, no re-tuning every prompt for a second model family. The gateway only pays for itself once you genuinely route across 2+ providers."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Sync vs async](./08-sync-vs-async.md).

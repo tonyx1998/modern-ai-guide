@@ -183,6 +183,46 @@ The single biggest jump came from a non-obvious change: replacing the prompt's "
 - [ ] You've sampled at least one batch of real prod outputs and added failures to the eval set.
 - [ ] You can articulate the *next* hypothesis you'd test if you had another week.
 
+<Quiz id="lifecycle-iterate-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Why does the page insist on changing only one thing per iteration cycle?"
+  options={[
+    { text: "Multiple changes make the eval suite too expensive to run" },
+    { text: "Version control cannot track more than one change cleanly" },
+    { text: "Models behave nondeterministically when several parameters change at once" },
+    { text: "If the score moves after a bundled change, you cannot tell which change helped or which one hurt" }
+  ]}
+  correct={3}
+  explanation="Bundling 'better retrieval, tighter prompt, bigger model' into one PR means an improved score teaches you nothing and a worse score gives you nothing to revert precisely. The page notes three separate eval runs cost about $6 and 15 minutes — cheap insurance. Cost is not the obstacle; attribution is."
+/>
+
+<Question
+  prompt="Your RAG feature is underperforming. According to the page's 'order of cheapness', what should you try first?"
+  options={[
+    { text: "Prompt wording — it is free and instant" },
+    { text: "Fine-tuning a smaller specialized model" },
+    { text: "Swapping in a bigger model" },
+    { text: "Splitting the single call into two specialized calls" }
+  ]}
+  correct={0}
+  explanation="The ladder runs from cheapest to most expensive: prompt wording, few-shot examples, system prompt structure, output schema, retrieval settings, model swap, decomposition, and only then fine-tuning. The discipline is not skipping ahead — teams reach for fine-tuning when a single sentence added to the system prompt would have fixed the problem."
+/>
+
+<Question
+  prompt="While reading failing outputs, you find the expected answer in an eval case is itself wrong. How common does the page say this is?"
+  options={[
+    { text: "Vanishingly rare — under 1% of failures" },
+    { text: "About half of all eval failures" },
+    { text: "Roughly 10-20% of eval failures are actually bad eval cases — fix the case rather than blaming the model" },
+    { text: "It only happens with synthetic eval cases" }
+  ]}
+  correct={2}
+  explanation="The page says about 10-20% of eval failures trace back to the eval case itself — a wrong or under-specified expected output. That is why the failure-reading routine ends with asking whether this is a prompt problem, a retrieval problem, a model-capability problem, or a case-was-wrong problem. Treating every failure as a model bug wastes iteration cycles on phantom issues."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Pre-production hardening](./07-harden.md)

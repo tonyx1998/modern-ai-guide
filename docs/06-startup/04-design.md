@@ -153,6 +153,46 @@ Document these in the feature spec. The team that hasn't agreed on these *will* 
 - **No fallback state.** When the provider has a 30-minute outage (it happens), your app shows a spinner forever. Build the "AI is temporarily unavailable, here's the manual flow" state on day one.
 :::
 
+<Quiz id="startup-ai-design-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the streaming latency target this page sets, and what should happen if you miss it?"
+  options={[
+    { text: "Full response in under 5 seconds, or switch to a faster model" },
+    { text: "Time to first token under 200ms p50, or cache all responses" },
+    { text: "Time to first token under 800ms p95 — otherwise add a thinking indicator that names the step the system is on" },
+    { text: "No specific target — streaming makes latency irrelevant" }
+  ]}
+  correct={2}
+  explanation="The target is TTFT under 800ms at p95, because anything slower makes users think the app is broken; if you cannot hit it, make the wait feel productive with an indicator like 'searching policy docs'. 'Streaming makes latency irrelevant' is the tempting belief — but streaming only helps once the first token arrives; the wait before it is pure perceived breakage."
+/>
+
+<Question
+  prompt="In the legal-research worked example, what single change moved feature NPS from 6 to 8.5?"
+  options={[
+    { text: "Adding inline clickable citations to the answer — no prompt or model change at all" },
+    { text: "Swapping to a frontier model with better legal reasoning" },
+    { text: "Rewriting the system prompt with few-shot examples" },
+    { text: "Reducing response latency by half" }
+  ]}
+  correct={0}
+  explanation="Two days of frontend work on citations cut 'is this accurate?' tickets by 70% and lifted NPS — the lesson being that the most leveraged AI improvements are often UX patterns, not model swaps. The model-swap option is the reflexive engineering answer, which is exactly the instinct the example exists to correct: the model never changed."
+/>
+
+<Question
+  prompt="The AI takes a real action like sending an email. What undo pattern does the page prescribe?"
+  options={[
+    { text: "Execute immediately and offer a written apology template if wrong" },
+    { text: "Require a confirmation dialog before every single action" },
+    { text: "Let the user file a support ticket to reverse actions" },
+    { text: "Queue the action for 5-10 seconds before execution, with a toast showing the action and an Undo button" }
+  ]}
+  correct={3}
+  explanation="The queue-then-execute window gives users a real undo without the friction of confirming everything — the toast pattern ('Sent — Undo') keeps flow intact. A confirmation dialog on every action is the tempting safe-sounding alternative, but it taxes every interaction to guard against the rare mistake; the delay window guards the same risk invisibly."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [Architecture](./05-architecture.md) where we cover the monolith + LLM gateway + pgvector + Inngest stack and when to split.

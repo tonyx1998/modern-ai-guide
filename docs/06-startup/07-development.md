@@ -146,6 +146,46 @@ Print this. Tape it above the desk. Run through it every prompt PR.
 - **Shipping the demo, never shipping the production version.** The week-1 demo is a prototype. The week-2 hardening (cost cap, rate limit, fallback, kill switch) is what makes it shippable. Skipping week 2 means you launch a feature that takes you down at 1% rollout.
 :::
 
+<Quiz id="startup-ai-development-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="The eval suite reports a regression, but you believe the new model output is genuinely better. What is the discipline?"
+  options={[
+    { text: "Merge anyway — human judgment outranks automated scores" },
+    { text: "Delete the failing cases since they are clearly outdated" },
+    { text: "Ask a second engineer to vote and merge on majority" },
+    { text: "Do not merge; update the eval cases to capture what 'better' means, re-run, and merge only if it now passes" }
+  ]}
+  correct={3}
+  explanation="The eval is the contract — overruling it reintroduces vibes-driven shipping. If the new behavior really is better, encoding that into new cases makes the suite smarter over time; if it still fails, the model was not better on the cases that matter. Deleting failing cases is the trap: it superficially resembles 'updating the evals' but removes coverage instead of refining it."
+/>
+
+<Question
+  prompt="Why do preview deploys hit real provider APIs instead of mocks?"
+  options={[
+    { text: "Mocks are harder to write than real API calls" },
+    { text: "Real keys are needed to test authentication flows" },
+    { text: "Mock responses lie — they lack the real provider's rate limits, latency variance, and occasional 500s, making the preview useless for review" },
+    { text: "Provider terms of service forbid mocking their responses" }
+  ]}
+  correct={2}
+  explanation="The preview is where the designer, PM, and stakeholders evaluate the feature before merge, and cost is negligible (about $1-5 per PR) with guardrails: sandbox tenant data, gateway-level spend caps, and auto-deleted branches. The mocks-are-harder option inverts reality — mocks are easier, which is exactly why teams reach for them and why the page warns against it."
+/>
+
+<Question
+  prompt="What does week-2 'hardening' add that the week-1 demo lacks, and why does it matter?"
+  options={[
+    { text: "A marketing site and pricing page — features need a launch surface" },
+    { text: "Cost caps, rate limits, fallback provider, and a kill switch — skipping these means launching a feature that takes you down at 1% rollout" },
+    { text: "Fine-tuning the model on production data" },
+    { text: "A full UI redesign based on stakeholder feedback" }
+  ]}
+  correct={1}
+  explanation="The week-1 output is a prototype; the hardening pass plus staged cohort rollout (5% then 25% then 100%, with cost alerts armed at 2x forecast) is what makes it production-safe. Fine-tuning is the seductive distractor because it sounds like 'making it production-grade' — but it appears on the playbook's explicit NOT-included list."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [Testing Strategy](./08-testing.md) where we cover the four-layer test stack: unit, integration, evals, and adversarial.

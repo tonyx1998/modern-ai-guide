@@ -133,6 +133,46 @@ The `4 * len(messages)` is a heuristic for role/format overhead. The real number
 Two models advertised at the same $/1M tokens can have 30%+ different real costs on your actual workload, just because their tokenizers chop your text differently. Always benchmark on *your* prompts.
 :::
 
+<Quiz id="tokenizers-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="You count the same paragraph with tiktoken, with Anthropic's counter, and with a Llama tokenizer, and get three different numbers. What does this tell you?"
+  options={[
+    { text: "One of the libraries has a bug" },
+    { text: "Each model family uses its own tokenizer, so counts legitimately differ" },
+    { text: "You need to normalize the text encoding first" },
+    { text: "Token counts are random and only the final bill is meaningful" }
+  ]}
+  correct={1}
+  explanation="Tokenizers are not interchangeable — each model family learned its own vocabulary during training, so the same string genuinely produces different token counts. This is why comparing prices across providers implicitly compares tokenizers too: two models with the same advertised per-token price can have 30 percent different real costs on your actual workload."
+/>
+
+<Question
+  prompt="Which input is closest to worst-case for a tokenizer, costing the most tokens per character?"
+  options={[
+    { text: "A base64 blob, UUID, or random hash" },
+    { text: "Common English prose" },
+    { text: "A short Python function" },
+    { text: "A frequently used English word like 'the'" }
+  ]}
+  correct={0}
+  explanation="Tokenizers compress by merging frequently seen character patterns. Random strings like base64, UUIDs, and hashes have no patterns to merge, so they shatter into many tiny tokens — a 4-line base64 image can be about 2,000 tokens. Common prose is the cheapest case, and code sits in between at roughly 3 characters per token."
+/>
+
+<Question
+  prompt="Your cost estimator divides character count by 4 to predict tokens. Where will it break down badly?"
+  options={[
+    { text: "On long English essays" },
+    { text: "On short English tweets" },
+    { text: "On code, JSON, and Japanese text" },
+    { text: "Nowhere — 4 characters per token is exact for all text" }
+  ]}
+  correct={2}
+  explanation="The divide-by-4 heuristic only fits English prose. Code and JSON tokenize denser because brackets, operators, and indentation each become tokens, and Japanese can approach one token per character. When the number actually matters — RAG chunk budgets, cost estimates, TPM planning — count with the provider's real tokenizer at runtime."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Embeddings](./embeddings.md)

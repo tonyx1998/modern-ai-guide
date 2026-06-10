@@ -384,6 +384,44 @@ Build an assistant with three real tools (no stubs). Suggestions: `get_weather(c
 
 ## Page checkpoint
 
+<Quiz id="stage-4-tools-quick-check" variant="micro" title="Quick check">
 
+<Question
+  prompt="In a tool-calling loop, who actually executes the function when the model emits a tool call?"
+  options={[
+    { text: "Your code — the model only suggests a structured call, and your app runs it (or refuses) and sends the result back" },
+    { text: "The provider's servers run it in a sandbox and return the result" },
+    { text: "The model executes it internally as part of generating its response" },
+    { text: "A separate executor model dedicated to running tools" }
+  ]}
+  correct={0}
+  explanation="This is the load-bearing fact of the whole architecture: the model never runs code. It emits a structured request like get_weather(city='Tokyo'); your application decides whether to execute it, runs the function, and feeds the result back so the model can continue reasoning. That separation is also why you can — and must — add safeguards like confirmation steps, since the decision to act always passes through your code."
+/>
+
+<Question
+  prompt="Your assistant keeps picking the wrong tool for user questions. According to this page, what is the highest-leverage fix?"
+  options={[
+    { text: "Switch to a larger, more capable model" },
+    { text: "Add few-shot examples of correct tool calls to every prompt" },
+    { text: "Rewrite the tool descriptions — the model picks tools largely by reading descriptions, so treat them as prompt engineering" },
+    { text: "Reduce the number of tools to exactly one" }
+  ]}
+  correct={2}
+  explanation="The reality nobody warns you about: the model selects tools by reading their descriptions far more than anything else. A terse description like 'Search docs' gets wrong tool choices; a docstring-quality one that says what the tool returns and when NOT to use it fixes most selection errors. Bigger models and fewer tools can paper over the problem, but description-writing is the cheapest, highest-leverage knob you control."
+/>
+
+<Question
+  prompt="After executing the model's tool calls, your next API request gets rejected by the provider. What ordering rule did you most likely violate?"
+  options={[
+    { text: "Tool results must be sent in a separate API call from user messages" },
+    { text: "Each tool result must appear before the tool call that requested it" },
+    { text: "Tool results must be wrapped in a system message" },
+    { text: "The assistant message containing tool_calls must be appended to history before the tool result messages" }
+  ]}
+  correct={3}
+  explanation="The required sequence is: assistant turn (with tool_calls) first, then one tool message per call referencing its tool_call_id. If you push tool results without first appending the assistant turn that requested them, the API rejects the conversation as malformed — there is a result with no matching request. The other orderings described here are inventions; the assistant-before-results rule is the one that actually bites people."
+/>
+
+</Quiz>
 
 → [Next: Stage 5 — RAG](./06-stage-5-rag.md) · [Back to Part I overview](./index.md)

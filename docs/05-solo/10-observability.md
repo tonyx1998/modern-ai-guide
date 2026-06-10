@@ -195,6 +195,46 @@ Self-check:
 - Are server-side exceptions hitting Sentry with user context?
 - Do you get a daily email with yesterday's cost + top users?
 
+<Quiz id="solo-observability-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What are the three tools in the minimum-useful observability stack for a solo AI tool?"
+  options={[
+    { text: "Datadog for metrics, Grafana for dashboards, PagerDuty for alerts" },
+    { text: "Langfuse for LLM traces, Sentry for server errors, and the provider dashboard for spend" },
+    { text: "PostHog for events, Vercel Analytics for vitals, and a custom dashboard for cost" },
+    { text: "Console logs, a spreadsheet, and weekly manual testing" }
+  ]}
+  correct={1}
+  explanation="The stack is deliberately small: Langfuse records every prompt, response, cost, and latency; Sentry catches exceptions with stack traces; the Anthropic or OpenAI console tracks total spend. PostHog and Vercel Analytics are listed only as optional additions — PostHog specifically waits until around 50+ active users, when behavioral data becomes statistically meaningful."
+/>
+
+<Question
+  prompt="A user reports a bad output. After finding their trace in Langfuse, what does the page say to do with the offending input?"
+  options={[
+    { text: "Forward the trace to the model provider as a bug report" },
+    { text: "Delete the trace so it does not skew your metrics" },
+    { text: "Switch the user to a more expensive model" },
+    { text: "Copy it into eval.csv as a new row with the expected behavior, then iterate the prompt until it passes alongside the existing rows" }
+  ]}
+  correct={3}
+  explanation="The investigation loop converts every real-world failure into a permanent regression test: trace, reproduce, add an eval row, fix the prompt, deploy. Reporting to the provider is tempting because the model produced the bad output, but at solo scale the fix is almost always in your prompt — and only the eval row guarantees the bug stays fixed."
+/>
+
+<Question
+  prompt="Why does the page insist on setting up tracing in week one rather than when something breaks?"
+  options={[
+    { text: "You cannot retroactively trace yesterday's request — observability only helps if it was running before the bug report arrives" },
+    { text: "Langfuse charges more for accounts created after launch" },
+    { text: "Tracing libraries require a clean codebase to install" },
+    { text: "Sentry refuses to ingest errors from apps without traffic history" }
+  ]}
+  correct={0}
+  explanation="The worked example shows the payoff: a 'summaries are weird this week' report became a 10-minute fix because weeks of traces existed to compare against. The pricing distractor is plausible because free tiers do have limits, but the real argument is temporal — data not captured at request time is gone forever."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [Launching](./11-launching.md) where we'll go from "deployed URL" to "strangers using it" with the 2026 distribution playbook.

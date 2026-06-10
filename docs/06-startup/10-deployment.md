@@ -132,6 +132,46 @@ Cohort rollouts buy you time to spot fluent failures before they reach everyone.
 - **Skipping the monthly failover drill.** It works in theory until the day you need it. Drill quarterly minimum, monthly ideally.
 :::
 
+<Quiz id="startup-ai-deployment-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Which of these correctly describes the kill switch every AI feature must have?"
+  options={[
+    { text: "An environment variable redeployed within the hour" },
+    { text: "A single toggle in the feature-flag platform that disables the feature for everyone in under a minute, tested monthly" },
+    { text: "A code branch that reverts the feature, merged through normal CI" },
+    { text: "A provider-side setting that pauses the API key" }
+  ]}
+  correct={1}
+  explanation="The switch lives in PostHog or Statsig — not in code or env vars — because flipping a flag takes seconds while a redeploy takes minutes you don't have during a cost spike or PR fire. The revert-branch option is the tempting 'proper' answer, but the worked example shows why speed wins: the on-call engineer killed an 18x cost spike in 45 seconds with zero customer-visible impact."
+/>
+
+<Question
+  prompt="Why does the page say AI features are MORE dangerous to deploy than regular features?"
+  options={[
+    { text: "AI features use more compute, so failures are more expensive" },
+    { text: "AI providers have worse uptime than other dependencies" },
+    { text: "Regulators require staged rollouts for AI" },
+    { text: "Their failure mode is fluent and confident — a buggy non-AI feature breaks visibly, while a buggy AI feature lies smoothly" }
+  ]}
+  correct={3}
+  explanation="Cohort rollouts buy time to spot fluent failures before they reach everyone — the danger is not that AI breaks more often, but that when it breaks, the output still LOOKS right. The compute-cost option is plausible since cost spikes are a real trigger, but the page's core reframe is about detectability, not expense."
+/>
+
+<Question
+  prompt="A new model version from your provider 'looks better' across the board. How should you treat the upgrade?"
+  options={[
+    { text: "As a Tier-1 change — eval it, cohort it, roll it out, because it has different latency curves, failure modes, and costs" },
+    { text: "Adopt it immediately everywhere to stay competitive" },
+    { text: "As a routine dependency bump handled by Dependabot" },
+    { text: "Wait a year for the version to stabilize before evaluating" }
+  ]}
+  correct={0}
+  explanation="Model upgrades pattern-match to routine dependency bumps, which is exactly the mistake — a 'better' model can regress your specific use cases, shift latency, and change cost structure, so it goes through the same eval-gate and cohort machinery as any Tier-1 prompt change. Immediate adoption is the hype-driven failure; a year's delay is the opposite overcorrection."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [Observability](./11-observability.md) where we cover Langfuse/Braintrust + Datadog dashboards and the quality/cost/latency triple.

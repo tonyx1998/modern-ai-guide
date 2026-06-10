@@ -218,6 +218,46 @@ Coding-agent costs are dominated by repeated context. A 5-iteration task that re
 The model is roughly equal across vendors at 2026 frontier-tier. What separates Cursor, Claude Code, Cline, and Aider is *who manages context better* — which files to load, when, how to summarize, how to handle long sessions, how to make caching hit. Engineering investment goes into that layer, not into the LLM call itself.
 :::
 
+<Quiz id="pattern-coding-agents-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What does this page call the central engineering problem of a coding agent?"
+  options={[
+    { text: "Context strategy — the repo cannot fit in any window, so the agent must strategically retrieve what matters" },
+    { text: "Picking the strongest frontier model" },
+    { text: "Writing a system prompt that makes the model code carefully" },
+    { text: "Supporting every programming language" }
+  ]}
+  correct={0}
+  explanation="A 200KLOC repo is roughly 30M tokens against a 200K-1M window, so retrieval strategy (lexical, embedding, repo map, AST) is where the engineering goes — the page notes the 2026 coding-agent fight is about context, not the model. Picking a stronger model is the tempting answer because models are roughly equal across vendors at frontier tier; the differentiator is who manages context better."
+/>
+
+<Question
+  prompt="Which edit-application format does the page call the most reliable in 2026?"
+  options={[
+    { text: "Whole-file rewrite — simplest for the model to emit" },
+    { text: "Freeform instructions that a human applies" },
+    { text: "Unified diff — line numbers anchor the edit and hunks fail loudly when context drifts" },
+    { text: "Direct writes to the user's working tree" }
+  ]}
+  correct={2}
+  explanation="Unified diffs anchor edits precisely and fail loudly rather than silently corrupting code, which is why serious agents use them. Whole-file rewrite is the tempting easy option, but the page ranks it worst: it wastes tokens, invites unrequested 'improvements,' and is hard to review."
+/>
+
+<Question
+  prompt="Why is verification (running tests, typecheck, build) so central to the coding-agent loop?"
+  options={[
+    { text: "It replaces the need for retrieval" },
+    { text: "Coding agents have a rare cheap, deterministic correctness signal — and failures feed straight back into the loop" },
+    { text: "Providers require test results before accepting tool calls" },
+    { text: "It eliminates the need for an iteration cap" }
+  ]}
+  correct={1}
+  explanation="Most LLM features need fuzzy judges; a coding agent can just run the tests — a deterministic signal it should use relentlessly, feeding errors back until checks pass. The iteration-cap option is exactly backwards: verification loops still need an aggressive cap of 5-10 cycles, because a confused agent will edit-revert-edit the same line forever."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Evals as a product surface](./evals.md)

@@ -128,6 +128,46 @@ Self-check:
 - Are test keys (Stripe, email, sometimes LLM) used in Development and Preview, with live keys only in Production?
 - Have you done a practice rollback at least once?
 
+<Quiz id="solo-deployment-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the rule for which environment variables get live keys versus test keys?"
+  options={[
+    { text: "Use live keys everywhere so preview behaves exactly like production" },
+    { text: "Use test keys everywhere, including production, until launch day" },
+    { text: "Only the Stripe key needs an environment split; everything else can be shared" },
+    { text: "Anything that costs money or sends email gets a test key everywhere except Production" }
+  ]}
+  correct={3}
+  explanation="Preview URLs are shareable, so a stranger clicking one must never trigger a real charge or a real email — Stripe, email, and often LLM keys are test-tier in Development and Preview, live only in Production. 'Live keys everywhere for realism' is the tempting option, and it is exactly the setup behind the page's most-common-incident story."
+/>
+
+<Question
+  prompt="Which database should preview deploys point at for a solo v0?"
+  options={[
+    { text: "A dev DB — never the production DB, since a bad migration in preview would wreck prod" },
+    { text: "The production DB, so previews test against real data" },
+    { text: "An in-memory SQLite database recreated on each deploy" },
+    { text: "No database at all until launch" }
+  ]}
+  correct={0}
+  explanation="The recommendation is preview to dev DB at v0, graduating to per-PR branch databases (Supabase or Neon branching) once real customers exist — and never preview to prod. Pointing at prod is tempting because real data removes fixture work, but the page weighs that against the risk of a preview migration destroying production data."
+/>
+
+<Question
+  prompt="What does the page say you should do about rollbacks BEFORE production ever breaks?"
+  options={[
+    { text: "Write a custom rollback script with database snapshots" },
+    { text: "Nothing — Vercel rolls back automatically when errors spike" },
+    { text: "Do one practice rollback the week you ship, so the first real one is not performed at 11pm under pressure" },
+    { text: "Disable auto-deploy so bad code can never reach production" }
+  ]}
+  correct={2}
+  explanation="Rollback on Vercel is just promoting a previous deploy — about 60 seconds — but the page insists you rehearse it once and even keep a note of the exact steps, because stress makes you slow at unfamiliar UI. The auto-rollback option is plausible-sounding, but no such automatic behavior is described; the rollback is a deliberate manual action."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [Observability](./10-observability.md) where we'll set up Langfuse and a cost dashboard so problems show up before users notice them.

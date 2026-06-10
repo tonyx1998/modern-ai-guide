@@ -163,6 +163,46 @@ Pre-2024, every team had a homegrown "fix the LLM's broken JSON" function. Today
 
 **→ Going deeper:** For the production view — defaulting *everything* to typed output, validation as defense-in-depth, streaming partials, and the provider matrix — see [Structured output everywhere](../10-patterns/structured-output.md).
 
+<Quiz id="structured-output-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="A teammate switches an extraction endpoint from plain prompting to the provider's JSON mode and declares the schema problem solved. What is still NOT guaranteed?"
+  options={[
+    { text: "That the output is syntactically valid JSON" },
+    { text: "That the model will respond at all" },
+    { text: "That the JSON contains the keys and types your schema expects" },
+    { text: "That the response can be streamed" }
+  ]}
+  correct={2}
+  explanation="JSON mode only promises well-formed JSON — the model can still emit whatever keys it feels like. Schema-constrained structured output is the level that forces your exact shape. The first option is the tempting trap because it sounds like the same promise, but validity and schema conformance are different guarantees: JSON mode gives you the first, only schema mode gives you the second."
+/>
+
+<Question
+  prompt="You make customer_lifetime_value a required float field while extracting from a single short tweet. What is the most likely outcome?"
+  options={[
+    { text: "The model hallucinates a plausible-looking number to satisfy the schema" },
+    { text: "The API rejects the request because the field cannot be filled" },
+    { text: "The field is automatically returned as null" },
+    { text: "Constrained sampling slows down until the model finds the true value" }
+  ]}
+  correct={0}
+  explanation="The schema guarantees shape, not truth. If a required field can't be found in the input, the model invents a value rather than violate the schema. The API has no idea whether a value is findable, so it won't reject the request — and a required float can't legally be null. The fix is to make unfindable fields Optional, or only require fields the input actually contains."
+/>
+
+<Question
+  prompt="For which task is schema-constrained output likely to make results WORSE rather than better?"
+  options={[
+    { text: "Triaging support tickets into fixed categories" },
+    { text: "Extracting invoice fields from messy emails" },
+    { text: "Classifying sentiment with a Literal field" },
+    { text: "Writing a long, open-ended analytical essay" }
+  ]}
+  correct={3}
+  explanation="Constrained sampling subtly reduces quality on long, open-ended outputs — the sampler masks tokens at every step, which is net negative for deep prose. For extraction and classification it's net positive, which is why the first three options are exactly where structured output shines. For essays, just take the string."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Tool use / function calling](./tool-use.md)

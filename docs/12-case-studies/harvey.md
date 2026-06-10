@@ -9,6 +9,10 @@ description: Legal AI. RAG over case law and contracts, citation-grade retrieval
 
 > **In one line:** Harvey is an AI assistant for law firms — drafting, research, contract review, due diligence — and the architecture interesting bits are how they handle *citation-grade* retrieval (one wrong citation can sink a brief), how they shape products around lawyer workflows rather than chat, and how they isolate per-firm data with very serious enterprise security.
 
+:::tip[In plain English]
+Harvey is an AI assistant for lawyers — it drafts contracts, researches case law, and reviews documents, at firms where citing a made-up case can end a career. Everything in the architecture flows from that stake: every citation is checked against a real retrieved source, results are filtered by jurisdiction, and the lawyer always makes the final call. Study this page because it shows how to build AI for a high-stakes domain — verification as a hard gate, structured workflows instead of open chat, and data isolation treated as existential.
+:::
+
 ## The product
 
 A suite of AI tools for attorneys at major law firms (Allen & Overy, A&O Shearman, PwC Legal, and a long list of AmLaw 100 firms). Workflows include:
@@ -112,6 +116,13 @@ This is correct for the domain. A coding agent that commits to main is one risk 
 - **Multi-tenant indexing without strict filtering.** A single data-leak incident is existential.
 - **"AI files the brief" autonomy.** Wrong risk class. Humans in the loop.
 
+:::caution[What people get wrong when copying this]
+- **Assuming a strong model plus a "you are an expert lawyer" prompt approximates this.** The product is the verification, workflow, and isolation machinery *around* the model — the model is the most replaceable part.
+- **Building chat first and workflows later.** When the users' work is structured, the workflow surfaces are the actual product; generic chat retrofitted with structure rarely gets there.
+- **Bolting per-tenant filtering onto a shared index late.** Harvey-grade isolation (per-firm tenancy plus per-matter ACL) has to be designed in from the first schema, not patched in after a near-miss.
+- **Copying citation pills without the rejection step.** In a high-stakes domain, a displayed-but-unverified citation is a liability dressed up as a feature.
+:::
+
 :::tip[→ Going deeper]
 Harvey's two hardest problems map to two new chapters: citation-grade faithfulness is the heart of [Chapter 5: Evaluation & Measurement](/docs/evaluation), and audit-grade, leak-proof handling of privileged documents is [Chapter 6: Responsible & Safe AI](/docs/safety) — see [guardrails](/docs/safety/safety-guardrails).
 :::
@@ -123,6 +134,46 @@ Harvey's two hardest problems map to two new chapters: citation-grade faithfulne
 - Conference talks by Harvey engineers (AI Engineer Summit, legal-tech conferences).
 - Public discussions of citation-verification approaches in legal AI.
 - News coverage of customer deployments at major firms.
+
+<Quiz id="case-harvey-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="How does Harvey handle citations in model output, given that citing a fictional case is malpractice?"
+  options={[
+    { text: "The model is fine-tuned until it stops hallucinating citations" },
+    { text: "Lawyers are warned to double-check every citation themselves" },
+    { text: "Every citation is checked against the retrieved set - cites that do not anchor to a retrieved chunk are rejected, and unsupported claims are flagged" },
+    { text: "Citations are limited to a pre-approved whitelist of famous cases" }
+  ]}
+  correct={2}
+  explanation="Citation correctness is treated as the load-bearing quality dimension and enforced as a hard gate: outputs the lawyer sees have been verified, not just generated. In any domain where wrong citations have real consequences, build the verifier first."
+/>
+
+<Question
+  prompt="Why is jurisdiction-aware reranking necessary instead of relying on generic embedding similarity?"
+  options={[
+    { text: "Embedding models cannot process legal vocabulary accurately" },
+    { text: "Embedding similarity does not capture jurisdiction-as-relevance - a New York attorney needs binding New York precedent, not semantically similar California cases" },
+    { text: "Each jurisdiction requires a separately licensed index" },
+    { text: "Reranking is mainly a cost optimization to retrieve fewer documents" }
+  ]}
+  correct={1}
+  explanation="Semantic similarity treats a similar case from the wrong jurisdiction as a great match, but it is not binding precedent. Domain-aware reranking features - jurisdiction, recency, document type, source authority - are what separate 'RAG over case law' from a tool that actually helps a lawyer."
+/>
+
+<Question
+  prompt="Why is Harvey's primary product surface a set of workflows rather than a chatbot?"
+  options={[
+    { text: "Chat interfaces are too expensive to run at law-firm scale" },
+    { text: "Bar associations prohibit open-ended legal chatbots" },
+    { text: "Early users found chat confusing and asked for menus instead" },
+    { text: "Lawyers' work is structured, so each workflow has a defined input shape, output shape, and quality gates - the AI fits the work instead of asking lawyers to translate" }
+  ]}
+  correct={3}
+  explanation="Workflows like 'draft an NDA' or 'extract change-of-control clauses' are structured agent loops with defined inputs, outputs, and gates. Generic chat exists but is not the primary model. The lesson: if your users have structured work, build for that structure."
+/>
+
+</Quiz>
 
 ---
 

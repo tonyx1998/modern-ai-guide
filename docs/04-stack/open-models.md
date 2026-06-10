@@ -7,6 +7,13 @@ description: Llama, Mistral, Qwen, DeepSeek, Gemma — when self-hosting open we
 
 # Open-weight models
 
+:::info[Dated content — June 2026]
+This page names specific tools, models, and prices, which rotate quarterly. The *selection
+logic* is durable; the names are a snapshot. Cross-check the
+[Model snapshot](/docs/model-snapshot) for current model names and pricing.
+:::
+
+
 > **In one line:** Models whose weights you can download. You can run them on your own GPUs, on a managed inference provider, or even on a laptop. The freedom is real; so is the operational cost.
 
 :::tip[In plain English]
@@ -93,6 +100,46 @@ The trap: self-hosting is cheap only at saturation. A GPU sitting at 10% utiliza
 - **Self-hosting on a single GPU node.** No autoscaling, no failover, no observability. The first incident teaches a lesson you didn't need to learn.
 - **Trusting MMLU scores.** Open-model benchmark sheets are even more gamed than closed ones. The "this 7B beats GPT-4" claim almost never survives contact with your actual workload.
 - **Ignoring license clauses.** Llama's Community License has a 700M-MAU cap. Cohere's Command R+ is non-commercial. Read the license before you build a product on it.
+
+<Quiz id="open-models-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Your team spends a modest amount per month on closed-provider APIs and has no compliance constraints. What does the page recommend?"
+  options={[
+    { text: "Stay on closed providers — the operational cost of running open weights would swamp the API savings" },
+    { text: "Self-host on vLLM immediately to build infrastructure skills early" },
+    { text: "Fine-tune a small open model to replace the API entirely" },
+    { text: "Move everything to the fastest hosted open-model provider" }
+  ]}
+  correct={0}
+  explanation="The page's default for open weights is literally 'don't' below a meaningful API spend with no hard compliance need. GPU procurement, autoscaling, quantization tuning, and eval drift cost more than the savings. Self-hosting early feels proactive but buys you ML infrastructure ownership you don't need yet."
+/>
+
+<Question
+  prompt="Which scenario genuinely justifies moving to open-weight models, according to the page?"
+  options={[
+    { text: "Wanting the highest frontier reasoning quality available" },
+    { text: "An air-gapped deployment where no cloud access is allowed" },
+    { text: "Cutting a small monthly API bill in half" },
+    { text: "Avoiding the need to build an eval suite" }
+  ]}
+  correct={1}
+  explanation="Air-gapped environments make weights-on-disk the only option — no closed API can serve them. Frontier quality actually argues the opposite direction, since the best closed models are never released as open weights, and swapping to open weights requires MORE eval discipline, not less."
+/>
+
+<Question
+  prompt="Why can a self-hosted GPU deployment end up costing MORE than a hosted API?"
+  options={[
+    { text: "Open-weight licenses charge per-token royalties" },
+    { text: "Managed providers subsidize compute below cost" },
+    { text: "Quantization adds a per-request processing fee" },
+    { text: "You pay the full GPU-hour even at low utilization, while hosted APIs only bill per token used" }
+  ]}
+  correct={3}
+  explanation="Self-hosting is cheap only at saturation. A GPU sitting at 10% utilization burns the same hourly cost as a busy one, so the effective per-token price skyrockets — that's the trap the page warns about. There are no per-token royalties on open weights; the economics problem is idle hardware, not licensing."
+/>
+
+</Quiz>
 
 ---
 

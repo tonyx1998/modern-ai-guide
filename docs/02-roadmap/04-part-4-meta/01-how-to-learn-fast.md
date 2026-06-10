@@ -10,6 +10,10 @@ description: Run your own evals on every new model. Ignore most of Twitter. Buil
 
 > **In one line:** The field moves too fast to learn it linearly — build your own eval set, run new models against it, and ignore 95% of the discourse. Numbers > vibes > influencer takes.
 
+:::tip[In plain English]
+New models, frameworks, and techniques ship every week, and you cannot read it all — nobody can. The escape hatch is owning a personal eval set: a collection of test cases from your actual work that you run every new thing against. If the shiny new model improves your numbers, adopt it; if not, ignore the hype with a clear conscience. That one habit turns an overwhelming firehose into a simple yes-or-no filter.
+:::
+
 The field is overwhelming on purpose. Every week is a new model, a new framework, a new pattern. Three habits separate engineers who get steadily better from engineers who run on a hype treadmill.
 
 ## 1. Your eval set IS your information filter
@@ -154,5 +158,45 @@ After 6–12 months, this is:
 - **Not specializing.** "I want to be good at everything" → you're a beginner at everything. Pick a depth by year two.
 - **Treating "I'm behind" as failure.** Everyone is behind. The skill is being deliberate about which behind-ness costs you and which doesn't.
 :::
+
+<Quiz id="how-to-learn-fast-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What does the page say is the fastest, most truthful way to evaluate any new AI thing?"
+  options={[
+    { text: "Check the public benchmark leaderboards" },
+    { text: "Run it against your own eval set in your own problem domain" },
+    { text: "Follow recommendations from trusted influencers" },
+    { text: "Read the provider's launch announcement carefully" }
+  ]}
+  correct={1}
+  explanation="Your eval set in your domain is the ground truth; public benchmarks are not. Every model claims SOTA on something, and that something is rarely your problem."
+/>
+
+<Question
+  prompt="In the 20-minute decision rule, a new tool addresses a real pain you have but offers no working examples or trustworthy eval numbers. What should you do?"
+  options={[
+    { text: "Adopt it immediately to stay ahead of the curve" },
+    { text: "Build your own version from scratch instead" },
+    { text: "Wait 3-6 months and let others find the pitfalls" },
+    { text: "Bookmark it and never revisit" }
+  ]}
+  correct={2}
+  explanation="The flowchart routes 'real pain but no trustworthy evidence' to waiting 3-6 months. Trying everything in real time means you spend all your time evaluating and none shipping."
+/>
+
+<Question
+  prompt="How does the page describe the feeling of being behind in AI engineering?"
+  options={[
+    { text: "A sign you should consider a different specialty" },
+    { text: "A temporary phase that ends after your first year" },
+    { text: "Proof you need to subscribe to more newsletters" },
+    { text: "The permanent default state, managed by being deliberate and specializing" }
+  ]}
+  correct={3}
+  explanation="The volume of new releases is genuinely faster than any human can absorb, so feeling behind never goes away. Senior engineers cope by picking their depth, trusting their evals, and ignoring the rest."
+/>
+
+</Quiz>
 
 → Next: [Papers worth reading](./02-papers-worth-reading.md) — the short list, plus how to skim the rest.

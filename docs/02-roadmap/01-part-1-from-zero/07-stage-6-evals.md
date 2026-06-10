@@ -309,6 +309,44 @@ Take the RAG from Stage 5. Curate **50+ cases**: 30 easy/representative, 10 hard
 
 ## Page checkpoint
 
+<Quiz id="stage-6-evals-quick-check" variant="micro" title="Quick check">
 
+<Question
+  prompt="You want to check that every source the model cites was actually in the retrieved chunk set. What kind of check should this be?"
+  options={[
+    { text: "A deterministic check — a few lines of regex against the retrieved set, free and fast" },
+    { text: "An LLM-as-judge check, since citations require semantic understanding" },
+    { text: "Manual sampling, since citations are too subjective to automate" },
+    { text: "A separate fine-tuned classifier model" }
+  ]}
+  correct={0}
+  explanation="Extract the [Source: X] patterns with a regex and verify each one appears in the retrieved set — two trivial lines that catch the most common RAG hallucination. The page's rule: if a 5-line deterministic check can do the job, use it; LLM-judge is the second choice for genuinely open-ended qualities like helpfulness, because it is slow, expensive, and has its own biases. Reaching for a judge here would pay all those costs to answer a question string matching answers exactly."
+/>
+
+<Question
+  prompt="Why is judging your gpt-5-mini system with gpt-5-mini as the judge a problem?"
+  options={[
+    { text: "Using the same model twice doubles your API cost per case" },
+    { text: "A model cannot parse its own output format" },
+    { text: "Self-preference bias — judges rate outputs from their own model family higher, inflating your scores" },
+    { text: "Providers block a model from evaluating its own responses" }
+  ]}
+  correct={2}
+  explanation="LLM judges carry known biases: positional bias, verbosity bias, and self-preference — a tendency to favor outputs that sound like their own family's writing. Judge your model with itself and your pass rate reads higher than reality, which defeats the entire point of measuring. The mitigation is cheap: pick a judge from a different model family, anchor it with a gold answer, and periodically calibrate against human-rated cases. There is no provider restriction; the API will happily let you fool yourself."
+/>
+
+<Question
+  prompt="A teammate proposes shipping with a 5-case eval set, arguing 'it covers our main scenarios.' What is the strongest objection from this page?"
+  options={[
+    { text: "Five cases take too long to run in CI" },
+    { text: "Eval sets must contain at least one case per model you support" },
+    { text: "Small sets cannot include LLM-judge checks" },
+    { text: "With 5 cases, a single flipped answer swings your pass rate by 20% — the score is statistical noise, not signal" }
+  ]}
+  correct={3}
+  explanation="The point of an eval is to detect whether a change made things better or worse; at 5 cases, one lucky or unlucky answer moves the score 20 points, so you cannot distinguish a real regression from noise. The page calls anything under ~30 cases noise, 50 the minimum useful set, and 100+ real — including hard, refusal, and adversarial cases, since an all-easy set scores 100% and tells you nothing. Five cases is a smoke test, and runtime is the one thing it has going for it."
+/>
+
+</Quiz>
 
 → [Next: Stage 7 — Observability](./08-stage-7-observability.md) · [Back to Part I overview](./index.md)

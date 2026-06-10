@@ -147,6 +147,46 @@ That's the full serving picture: a registry of versioned fine-tunes, a server (h
 - **Prompt drift between train and serve.** Serve with the same (often short) system prompt the model was trained with, or behaviour shifts.
 :::
 
+<Quiz id="ft-serving-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="You need to serve 50 per-customer fine-tunes of the same 8B base model. The naive plan is 50 model deployments. What does this page recommend instead?"
+  options={[
+    { text: "Merge all 50 adapters into one combined model" },
+    { text: "Quantize each of the 50 copies to 4-bit to fit more per GPU" },
+    { text: "LoRA hot-swapping — load the shared base once and attach 50 tiny adapters, selecting one per request, on a handful of GPUs" },
+    { text: "Use a bigger base model so customers can share one generic fine-tune" }
+  ]}
+  correct={2}
+  explanation="Since each adapter is a megabytes-sized overlay on the same frozen base, one server can multiplex them per request — 50 full copies would mean 50x the GPU memory for identical base weights. Merging all adapters together is the tempting simplification, but merged behaviours would interfere; merging is for serving exactly one fine-tune, not many."
+/>
+
+<Question
+  prompt="When does this page say you should merge a LoRA adapter into its base model rather than serving it as a swappable adapter?"
+  options={[
+    { text: "Only when you're serving exactly one fine-tune at high volume — merging gains a little speed but loses multi-adapter serving and easy rollback" },
+    { text: "Always — merged models are strictly better in production" },
+    { text: "Never — merging corrupts the adapter weights" },
+    { text: "Whenever you self-host, since vLLM can't serve unmerged adapters" }
+  ]}
+  correct={0}
+  explanation="Merging trades flexibility for a small latency win: no swap overhead, but you can no longer multiplex adapters on one base or roll back by flipping an adapter name. 'Merged is strictly better' is tempting because a standalone model feels cleaner — but the multi-adapter and rollback benefits are usually worth the tiny overhead."
+/>
+
+<Question
+  prompt="Production alerts fire: the newly deployed acme-support-v3 is misbehaving. In the setup this page recommends, what does recovery look like?"
+  options={[
+    { text: "Roll back the git commit and redeploy the application" },
+    { text: "Flip a config value to point back at v2 — the active model is config, not a code constant, and the previous version is kept warm" },
+    { text: "Retrain v3 with corrected data as fast as possible" },
+    { text: "Restart the inference server to clear the bad state" }
+  ]}
+  correct={1}
+  explanation="Rollback must be a seconds-fast config flip: versions are immutable and pinned, the old adapter is still on disk (or the old hosted model id still live), so recovery means changing one value — ideally automated off A/B metrics. The redeploy answer is the standard software reflex, but it turns a 30-second fix into a 30-minute outage."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Chapter checkpoint](./99-checkpoint.md)

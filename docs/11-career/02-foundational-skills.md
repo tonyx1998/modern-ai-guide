@@ -129,4 +129,44 @@ Quick self-check:
 4. Why are evals called the single biggest skill differentiator?
 5. What's a reasonable monthly cost ballpark for an agent doing 3 tool calls / conversation × 10K conversations / day on Claude Sonnet?
 
+<Quiz id="career-foundational-skills-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Which four skills does the page identify as the gate in a 2026 AI-engineering interview?"
+  options={[
+    { text: "Prompting, retrieval, evals, and observability" },
+    { text: "TypeScript, Python, SQL, and cloud deployment" },
+    { text: "Product taste, communication, cost intuition, and skepticism" },
+    { text: "Fine-tuning, CUDA, distributed training, and inference" }
+  ]}
+  correct={0}
+  explanation="SWE foundations are necessary but not sufficient - the filter question is 'walk me through how you'd add an eval suite to a flaky agent in production', not 'implement merge sort'. The four AI-specific skills (items 5 through 8) deserve most of your career-prep time."
+/>
+
+<Question
+  prompt="Why does the page claim a balanced 6 out of 12 score with no zeros beats an 11 out of 12 with a single zero?"
+  options={[
+    { text: "Hiring managers average scores, so balance raises the mean" },
+    { text: "High scores look suspicious and trigger extra screening" },
+    { text: "The zero is what gets you rejected - one missing skill like evals or observability is a no-hire signal regardless of strengths elsewhere" },
+    { text: "Interviews only test six skills at a time" }
+  ]}
+  correct={2}
+  explanation="The checklist is not about ticking boxes - it is about finding your weakest item and spending the next month on it. A zero in a gating skill like evals sinks the interview no matter how strong the rest of the profile is."
+/>
+
+<Question
+  prompt="Why does the page warn against letting an LLM do your self-tests?"
+  options={[
+    { text: "LLMs give wrong answers on most engineering self-tests" },
+    { text: "Using AI tools during practice is considered cheating by employers" },
+    { text: "Self-tests must be timed, and AI assistance breaks the timing" },
+    { text: "The self-tests exist to calibrate your own ability - if Cursor does them, you are calibrating Cursor, not yourself" }
+  ]}
+  correct={3}
+  explanation="The depth checks only work as honest measurements of what you can do from a blank file. The interview will not let you open an assistant to debug a streaming bug or design an eval suite, so the calibration has to be of you."
+/>
+
+</Quiz>
+
 → Next: [The roles, distinguished](./03-roles.md).

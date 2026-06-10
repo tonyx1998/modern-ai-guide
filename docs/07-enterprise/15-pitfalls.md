@@ -135,6 +135,46 @@ Platform-team headcount lagging the consuming feature teams. Symptoms: the gatew
 - **Audit-driven engineering.** If the only reason a process exists is the audit, that's a smell. Good audits ratify good engineering; they shouldn't drive bad engineering.
 :::
 
+<Quiz id="enterprise-ai-pitfalls-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the clearest sign that an AI Risk Review has become governance theater?"
+  options={[
+    { text: "Reviews take more than two weeks to schedule" },
+    { text: "It approves 100% of submissions, each in a few minutes" },
+    { text: "It rejects most submissions outright" },
+    { text: "Its members rotate every quarter" }
+  ]}
+  correct={1}
+  explanation="A working review function shows visible work: 10–25% of submissions sent back with concrete changes, deferrals on incomplete artifacts, real eval-bar enforcement. Universal fast approval means the ritual exists for audit appearance while doing no actual risk management. Slow scheduling is annoying but is not the theater signature."
+/>
+
+<Question
+  prompt="How does the page recommend responding to widespread shadow AI usage?"
+  options={[
+    { text: "Block unapproved AI tools at the network level" },
+    { text: "Discipline the employees involved" },
+    { text: "Treat it as feedback and out-ship it — make the paved road meet the underlying need" },
+    { text: "Accept it as the unavoidable cost of innovation" }
+  ]}
+  correct={2}
+  explanation="Shadow AI measures where the platform fails to meet real needs. Teams that eliminate it do so by shipping a better official path, not by policing — cracking down without an alternative drives usage underground, where you lose even the measurement. Blocking and discipline are the instinctive answers the page explicitly argues against."
+/>
+
+<Question
+  prompt="What is the page's guidance on multi-agent architectures?"
+  options={[
+    { text: "Adopt them early so the team builds expertise" },
+    { text: "Use them whenever a feature involves more than one tool" },
+    { text: "Avoid them entirely until the frameworks mature" },
+    { text: "Start with the simplest model call that works; add steps only when evals prove they are needed" }
+  ]}
+  correct={3}
+  explanation="Premature multi-agent brings 20-second p95 latencies, 5–10x cost, an unsolved debugging story, and an eval suite that is hard to write because the behavior space is huge. Multi-agent is sometimes the right answer but rarely the right first answer — the eval suite, not architectural ambition, should drive added complexity."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [A Day in the Life](./16-day-in-life.md) — what an enterprise AI platform engineer's day actually looks like.

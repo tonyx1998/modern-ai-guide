@@ -200,6 +200,46 @@ Before adding planning ceremony, ask: *is the model missing information, or miss
 Every reflection step is a real bill, real latency, and real points of failure. Treat planning and reflection as optimizations to add *after* you've measured the baseline — not as default architecture.
 :::
 
+<Quiz id="planning-and-reflection-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Your reflection pass asks 'is this answer good?' and the model always replies yes — including for wrong answers. What's missing, per the page?"
+  options={[
+    { text: "A higher cap on reflection rounds" },
+    { text: "A bigger model for the critique step" },
+    { text: "More forceful phrasing in the critique prompt" },
+    { text: "An external signal or concrete criterion — a test, a tool result, or a rubric the critique can actually check against" }
+  ]}
+  correct={3}
+  explanation="Models are often equally confident in correct and incorrect outputs, so a vague 'is this good?' just gets affirmation. Reflection earns its keep when there's something verifiable: code that runs against tests is the canonical win, because the failure output gives the next attempt real information. More rounds or a bigger model just produce more confident agreement with the same wrong answer."
+/>
+
+<Question
+  prompt="You're already using a reasoning model with extended thinking. Should you add an explicit reflection pass on top?"
+  options={[
+    { text: "Usually not — reasoning models already self-critique internally, so stacking both is double-paying for the same effect" },
+    { text: "Yes — reflection always compounds with reasoning" },
+    { text: "Yes — reasoning models cannot critique their own work" },
+    { text: "No — reflection only works with non-reasoning models for technical reasons" }
+  ]}
+  correct={0}
+  explanation="Reasoning models spend their thinking tokens doing internal reflection for free, so an explicit reflection pass on top usually buys the same effect twice — at double the cost and latency. The exception is when you need to SEE the critique or chain it into a tool. 'Always compounds' is the intuitive trap; the page's rule is measure before stacking ceremony."
+/>
+
+<Question
+  prompt="An agent keeps failing because it doesn't know a fact and has no way to look it up. The page's 'tools over ceremony' advice says:"
+  options={[
+    { text: "Add a planning step so it reasons more carefully" },
+    { text: "Add three reflection rounds before each answer" },
+    { text: "Give it a lookup tool — a model can't reflect its way to information it doesn't have" },
+    { text: "Switch to multi-agent so a second agent can help" }
+  ]}
+  correct={2}
+  explanation="The key diagnostic question is: is the model missing information, or missing thinking? Most of the time it's information, and no amount of planning or reflection can conjure a fact the model has no access to. Better tools or retrieval are cheaper and more reliable than extra LLM passes. Planning ceremony on an information-starved agent is paying double for the same failure."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Multi-agent systems](./multi-agent.md)

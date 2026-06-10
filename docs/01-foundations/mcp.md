@@ -147,6 +147,46 @@ The MCP bet was "if the protocol is open and the reference SDKs are good, the to
 - **Streaming tool output.** Partially supported via streamable HTTP, but not universal across clients yet.
 - **Cost.** Tool calls still hit your LLM and your downstream APIs. MCP saves integration time, not runtime money.
 
+<Quiz id="mcp-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Which statement best captures the relationship between MCP and function calling?"
+  options={[
+    { text: "MCP replaces function calling, so MCP-aware models no longer emit tool calls" },
+    { text: "Function calling is for local tools, MCP is for cloud-hosted models" },
+    { text: "MCP is a framework that competes with agent libraries" },
+    { text: "Function calling is the model-to-host protocol; MCP is the host-to-external-server protocol, and MCP tools surface as normal function-calling entries" }
+  ]}
+  correct={3}
+  explanation="The model never speaks MCP. The client in your host app speaks it, then translates whatever the server exposes into the function-calling tool definitions the model already understands. 'MCP replaces function calling' is the most tempting wrong answer because both involve tools — but they're different layers that compose: MCP feeds function calling, it doesn't substitute for it."
+/>
+
+<Question
+  prompt="You have one internal helper function used by exactly one app. Should you wrap it in an MCP server?"
+  options={[
+    { text: "Yes — MCP is the 2026 standard, so all tools should be MCP servers" },
+    { text: "No — MCP earns its weight through reuse across hosts; for one app and one tool, native function calling is shorter" },
+    { text: "Yes — MCP servers run faster than in-process functions" },
+    { text: "No — MCP can only expose resources, not tools" }
+  ]}
+  correct={1}
+  explanation="The whole value of MCP is write-once, use-everywhere: the same server works in Claude Desktop, Cursor, and your own agents. A single function in a single app gets none of that benefit and all of the protocol overhead. 'It's the standard, so use it everywhere' is the hype trap the page explicitly warns against."
+/>
+
+<Question
+  prompt="A team exposes a remote HTTP MCP server for their database with no authentication, reasoning that the system prompt tells the model to only read permitted tables. What is the problem?"
+  options={[
+    { text: "The server is an open RPC endpoint; authorization must run in the server's code, not in the prompt" },
+    { text: "Nothing — MCP traffic is automatically encrypted and access-controlled" },
+    { text: "The only issue is performance, since HTTP transport is slower than stdio" },
+    { text: "Prompts are a fine auth boundary as long as they are written carefully" }
+  ]}
+  correct={0}
+  explanation="Never let the LLM be the auth boundary: prompts can be injected, ignored, or bypassed entirely by anyone who connects to the endpoint directly. The 2025 spec answer is OAuth or scoped bearer tokens enforced in server code. Assuming the protocol ships security by default is the plausible-sounding mistake — MCP standardizes the wire format, not your access control."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Multimodal inputs](./multimodal-inputs.md)

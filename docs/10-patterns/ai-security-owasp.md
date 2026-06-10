@@ -92,3 +92,43 @@ Before shipping, deliberately try to break your own app: fire injection payloads
 :::
 
 **Further reading:** [OWASP GenAI Security Project — LLM Top 10](https://genai.owasp.org/llmrisk/llm01-prompt-injection/). See also [Safety & privacy](./11-safety-privacy.md) and [enterprise governance](../07-enterprise/governance.md). For the full discipline behind these controls — threat modeling, guardrails, and red-teaming — go deep in [Chapter 6: Responsible & Safe AI](/docs/safety).
+
+<Quiz id="pattern-ai-security-owasp-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What single idea ties all ten OWASP LLM risks together?"
+  options={[
+    { text: "Always use the latest model version, which patches known attacks" },
+    { text: "The LLM is untrusted — authorization, validation, and limits run in deterministic code around it" },
+    { text: "Encrypt all traffic between your app and the provider" },
+    { text: "Write a system prompt that explicitly forbids each of the ten attacks" }
+  ]}
+  correct={1}
+  explanation="Every item on the list is the same idea wearing a different hat: controls live in your code, never inside the prompt. The system-prompt option is the classic trap the page warns about — if your only defense is telling the model to ignore malicious instructions, you do not have a defense."
+/>
+
+<Question
+  prompt="LLM05 is 'improper output handling.' What is the structural defense?"
+  options={[
+    { text: "Ask the model to double-check its own output before responding" },
+    { text: "Only use models that have passed a security audit" },
+    { text: "Treat model output exactly like untrusted user input — encode, validate, parameterize queries, sandbox generated code" },
+    { text: "Disable code generation features entirely" }
+  ]}
+  correct={2}
+  explanation="Model output can carry SQL, HTML, or shell payloads downstream, so it gets the same treatment as any untrusted input: encoding, validation, parameterized queries, sandboxing. Asking the model to self-check is tempting but circular — you would be using the untrusted component to vouch for itself."
+/>
+
+<Question
+  prompt="LLM10, 'unbounded consumption,' is nicknamed denial of wallet. What prevents it?"
+  options={[
+    { text: "Rate limits, per-user and per-session cost budgets, request timeouts, and hard caps on agent loop iterations" },
+    { text: "Switching to a cheaper model so runaway loops cost less" },
+    { text: "Caching every response so repeat requests are free" },
+    { text: "Asking users to confirm before each expensive request" }
+  ]}
+  correct={0}
+  explanation="The defense is hard limits in code at every layer — rates, budgets, timeouts, iteration caps — so one runaway loop or abusive client cannot drain the account. A cheaper model just lowers the burn rate without bounding it, which is why it is the tempting half-measure rather than the fix."
+/>
+
+</Quiz>

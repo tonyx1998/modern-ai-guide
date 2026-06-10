@@ -142,6 +142,46 @@ Some frontier providers' terms restrict using their model's outputs to train a *
 - **Ignoring provider ToS.** Confirm you're allowed to train on the teacher's outputs for your use case.
 :::
 
+<Quiz id="ft-distillation-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Your distilled 8B student matches the frontier teacher on your ticket-classification task, but a teammate benchmarks it on general trivia and reports it's 'broken'. What's the right interpretation?"
+  options={[
+    { text: "The distillation failed — a good student should match the teacher everywhere" },
+    { text: "The student needs more epochs to absorb the teacher's general knowledge" },
+    { text: "The benchmark is buggy; small models retain general ability after distillation" },
+    { text: "Working as designed — distillation narrows a model to one job; the student matches the teacher only on the trained distribution and fails off-task by design" }
+  ]}
+  correct={3}
+  explanation="The student is a specialist: you transferred the skill for your menu, not the chef's full range. 'Should match everywhere' is the natural expectation since the teacher does both — but the cost/latency win comes precisely from giving up generality, so don't benchmark the student on things you didn't train it for."
+/>
+
+<Question
+  prompt="To save money, a team generates their distillation dataset with a cheap mid-tier model instead of the frontier teacher. What does this page predict?"
+  options={[
+    { text: "A weak student — the student's ceiling is the teacher's output quality, so a garbage teacher makes a garbage student" },
+    { text: "The same result, since the student can't tell teachers apart anyway" },
+    { text: "A better student, because mid-tier outputs are easier for a small model to imitate" },
+    { text: "Failure to train, since distillation requires logit access to the teacher" }
+  ]}
+  correct={0}
+  explanation="The student learns to imitate whatever labels it's shown, errors included — the labeling cost is a one-time expense, so skimping there caps your quality forever. The 'easier to imitate' theory sounds clever but inverts the logic; and logits are only needed for the soft-label variant, not standard response distillation."
+/>
+
+<Question
+  prompt="You trained the student with a short 10-word system prompt, but in production someone deploys it with the teacher's original 2,000-token system prompt 'to be safe'. What's the risk?"
+  options={[
+    { text: "None — more instructions can only help" },
+    { text: "Slower inference, but identical output quality" },
+    { text: "Behaviour shifts — the student learned to behave under the prompt it was trained with, so serve with that same short prompt" },
+    { text: "The long prompt overflows the small model's context window" }
+  ]}
+  correct={2}
+  explanation="Prompt mismatch between training and serving changes the input distribution the model conditioned on, so its behaviour drifts unpredictably — and you also forfeit the token savings that motivated distillation. 'More instructions can only help' is the safe-sounding intuition; for a distilled specialist, the behaviour is baked into the weights, and the prompt should match training."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Evaluating fine-tunes](./08-evaluating-finetunes.md)

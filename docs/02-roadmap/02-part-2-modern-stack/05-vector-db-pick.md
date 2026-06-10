@@ -8,7 +8,18 @@ description: pgvector is the boring-tech answer for almost every project. When t
 
 # Vector DB Pick — pgvector by Default
 
+:::info[Dated content — June 2026]
+This page names specific tools, models, and prices, which rotate quarterly. The *selection
+logic* is durable; the names are a snapshot. Cross-check the
+[Model snapshot](/docs/model-snapshot) for current model names and pricing.
+:::
+
+
 > **In one line:** Start with pgvector (Postgres extension) — it covers ~90% of vector workloads through ~50M chunks. Climb only when you can name a specific reason the boring answer doesn't fit.
+
+:::tip[In plain English]
+Once your documents are turned into number-lists (embeddings), they need to live somewhere that can quickly answer "which ones are closest to this question?" — that's a vector database. There's a whole industry of shiny specialized products for this, and this page's job is to talk you out of most of them. The boring answer is to add one small extension to the ordinary database you almost certainly already run, which handles far more data than most apps will ever have. The skill being taught is recognizing the few specific, measurable situations where the fancy option genuinely earns its complexity.
+:::
 
 ## Tier 1 — pgvector
 
@@ -157,5 +168,45 @@ This is engineering boilerplate, not vector-DB-specific. The fact that you can d
 - **Treating vector DB as the bottleneck before measuring.** "Retrieval is slow, we need Pinecone." Measure first. Often the slowness is in embedding the query, in chunking quality, or in over-fetching K=50 when K=5 would do.
 - **Vendor lock-in via the SDK.** Some vector DB SDKs assume their data model end-to-end. Keep your retrieval code thin — `def retrieve(query, k) -> list[Chunk]` — so swapping stores is a one-day project, not a refactor.
 :::
+
+<Quiz id="vector-db-pick-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="You are starting a new RAG project and already run Postgres. What does this page say to do for vector storage?"
+  options={[
+    { text: "Adopt a dedicated managed vector database so you never have to migrate" },
+    { text: "Build your own index with a low-level library for maximum control" },
+    { text: "Add the pgvector extension to the Postgres you already have" },
+    { text: "Benchmark five vector databases before writing any code" }
+  ]}
+  correct={2}
+  explanation="pgvector is the boring-tech default: one database to operate, joins with your existing data, transactions, built-in hybrid search, and comfortable scale to tens of millions of chunks. You can always migrate gradually later; you cannot easily un-adopt a complex system you never needed."
+/>
+
+<Question
+  prompt="Which of these is a legitimate, named reason to move off pgvector to a dedicated vector database?"
+  options={[
+    { text: "Retrieval feels slow, though nobody has measured where the time goes" },
+    { text: "Your corpus is heading past 100 million chunks, or you index millions of new chunks per day" },
+    { text: "A dedicated vector database was featured at a conference your team attended" },
+    { text: "You want to be prepared in case the app grows later" }
+  ]}
+  correct={1}
+  explanation="The climb must be named and measured: extreme scale, high write throughput, strict tenant isolation, or heavy filtered search. Feelings of slowness are not a reason — measure first, because the bottleneck is often query embedding, chunking, or over-fetching rather than the store."
+/>
+
+<Question
+  prompt="Why does this page recommend hybrid search (combining keyword and vector search) rather than pure vector search?"
+  options={[
+    { text: "Pure vector search misses exact-match queries, and hybrid is the consistent winner across corpora" },
+    { text: "Hybrid search is cheaper to run than vector search alone" },
+    { text: "Vector search cannot handle more than a few thousand documents" },
+    { text: "Keyword search alone is always more accurate than vectors" }
+  ]}
+  correct={0}
+  explanation="Vectors capture meaning but can whiff on exact terms like error codes, names, or IDs. Combining a keyword signal with the vector signal consistently beats either alone — and pgvector supports both in a single SQL query."
+/>
+
+</Quiz>
 
 → Next: [Framework pick](./06-framework-pick.md) — when to use LangChain, Vercel AI SDK, OpenAI Agents SDK, or raw.

@@ -115,6 +115,46 @@ What you must internalize about 2026 video generation:
 - **Underbudgeting generation cost/latency.** Video gen is far pricier than image gen; never wire it to a high-traffic, on-demand path without caching and rate limits.
 :::
 
+<Quiz id="mm-video-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="A teammate's prototype sends every frame of a 5-minute, 30fps video to a vision model and the bill is enormous. What's the page's prescription?"
+  options={[
+    { text: "Switch to a cheaper vision model and keep sending all frames" },
+    { text: "Compress each frame to a smaller JPEG before sending" },
+    { text: "Sample at the lowest fps that captures the information (often 0.2-1 fps), use keyframe/scene detection to send only frames where the picture changes, and add the transcript" },
+    { text: "Split the video across multiple parallel API calls to spread the cost" }
+  ]}
+  correct={2}
+  explanation="A video is a flipbook, and 9,000 frames is 9,000 images — but a lecture barely changes between frames, so 1 fps or keyframe detection captures the same information at a fraction of the cost. Compressing frames helps marginally, but the dominant cost is frame count; the win is sending fewer, smarter frames, with the cheap transcript carrying the audio-borne half."
+/>
+
+<Question
+  prompt="You need to answer 'what happened in the seconds before the machine jammed?' from factory footage. Frame sampling at 1 fps keeps missing it. What's the trade this page describes?"
+  options={[
+    { text: "Frame sampling can answer any temporal question if you add the transcript" },
+    { text: "Use a native video model — it sees real motion and handles temporal reasoning better, at the cost of giving up your control over exactly how many frames you pay for" },
+    { text: "Increase to 60 fps sampling; more stills always beat native video" },
+    { text: "Temporal reasoning is impossible with current models" }
+  ]}
+  correct={1}
+  explanation="The decision is almost always cost vs temporal fidelity: hand-picked stills give you cost control but a choppy view of motion, while native video ingestion lets the model see what actually happened between your samples. The 60fps answer technically adds fidelity but at ruinous cost — at that point the native model is both better and likely cheaper."
+/>
+
+<Question
+  prompt="You're adding text-to-video generation to your app and wire it up like the image API — a synchronous call with a loading spinner. What's wrong?"
+  options={[
+    { text: "Video generation is a long-running async job (tens of seconds to minutes) — design the UX around 'submit and notify', with caching and rate limits, never an on-demand spinner" },
+    { text: "Nothing — video APIs return as fast as image APIs in 2026" },
+    { text: "Spinners are a UX anti-pattern for all AI features" },
+    { text: "Synchronous calls produce lower-quality video than async ones" }
+  ]}
+  correct={0}
+  explanation="Generating temporally-consistent frames costs orders of magnitude more compute than one image, so the APIs are submit-and-poll by design. 'It's just like images but moving' is the mental model this page exists to correct: budget for the cost and latency, cache aggressively, and never put generation on a high-traffic on-demand path."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Multimodal retrieval](./07-multimodal-rag.md)

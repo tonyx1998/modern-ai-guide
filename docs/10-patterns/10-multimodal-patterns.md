@@ -199,6 +199,46 @@ A team's receipt-parsing service in 2023 had three deployed components: an OCR m
 That story is the chapter in miniature. *"Give the model the raw thing and a schema"* is the most under-used 10× pattern in the AI stack.
 :::
 
+<Quiz id="pattern-multimodal-patterns-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="A team needs to parse receipts that used to require an OCR service, a layout model, and a field extractor. What is the 2026 pattern this page recommends?"
+  options={[
+    { text: "Fine-tune a dedicated OCR model on receipt images" },
+    { text: "Convert the image to text with Tesseract, then ask an LLM to clean it up" },
+    { text: "Use a separate vision API that is distinct from the chat API" },
+    { text: "Give a vision model the raw image plus a typed schema and let structured output do the parsing" }
+  ]}
+  correct={3}
+  explanation="The load-bearing pattern is 'give the model the raw thing and a schema' — image in, typed object out, replacing three deployed components with roughly 20 lines. The Tesseract-then-LLM option is tempting because it reuses familiar pieces, but it keeps the brittle multi-stage pipeline the pattern exists to eliminate."
+/>
+
+<Question
+  prompt="How does most production audio AI work in 2026, per this page?"
+  options={[
+    { text: "Native audio LLM APIs, because they are cheaper and offer more control" },
+    { text: "A two-stage pipeline: transcribe with a dedicated model, then process the text with an LLM" },
+    { text: "Speech-to-speech models for everything, including batch call summaries" },
+    { text: "Embedding the raw audio waveform and running k-NN over it" }
+  ]}
+  correct={1}
+  explanation="Transcribe-then-process is the production default: a specialized transcription model (Whisper, Deepgram) is cheap and fast, and the LLM then handles the text with structured output. Native audio APIs are catching up but tend to be more expensive with less control — the opposite of option one. Speech-to-speech is reserved for realtime voice agents, not batch processing."
+/>
+
+<Question
+  prompt="What is the prompt-injection risk specific to vision inputs?"
+  options={[
+    { text: "Text inside an image (a receipt, a screenshot) can contain instructions the model treats like any other input" },
+    { text: "Vision models cannot be prompt-injected because images are not text" },
+    { text: "Injection only matters if the image is over a certain resolution" },
+    { text: "The risk only exists when using dedicated OCR services" }
+  ]}
+  correct={0}
+  explanation="A receipt can literally contain 'ignore previous instructions' text, and the model sees it the same as any other input — so treat extracted content as untrusted data and never let it reach the system prompt. The idea that images are immune because they are not text is the tempting wrong answer: the model reads the text in the image, so the attack surface follows the image. Moderation that only scans text fields misses the same payload sent as pixels."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Safety & privacy](./11-safety-privacy.md).

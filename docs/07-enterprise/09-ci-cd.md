@@ -165,6 +165,46 @@ Use of the emergency pipeline is itself logged and reviewed monthly — it shoul
 - **Emergency pipeline used routinely.** The emergency path exists for jailbreaks and regulatory urgencies. If it's used for "we want to ship faster," you've broken the audit story.
 :::
 
+<Quiz id="enterprise-ai-ci-cd-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Why does the enterprise pipeline separate the engineer who wrote a change from the person who deploys it to production?"
+  options={[
+    { text: "Authors are too busy to watch deployments" },
+    { text: "It halves the chance of human error during deploys" },
+    { text: "Deployment requires special infrastructure credentials" },
+    { text: "Segregation of duties is required by SOC 2, HIPAA, SR 11-7, and similar regimes — the audit record must show different people" }
+  ]}
+  correct={3}
+  explanation="Trust is not the audit criterion; separation is. The record must show authored by person A, reviewed by persons B and C, deployed by person D — and SOC 2 will fail the company on this even if the engineer is the most careful person on the team. The other answers are plausible operational reasons but not the page's point."
+/>
+
+<Question
+  prompt="What is the novel monitoring signal in an AI canary compared to a conventional canary?"
+  options={[
+    { text: "Live eval-score drift on sampled production calls" },
+    { text: "p95 latency" },
+    { text: "HTTP error rate" },
+    { text: "Memory utilization of the serving fleet" }
+  ]}
+  correct={0}
+  explanation="Latency and error rates catch conventional failures, but a bad prompt change can quietly drop groundedness across thousands of successful-looking calls. Scoring a sample of live traffic against the eval scorers catches exactly that — the page calls eval drift the AI canary's superpower."
+/>
+
+<Question
+  prompt="What does the page warn happens when pre-merge gates grow past about 25 minutes?"
+  options={[
+    { text: "CI costs exceed the model API budget" },
+    { text: "PR throughput drops sharply as engineers context-switch away" },
+    { text: "The eval suite becomes statistically invalid" },
+    { text: "Auditors flag the pipeline as non-compliant" }
+  ]}
+  correct={1}
+  explanation="Slow gates make engineers context-switch and lose the PR, and reviewers procrastinate. The fix is aggressively pruning slow tests into the post-merge staging stage, where the full 200-case suite, adversarial cases, and fairness slices run. The other options sound official but are not the failure mode the page describes."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [Deployment & Change Management](./10-deployment.md) — the operational practices around the moment a change actually ships.

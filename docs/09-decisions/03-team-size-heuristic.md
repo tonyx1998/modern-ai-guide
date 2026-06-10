@@ -101,6 +101,46 @@ The fix: collapse to OpenAI API + pgvector + Promptfoo + Vercel. One person spen
 The lesson: every tool has an operational tax. The tax is invisible until you count the meetings, the on-call, the upgrades, the integrations. At 7 people, you can afford 2 or 3 of these taxes, not 8.
 :::
 
+<Quiz id="team-size-heuristic-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the recommended RAG setup for a 1-person team?"
+  options={[
+    { text: "A self-hosted Weaviate cluster" },
+    { text: "Pinecone plus a dedicated indexing pipeline" },
+    { text: "pgvector inside your existing Postgres" },
+    { text: "A custom-built vector database" }
+  ]}
+  correct={2}
+  explanation="At one person, every tool must fit in your head, and pgvector adds zero new systems to operate. A separate vector DB looks more 'serious' but is an operational tax a solo founder pays forever — the anti-pattern is becoming a dev-ops engineer instead of a founder."
+/>
+
+<Question
+  prompt="At which team size does a model gateway become the recommended default?"
+  options={[
+    { text: "1 person — adopt it from day one" },
+    { text: "Around 50 people, when a dedicated platform person exists" },
+    { text: "5 people, as soon as there are two providers anywhere" },
+    { text: "Never — gateways are always overkill" }
+  ]}
+  correct={1}
+  explanation="The 5-person band explicitly says 'gateway: not yet — flat call from app code is fine.' The gateway appears in the 50-person band because that is when someone is actually paid to maintain it. Infrastructure should match the people you have, not the people you wish you had."
+/>
+
+<Question
+  prompt="When does the team-size rule NOT apply?"
+  options={[
+    { text: "When your moat is the infrastructure layer itself" },
+    { text: "When a senior hire used the tool at their last job" },
+    { text: "When you expect to reach Series B soon" },
+    { text: "When the big-co reference architecture includes the tool" }
+  ]}
+  correct={0}
+  explanation="If you are Pinecone, you build a vector DB — match the rule to your product, not just headcount. The other three are listed as classic mistakes: aspirational tooling, cargo-culting a senior engineer's old stack, and copying reference architectures built for 10x your team."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Prompt vs RAG vs fine-tune](./prompt-vs-rag-vs-finetune.md).

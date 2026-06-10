@@ -7,6 +7,13 @@ description: OpenAI fine-tuning, Together, Modal, Hugging Face, Unsloth, Prediba
 
 # Fine-tuning platforms
 
+:::info[Dated content — June 2026]
+This page names specific tools, models, and prices, which rotate quarterly. The *selection
+logic* is durable; the names are a snapshot. Cross-check the
+[Model snapshot](/docs/model-snapshot) for current model names and pricing.
+:::
+
+
 > **In one line:** Where you actually run the training job. Pick after you've decided fine-tuning is the right tool — most of the time, it isn't.
 
 :::tip[In plain English]
@@ -146,6 +153,46 @@ A typical "1000-example SFT on a small model" costs $5–$50 in training; the re
 - **Catastrophic forgetting.** The model gets great at your task and worse at general reasoning. Mix in some general examples or evaluate broadly.
 - **Forgetting that frontier models keep getting better.** A fine-tune that won by 10% over GPT-5.1 today may be tied by GPT-5.2 in six months. Re-check periodically.
 - **Hand-rolling distributed training.** Modal, Together, Unsloth — they exist so you don't have to. Don't reinvent.
+
+<Quiz id="fine-tuning-platforms-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="The model keeps getting facts about your product wrong. What is the right fix, per the page?"
+  options={[
+    { text: "RAG — fine-tuning bakes in patterns and style, not knowledge" },
+    { text: "Fine-tune on a corpus of product documentation" },
+    { text: "Increase the temperature so the model explores more" },
+    { text: "Switch to DPO with preference pairs" }
+  ]}
+  correct={0}
+  explanation="'The model doesn't know X' is the canonical RAG problem: retrieval injects current facts at query time, while fine-tuning teaches output patterns and formats. Training on docs is the tempting move, but baked-in facts go stale immediately and the model still confabulates around them."
+/>
+
+<Question
+  prompt="What does the page say to exhaust BEFORE reaching for fine-tuning?"
+  options={[
+    { text: "Distributed training and a custom reward model" },
+    { text: "Continued pre-training on domain text" },
+    { text: "A larger GPU cluster" },
+    { text: "Prompting, structured output, RAG, and tier-routing" }
+  ]}
+  correct={3}
+  explanation="Prompt iteration takes hours while a fine-tune takes days and a new bill on every retrain — and frontier models improve faster than you can re-train, often erasing your edge. Continued pre-training is rarer and more expensive than ordinary fine-tuning, so it is even further down the list, not before it."
+/>
+
+<Question
+  prompt="What is the appeal of LoRA over full supervised fine-tuning?"
+  options={[
+    { text: "It permanently improves the base model for all users" },
+    { text: "It works without any training examples" },
+    { text: "Training a small low-rank adapter is roughly 100 times cheaper, with quality usually within a few percent of full SFT" },
+    { text: "It eliminates the need for a held-out eval set" }
+  ]}
+  correct={2}
+  explanation="LoRA leaves the base weights untouched and trains a compact adapter, capturing most of the quality at a fraction of the cost — which is why it is the default flavor for open-weight tuning. It still needs clean examples and a held-out set; cheaper training does not exempt you from eval discipline."
+/>
+
+</Quiz>
 
 ---
 
