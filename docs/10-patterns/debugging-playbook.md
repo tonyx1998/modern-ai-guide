@@ -13,11 +13,42 @@ description: Symptom → likely root causes → first three things to check. The
 LLMs are stochastic, so the temptation when something breaks is to shrug and re-run. Don't. Almost every "weird" LLM failure has a small set of likely causes — and a debugging order that gets you to the answer faster than another prompt-tweak iteration. This page is the reference card. Use it when you're stuck in dev, and use it as a triage tree during an incident.
 :::
 
-## The debugging mindset
+:::info[Industry jargon — LLM debugging]
+| In plain English | What engineers call it |
+|---|---|
+| Re-run until output looks fine | **Prompt roulette** — the habit this page replaces |
+| Change the prompt hoping it fixes itself | **Prompt tweaking** before reading traces |
+| Log of one request: prompt in, model out, tools | A **trace** — "pull the **Langfuse** trace", "check **observability**" |
+| Pin randomness while investigating | **`temperature=0`**, **fixed seed** — "make it deterministic" |
+| Model invents a function that doesn't exist | **Hallucination** — **confidently wrong** when it reads plausible |
+| JSON that breaks sometimes | **Structured output** / **`response_format`** when you enforce schema |
+| Agent runs forever | **Agent loop** — fix with **max iterations** cap |
+| Retrieved wrong document chunk | **RAG miss** — check **chunking**, **reranker**, **hybrid search** |
+| Test set that catches regressions | **Eval set** / **regression evals** — not the same as unit tests |
+| Deploy new model, quality drops | **Model regression** — run **canary** or **A/B** before full cutover |
+:::
+
+:::info[What this page covers — and what it doesn't]
+This playbook is for debugging **LLM-powered features** (chat, RAG, agents, tool calling) — when the *model or pipeline* misbehaves. For debugging **regular application code** (including code an AI assistant wrote for you), the same scientific loop applies: reproduce → hypothesize → test one change at a time. The usual suspects are off-by-one errors, wrong types, async races, and silent `catch` blocks. Everything you need for that is below in brief; the optional links at the end point to longer job-focused guides if you want them.
+:::
+
+## The universal loop (all software, including AI-generated code)
+
+Before the LLM-specific tables, the loop that works on *any* bug:
+
+1. **Reproduce** — trigger the failure on demand. No repro = guessing.
+2. **Observe** — read the error, stack trace, or failing test output literally.
+3. **Hypothesize** — one specific, falsifiable guess ("the loop skips index 0").
+4. **Test cheaply** — print, log, breakpoint, or a tiny test that fails iff your guess is right.
+5. **Fix one thing, verify, add a regression test.**
+
+When the broken code came from Cursor/Copilot/Claude, check **invented APIs**, **missing edge cases**, and **partial multi-file edits** before exotic theories. Re-prompting "fix it" without a reproducer produces another confidently-wrong answer.
+
+## The debugging mindset (LLM systems)
 
 Three reflexes that distinguish engineers who debug LLMs fast:
 
-1. **Look at the trace first, not the prompt.** What did the model actually receive? What did it actually emit? Half the time the bug isn't in the prompt — it's in what your *code* sent to the model. Open [observability](../04-stack/observability-tools.md) before you open the prompt.
+1. **Look at the trace first, not the prompt.** What did the model actually receive? What did it actually emit? Half the time the bug isn't in the prompt — it's in what your *code* sent to the model. A **trace** is a recorded log of one request: the exact prompt, model output, tool calls, and latencies. Open your observability tool (Langfuse, LangSmith, Helicone, or your gateway's trace UI) before you open the prompt editor.
 2. **Reproduce with temperature=0 and a fixed seed.** If the bug only happens 20% of the time, your job is to bisect what changes between runs. Pin the sampler first.
 3. **Trust the model less than your code.** When an output is "wrong," check whether the input was correct, whether the schema validator agrees, whether the tool actually returned what the model says it returned. The model is usually doing exactly what the inputs imply.
 
@@ -235,6 +266,15 @@ Every weird LLM bug you debug, write down: symptom, root cause, fix, and which c
 />
 
 </Quiz>
+
+## Going deeper (optional)
+
+This page is self-contained for debugging LLM features in dev and prod. If you want more on adjacent topics:
+
+- [Observability tools](../04-stack/observability-tools.md) — Langfuse, LangSmith, gateway tracing in depth
+- [Evaluation overview](../13-evaluation/evaluation-overview) — building regression sets so bugs stay fixed
+- [Modern Web Dev Guide — Debugging methodology](https://modern-web-dev-guide.vercel.app/docs/foundations/debugging) — production app debugging, unfamiliar codebases, performance and flaky tests
+- [SWE Interview Guide — debugging rounds](https://swe-interview-guide.vercel.app/#/lesson/debugging-round) — the same hypothesis loop under interview pressure
 
 ---
 
