@@ -176,6 +176,46 @@ For most products in 2026:
 - **Never re-calibrating.** Model upgrades silently shift judge behavior. Re-check agreement after any change.
 :::
 
+<Quiz id="eval-llm-as-judge-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="In a pairwise comparison, your judge picks answer A when A is shown first, but picks answer B when B is shown first. Per this page, how should you score this pair?"
+  options={[
+    { text: "Count it for A, since the first run is the canonical ordering" },
+    { text: "Call it a tie — the judge flipped with position, so neither answer really won" },
+    { text: "Average the two runs into a half-win for each answer" },
+    { text: "Re-run with a higher temperature until the judge settles" }
+  ]}
+  correct={1}
+  explanation="This is position bias: the judge is partly grading the slot, not the answer. The defense is to run both orders and only count a win when the verdict survives the swap — a flip means tie. Trusting the first run is the tempting shortcut, but it bakes the bias directly into your win rates."
+/>
+
+<Question
+  prompt="You want to grade your GPT-based product's outputs, so you use the same GPT model as the judge to keep things simple. What risk does this page flag?"
+  options={[
+    { text: "Self-preference bias — a judge rates text from its own model family higher, inflating your scores" },
+    { text: "Rate limiting, since judge and generator share a quota" },
+    { text: "The judge will refuse to grade outputs it generated" },
+    { text: "Nothing — using the same model improves consistency" }
+  ]}
+  correct={0}
+  explanation="Judges systematically favor their own model family's writing, so same-family judging inflates scores and can make a worse system look better. 'Same model for consistency' sounds reasonable, but consistency with a biased grader just means consistently biased numbers — use a different model family to judge."
+/>
+
+<Question
+  prompt="A team builds a careful judge prompt with a rubric, deploys it at scale, and gates releases on its scores — but never compares its grades to human grades. What does this page call that?"
+  options={[
+    { text: "A reasonable trade-off, since a concrete rubric guarantees alignment with humans" },
+    { text: "Pointwise judging, which is fine for CI gates" },
+    { text: "An uncalibrated judge — 'just a vibe with extra steps' — because you have no idea if its scores mean anything" },
+    { text: "Pairwise judging without position-swapping" }
+  ]}
+  correct={2}
+  explanation="Calibration — grading ~30-50 cases with both humans and the judge and measuring agreement (e.g. Cohen's kappa) — is the step that separates a real eval from cargo-culting. A good rubric helps, but it does not guarantee the judge agrees with people; only measuring agreement does, and it must be re-checked after any judge change."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Human evaluation](./07-human-eval.md)

@@ -125,6 +125,46 @@ This is a justified override. Compare to: "We want to self-host because it'd be 
 The framework's value isn't in the answer; it's in forcing you to defend the override in words your team accepts. If you can't write those three sentences, you're probably wrong.
 :::
 
+<Quiz id="overriding-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What makes an override of the chapter's rules legitimate?"
+  options={[
+    { text: "A senior engineer's strong intuition" },
+    { text: "Everyone else in the industry is doing it" },
+    { text: "A specific reason, evidence, written articulation, stakeholder buy-in, and awareness of the risk" },
+    { text: "The team has already started down that path" }
+  ]}
+  correct={2}
+  explanation="A legitimate override has all five elements; missing any usually means you are rationalizing. The distractors are the listed lazy overrides: 'I have intuition' is not a reason, popularity is the reverse boring-tech instinct, and 'we've already started' is sunk cost."
+/>
+
+<Question
+  prompt="Where does the framework usually BEAT intuition?"
+  options={[
+    { text: "High-rung decisions like fine-tuning, self-hosting, and multi-agent" },
+    { text: "A competitive sprint with a 6-week deadline" },
+    { text: "A senior engineer's chunking instinct after debugging 10 RAG issues" },
+    { text: "Situations where the team needs to learn by doing" }
+  ]}
+  correct={0}
+  explanation="High-rung, expensive-to-reverse decisions are where overrides are usually wrong — the framework crystallizes years of other teams' mistakes. The other three are the cases where intuition often legitimately wins: speed under competition, hard-won personal experience with a failure mode, and team dynamics."
+/>
+
+<Question
+  prompt="What is the meta-skill this chapter says predicts AI engineering success?"
+  options={[
+    { text: "Picking the most capable model" },
+    { text: "Building the most complete system up front" },
+    { text: "Adopting agents before competitors do" },
+    { text: "Restraint — ship the smallest thing that could work, and add complexity only when the simple version provably failed" }
+  ]}
+  correct={3}
+  explanation="Most failed AI projects fail because they took on too much, not too little. Every framework in the chapter points the same way: boring models, cheap rungs first, chains before agents, buy before build. The override skill is proving — with evidence, not vibes — that the simple version won't work."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Chapter 13 checkpoint](./17-checkpoint.md).

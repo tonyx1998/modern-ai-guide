@@ -113,4 +113,44 @@ Quick self-check:
 
 If you can answer all five from memory, you've got the lay of the land.
 
+<Quiz id="career-state-of-market-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Which tier of AI hiring has the highest compensation ceiling in 2026?"
+  options={[
+    { text: "AI-native scaleups, because of pre-IPO equity upside" },
+    { text: "AI features at non-AI companies, because of mature RSU packages" },
+    { text: "Frontier labs, where senior total comp runs 400K to over 1M dollars" },
+    { text: "Remote-first infrastructure startups" }
+  ]}
+  correct={2}
+  explanation="Frontier labs like Anthropic, OpenAI, and DeepMind pay the highest in tech outside HFT - but they also have the highest bar, with juniors rarely hired without an exceptional artifact. Scaleups offer equity upside; non-AI companies offer the lowest entry bar and most stability."
+/>
+
+<Question
+  prompt="Why does the page argue that 'AI features at non-AI companies' is a more important tier than its Twitter visibility suggests?"
+  options={[
+    { text: "These companies pay more than frontier labs at every level" },
+    { text: "By raw headcount it is the largest pool of AI-engineering jobs, with a lower entry bar, better work-life balance, and steadier comp" },
+    { text: "These roles are the only ones open to engineers without degrees" },
+    { text: "Enterprise SaaS companies never run layoffs" }
+  ]}
+  correct={1}
+  explanation="Social media overweights frontier labs and hot scaleups, but boring enterprise SaaS adding AI to existing products employs the most AI engineers. The ceiling work is less exciting, but as a first AI job - especially when transitioning from generalist SWE - it is perfectly legitimate."
+/>
+
+<Question
+  prompt="What does the page say about treating remote AI roles as a fallback option?"
+  options={[
+    { text: "Remote roles pay so much less that they are rarely worth it" },
+    { text: "Remote roles are mostly junior-level and disappear at senior levels" },
+    { text: "Remote roles skip interviews and hire from portfolios alone" },
+    { text: "The best remote AI teams have a higher bar than equivalent in-office teams because the candidate pool is global" }
+  ]}
+  correct={3}
+  explanation="Remote is not a backdoor. Strong remote-first teams like Modal, Braintrust, Langfuse, Vellum, and Replicate compete for candidates worldwide, which raises the bar. If you are outside SF or NYC, a strong remote-first scaleup is often the highest-leverage move - but you have to earn it."
+/>
+
+</Quiz>
+
 → Next: [Foundational Skills Checklist](./02-foundational-skills.md).

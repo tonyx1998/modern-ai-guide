@@ -140,6 +140,46 @@ Defend the weekly half-day. It's the highest-leverage time on the AI engineer's 
 - **Treating cost reviews as finance's problem.** Engineering owns the bill; finance keeps engineering honest. Both in the room or neither.
 :::
 
+<Quiz id="startup-ai-maintenance-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What happens in the quarterly model audit?"
+  options={[
+    { text: "Every feature is migrated to the newest model automatically" },
+    { text: "Each feature's pinned model is reviewed against what is now available, candidates are run through the eval suite, and the winner on the quality/cost/latency triple gets a full cohort rollout" },
+    { text: "The provider contracts are renegotiated for volume discounts" },
+    { text: "All model pins are removed so features track the latest versions" }
+  ]}
+  correct={1}
+  explanation="The audit asks what is available now that was not at pin time, then lets the eval suite and the triple decide — typically 1-3 features get upgrades per quarter, each through full rollout machinery. Auto-migrating to the newest model is the tempting 'stay current' answer, but it is exactly the stealth-regression recipe the pinning discipline exists to prevent."
+/>
+
+<Question
+  prompt="Which of these is a stated criterion for retiring a feature?"
+  options={[
+    { text: "The feature is more than a year old" },
+    { text: "A competitor shipped a similar feature" },
+    { text: "Under 5% adoption among active users after 90 days, cost above $0.50/answer with no cheaper path, or eval scores plateaued below the bar for two quarters" },
+    { text: "The original author has left the company" }
+  ]}
+  correct={2}
+  explanation="The retirement criteria are quantitative — adoption, unit cost, and stalled quality — because the surface area of maintained features directly bounds velocity on new ones. Age alone is the intuitive proxy people reach for, but an old feature with healthy adoption and margins is fine; the page targets features failing on measurable value."
+/>
+
+<Question
+  prompt="What is the only thing the page says prevents the 'we woke up to broken features because the model retired overnight' incident?"
+  options={[
+    { text: "Calendar reminders filed the day the deprecation is announced, with migration completed at least 4 weeks before sunset" },
+    { text: "Using model aliases that automatically resolve to supported versions" },
+    { text: "A clause in the provider contract guaranteeing indefinite support" },
+    { text: "Weekly emails from the provider about upcoming sunsets" }
+  ]}
+  correct={0}
+  explanation="Providers give 6-12 months notice, which paradoxically causes the failure: 'we have until October' becomes 'it is now October and the feature is broken'. The process is file the date, open an issue per pinned feature, eval the replacement, cohort-roll, and never migrate the week of sunset. Auto-resolving aliases avoid the breakage but reintroduce silent behavior changes — the cure the pinning discipline rejects."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [Cost Breakdown](./14-cost-breakdown.md) for realistic 20-person AI startup line items and the $50K–$200K/month range.

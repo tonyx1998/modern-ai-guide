@@ -214,6 +214,46 @@ The skill is not "knowing the architecture." It's *talking through* an architect
 By 2026, the AI sysdesign round filters as hard as classical sysdesign once did at FAANG. A loop without a strong sysdesign round signals a less mature AI engineering culture at the hiring company. A strong performance in AI sysdesign is one of the highest-leverage things you can prep, because it's heavily tested and most candidates under-prepare it.
 :::
 
+<Quiz id="career-ai-system-design-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What part of the AI system-design round does the page say candidates botch most often?"
+  options={[
+    { text: "The cost and latency math - estimating with real numbers instead of hand-waving at scale" },
+    { text: "Drawing the architecture diagram cleanly" },
+    { text: "Choosing between vector databases" },
+    { text: "Remembering the names of orchestration frameworks" }
+  ]}
+  correct={0}
+  explanation="Strong candidates compute things like 'a 2K-token Sonnet call costs about 2 cents, so 50M calls a day is 30M dollars a month - too expensive, route 80 percent to a cheaper model'. 'It would be expensive at scale' is not an answer; a dollar figure at projected load is."
+/>
+
+<Question
+  prompt="In the content-moderation example, what distinguishes the strong candidate's answer from the weak one?"
+  options={[
+    { text: "The strong candidate proposes fine-tuning a dedicated moderation model" },
+    { text: "The strong candidate adds human reviewers for every flagged post" },
+    { text: "The strong candidate tiers the pipeline - cheap heuristics first, a small classifier for borderline cases, and the LLM only for the hard 1 percent" },
+    { text: "The strong candidate selects the largest available model for accuracy" }
+  ]}
+  correct={2}
+  explanation="The weak answer sends every post to an LLM; the strong one achieves the same accuracy at about 1 percent of the cost by knowing when NOT to use AI. Naming the case where AI does not fit part of the flow is one of the highest-signal moves in the round."
+/>
+
+<Question
+  prompt="Why is an architecture diagram without an eval pipeline considered an incomplete answer in 2026?"
+  options={[
+    { text: "Interviewers award points per box drawn on the diagram" },
+    { text: "Eval pipelines are the most expensive component to operate" },
+    { text: "Regulations require eval documentation for AI products" },
+    { text: "Quality measurement is part of the design - strong candidates draw offline regression sets, online sampling, and name what they would alert on in production" }
+  ]}
+  correct={3}
+  explanation="Treating evals as 'we'll figure it out later' is a named weak-candidate marker. Eval discipline is one of the exact senior-IC signals the round exists to measure, alongside cost intuition, practical model selection, and failure-mode thinking."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Portfolio anatomy](./06-portfolio.md)

@@ -133,6 +133,46 @@ Three weeks after launch, the model upgrades and quality drops on a specific mee
 The pre-launch checklist cost 2 days. The incident that didn't happen would have cost weeks. Always worth it.
 :::
 
+<Quiz id="checklist-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What does the 1-page checklist force you to decide BEFORE writing code?"
+  options={[
+    { text: "Twenty research questions about the model landscape" },
+    { text: "A full 20-page design document" },
+    { text: "The launch marketing plan" },
+    { text: "Model, RAG, agent/chain, eval bar, kill switch, cost cap, and owner" }
+  ]}
+  correct={3}
+  explanation="Seven decisions, one page, no filler. Most 'we should have caught this' incidents trace back to one of these questions never being answered out loud. Making it a 20-question gate is itself a listed mistake — then nobody fills it out."
+/>
+
+<Question
+  prompt="Why does every production AI feature need a kill switch?"
+  options={[
+    { text: "It looks good in compliance audits" },
+    { text: "You need to turn the feature off in seconds — not deploys — when a regression or cost spike hits" },
+    { text: "It substitutes for having an eval set" },
+    { text: "Regulators require one for all AI features" }
+  ]}
+  correct={1}
+  explanation="The page's rule is blunt: no kill switch, no production AI. And the switch must route somewhere — a human review queue or deterministic fallback — not silently break. In the worked example, finding the missing kill switch pre-launch cost 2 days; the incident it later contained would have cost weeks."
+/>
+
+<Question
+  prompt="Which is a valid case for skipping the checklist?"
+  options={[
+    { text: "An internal-only feature with single-digit users" },
+    { text: "Any customer-facing feature, if the team is experienced" },
+    { text: "A feature spending $5k per month" },
+    { text: "A feature an exec might ask about" }
+  ]}
+  correct={0}
+  explanation="Skip only for tiny internal features, throwaway prototypes, or trivial extensions inheriting a parent's decisions. The other three are explicitly in the 'do the checklist' bucket: anything customer-facing, anything above $100/month in cost, or anything an exec might ask about."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [When to override these rules](./16-overriding.md).

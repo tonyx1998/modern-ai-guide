@@ -87,6 +87,46 @@ Final state: 85% resolution rate, 30% lower cost (because most requests now skip
 The lesson: even *correct* rebuilds take longer than you think. Make sure the structural reason is real before you start.
 :::
 
+<Quiz id="when-to-rebuild-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the only class of trigger that justifies rebuilding an AI feature?"
+  options={[
+    { text: "The code is ugly and hard to read" },
+    { text: "A new agent framework was just released" },
+    { text: "The original engineer left the team" },
+    { text: "The structure of the feature — not the prompt or model — is the ceiling" }
+  ]}
+  correct={3}
+  explanation="Real rebuild triggers are structural: wrong architecture for the task shape, a structural eval ceiling, or a fundamentally wrong corpus. Ugly code is a refactor, not a rebuild; new frameworks and departed engineers are explicitly listed as bad reasons that feel like progress but aren't."
+/>
+
+<Question
+  prompt="A team's eval has plateaued for months despite multiple models and prompt variants. What is that?"
+  options={[
+    { text: "A sign to keep tweaking prompts" },
+    { text: "A rebuild signal" },
+    { text: "Only a reason to add more eval examples" },
+    { text: "Proof the task is impossible" }
+  ]}
+  correct={1}
+  explanation="Plateau despite varied interventions means the current design can't go higher — the structural ceiling. The flip side matters too: if individual changes are still moving the eval, keep iterating; each move is hours to days versus months for a rebuild."
+/>
+
+<Question
+  prompt="How should you estimate the cost of a justified rebuild?"
+  options={[
+    { text: "Exactly your gut estimate" },
+    { text: "Half your estimate, since you know the domain now" },
+    { text: "About 3x your gut estimate" },
+    { text: "Rebuilds are usually nearly free" }
+  ]}
+  correct={2}
+  explanation="A working feature hides implicit knowledge — hundreds of small prompt edits, retrieval filters, post-processing, eval cases from production bugs — and the rebuild loses all of it. Even the worked example's justified rebuild took 2x its estimate. Plan for 3x and use a strangler ramp, never a big-bang cutover."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Single vs multi-provider](./07-single-vs-multi-provider.md).

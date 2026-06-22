@@ -232,6 +232,46 @@ The one document that made this work: a single-page "who owns what" matrix pinne
 - [ ] Runbook for top 5 failure modes exists.
 - [ ] Domain expert has 1-2 hours/week allocated post-launch.
 
+<Quiz id="lifecycle-handoffs-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="According to the page, what makes handoffs between roles go smoothly on an AI project?"
+  options={[
+    { text: "Weekly all-hands meetings where every role reports status" },
+    { text: "Having the AI engineer own every artifact end to end" },
+    { text: "Each role owning a concrete artifact that the next role consumes" },
+    { text: "Keeping the team small enough that handoffs never happen" }
+  ]}
+  correct={2}
+  explanation="The page's thesis is that AI projects fail at handoff boundaries more often than at technical ones, and the fix is artifacts: the PM's one-pager and PRD, the designer's flows, the engineer's prompt registry and eval set, and so on. When the artifact is clear, the handoff is smooth; when it is vague, the project stalls. Concentrating ownership in one person is the opposite of the page's artifact map."
+/>
+
+<Question
+  prompt="What is the designer's most common failure mode on an AI feature, per the page?"
+  options={[
+    { text: "Designing in Figma instead of directly in code" },
+    { text: "Designing only the happy-path flow, when AI adds unhappy states like low confidence, empty retrieval, and 'drafting unavailable'" },
+    { text: "Choosing visuals that conflict with the brand system" },
+    { text: "Writing error copy without consulting the PM" }
+  ]}
+  correct={1}
+  explanation="AI features fail in shapes traditional features do not — low-confidence output, 'I don't know' states, fallback states, partial output — and each needs a designed state. The related trip-up is the designer working from a screenshot: they need real sample outputs from the system, including bad ones, to design proper states."
+/>
+
+<Question
+  prompt="Who owns the eval set, according to the artifact map?"
+  options={[
+    { text: "The PM, since evals measure the product's success metric" },
+    { text: "The ML platform team, since evals run in CI infrastructure" },
+    { text: "The domain expert, since they judge output quality" },
+    { text: "The AI engineer owns it, with the domain expert curating the cases" }
+  ]}
+  correct={3}
+  explanation="The eval set is a technical artifact — JSON/YAML cases, scoring code, CI integration — so the AI engineer owns it, while the domain expert curates the cases and reviews coverage. 'PM owns the eval set instead of the AI engineer' is a named anti-pattern; the PM consumes the eval-score trend rather than owning the artifact itself."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Checkpoint](./12-checkpoint.md)

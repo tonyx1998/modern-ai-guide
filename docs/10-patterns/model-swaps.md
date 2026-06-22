@@ -193,6 +193,46 @@ Observability platforms ([Langfuse, LangSmith, Helicone, Braintrust](../04-stack
 The model-swap discipline is what makes AI features feel reliable to users over months. Without it, a feature can be silently worse for 60 days before someone notices — and by then the trust is gone. With it, you ship faster *and* more safely, because each rollout is a small, instrumented bet rather than a big leap.
 :::
 
+<Quiz id="pattern-model-swaps-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Offline evals pass on the new prompt. Why is that not enough to ship it to everyone?"
+  options={[
+    { text: "Offline evals are too expensive to trust" },
+    { text: "Eval sets cover maybe 80 percent of behavior — regressions hide in the real-traffic distribution your eval never covered" },
+    { text: "Offline evals only work on the old model" },
+    { text: "Evals cannot measure latency" }
+  ]}
+  correct={1}
+  explanation="Evals catch the failures you anticipated; shadow and canary catch the ones you did not — tail behavior like refusals, JSON breaks, and timeouts shows up in real traffic first. 'Skipping shadow because evals passed' is the page's first listed mistake, which makes the passing eval itself the most tempting trap."
+/>
+
+<Question
+  prompt="In shadow traffic, what does the user see?"
+  options={[
+    { text: "The old version's response — the new version runs alongside for telemetry only and is discarded" },
+    { text: "The new version's response, with the old one logged" },
+    { text: "Whichever response returns faster" },
+    { text: "Both responses, side by side" }
+  ]}
+  correct={0}
+  explanation="Shadow mode compares the two versions on real production inputs with zero user impact — you learn the quality direction, cost delta, and tail behavior before a single user sees the change. Serving the new version is the next stage (canary); confusing the two means exposing users to an unvalidated change."
+/>
+
+<Question
+  prompt="Why is the canary split bucketed by user id rather than by request?"
+  options={[
+    { text: "Request-level hashing is computationally expensive" },
+    { text: "Providers bill per user, not per request" },
+    { text: "User-level splits require less traffic" },
+    { text: "Per-request splits give the same user different variants across requests — confusing UX and broken statistics" }
+  ]}
+  correct={3}
+  explanation="A deterministic hash on user id keeps each user's experience consistent and keeps the A/B arms statistically clean. Hashing on request id is the listed beginner mistake: it looks equivalent at the aggregate level but contaminates both the user experience and the experiment."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [LLMOps — the production operations loop](./llmops-loop.md)

@@ -159,6 +159,46 @@ This versioning is what lets you build a **score-over-time dashboard**: plot ove
 - **A flaky gate.** If CI fails randomly, the team learns to click "merge anyway." Make the gate trustworthy or it's worse than nothing.
 :::
 
+<Quiz id="eval-cicd-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Your team pins the model as 'gpt-5' (a floating alias). Three weeks later scores drop with zero commits to your repo. What does this page say happened, and what's the fix?"
+  options={[
+    { text: "The eval set went stale; refresh it from production traffic" },
+    { text: "CI caching corrupted the baseline; clear the cache and re-run" },
+    { text: "The provider updated the model behind the alias; pin dated snapshots and treat version bumps as gated changes" },
+    { text: "Temperature drift; set temperature to zero in the judge" }
+  ]}
+  correct={2}
+  explanation="A floating alias means the provider can swap the underlying model with no change on your side — a silent regression with no commit to trace. The stale-eval-set answer is plausible in general, but the tell here is 'zero commits, sudden shift': pin the dated snapshot so any model change is an explicit, gated event."
+/>
+
+<Question
+  prompt="You set the slice-regression tolerance well below your eval set's run-to-run noise level. What does this page predict will happen?"
+  options={[
+    { text: "The gate fails randomly, the team learns to click 'merge anyway', and the gate becomes worse than nothing" },
+    { text: "The gate becomes stricter and catches more real regressions" },
+    { text: "Nothing changes, since the absolute floor is the only threshold that matters" },
+    { text: "CI runs get slower because more cases must be evaluated" }
+  ]}
+  correct={0}
+  explanation="A tolerance below the noise floor means CI cries wolf on PRs that changed nothing real. The 'stricter is safer' intuition is the trap: a flaky gate trains people to ignore it, and an ignored gate provides zero protection. Calibrate the tolerance just above measured run-to-run variance."
+/>
+
+<Question
+  prompt="A release candidate passes the full offline eval suite. Per this page's layered rollout, what does that result actually prove?"
+  options={[
+    { text: "The change is good in production and can roll out to all users immediately" },
+    { text: "The change is safe to try — you still canary it on a slice of real traffic and watch online signals before full rollout" },
+    { text: "The offline suite is too easy and needs harder cases" },
+    { text: "Online evaluation is now redundant for this release" }
+  ]}
+  correct={1}
+  explanation="The offline gate is layer 1-2 of a four-layer discipline: PR gate, pre-deploy gate, canary/shadow rollout, auto-rollback. Passing offline means 'safe to try', not 'good in the wild' — real traffic contains inputs the frozen set never covered, which is why the canary and online signals still matter."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Production evaluation](./09-production-evals.md)

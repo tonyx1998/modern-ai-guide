@@ -110,6 +110,46 @@ Total: one week of one engineer, no training data needed, 80% of the gap closed.
 The fine-tune may *still* be the right next move — but the eval bar to justify it is now "is the win worth the 3 months and the retraining-forever commitment?" Often the answer is no.
 :::
 
+<Quiz id="prompt-vs-rag-vs-finetune-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the decision order for the first architecture choice in an AI project?"
+  options={[
+    { text: "Fine-tune first, then add RAG, then simplify to prompting" },
+    { text: "Start with whichever technique is newest" },
+    { text: "Prompting, then RAG, then fine-tuning — stopping at the first that passes your evals" },
+    { text: "Run all three in parallel and compare" }
+  ]}
+  correct={2}
+  explanation="The escalation is one-way and each step costs roughly 10x more engineering time than the one before, so you walk the ladder and stop at the first rung that passes evals. Skipping straight to fine-tuning when prompting would have worked is called the single most common mistake in AI engineering."
+/>
+
+<Question
+  prompt="The model hallucinates facts about your domain. What is the first-line fix?"
+  options={[
+    { text: "RAG or better prompting — not fine-tuning" },
+    { text: "Immediately collect data and fine-tune" },
+    { text: "Add more agents to cross-check answers" },
+    { text: "Only lower the temperature" }
+  ]}
+  correct={0}
+  explanation="Hallucination usually means the model lacks knowledge — that is a RAG problem (or an eval and prompting problem), not a weights problem. Fine-tuning tempts because it feels decisive, but baked-in knowledge goes stale the moment your corpus changes, while RAG stays current."
+/>
+
+<Question
+  prompt="In the ticket-router worked example, how much of the 30% error rate was fixed WITHOUT fine-tuning?"
+  options={[
+    { text: "None — the fine-tune was required" },
+    { text: "About 5 points" },
+    { text: "All of it, instantly" },
+    { text: "About 80% of the gap, in one week of prompt, few-shot, and RAG work" }
+  ]}
+  correct={3}
+  explanation="Wrong-routing fell from 30% to 6% across three cheap rungs: explicit queue rules in the prompt, six few-shot edge cases, and RAG over the escalation doc. The planned 3-month, 5,000-example fine-tune became optional — and now had to justify itself against a much smaller remaining gap."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Agent vs chain](./agent-vs-chain.md).

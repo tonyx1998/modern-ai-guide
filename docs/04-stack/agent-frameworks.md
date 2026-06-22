@@ -7,6 +7,13 @@ description: LangGraph, CrewAI, AutoGen/AG2, OpenAI Agents SDK, Pydantic AI, Ver
 
 # Agent frameworks
 
+:::info[Dated content — June 2026]
+This page names specific tools, models, and prices, which rotate quarterly. The *selection
+logic* is durable; the names are a snapshot. Cross-check the
+[Model snapshot](/docs/model-snapshot) for current model names and pricing.
+:::
+
+
 > **In one line:** Libraries that wrap the "loop until done" pattern around your LLM — state machines, tool routing, retries, checkpointing, and (sometimes) multi-agent orchestration.
 
 :::tip[In plain English]
@@ -134,6 +141,46 @@ All major frameworks are open-source. Hosted control planes (LangSmith for LangG
 - **No checkpointing on a long-running flow.** A deploy at minute 8 of a 10-minute run loses everything. Persist state.
 - **Mixing checkpointing storage with operational data.** Don't put agent state in the same Postgres table as your users. Separate schema or separate DB.
 - **Trusting tool args without validation.** The model *will* pass a stringified date when you asked for an int. Validate on the boundary (Pydantic / Zod).
+
+<Quiz id="agent-frameworks-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the page's honest default position on multi-agent systems?"
+  options={[
+    { text: "One strong agent with many tools; go multi-agent only with a real division-of-labor reason" },
+    { text: "Always run at least a researcher, writer, and editor team" },
+    { text: "Multi-agent setups are cheaper because each agent uses a smaller model" },
+    { text: "Multi-agent is only viable in TypeScript stacks" }
+  ]}
+  correct={0}
+  explanation="Each extra agent multiplies token cost, latency, and failure modes, so the default is a single capable agent with good tools. The role-play team pattern is easy to spin up — that's the trap — but easy is not the same as a good idea without genuine parallel work or skill separation."
+/>
+
+<Question
+  prompt="What signals that it's time to graduate from a hand-written agent loop to a framework?"
+  options={[
+    { text: "The agent uses more than one tool" },
+    { text: "You switch from Python to TypeScript" },
+    { text: "You need runs to survive deploys and to checkpoint state mid-flow" },
+    { text: "You start calling a second model provider" }
+  ]}
+  correct={2}
+  explanation="The DIY while-loop is fine until production durability shows up: resuming after a restart, persisting state between turns, human approval gates. Those are the primitives frameworks actually sell. Multiple tools fit comfortably in a raw loop — tool count alone is not the trigger."
+/>
+
+<Question
+  prompt="For long-running flows that must checkpoint and resume across restarts, which framework does the page call the most mature?"
+  options={[
+    { text: "CrewAI" },
+    { text: "Smolagents" },
+    { text: "Vercel AI SDK" },
+    { text: "LangGraph" }
+  ]}
+  correct={3}
+  explanation="LangGraph treats checkpointing as first-class — compile the graph with a Postgres saver and runs survive deploys and transient failures. CrewAI's specialty is role-based teams and Smolagents is for code-writing agents; the Vercel AI SDK's checkpointing support is only partial."
+/>
+
+</Quiz>
 
 ---
 

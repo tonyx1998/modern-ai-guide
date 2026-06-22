@@ -18,7 +18,7 @@ A regular bug shows up as a stack trace. An AI safety failure shows up as a cust
 
 ## What this chapter covers
 
-This chapter goes far deeper than the [safety & privacy pattern](/docs/patterns/pattern-safety-privacy) and [OWASP page](/docs/patterns/pattern-ai-security-owasp) you met in the patterns chapter — those were the field-card; this is the textbook.
+This chapter goes far deeper than the [safety mindset](/docs/roadmap/part-3-beyond/safety-mindset) on-ramp from the roadmap and the [safety & privacy pattern](/docs/patterns/pattern-safety-privacy) and [OWASP page](/docs/patterns/pattern-ai-security-owasp) you met in the patterns chapter — those were the field-card; this is the textbook.
 
 - [A threat model for AI systems](./02-threat-model.md) — A taxonomy of AI harm (misuse, malfunction, systemic), who gets hurt, the safety-vs-security distinction, and the rule that anchors the whole chapter: *the LLM is never the security boundary.*
 - [Prompt injection & jailbreaks](./03-prompt-injection.md) — Direct and indirect (RAG-borne) injection, why data and instructions can't be separated, why it's an *unsolved* problem, and the layered defenses that actually reduce blast radius.

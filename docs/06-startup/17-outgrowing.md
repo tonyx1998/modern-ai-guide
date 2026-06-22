@@ -139,6 +139,46 @@ Startup AI in 2026 is a sweet spot. The tooling is mature, eval discipline is we
 
 The hardest discipline: resisting both extremes. Don't be vibes-driven like a hackathon project; don't be process-heavy like a regulated enterprise. Stay in the middle, where execution speed is highest and customers actually get value.
 
+<Quiz id="startup-ai-outgrowing-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="A 65-engineer AI team has no regulated customers, no multi-team eval collisions, and no bill pressure. Should they adopt enterprise patterns?"
+  options={[
+    { text: "No — watch the symptoms, ignore the org chart; importing enterprise overhead 'because we're 65 now' is unjustified" },
+    { text: "Yes — 50+ engineers always requires enterprise governance" },
+    { text: "Yes, but only the model risk register" },
+    { text: "No team that size can function on startup patterns, so the premise is impossible" }
+  ]}
+  correct={0}
+  explanation="Pain, not headcount, is the signal: the page contrasts this team with a 30-engineer healthcare startup that has ALREADY outgrown startup patterns despite being half the size. The 'always at 50+' option leans on the headcount signal alone, but that signal matters because of communication overhead and collisions — absent the symptoms, the overhead is pure cost."
+/>
+
+<Question
+  prompt="How does the migration playbook say enterprise patterns should be adopted?"
+  options={[
+    { text: "All at once, in a dedicated re-platforming quarter" },
+    { text: "By hiring an enterprise architect to redesign the stack first" },
+    { text: "Surgically — each specific signal gets a targeted response taking a quarter or less, like a 2-person platform team for duplicated eval infra" },
+    { text: "By copying the full playbook of a public enterprise AI company" }
+  ]}
+  correct={2}
+  explanation="You graduate one piece at a time: audit trails when a regulated customer demands them, a cost engineer when the bill crosses $500K/month, an MLOps hire when self-hosting starts. The worked example's CTO rewrites nothing — and the realistic end state is hybrid, with regulated cohorts on enterprise patterns while Tier-2/3 teams keep shipping 2-week cycles. Wholesale rebuilds are the crisis-mode failure the page exists to prevent."
+/>
+
+<Question
+  prompt="Which startup practices STAY the same after graduating to enterprise patterns?"
+  options={[
+    { text: "None — enterprise governance replaces all startup workflows" },
+    { text: "Eval-gating in CI, per-tenant cost dashboards, kill switches, the triad, and 2-week cycles — these get MORE important at scale" },
+    { text: "Only the feature flags survive" },
+    { text: "The startup patterns persist for one transition year, then phase out" }
+  ]}
+  correct={1}
+  explanation="Enterprise process layers ON TOP of the startup core; it does not replace it — eval-gating remains the single most important rule and the triad remains the unit that ships features. 'Governance replaces everything' is the intuitive reading of 'graduating', which is why the page includes a what-stays-the-same list at all."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Take the [Chapter 10 Checkpoint](./18-checkpoint.md), then continue to [Chapter 11: Enterprise AI](/docs/enterprise) for a contrast — same problems, very different solutions at 100+ engineers.

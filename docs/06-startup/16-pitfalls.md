@@ -112,6 +112,46 @@ The lesson: design the safe paths to be the default paths. CI rules. Templates. 
 - **Believing the next model will save you.** A model upgrade rarely fixes a process failure. If your team can't ship eval-gated changes, no model release helps you.
 :::
 
+<Quiz id="startup-ai-pitfalls-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the fix for agent-loop runaway?"
+  options={[
+    { text: "Use a more capable model that reasons better about when to stop" },
+    { text: "Restrict agents to internal users only" },
+    { text: "Add a confirmation dialog before each tool call" },
+    { text: "A hard-coded max_iterations cap, a cost ceiling per run, and loop detection that refuses to call the same tool with the same args twice" }
+  ]}
+  correct={3}
+  explanation="The worked example shows an agent stuck in a search-retry loop averaging 23 tool calls instead of 3 — caught by a cost alert and killed by the kill switch, then fixed with max_iterations: 7, a $0.30 per-run cap, and query-repeat refusal. 'A smarter model' is the tempting fix, but runaway is a control problem: only hard caps make the failure structurally impossible."
+/>
+
+<Question
+  prompt="The page says pitfalls 'don't get added by villains.' What is the actual lesson?"
+  options={[
+    { text: "Hire more carefully so bad decisions stop happening" },
+    { text: "Design the safe paths to be the default paths — CI rules, templates, and client defaults that make the wrong path harder to take" },
+    { text: "Assign blame quickly after incidents so lessons stick" },
+    { text: "Write a policy document listing all eight pitfalls" }
+  ]}
+  correct={1}
+  explanation="No team chooses to ship without evals — they just don't get around to it under deadline pressure; the durable fix is structural, so the safe behavior happens without willpower. The policy-document option is the bureaucratic mirage: a list nobody reads changes nothing, while a CI gate that blocks merge changes everything."
+/>
+
+<Question
+  prompt="A team burned by 'no evals' builds a 200-case suite that takes 45 minutes in CI. What pitfall is this?"
+  options={[
+    { text: "Over-correcting from one pitfall into another — the suite is now so slow engineers stop running it" },
+    { text: "Framework lock-in" },
+    { text: "Fine-tuning too early" },
+    { text: "Nothing — more eval coverage is always strictly better" }
+  ]}
+  correct={0}
+  explanation="Swinging from no discipline to crushing process recreates the original failure by a different route: a 45-minute gate gets skipped, and skipped evals equal no evals. 'More coverage is always better' is the seductive principle — but coverage only counts if the suite actually runs, which is why the guide repeatedly targets an 8-minute budget."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [Outgrowing the Stack](./17-outgrowing.md) where we cover the signals you've outgrown the startup AI stack and need enterprise-grade governance.

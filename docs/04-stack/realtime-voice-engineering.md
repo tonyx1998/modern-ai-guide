@@ -265,6 +265,46 @@ A stuck voice agent that loops in a `let-me-think` cycle for 30 minutes costs ~$
 Voice products force you to think about jitter, packet loss, NAT traversal, codecs, and turn-taking — concerns that don't exist in text. That's why voice specialization commands a premium: it's the union of AI engineering and real-time media engineering. If you can ship a working voice product, you can ship anything.
 :::
 
+<Quiz id="realtime-voice-engineering-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="The user starts talking while the AI is mid-answer. What is the correct barge-in handling?"
+  options={[
+    { text: "Immediately stop playing the buffered audio and send a cancel event so the model stops generating too" },
+    { text: "Let the model finish its sentence before yielding the turn" },
+    { text: "Lower the playback volume until the user finishes" },
+    { text: "Tear down and re-establish the WebRTC connection" }
+  ]}
+  correct={0}
+  explanation="Both halves matter: clearing the playback buffer stops the AI talking over the user, and cancelling generation stops you paying for audio that will never play. Waiting for the model to finish is the natural-feeling wrong answer — it is exactly the broken UX barge-in exists to prevent."
+/>
+
+<Question
+  prompt="Why does the browser receive a short-lived ephemeral key instead of your real API key?"
+  options={[
+    { text: "Ephemeral keys negotiate the WebRTC connection faster" },
+    { text: "Anyone can read a key shipped to the browser in DevTools — minting short-lived tokens server-side keeps the long-lived key behind your auth, rate limits, and spend caps" },
+    { text: "Providers charge less for ephemeral-key sessions" },
+    { text: "Long-lived keys are incompatible with the SDP handshake" }
+  ]}
+  correct={1}
+  explanation="The browser is a hostile environment for secrets, so the pattern moves the trust boundary to your backend: it authenticates the user, enforces caps, then mints a token with a roughly 60-second TTL. There is no speed or pricing benefit — it is purely the threat model of client-side code."
+/>
+
+<Question
+  prompt="Why is WebRTC preferred over WebSocket for duplex audio in the browser?"
+  options={[
+    { text: "WebSocket cannot carry binary data" },
+    { text: "WebRTC compresses audio to one tenth the bandwidth" },
+    { text: "It runs over UDP with built-in jitter buffering and loss concealment, so a dropped packet does not stall playback the way TCP retransmits would" },
+    { text: "WebRTC sessions never need authentication" }
+  ]}
+  correct={2}
+  explanation="A lost packet during a 30ms phoneme should just be skipped; TCP-based WebSocket would block on the retransmit and the user hears stutter. WebRTC also bundles echo cancellation, codec negotiation, and DTLS-SRTP encryption you would otherwise rebuild. WebSocket handles binary fine — transport semantics are the real difference."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Fine-tuning platforms](./fine-tuning-platforms.md)

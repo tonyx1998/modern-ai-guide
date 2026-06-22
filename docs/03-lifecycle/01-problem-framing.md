@@ -132,6 +132,46 @@ Notice what's *not* in there: which model, what framework, whether to use RAG. T
 - [ ] Go/no-go decision recorded, with names + date.
 - [ ] At least one non-engineer has read it and agrees with the framing.
 
+<Quiz id="lifecycle-problem-framing-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="According to the page, what does the problem-framing phase concretely produce?"
+  options={[
+    { text: "A model choice, a framework choice, and a deployment plan" },
+    { text: "A working prototype and a demo for stakeholders" },
+    { text: "A one-page write-up, five hand-written input/ideal-output examples, and a recorded go/no-go decision" },
+    { text: "A complete eval suite with hundreds of graded cases" }
+  ]}
+  correct={2}
+  explanation="Framing produces exactly three lightweight artifacts: a written description of the user and problem, five hand-written ideal outputs, and a recorded go/no-go decision — all fitting on one page. Model and framework choices are deliberately absent; as the Acme example notes, those belong to the next phases."
+/>
+
+<Question
+  prompt="Two teammates write noticeably different 'ideal outputs' for the same example input. What does the page say this indicates?"
+  options={[
+    { text: "A definition-of-good problem that needs an alignment conversation before any building" },
+    { text: "A model problem that a stronger frontier model would fix" },
+    { text: "Normal variance that evals will smooth out later" },
+    { text: "A sign the task is research-grade and should be abandoned" }
+  ]}
+  correct={0}
+  explanation="Disagreement on ideal outputs means the team has not agreed on what 'good' means — a definition-of-good problem, not a model problem. Caught early it is a 30-minute alignment conversation; caught after build it is a re-do. No model can hit a target nobody has agreed on, so a stronger model would not help."
+/>
+
+<Question
+  prompt="A teammate proposes using an LLM to check whether email addresses are valid. Based on this page, what is the best response?"
+  options={[
+    { text: "Agree, since LLMs handle open-ended input well" },
+    { text: "Agree, but require human-in-the-loop review of each result" },
+    { text: "Suggest fine-tuning a small model to cut latency" },
+    { text: "Push back: the input is structured and a deterministic rule solves it, so AI is the wrong tool" }
+  ]}
+  correct={3}
+  explanation="Email validation is the page's own example of when AI is the wrong tool: the input is already structured and a rule can solve it. If a regex, SQL query, or heuristic gets you 90% of the way, that is almost always the right v0. AI fits open-ended input — free text, images, documents — not already-solved structured checks, so options that keep the LLM are over-engineering."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Data sourcing](./02-data.md)

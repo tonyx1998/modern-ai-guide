@@ -9,6 +9,10 @@ description: Consumer AI tutoring. Cost-controlled per-turn economics, persona-d
 
 > **In one line:** Duolingo Max is the AI tier of Duolingo — "Roleplay" (practice conversations with characters) and "Explain My Answer" (when you get something wrong, the AI tells you why) — and the engineering interesting bits are how a consumer product runs LLM features at hundreds of millions of users without ruinous costs, how it designs personas that don't feel like ChatGPT-with-a-hat, and how it evaluates language-learning quality at scale.
 
+:::tip[In plain English]
+Duolingo Max adds AI features to a language-learning app used by hundreds of millions of people — you can practice conversations with the app's characters or get a patient explanation of why your answer was wrong. At that scale the defining constraint is cost per conversation turn, so the architecture is built around cheap models for most traffic, aggressive caching, and strict limits on how much the AI says. Study this page because it's the best public example of consumer-scale AI economics, plus two ideas that transfer everywhere: personas specific enough to test, and evals that measure what the product actually teaches.
+:::
+
 ## The product
 
 A premium tier of Duolingo that adds AI-powered features on top of the gamified language-learning core:
@@ -122,6 +126,13 @@ This shape lets Duolingo expose AI to the entire user base (acquisition signal) 
 - **Letting the AI drop out of the exercise frame.** A language-learning AI that switches to English breaks the product.
 - **Evaling AI-product quality with generic LLM benchmarks.** Your evals must measure what your users actually care about.
 
+:::caution[What people get wrong when copying this]
+- **Prototyping on a frontier model and assuming costs will work out later.** At consumer scale, model tiering, prompt caching, and token caps *are* the architecture — not optimizations to bolt on after launch.
+- **Shipping a generic friendly assistant instead of a specific character.** Vague personas are both indistinguishable from ChatGPT and nearly impossible to write evals for; "did Lily stay in voice?" is testable, "was the response good?" isn't.
+- **Trusting the prompt to enforce hard rules like stay-in-language.** Load-bearing guardrails need post-generation validation (here, language detection) with regenerate-or-filter on failure — instructions alone drift.
+- **Reusing generic helpfulness benchmarks when the product's quality bar is domain-specific.** Duolingo's bar is pedagogy; yours will be something else, but the gap between generic and domain evals exists in every vertical.
+:::
+
 ## Sources
 
 - Duolingo's blog (`blog.duolingo.com`) on AI features and engineering.
@@ -129,6 +140,46 @@ This shape lets Duolingo expose AI to the entire user base (acquisition signal) 
 - Luis von Ahn (CEO) interviews on product strategy.
 - Public discussions of Duolingo's eval and persona-design approach.
 
+<Quiz id="case-duolingo-max-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Why is cost-per-turn the central engineering constraint for Duolingo Max?"
+  options={[
+    { text: "A consumer subscription is around 14 dollars a month, so expensive LLM calls per conversation would collapse the unit economics" },
+    { text: "App stores cap how much compute a mobile app may consume" },
+    { text: "Language models charge more for non-English output tokens" },
+    { text: "Investors require AI features to be profitable from day one" }
+  ]}
+  correct={0}
+  explanation="At hundreds of millions of users on a cheap subscription, a 50-cent conversation is fatal. The response is architectural: aggressive model tiering, cached context so only the new turn is uncached, strict output length caps, and server-side session limits. Cost discipline is the design, not an afterthought."
+/>
+
+<Question
+  prompt="Beyond branding, why are Duolingo's AI personas specific characters like Lily rather than a generic helpful assistant?"
+  options={[
+    { text: "Specific characters require less prompt text, saving tokens" },
+    { text: "A specific character with defined behavior is more evaluable - you can test whether Lily stayed in voice in a way you cannot test whether a response was good" },
+    { text: "Licensing rules prevent using a generic assistant persona" },
+    { text: "Characters let the app avoid safety guardrails entirely" }
+  ]}
+  correct={1}
+  explanation="Encoding voice, backstory, reactions to mistakes, and in-character refusals makes quality concrete and testable. Specific personas are both more product-distinctive and more eval-able than 'be helpful' - a lesson that applies to any AI product persona."
+/>
+
+<Question
+  prompt="How does Duolingo enforce that Roleplay responses stay in the target language?"
+  options={[
+    { text: "The model is fine-tuned to be incapable of producing English" },
+    { text: "Human moderators review conversations before delivery" },
+    { text: "The prompt emphasizes target-language-only, and a language-detection check validates each output, regenerating or filtering failures" },
+    { text: "The app blocks the user from typing in their native language" }
+  ]}
+  correct={2}
+  explanation="The prompt sets the expectation, but the hard guarantee comes from post-generation validation: language detection on the response, with regeneration when it fails. Hard guardrails that matter to the product need output validators, not just instructions."
+/>
+
+</Quiz>
+
 ---
 
-→ Back to: [Case studies overview](./index.md)
+→ Back to: [Case studies overview](./index.md) · Optional next: [Cutting Edge & What's Next](../17-cutting-edge/index.md)

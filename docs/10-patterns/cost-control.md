@@ -187,6 +187,46 @@ Two afternoons in week one will save you more money than two months of tuning pr
 The third afternoon (cascade routing) saves another big chunk but is more work. Do it after evals are in place — you need them to confirm the cheap path isn't a quality regression.
 :::
 
+<Quiz id="pattern-cost-control-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="How does the cascade pattern cut cost roughly 8x in the page's example?"
+  options={[
+    { text: "By compressing prompts so they use fewer tokens" },
+    { text: "A cheap model answers first, and only low-confidence cases (about 5 percent) escalate to the expensive model" },
+    { text: "By batching many requests into one model call" },
+    { text: "By caching responses so most requests never hit a model" }
+  ]}
+  correct={1}
+  explanation="If 95 percent of requests resolve on Haiku and 5 percent fall through to Sonnet, the blended cost lands around 8x cheaper than always-Sonnet — and evals confirm the cheap path holds quality. Caching is a real lever, but it is a different pattern on a different page; the cascade saves money even on never-before-seen inputs."
+/>
+
+<Question
+  prompt="Why must rate limits be anchored on the authenticated user id rather than a client-supplied header?"
+  options={[
+    { text: "Headers are slower to parse than user ids" },
+    { text: "User ids compress better in Redis keys" },
+    { text: "Providers only support rate limiting by user id" },
+    { text: "A client-controlled key like x-session-id can be rotated by an attacker, defeating the limit entirely" }
+  ]}
+  correct={3}
+  explanation="Anything the client controls, the attacker controls — rotating a session header gives them a fresh bucket on every request. The other options sound technical but are noise: the issue is trust boundary, not parsing speed or storage."
+/>
+
+<Question
+  prompt="What are the two changes that typically cut a startup's AI bill in half, per the 80/20 section?"
+  options={[
+    { text: "Move classification-style tasks to small models, and turn on prompt caching for long stable prompts" },
+    { text: "Negotiate enterprise pricing and switch providers quarterly" },
+    { text: "Disable streaming and shorten all responses" },
+    { text: "Fine-tune a custom model and self-host it" }
+  ]}
+  correct={0}
+  explanation="Small models handle 90 percent of classification and short structured-output tasks at 10-30x lower cost, and prompt caching makes a long stable prefix nearly free after the first call — do these before anything else. Disabling streaming is a trap: the page's token-economics table shows it changes cost approximately not at all while regressing UX."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Embeddings & semantic search](./09-embeddings-search.md).

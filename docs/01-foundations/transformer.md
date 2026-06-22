@@ -134,6 +134,46 @@ Two distinct latency knobs, two distinct billing lines — same call.
 
 Modern frontier models often use MoE — instead of every token using all 400B parameters, only 30–50B "experts" activate per token. Same quality as a dense model with the same active params, ~5–10× cheaper to serve. Examples in 2026: Mixtral-style, DeepSeek V4, GPT-5 (assumed), Claude Opus 4.8 (assumed). You don't pick this; the provider does. It just means "open weights = X B params" and "active per token = Y B params" are two different numbers worth knowing when self-hosting.
 
+<Quiz id="transformer-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="A user complains the chatbot 'takes forever to start answering' but streams quickly once it starts. Which phase is the bottleneck?"
+  options={[
+    { text: "Decode — output tokens are generated too slowly" },
+    { text: "Tokenization — converting text to IDs is slow" },
+    { text: "Prefill — processing the long input prompt dominates time-to-first-token" },
+    { text: "The network — the provider is buffering tokens" }
+  ]}
+  correct={2}
+  explanation="Time-to-first-token is dominated by prefill, where the model processes every input token before generating anything. Once decode starts, tokens stream at a steady per-token rate. A slow start with fast streaming is the signature of a long prompt — and it is exactly the cost that prompt caching, which skips repeated prefill work, eliminates."
+/>
+
+<Question
+  prompt="You call the model twice and expect the second call to remember the first. What does this page say actually happens?"
+  options={[
+    { text: "The model keeps a short-term memory of recent requests" },
+    { text: "Memory persists, but only within the same API key" },
+    { text: "The provider stores your session for a few minutes" },
+    { text: "Nothing persists — each request starts from scratch with whatever tokens you send" }
+  ]}
+  correct={3}
+  explanation="A transformer is a function, not a database: given the same input it computes the output fresh each time, and no state survives between calls. Anything that looks like 'memory' in a chat product is the application re-sending history inside the prompt. Confusing the context window with memory is one of the most common beginner mistakes."
+/>
+
+<Question
+  prompt="Why do providers typically charge 3 to 5 times more for output tokens than input tokens?"
+  options={[
+    { text: "Decode generates output tokens one at a time, which is sequential and harder to batch than the parallel prefill" },
+    { text: "Output tokens carry more information than input tokens" },
+    { text: "It is a pricing trick to encourage shorter prompts" },
+    { text: "Output tokens come from a larger vocabulary" }
+  ]}
+  correct={0}
+  explanation="Prefill processes the whole input in one highly parallel matrix multiply, so its cost amortizes well. Decode must produce each output token sequentially, with every token depending on all previous ones — work that cannot be parallelized within a single response. The price gap reflects that compute asymmetry, not information content or marketing."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Training vs. inference](./training-vs-inference.md)

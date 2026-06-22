@@ -1,0 +1,12 @@
+---
+description: Project onboarding and Makefile workflow
+alwaysApply: true
+---
+
+# Project workflow
+
+- Read `CLAUDE.md` at the repo root first.
+- Use `make setup` on first clone, then `make dev` for local development.
+- Use `make test` or `make verify` before finishing a task.
+- Never commit `.env` — copy from `.env.example` when needed.
+- Keep changes scoped to what the user asked for.

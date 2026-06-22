@@ -158,6 +158,46 @@ The job title might be "AI Engineer," "Senior MLE," "Applied AI Engineer," "AI P
 - **Forgetting the Internal AI Productivity team exists.** A Cursor rollout to 2,000 engineers is its own program — security review, license management, prompt-history governance, IP-leakage testing. Bolting it onto the AI Platform team starves both.
 :::
 
+<Quiz id="enterprise-ai-team-structure-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="How should an AI Platform team's success be measured, according to the page?"
+  options={[
+    { text: "Number of platform features shipped per quarter" },
+    { text: "Adoption of its paved roads by feature teams" },
+    { text: "Total AI revenue generated across the company" },
+    { text: "Headcount growth of the platform function" }
+  ]}
+  correct={1}
+  explanation="Platform OKRs are about paved-road adoption, not features shipped: one eval feature that 90% of AI features run inside delivers more than ten features nobody uses. 'Features shipped' is the tempting answer because that is how feature teams are judged — which is exactly the cultural shift the page highlights."
+/>
+
+<Question
+  prompt="Why does the page warn against putting the AI Platform team and the Responsible AI team under the same VP?"
+  options={[
+    { text: "It creates duplicate budgets that finance will cut" },
+    { text: "The platform team would slow down governance reviews" },
+    { text: "They have legitimately different incentives — adoption versus careful review — and one leader will favor one side" },
+    { text: "Responsible AI is legally required to report to the board" }
+  ]}
+  correct={2}
+  explanation="The platform team wants adoption and shipping; the governance team wants careful review. Concentrating both under one leader produces either over-shipping or over-blocking. The other options sound plausible as org-design trivia, but the page's argument is specifically about opposing incentives, not budgets or legal mandates."
+/>
+
+<Question
+  prompt="What is the 'named partners' pattern for Risk, Legal, Privacy, and Security?"
+  options={[
+    { text: "Each function builds its own dedicated AI review team" },
+    { text: "Feature teams hire embedded lawyers and privacy officers" },
+    { text: "AI reviews rotate across all available reviewers to spread knowledge" },
+    { text: "Each function designates one or two people who become its AI specialists and handle reviews repeatedly" }
+  ]}
+  correct={3}
+  explanation="The healthy pattern is continuity: the same few people who already understand your gateway architecture handle every AI review. Rotating reviewers sounds fair and knowledge-spreading, but it is the unhealthy pattern the page calls out — a fresh privacy lawyer every review means each review starts from scratch."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [AI Portfolio Planning](./03-planning.md) — how the AI work for the year actually gets decided.

@@ -218,6 +218,46 @@ Forty lines. Parallel calls. Error-tolerant. Step cap. This is 80% of what every
 Treat it like an API contract: stable names, clear descriptions, validated inputs, structured errors. Sloppy tool definitions → unreliable agents. Tight ones → robust ones.
 :::
 
+<Quiz id="function-calling-deep-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="The model returns three independent get_weather calls in one response. What does the page recommend?"
+  options={[
+    { text: "Execute them one at a time in the order returned, since order may matter" },
+    { text: "Ignore all but the first call to save tokens" },
+    { text: "Execute them concurrently with asyncio.gather, then append all three results" },
+    { text: "Make three separate LLM calls, one per city" }
+  ]}
+  correct={2}
+  explanation="Parallel tool calls in one response are ones the model judged independent — running them concurrently turns about 900ms of serial lookups into about 300ms, and that saving multiplies across an agent loop. Running them serially is the documented beginner mistake; if ordering ever actually matters, the tool itself should enforce it rather than your code assuming a sequence."
+/>
+
+<Question
+  prompt="You need the model to ALWAYS call extract_invoice and never answer in plain text. The right mechanism is:"
+  options={[
+    { text: "Set tool_choice to that specific function in the API call" },
+    { text: "Add 'you MUST use the extract_invoice tool' to the system prompt" },
+    { text: "Delete every other tool so it has no alternative" },
+    { text: "Raise the temperature so the model explores tool use more" }
+  ]}
+  correct={0}
+  explanation="The API has a dedicated knob: forcing a named tool guarantees the call, every time. Begging in the system prompt is the tempting habit, but it's probabilistic — the model can still ignore it — and the page flags it as exactly the mistake to avoid when a parameter gives you a hard guarantee. Even with one tool, the default auto mode lets the model answer in plain text."
+/>
+
+<Question
+  prompt="While streaming, you call json.loads on the tool-call arguments after each chunk and it keeps throwing. Why?"
+  options={[
+    { text: "The provider encrypts arguments until the stream finishes" },
+    { text: "Arguments arrive incrementally, so the buffer is incomplete JSON mid-stream" },
+    { text: "Tool arguments switch to a different format during streaming" },
+    { text: "json.loads cannot handle strings containing city names" }
+  ]}
+  correct={1}
+  explanation="Tool arguments stream character by character just like text, so mid-stream your buffer holds a fragment that isn't valid JSON yet. Use a partial-JSON parser if you want live UI as args arrive, or simply wait for the stream to finish before parsing — and remember you can never execute the tool until the arguments are complete."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [MCP — Model Context Protocol](./mcp.md)

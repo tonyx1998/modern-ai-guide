@@ -165,6 +165,46 @@ If you can't articulate which agent in your system uniquely makes the result bet
 Every multi-agent system should be measured against the same task solved by a single agent with the same tools and a careful prompt. If multi-agent doesn't win that comparison, ship the single agent.
 :::
 
+<Quiz id="multi-agent-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Your single support-ticket classifier is wrong 15% of the time. A teammate proposes adding a second 'verifier agent' to double-check it. The page's take:"
+  options={[
+    { text: "Good idea — verification layers reliably halve error rates" },
+    { text: "Fix the single classifier first — better prompt, examples, model, and a real eval; a verifier mostly adds latency and re-stamps the same errors" },
+    { text: "Good idea, but only if the verifier uses the same model" },
+    { text: "Replace both with a fine-tuned classifier immediately" }
+  ]}
+  correct={1}
+  explanation="A second agent rarely fixes the first one's quality problems — it usually doubles them, since the verifier consumes the classifier's output and tends to confirm it with a 'vetted' stamp. The questions to ask first: is the prompt clear, does it see enough examples, is the model right-sized, and is the eval big enough to know WHICH 15% fails? The verifier reflex is exactly the over-application the page warns about."
+/>
+
+<Question
+  prompt="Your 'multi-agent system' is three LLM stages that always run in the same fixed order, decided at design time. The page says:"
+  options={[
+    { text: "That's a chain, not multi-agent — multi-agent earns the name when the model decides who to call next" },
+    { text: "That's a hierarchical multi-agent system" },
+    { text: "That's adversarial debate" },
+    { text: "Any system with more than one LLM call counts as multi-agent" }
+  ]}
+  correct={0}
+  explanation="When the handoff structure is fixed at design time, you have a pipeline — and that's a good thing: chains are predictable and debuggable. Multi-agent earns its keep when the model dynamically decides who handles what next. The page is blunt about calling chains 'multi-agent' for the resume; the label matters because it sets expectations about complexity and failure modes."
+/>
+
+<Question
+  prompt="Before shipping a multi-agent design, what comparison does the page insist on?"
+  options={[
+    { text: "Benchmark each individual agent against a frontier model" },
+    { text: "Compare against a system with no LLM at all" },
+    { text: "A/B test two different multi-agent frameworks" },
+    { text: "Measure it against a single agent with the same tools and a careful prompt — if multi-agent doesn't win, ship the single agent" }
+  ]}
+  correct={3}
+  explanation="The single-agent baseline is the honest comparison: same tools, same task, one well-prompted agent. In 2026, strong workhorse models with good tools handle 80%+ of what people reach for multi-agent to solve, so without this baseline you can't know whether the extra latency, cost, and debugging surface bought anything. If you can't articulate which agent uniquely improves the result, you don't need multi-agent yet."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Context engineering](./context-engineering.md)

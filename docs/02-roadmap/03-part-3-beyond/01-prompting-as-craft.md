@@ -10,6 +10,10 @@ description: Context engineering — the entire model input as designed artifact
 
 > **In one line:** "Prompt engineering" was about wording. **Context engineering** is about treating the entire model input — system prompt, examples, retrieved chunks, tool definitions, schema — as a designed artifact you version, measure, and iterate on.
 
+:::tip[In plain English]
+When people say "prompt engineering," they usually mean fiddling with the wording of one message. Context engineering is the bigger, more honest version: everything the model sees — the instructions, the examples, the tool descriptions, the retrieved documents — is something you designed, and all of it shapes the answer. So treat that whole package the way you treat code: keep it in version control, review changes, and measure whether each change actually helped. This page is about building that habit.
+:::
+
 The discipline shift in 2024–2026: stop thinking of "the prompt" as a string and start thinking of it as a *program* whose source is your context window. Same engineering rigor as code: versioned in git, reviewed in PRs, measured by evals, regression-tested on every change.
 
 ## 1. What's in "the context"
@@ -204,5 +208,45 @@ This is the loop. Every prompt change comes from a specific failure case. Every 
 - **Chasing prompting tricks from Twitter without testing.** Most reported "magic phrases" don't survive eval. Trust your eval, not anecdotes.
 - **Not versioning prompts in production logs.** When v3 regresses and you don't know which version generated yesterday's bad output, debugging is impossible.
 :::
+
+<Quiz id="prompting-as-craft-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What does 'context engineering' treat as the designed artifact?"
+  options={[
+    { text: "Just the wording of the user message" },
+    { text: "The entire model input - system prompt, examples, tool definitions, retrieved chunks, and schema" },
+    { text: "Only the system prompt" },
+    { text: "The model's training data" }
+  ]}
+  correct={1}
+  explanation="The shift from 'prompt engineering' to context engineering is treating everything the model sees on a call as one designed artifact. Tweaking the user prompt is one knob out of seven."
+/>
+
+<Question
+  prompt="According to the page, which prompting pattern does NOT survive careful evaluation?"
+  options={[
+    { text: "Explicit chain-of-thought for cheap models on hard problems" },
+    { text: "Decomposing a hard task into extract, reason, synthesize stages" },
+    { text: "Threatening or rewarding the model, like offering a '$100 tip'" },
+    { text: "Adding a self-critique turn for high-stakes outputs" }
+  ]}
+  correct={2}
+  explanation="Reported gains from threats and rewards evaporate under careful eval - don't ship them. CoT, decomposition, and self-critique are listed among the patterns that genuinely work."
+/>
+
+<Question
+  prompt="In the eval-driven prompt loop, where should each prompt change come from?"
+  options={[
+    { text: "A specific failure case found by running the eval set" },
+    { text: "A sense that the new version reads better" },
+    { text: "The latest prompting trick trending on social media" },
+    { text: "A goal of making the prompt as short as possible" }
+  ]}
+  correct={0}
+  explanation="The loop is: run the eval, look at the worst cases, identify the missing rule or example, add it, and measure again. No change merges on vibes - every change is tied to a measured failure."
+/>
+
+</Quiz>
 
 → Next: [Eval mindset](./02-eval-mindset.md) — how to think about measurement, LLM-judge biases, and the calibration problem.

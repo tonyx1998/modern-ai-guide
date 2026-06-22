@@ -85,6 +85,46 @@ Quick self-check:
 
 If any of those land awkwardly, re-read the inverted trade-offs table before moving on.
 
+<Quiz id="solo-ai-mindset-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the single mental shift this page says unlocks solo AI work in 2026?"
+  options={[
+    { text: "Fine-tune a small open model early so you control quality" },
+    { text: "Assume the frontier API is the answer until cost, latency, or privacy forces a change" },
+    { text: "Start by benchmarking every provider to pick the best model" },
+    { text: "Self-host inference so you are never dependent on a vendor" }
+  ]}
+  correct={1}
+  explanation="The page's highlight is frontier-API-by-default: write the prompt for a frontier model first and only deviate when cost, latency, or privacy forces your hand. Benchmarking providers first sounds responsible, but the page says to start with the prompt and the default model — at hobby volume the frontier API costs less than a coffee subscription, so comparison-shopping is a distraction."
+/>
+
+<Question
+  prompt="In the four-question filter, what should you do with a tool if removing it would NOT break the demo?"
+  options={[
+    { text: "Add it anyway as long as it has a free tier" },
+    { text: "Add it if you could write it yourself in an afternoon" },
+    { text: "Add it only if a teammate requests it" },
+    { text: "Don't add it — defer anything that isn't load-bearing for the demo" }
+  ]}
+  correct={3}
+  explanation="Question 1 of the filter is 'Does removing this break the demo?' — only a yes earns a tool a place in the stack; everything else is deferred. The free-tier option is tempting because question 3 mentions managed free tiers, but that question is about choosing a managed service over a framework, not a license to add non-essential tools."
+/>
+
+<Question
+  prompt="According to this page, why does fine-tuning almost never pay off at solo scale?"
+  options={[
+    { text: "A frontier model with a good prompt beats the fine-tune on quality and total cost, and you can swap models when a better one ships" },
+    { text: "Fine-tuning is technically impossible without an H100 cluster" },
+    { text: "Fine-tuned models cannot be deployed on managed runtimes" },
+    { text: "Providers prohibit fine-tuning for commercial side projects" }
+  ]}
+  correct={0}
+  explanation="The page argues the frontier model plus a good prompt wins on quality, avoids data labeling and training costs, and stays swappable when better models ship — so the fix is to delete the fine-tuning branch and rewrite the prompt. The H100 option is tempting because the page mocks H100-cluster culture, but the argument is economic and practical, not that fine-tuning is impossible."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [What Kinds of AI Side Projects Actually Work Solo](./02-project-types.md) where we'll narrow the universe of "AI ideas" to the ones that finish.

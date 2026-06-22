@@ -102,6 +102,46 @@ The mindset shapes everything else in this chapter:
 - **Optimizing for the AI specialist on the team.** The senior AI engineer who already knows everything isn't the customer of the platform. The back-end engineer adding their first AI feature is — and the best platform metric is "minutes from `git clone` to a passing eval on a new AI feature."
 :::
 
+<Quiz id="enterprise-ai-mindset-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="According to this page, how should an enterprise AI engineer view governance artifacts like model cards, eval results, and audit logs?"
+  options={[
+    { text: "As overhead to be minimized so features ship faster" },
+    { text: "As documents the Legal team produces after launch" },
+    { text: "As part of the deliverable itself — the work is not done without them" },
+    { text: "As requirements that apply only to High-tier features" }
+  ]}
+  correct={2}
+  explanation="The page's core claim is that governance is the work, not a tax on the work: an enterprise engineer measures the week in shipped features with the governance artifacts attached. Treating them as overhead to minimize is the startup reflex the page warns against — at enterprise stakes, a careless AI deploy is a regulatory event, not an embarrassing tweet."
+/>
+
+<Question
+  prompt="Who is the design point for an enterprise AI platform, according to the page?"
+  options={[
+    { text: "The competent generalist engineer adding their first AI feature" },
+    { text: "The AI researcher doing novel prompt engineering" },
+    { text: "The most senior AI specialist on each team" },
+    { text: "The CTO and the AI governance committee" }
+  ]}
+  correct={0}
+  explanation="Enterprise platforms are optimized for the median engineer — the back-end developer who has never trained a model and just wants to add a safe, compliant AI feature. The 'AI researcher' answer is tempting because the practices look sophisticated, but the page explicitly says they are not built for specialists; specialists already know the tricks."
+/>
+
+<Question
+  prompt="What does the page say about shadow AI — engineers routing around official governance?"
+  options={[
+    { text: "It is harmless as long as no customer data is involved" },
+    { text: "It should be eliminated through stricter enforcement and monitoring" },
+    { text: "It only happens at companies without a governance function" },
+    { text: "It is more dangerous than no governance, and the fix is making the paved road genuinely faster" }
+  ]}
+  correct={3}
+  explanation="Shadow AI gives the appearance of control with none of the substance, which the page calls more dangerous than no governance at all. The tempting answer is stricter enforcement, but the page argues the opposite: if engineers route around governance, governance has lost — fix the paved road rather than blaming the engineers."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [Team Structure at This Scale](./02-team-structure.md) to see who actually does this work in an enterprise AI org.

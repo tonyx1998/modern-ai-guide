@@ -211,6 +211,46 @@ One surprise: the PII scrubber initially redacted *every* ticket number because 
 - [ ] Eval suite in CI, blocking on regression
 - [ ] Cost + quality dashboards live
 
+<Quiz id="lifecycle-harden-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="How does the page's recommended prompt structure defend against prompt injection?"
+  options={[
+    { text: "It runs every user message through a separate classifier model first" },
+    { text: "It clearly delimits user content and retrieved docs and instructs the model to treat them as untrusted data, never as instructions" },
+    { text: "It strips all punctuation from user input before the call" },
+    { text: "It relies on the model's built-in safety training to ignore injected commands" }
+  ]}
+  correct={1}
+  explanation="The structure separates SYSTEM instructions from RETRIEVED_DOCS and USER_CONTENT, wraps user text in explicit delimiters, and tells the model both are untrusted data — never instructions. The page is blunt that safety training alone is not enough for prompt injection; you need architectural defenses like delimiters, tool sandboxing, and authorization."
+/>
+
+<Question
+  prompt="Where does the page say the hard daily spend cap should live?"
+  options={[
+    { text: "Only in application code, so it can change without provider access" },
+    { text: "Only at the provider console, since that is the authoritative source" },
+    { text: "Both at the provider console and in application code — belt and suspenders" },
+    { text: "In the CI pipeline, gating deploys whenever spend rises" }
+  ]}
+  correct={2}
+  explanation="The checklist says to set the cap in the provider console, not just in code — belt and suspenders, because a single misconfigured loop can burn thousands in a weekend. A related trip-up: if your spend tracker depends on the same provider API you are capping, an outage breaks the cap too, so track spend locally as well."
+/>
+
+<Question
+  prompt="Why does the page insist on a kill switch even when you already have fast rollback?"
+  options={[
+    { text: "A rollback takes minutes while a kill switch takes seconds — during an incident you want both" },
+    { text: "Rollbacks erase the logs you need for the postmortem" },
+    { text: "Kill switches are required by most provider terms of service" },
+    { text: "Rollback cannot change feature-flag state" }
+  ]}
+  correct={0}
+  explanation="The page addresses this exact objection: 'We don't need a kill switch — we have rollback' is a trip-up because rollback takes minutes while a kill switch takes seconds. When something goes wrong you want a single toggle that turns AI off and falls back to non-AI behavior immediately, then rollback as the slower, fuller fix."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Deploy](./08-deploy.md)

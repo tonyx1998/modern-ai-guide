@@ -109,6 +109,46 @@ Result:
 The product is no worse for the user. The "chat" instinct was the bug.
 :::
 
+<Quiz id="sync-vs-async-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="When is sync streaming the right pattern?"
+  options={[
+    { text: "For every AI feature, since chat is the standard UI" },
+    { text: "For tasks that take over a minute" },
+    { text: "When the user is actively waiting and expects a sub-30-second response" },
+    { text: "For overnight batch processing of 10,000 items" }
+  ]}
+  correct={2}
+  explanation="Streaming fits conversational, actively-watched interactions where tokens reduce perceived latency and the user can interrupt. The page's core warning is the opposite instinct: forcing every AI task into a chat box even when the user shouldn't be sitting there waiting."
+/>
+
+<Question
+  prompt="Why shouldn't you hold an HTTP request open for 60+ seconds, even if it works in dev?"
+  options={[
+    { text: "Production load balancers, CDNs, and function platforms will time it out" },
+    { text: "HTTP cannot carry streamed tokens" },
+    { text: "Provider terms of service forbid it" },
+    { text: "It makes the model respond less accurately" }
+  ]}
+  correct={0}
+  explanation="The production stack will kill the connection somewhere — in the worked example, the platform's 60s timeout killed half of all requests. For long user-facing tasks, use start-then-poll or server-sent progress events instead of an open request. 'It works in dev' is exactly the trap."
+/>
+
+<Question
+  prompt="What does going async unlock that sync cannot?"
+  options={[
+    { text: "Lower model quality requirements" },
+    { text: "Faster token generation" },
+    { text: "Better conversational flow" },
+    { text: "Batch APIs at about 50% discount, plus retries and durability" }
+  ]}
+  correct={3}
+  explanation="Batch endpoints trade hours of latency for roughly half the cost; async also gives retries that don't burn the user's session, concurrency caps, and pause/resume across deploys. Conversational flow is the one thing async is WORSE at — a chat that takes 30 seconds to respond is a dead chat."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [On-prem vs cloud](./09-on-prem-vs-cloud.md).

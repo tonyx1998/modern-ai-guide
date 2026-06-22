@@ -241,6 +241,46 @@ Now write it yourself — same loop, same `step = size − overlap`:
   hint="The step between window starts is size − overlap. Loop `start` from 0 while it's less than the length, pushing tokens.slice(start, start + size) each time."
 />
 
+<Quiz id="chunking-strategies-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Your RAG answers are bad. You've already upgraded the embedding model and added a reranker, each gaining a few percent, but quality is still poor. What does the page say to check first?"
+  options={[
+    { text: "Switch to a bigger generation model" },
+    { text: "Increase top-K from 5 to 20" },
+    { text: "The chunking strategy — bad chunking can cost 50%+ and no downstream upgrade recovers it" },
+    { text: "Add a second reranker on top of the first" }
+  ]}
+  correct={2}
+  explanation="Chunking determines what the retriever can possibly find — if the answer was severed across chunks or buried in a giant one, no model upgrade or reranker can recover it. Downstream improvements each gain 5 to 15%; chunking failures can cost 50% or more. The page notes most RAG-quality complaints trace back to chunking, not retrieval."
+/>
+
+<Question
+  prompt="What is the purpose of keeping 10 to 20% overlap between adjacent chunks?"
+  options={[
+    { text: "A fact that straddles a chunk boundary isn't severed and lost to retrieval" },
+    { text: "Overlap makes the index smaller and cheaper" },
+    { text: "It increases the embedding model's accuracy" },
+    { text: "It removes the need for a reranker" }
+  ]}
+  correct={0}
+  explanation="Without overlap, a sentence cut at a boundary lives half in one chunk and half in the next — neither half matches a query about it. Overlap keeps the fact whole in at least one chunk. But more isn't better: past about 30% overlap you're storing duplicates and your top-K fills with near-identical chunks from the same paragraph."
+/>
+
+<Question
+  prompt="In hierarchical (parent-document) retrieval, what do you index and what do you hand the LLM?"
+  options={[
+    { text: "Index whole documents; hand the LLM the single best sentence" },
+    { text: "Index large parents; hand the LLM the small child chunk" },
+    { text: "Index everything at one fixed size and return exactly what matched" },
+    { text: "Index small chunks for precise matching; return the larger parent section for context" }
+  ]}
+  correct={3}
+  explanation="Small chunks make search precise — a 200-token chunk matches a specific question sharply. But the model answers better with surrounding context, so you map the matched chunk to its parent section and return that instead. The second option reverses the two roles, which is the easy mix-up since both involve two sizes; remember: search small, read big."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Reranking](./reranking.md)

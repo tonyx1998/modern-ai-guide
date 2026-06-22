@@ -10,6 +10,10 @@ description: How a new AI vendor actually gets approved at a 500+ engineer enter
 
 > **In one line:** A new AI vendor at a 500+ engineer enterprise takes 3–9 months to onboard — Security, Privacy, Legal, AI/Responsible-Use, and Procurement each have their own review — and the right play is to start all five clocks the same week you start the proof-of-concept, not after.
 
+:::tip[In plain English]
+At home, buying software means typing in a credit card. At a big company, buying an AI tool means five separate teams — Security, Privacy, Legal, the responsible-AI group, and the purchasing department — each examine the vendor before anyone can use it. That examination takes 3 to 9 months, and it can quietly become the longest part of your whole project. The trick this page teaches: start the paperwork the same week you start trying out the tool, so both finish around the same time.
+:::
+
 :::tip[Where this fits]
 The [Architecture page](./04-architecture.md) lists the vendors a typical enterprise stack uses (Bedrock, Azure OpenAI, Vertex, Portkey, Vespa, Snowflake, Datadog, etc.). This page is the operational view: what it actually takes to add a new vendor to that list, why it takes so long, and what an engineer can do to make procurement *not* the bottleneck on a launch.
 :::
@@ -168,6 +172,46 @@ A "Vendor Relationship Manager" role often exists for major vendors at large ent
 - **Forgetting that vendor approval includes ongoing obligations.** A signed contract isn't "done" — annual SOC 2 refreshes, sub-processor updates, contract renewals all need owners.
 - **Engineering treating procurement as someone else's problem.** The engineer who shepherds their vendor through procurement gets months faster than the engineer who waits passively. Procurement is part of the project.
 :::
+
+<Quiz id="enterprise-procurement-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="When should vendor onboarding start, relative to the engineering proof-of-concept?"
+  options={[
+    { text: "After the POC succeeds and the team commits to the vendor" },
+    { text: "After the budget is approved for the next fiscal year" },
+    { text: "Only once Legal requests it" },
+    { text: "The same week the POC starts, so all five review clocks run in parallel" }
+  ]}
+  correct={3}
+  explanation="Security, Privacy, Legal, AI review, and Procurement each take weeks to months; starting them after the POC adds 3–9 months to the timeline. Waiting until the POC proves out feels prudent — why do paperwork for a tool you might reject? — but the page's playbook is to run both clocks together so they finish around the same time."
+/>
+
+<Question
+  prompt="Why does buying through a hyperscaler marketplace (AWS, Azure, GCP) accelerate vendor onboarding?"
+  options={[
+    { text: "Marketplace tools skip security review entirely" },
+    { text: "It inherits an existing approved contract path and vendor status" },
+    { text: "Hyperscalers guarantee the vendor's product quality" },
+    { text: "Marketplace purchases fall below procurement thresholds" }
+  ]}
+  correct={1}
+  explanation="The contract relationship with the hyperscaler already exists, so the marketplace SKU rides an approved path — Bedrock-mediated access to Anthropic, for example, is often much faster than a direct enterprise contract. Nothing is skipped entirely; the surface that needs review shrinks. That distinction is why the skip-security answer is wrong."
+/>
+
+<Question
+  prompt="How does the central AI gateway shorten the procurement surface for new model providers?"
+  options={[
+    { text: "It hides new vendors from the security team" },
+    { text: "It bundles all vendors into a single annual review" },
+    { text: "Adding a provider becomes a registry-and-routing change instead of a new app-level integration, so reviewers examine a much smaller surface" },
+    { text: "Gateway vendors handle procurement on your behalf" }
+  ]}
+  correct={2}
+  explanation="Without a gateway, trying a new model means new auth, observability, and exception handling reviewed as a full application integration. Behind a gateway, it is a model registry entry and a routing policy — and engineering ships in days once approval lands. The page calls this one of the platform's highest-leverage benefits, and one that almost never appears in its stated value proposition."
+/>
+
+</Quiz>
 
 ## What's next
 

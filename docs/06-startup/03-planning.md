@@ -131,6 +131,46 @@ Notice what's missing: no "build an agent." No "add fine-tuning." No vanity feat
 - **Confusing "eval bar" with "feature done."** Hitting the eval bar gets you to launch readiness, not to "done." Real customer evidence is the only sign-off that counts.
 :::
 
+<Quiz id="startup-ai-planning-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="In the risk-tiering framework, what does a Tier-0 (catastrophic failure cost) feature require?"
+  options={[
+    { text: "Standard observability and free iteration" },
+    { text: "Human-in-the-loop, an eval bar above 95%, and quarterly external review" },
+    { text: "A weekly trace sampling and a monthly kill-switch test" },
+    { text: "Nothing special — tiers only affect documentation" }
+  ]}
+  correct={1}
+  explanation="Tier 0 covers features where failure means legal, safety, or financial damage — medical advice, contract generation — so a human must stay in the loop and the eval bar is the highest. The weekly-sampling option describes Tier 2, which is the tempting confusion because most teams default-tier everything as Tier 2; the page calls that wrong in both directions."
+/>
+
+<Question
+  prompt="What is the right first-year sequencing instinct for AI features at a B2B startup?"
+  options={[
+    { text: "Ship the flashiest agent demo first to win customers" },
+    { text: "Build all four quarters of features in parallel" },
+    { text: "Start with fine-tuning so quality is differentiated from day one" },
+    { text: "Build boring foundational retrieval first — it makes the flashy features cheap later" }
+  ]}
+  correct={3}
+  explanation="The recommended sequence is retrieval in Q1, one narrow high-value feature in Q2, an assistant on top of the retrieval in Q3, and a tightly scoped agentic feature only in Q4. Agent-first is the seductive path because it demos well — but the page traces it to six lost months: agent, then realize you need retrieval, then evals, then the agent fails because retrieval is bad."
+/>
+
+<Question
+  prompt="During discovery for a Tier-1 feature, the v0 prompt inspection shows the model cannot do the task at acceptable quality. What does the discipline require?"
+  options={[
+    { text: "Commit the sprint anyway — quality improves during implementation" },
+    { text: "Immediately fine-tune a custom model for the task" },
+    { text: "Do not commit the sprint — iterate the approach or push the feature to next quarter" },
+    { text: "Lower the eval bar so the feature can pass" }
+  ]}
+  correct={2}
+  explanation="Discovery exists to produce a real go/no-go before the team commits: interviews, 20 seed examples, and manual inspection of 30 outputs. 'Quality improves during implementation' is the optimistic trap — startups that skip this gate turn two-week sprints into six-week features and velocity collapses. Lowering the bar just relocates the failure to production."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [AI Product Design](./04-design.md) where we cover the UX patterns specific to AI features and how designers pair with engineering.

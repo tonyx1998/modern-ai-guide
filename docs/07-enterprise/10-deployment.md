@@ -146,6 +146,46 @@ Total elapsed time: 4 days. Total active engineering time: maybe 4 hours.
 - **Treating all AI changes as the same risk.** A prompt-clarity edit and a model swap are not the same change. Tier them; let the small ones move fast, gate the big ones hard.
 :::
 
+<Quiz id="enterprise-ai-deployment-change-mgmt-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Why does the page say 'we don't deploy on Friday' is not superstition?"
+  options={[
+    { text: "Model providers do maintenance on weekends" },
+    { text: "Release managers are contractually off on Fridays" },
+    { text: "On-call coverage is thinnest and weekend incidents take longest to detect and recover from" },
+    { text: "Change tickets cannot be filed outside business hours" }
+  ]}
+  correct={2}
+  explanation="The on-call population is thinnest, time-to-detection stretches over the weekend, and recovery pulls people away from the rest of their lives — so the cost of an incident is highest. The other answers invent mechanical restrictions; the page's reasoning is about incident economics, not rules."
+/>
+
+<Question
+  prompt="What are the three layers of kill switches described on the page?"
+  options={[
+    { text: "Feature, model, and tenant" },
+    { text: "Gateway, database, and frontend" },
+    { text: "Regional, national, and global" },
+    { text: "Soft, hard, and emergency" }
+  ]}
+  correct={0}
+  explanation="A feature switch turns one AI feature off (falling back to a non-AI default), a model switch pulls one model out of rotation company-wide, and a tenant switch turns AI off for a single customer. Each has a different owner — which is the point: the right team can act fast at the right scope. And all three are tested quarterly, because an unexercised kill switch is theatrical."
+/>
+
+<Question
+  prompt="What is the Change Advisory Board's actual job when reviewing an AI change?"
+  options={[
+    { text: "Re-reviewing the technical merits of the code and prompt" },
+    { text: "Negotiating the release date with customers" },
+    { text: "Approving the feature's risk tier" },
+    { text: "Confirming the ticket is complete: real rollback plan, current kill switch, sized blast radius, appropriate window" }
+  ]}
+  correct={3}
+  explanation="The CAB is not a second code review — technical merit was settled in code review and prompt review. Its job is operational readiness, which is why most CAB reviews take 5–10 minutes. Re-litigating technical decisions is the failure mode the page calls a Soviet-style approval committee."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [Observability & Audit Logging](./11-observability.md) — what you watch once the change is live.

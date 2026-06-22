@@ -9,6 +9,10 @@ description: IDE-native coding assistant. The context-retrieval + apply-diff + p
 
 > **In one line:** Cursor is a VS Code fork with three tightly-coupled AI surfaces — predictive autocomplete (Cursor Tab), chat with codebase context (Cmd-K / Cmd-L), and agent mode (Composer) — and the engineering interesting bit is how it retrieves the *right* code into context within a tight latency budget across all three surfaces.
 
+:::tip[In plain English]
+Cursor is a code editor with AI built into every part of it — it predicts your next edit as you type, answers questions about your codebase, and can make changes across many files at once. The hard engineering problem isn't the AI itself but feeding the model the right slice of a huge codebase fast enough that the tool never feels slow. Study this page because its core patterns — different models for different speed needs, indexing a codebase several ways at once, and applying edits as reviewable diffs — show up in almost every serious AI product, not just code editors.
+:::
+
 ## The product
 
 A code editor with AI deeply integrated, not bolted on. Three primary AI features:
@@ -87,12 +91,59 @@ This is the unsexy engineering that makes "the AI edits your code" not become "t
 - **Writing your own editor from scratch.** The VS Code fork strategy works; "make an editor with AI in it" has killed many startups. Build on shoulders.
 - **Skipping the index-staleness problem.** A stale index produces confidently wrong answers. Hash the repo state into your retrieval cache key.
 
+:::caution[What people get wrong when copying this]
+- **Copying the stack snapshot instead of the shape.** The durable lesson is the five-layer architecture (client, retrieval, context assembly, model routing, diff apply) — not which specific models Cursor happens to use this quarter.
+- **Underestimating the fast-model problem.** Teams bolt a frontier model onto autocomplete, get 2-second completions, and conclude "users don't want AI autocomplete" — when the real issue was the latency budget.
+- **Shipping embeddings-only retrieval because it demos well**, then discovering exact-symbol lookups fail in ways users notice immediately.
+- **Skipping the anchor-drift and index-staleness work** because it's invisible in a demo. That unsexy machinery is exactly what separates a toy from a product.
+:::
+
 ## Sources
 
 - Cursor's engineering blog: cursor.com/blog (Tab autocomplete training, indexing strategy posts).
 - AI Engineer Summit talks by Cursor founders (2024–2026).
 - Founder interviews on Lex Fridman, Lenny's Podcast, Latent Space.
 - Public discussion in Cursor's Discord / forum about retrieval and apply-diff.
+
+<Quiz id="case-cursor-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Why does Cursor use three different model tiers for Tab autocomplete, Chat, and Composer instead of one model for everything?"
+  options={[
+    { text: "Each surface is owned by a different team with its own provider contract" },
+    { text: "It lets Cursor charge separately for each feature" },
+    { text: "The surfaces have incompatible requirements - autocomplete needs sub-200ms responses a frontier model cannot hit, while agent work needs quality a fast model cannot deliver" },
+    { text: "Using multiple providers avoids rate limits on any single API" }
+  ]}
+  correct={2}
+  explanation="The split is driven by latency and quality budgets. A frontier model is too slow for keystroke-level autocomplete, and a fast model produces bad multi-file edits. Latency-tiering models by surface is the durable lesson: features with different latency budgets should not share a model."
+/>
+
+<Question
+  prompt="Why does Cursor's codebase index combine embeddings, AST/symbol data, and file metadata rather than relying on embeddings alone?"
+  options={[
+    { text: "Each representation catches what the others miss - embeddings handle semantic queries while symbol data handles precise lookups like a function definition" },
+    { text: "Embeddings are too expensive to compute for an entire repository" },
+    { text: "AST data is required for the editor to render syntax highlighting" },
+    { text: "Embeddings cannot be stored locally, so a fallback is needed for privacy mode" }
+  ]}
+  correct={0}
+  explanation="Embedding similarity alone misses exact-symbol lookups, and symbol search alone misses semantic questions like 'where is auth handled?'. Combining multiple representations of the same repo is the pattern to copy for any code-retrieval system."
+/>
+
+<Question
+  prompt="In Cursor's apply-diff design, what happens when the context lines anchoring a proposed edit have drifted because the user kept typing?"
+  options={[
+    { text: "The edit is applied anyway at the original line numbers" },
+    { text: "The user is asked to manually merge the conflicting changes" },
+    { text: "The edit is silently discarded and the user must re-ask" },
+    { text: "The apply step asks the model to re-emit the edit using the current file contents" }
+  ]}
+  correct={3}
+  explanation="Diffs are anchored by surrounding context lines, and if those anchors no longer match, the model re-emits the edit against current context. This verification step is what keeps 'the AI edits your code' from becoming 'the AI corrupts your code'."
+/>
+
+</Quiz>
 
 ---
 

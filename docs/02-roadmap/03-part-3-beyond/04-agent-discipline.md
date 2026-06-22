@@ -10,6 +10,10 @@ description: When agents are the right shape, when they're not, and the operatio
 
 > **In one line:** Most "AI agent" failures aren't intelligence failures — they're discipline failures. Caps, budgets, observability, human-in-the-loop on writes, and the judgment to use simpler patterns when they'd do.
 
+:::tip[In plain English]
+The word "agent" gets used for everything, but it has a precise shape: a model choosing actions in a loop, where the next step depends on what the previous step returned. Most AI features don't need that — a single call, a fixed pipeline, or a simple branch covers them. And when you do build an agent, the wins come from boring discipline: caps on iterations and spending, a confirmation step before destructive actions, and logs you can replay. This page is about choosing the simple shape when it works and constraining the loop when it doesn't.
+:::
+
 You built an agent in [Stage 8](../01-part-1-from-zero/09-stage-8-agent.md). This page is about *when to use one* (less often than the hype suggests), *how to design the loop* (constraints first, capabilities second), and *the failure modes* (which all repeat across teams).
 
 ## 1. The "is this really an agent" question
@@ -193,5 +197,45 @@ If any of these are missing, the agent is in demo state, not production state.
 - **Multi-agent for problems single agents would solve.** Adds debugging surface area and failure modes for marginal gain.
 - **Trusting agent narration over verification.** The agent says "I did X." Always verify X actually happened by checking real-world state, not by trusting the agent's report.
 :::
+
+<Quiz id="agent-discipline-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="According to the page, when is an agent actually the right shape for a task?"
+  options={[
+    { text: "Whenever the task involves more than one LLM call" },
+    { text: "When the sequence of steps itself depends on the model's reasoning, in a loop, with tools" },
+    { text: "When you want higher quality answers from a single call" },
+    { text: "Whenever a pipeline feels too slow to build" }
+  ]}
+  correct={1}
+  explanation="The decision tree goes single call, then pipeline, then workflow, and only then agent. Agents earn their complexity only when the step sequence is genuinely dynamic - most production AI stops earlier."
+/>
+
+<Question
+  prompt="A tool returns 10MB of JSON and blows out the context window for subsequent reasoning. What does the page recommend?"
+  options={[
+    { text: "Switch to a model with a larger context window" },
+    { text: "Lower the temperature so the model is less distracted" },
+    { text: "Truncate, paginate, or summarize tool outputs before they reach the model" },
+    { text: "Remove the tool from the agent entirely" }
+  ]}
+  correct={2}
+  explanation="This is the 'tool result poisoning' failure mode. The fix is at the agent layer: truncate outputs, paginate large results behind a get_more call, or summarize verbose outputs with a cheap model."
+/>
+
+<Question
+  prompt="The agent reports 'Done - I applied the label and saved the file.' What does the page say you should do?"
+  options={[
+    { text: "Verify by re-fetching the real-world state, since narration is not the action" },
+    { text: "Trust the report - models rarely misreport their own actions" },
+    { text: "Ask the agent to confirm a second time in the same conversation" },
+    { text: "Only verify when the operation was marked destructive" }
+  ]}
+  correct={0}
+  explanation="Agents narrate, and the narration is not the action. Decouple 'the agent says it did X' from 'X actually happened' by re-fetching world state or running an independent deterministic check."
+/>
+
+</Quiz>
 
 → Next: [Cost intuition](./05-cost-intuition.md) — order-of-magnitude estimation and the optimizations that actually move the bill.

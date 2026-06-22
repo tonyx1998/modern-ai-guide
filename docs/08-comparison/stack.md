@@ -125,6 +125,46 @@ The visual cue: **the number of arrows in the diagram is roughly the number of t
 - **Treating "polyglot" as a feature.** Five frameworks and three model providers in your stack is a *cost* enterprises absorb because they can't agree on one — not an aspiration. At solo and startup scale, picking one SDK and one workhorse model end-to-end is a competitive advantage.
 - **Reading the enterprise observability row as a shopping list.** Datadog LLM + Langfuse + corporate SIEM at startup scale is $50K/year for tools whose value is in features you can't yet use. Buy the column you're in, not the column you want on your resume.
 
+<Quiz id="comparison-stack-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="When comparing the solo, startup, and enterprise stacks, what does the page say is the right question to ask?"
+  options={[
+    { text: "Which stack has the best benchmark performance?" },
+    { text: "Which stack is appropriate for my blast radius — since each step up adds capability, cost, and coordination overhead together?" },
+    { text: "Which stack do the most successful companies use?" },
+    { text: "Which stack minimizes the per-token price?" }
+  ]}
+  correct={1}
+  explanation="The question is never 'which is best' — each step up the stack ladder buys capability while also adding cost and coordination overhead. The worked example shows the same doc-Q&A app correctly built three ways: 5 boxes for ~$50/month, 10 boxes for ~$8K, 25+ boxes for $200K+. Each is right for its column, and lifting another column's stack would be a mistake."
+/>
+
+<Question
+  prompt="Why does the page call the internal LLM gateway the load-bearing piece at enterprise scale?"
+  options={[
+    { text: "It is the only way to access frontier models from inside a VPC" },
+    { text: "It improves inference latency by co-locating with the model" },
+    { text: "It eliminates the need for a separate eval platform" },
+    { text: "It centralizes auth, per-team budgets, logging, PII redaction, rate limits, provider failover, and model routing in one chokepoint every team calls" }
+  ]}
+  correct={3}
+  explanation="At enterprise scale the gateway is the control plane: one chokepoint enforcing all the cross-cutting concerns for every team's app, which is why large orgs end up building or heavily customizing their own. Solo doesn't need one (there is only one team), and a startup gets about 80% of the value from a SaaS gateway like Portkey or LiteLLM for $0-$2K/month."
+/>
+
+<Question
+  prompt="A solo dev with a 200-document corpus is about to sign up for Pinecone. What does the page advise?"
+  options={[
+    { text: "Stay on pgvector — it outperforms a hosted vector DB at small scale, costs nothing, and adds zero new ops surface" },
+    { text: "Use Pinecone from day one to avoid a painful migration later" },
+    { text: "Self-host a Qdrant cluster for maximum control" },
+    { text: "Skip vector search entirely and stuff the docs into the context window" }
+  ]}
+  correct={0}
+  explanation="Adopting Pinecone for a 200-document corpus is the first entry in the page's mistakes list: pgvector on the Postgres you already run wins at small scale on performance, price, and operational simplicity. The rule is to reach for a hosted vector DB when you have outgrown pgvector — not in anticipation of growth that may never come."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Ops](./04-ops.md).

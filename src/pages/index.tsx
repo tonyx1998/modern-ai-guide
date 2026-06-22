@@ -79,7 +79,8 @@ const CHAPTERS = [
   {n: '14', t: 'Production Patterns', d: 'What recurs everywhere', to: '/docs/patterns'},
   {n: '15', t: 'Career', d: 'Position yourself', to: '/docs/career'},
   {n: '16', t: 'Case Studies', d: 'Eight shipped systems', to: '/docs/case-studies'},
-  {n: '17', t: 'Glossary', d: 'Every term, defined', to: '/docs/glossary'},
+  {n: '17', t: 'Cutting Edge', d: 'The 2026 frontier', to: '/docs/cutting-edge'},
+  {n: '18', t: 'Glossary', d: 'Every term, defined', to: '/docs/glossary'},
 ];
 
 const FIRST_LESSON = '/docs/foundations/tokens';
@@ -484,13 +485,13 @@ export default function Home(): ReactNode {
                   Start the first lesson <span className="arr">→</span>
                 </Link>
                 <a href="#chapters" className="btn btn-ghost">
-                  Browse all 17 chapters
+                  Browse all 18 chapters
                 </a>
               </div>
               <div className="hero-meta">
                 <div className="stat">
-                  <div className="n display" data-count={17}>
-                    17
+                  <div className="n display" data-count={18}>
+                    18
                   </div>
                   <div className="l">Chapters</div>
                 </div>
@@ -595,7 +596,7 @@ export default function Home(): ReactNode {
           <div className="wrap">
             <div className="sec-head">
               <span className="kicker">What this guide covers</span>
-              <h2 className="display">Six themes, seventeen chapters.</h2>
+              <h2 className="display">Six themes, eighteen chapters.</h2>
               <p>
                 Written so a beginner can follow along while still being useful to working
                 engineers. Read in order, or jump to what you need.
@@ -627,7 +628,7 @@ export default function Home(): ReactNode {
           <div className="wrap">
             <div className="sec-head">
               <span className="kicker">The full path</span>
-              <h2 className="display">Seventeen chapters, one per stop.</h2>
+              <h2 className="display">Eighteen chapters, one per stop.</h2>
               <p>
                 Designed so you can master one topic per page and always know what comes next.
               </p>

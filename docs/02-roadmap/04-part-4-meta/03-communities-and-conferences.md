@@ -10,6 +10,10 @@ description: Where production AI engineers actually congregate. AI Engineer Summ
 
 > **In one line:** The signal is concentrated in a few specific places — AI Engineer Summit, Latent Space, a handful of Discords, and the engineering blogs of the major labs. Everything else is noise with occasional signal.
 
+:::tip[In plain English]
+You don't need to be everywhere — the useful conversations in AI engineering happen in a surprisingly small number of rooms. One practitioner-focused conference, one good podcast, a couple of Discord servers, and a handful of engineering blogs cover most of the real signal. The strategy this page teaches is depth over breadth: pick a couple of communities and actually participate, instead of lurking silently in twenty. Showing up consistently in a few places beats skimming everything.
+:::
+
 ## 1. Conferences worth tracking
 
 ### AI Engineer Summit / AI Engineer World's Fair
@@ -174,5 +178,45 @@ This is sustainable. The "I'll keep up with everything" strategy is how you boun
 - **Networking only when job-hunting.** The networks built reactively don't pay off the way long-term genuine ones do.
 - **Lurking forever.** Sustained silent consumption gets you knowledge but no relationships. At some point, post / answer / contribute.
 :::
+
+<Quiz id="communities-and-conferences-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Which conference does the page describe as targeted at people who ship AI features rather than researchers?"
+  options={[
+    { text: "NeurIPS" },
+    { text: "ICML" },
+    { text: "AI Engineer Summit / AI Engineer World's Fair" },
+    { text: "Google I/O" }
+  ]}
+  correct={2}
+  explanation="AI Engineer Summit is signal-dense because speakers are typically engineering leads running real AI in production - talks cover evals, agent reliability, and cost optimization rather than research results."
+/>
+
+<Question
+  prompt="What's the first step the page recommends when you join a new community?"
+  options={[
+    { text: "Introduce yourself with a beginner question to break the ice" },
+    { text: "Lurk for two weeks to learn the culture and what people post about" },
+    { text: "DM the moderators for a tour" },
+    { text: "Share your portfolio in the main channel" }
+  ]}
+  correct={1}
+  explanation="The lurker-first strategy: read the top threads for two weeks, then answer easy questions, then ask one substantive question. Showing up day one with an oft-answered beginner question is the fastest way to be ignored."
+/>
+
+<Question
+  prompt="What does the page's sustainability rule for community involvement recommend?"
+  options={[
+    { text: "Join every relevant Discord and mute most channels" },
+    { text: "Rotate to fresh communities every month" },
+    { text: "Attend at least three conferences per year" },
+    { text: "Be in about 2 communities deeply rather than 20 shallowly" }
+  ]}
+  correct={3}
+  explanation="Pick one conference, one podcast, one Discord/Slack you actively participate in, and a small set of blogs. The 'keep up with everything' strategy is how you bounce off the field entirely."
+/>
+
+</Quiz>
 
 → Next: [When to pivot](./04-when-to-pivot.md) — the signals that your current approach has hit its ceiling.

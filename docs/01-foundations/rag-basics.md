@@ -176,6 +176,46 @@ If you're building an LLM feature on top of your own data — internal docs, kno
 
 **→ Going deeper:** For the production pipeline — hybrid search, reranking, metadata/tenant filtering, citation validation, and splitting retrieval vs generation evals — see [The RAG pattern in production](../10-patterns/rag-prod.md).
 
+<Quiz id="rag-basics-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Your product docs change weekly and auditors must see where each answer came from. Why does the page favor RAG over fine-tuning here?"
+  options={[
+    { text: "Fine-tuned models are always less accurate than RAG" },
+    { text: "RAG is legally required for documentation systems" },
+    { text: "RAG sees new docs as soon as they're indexed and can cite sources; a fine-tune needs a retrain and can't tell you where an answer came from" },
+    { text: "Fine-tuning cannot learn from documents at all" }
+  ]}
+  correct={2}
+  explanation="Updateability and citeability are RAG's structural advantages: re-index tomorrow's docs and they're live tomorrow, and the model cites the exact chunks it used. A fine-tuned model bakes knowledge into weights — no sources, days to update. 'Fine-tuning is always worse' overstates it: the page notes fine-tuning still wins for tone, style, and ultra-low-latency narrow tasks."
+/>
+
+<Question
+  prompt="An answer is wrong. You check the logs and the right chunk WAS in the top-5 context the model received. Where should you focus the fix?"
+  options={[
+    { text: "Generation — improve the prompt or use a stronger model; retrieval did its job" },
+    { text: "Retrieval — switch to hybrid search" },
+    { text: "Chunking — re-chunk the entire corpus" },
+    { text: "The embedding model — re-embed everything" }
+  ]}
+  correct={0}
+  explanation="RAG has two separate failure modes: the right doc never arrived (retrieval failure) or it arrived and the model still got it wrong (generation failure). Here retrieval succeeded, so reworking chunking, hybrid, or embeddings is wasted effort — those fix a problem you don't have. Measure the two stages separately or you'll keep tuning the wrong one."
+/>
+
+<Question
+  prompt="How does the page recommend making citations trustworthy?"
+  options={[
+    { text: "Ask the model to include URLs in its prose and trust them" },
+    { text: "Have the model return cited_chunk_ids via structured output, then verify each ID actually exists in the provided chunks" },
+    { text: "Show the user the full retrieved context instead of citations" },
+    { text: "Citations can't be made reliable, so omit them" }
+  ]}
+  correct={1}
+  explanation="The structured field forces the model to commit to specific sources, and the post-check filters out any invented IDs — shape from the schema, truth from your verification code. Free-text URLs are exactly the 'citations that lie' failure the page warns about: models happily invent plausible-looking links that were never in the context."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Memory](./memory.md)

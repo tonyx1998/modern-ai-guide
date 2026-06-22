@@ -135,6 +135,46 @@ They don't need an AI Center of Excellence yet (still one feature team). They do
 - **Treating the column as a destination.** A startup that "graduates to enterprise" by adopting the heaviest enterprise practices is choosing process for its own sake. The right adoption order is *as risk requires*, not *as headcount grows*.
 - **Reading the enterprise column as aspirational.** A 5,000-case eval battery, a CoE, and a private endpoint look principled from a blog post and feel like sludge from inside. The cost is real; only adopt when the risk it absorbs is also real.
 
+<Quiz id="comparison-tradeoffs-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="How does the page say you should decide which workflow column to operate in?"
+  options={[
+    { text: "By headcount: more engineers always means a heavier process" },
+    { text: "By blast radius — the worst plausible damage if the model misbehaves — not by the org chart or job titles" },
+    { text: "By picking the practices you like from each column" },
+    { text: "By copying whatever the most successful competitor does" }
+  ]}
+  correct={1}
+  explanation="The page matches workflow to blast radius: who is hurt, and how badly, if the model misbehaves on a Tuesday. Job titles lie — 'senior staff at a small startup' can be solo-column work, while 'junior at a bank' can be enterprise-column work from day one. And each column is a coherent bundle of tradeoffs, not a menu to cherry-pick from."
+/>
+
+<Question
+  prompt="What does the page call the most dangerous moment in an AI team's life?"
+  options={[
+    { text: "The first production incident involving real users" },
+    { text: "The day the primary model provider has an outage" },
+    { text: "Just after crossing into the next column, while still operating with the previous column's practices" },
+    { text: "The quarter when the eval set saturates" }
+  ]}
+  correct={2}
+  explanation="The column-jumping trap: a solo project that hires its first engineer is now a startup but still has no PRs, evals in CI, or kill switch; a startup that signs its first enterprise customer still has no SOC 2 or audit logs. Catching up late always costs more than adopting just-in-time — the fix is importing practices one at a time as thresholds are crossed, not waiting for the incident that forces the whole bundle at once."
+/>
+
+<Question
+  prompt="According to the 'wrong column' table, what happens to a startup that imports enterprise practices?"
+  options={[
+    { text: "It gets out-shipped by a smaller competitor within months — risk-tier reviews on prompt tweaks that only a handful of users see" },
+    { text: "It immediately passes SOC 2 and wins enterprise deals" },
+    { text: "It ships faster because the process catches bugs earlier" },
+    { text: "Nothing — extra process is harmless if the team is disciplined" }
+  ]}
+  correct={0}
+  explanation="The table's verdict: a startup running enterprise practices gets out-shipped by a 2-person competitor in 6 months, because it pays all the process cost without facing the risk that process absorbs. The columns are fit to context, not ranked — the same governance that is malpractice to skip at a bank is a self-inflicted tax on a 3-person team."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Checkpoint](./07-checkpoint.md) — self-test on the key differences.

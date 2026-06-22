@@ -110,6 +110,46 @@ Put these in CI exactly like text evals: a fixed audio test set, WER and latency
 - **Measuring components but not task success.** Perfect WER and snappy latency still fail if the agent doesn't actually complete the job. Track end-to-end success.
 :::
 
+<Quiz id="mm-evals-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="A generated image scores a high CLIPScore against its prompt, so the pipeline auto-approves it — but it ships with six fingers on a hand. What did the team get wrong?"
+  options={[
+    { text: "CLIPScore was computed with the wrong CLIP model version" },
+    { text: "They should have used FID instead, which catches artifacts per image" },
+    { text: "Perceptual metrics are cheap guardrails, not verdicts — CLIPScore measures prompt-adherence, not artifact-freeness; pair metrics with a judge model or human check" },
+    { text: "Nothing — six fingers is acceptable if the prompt was followed" }
+  ]}
+  correct={2}
+  explanation="Each metric measures one dimension: CLIPScore says 'the image matches the words', and a hand with six fingers can still match 'a person waving'. FID is the tempting swap, but it's a population-level distribution metric, not a per-image artifact detector — the layered answer is metrics for cheap regression-catching plus calibrated judges/humans for the dimensions metrics miss."
+/>
+
+<Question
+  prompt="Your voice agent's average turn latency is a healthy 600ms, yet users keep complaining it feels slow. What should you be measuring, per this page?"
+  options={[
+    { text: "The p50 and p95 — the slow tail is what users feel, and a fine average can hide a multi-second p95; also break latency down per pipeline stage to find the culprit" },
+    { text: "Total tokens generated per reply" },
+    { text: "Server CPU utilization during peak hours" },
+    { text: "Nothing more — 600ms average is under the 800ms budget, so the complaints are subjective" }
+  ]}
+  correct={0}
+  explanation="Averages hide tails: if one turn in ten takes three seconds, users remember those turns, not the median. 'Under budget on average, case closed' is the comfortable reading of a single number — report p50 and p95, and decompose by stage (VAD/STT/LLM TTFT/TTS) so you know which component to fix."
+/>
+
+<Question
+  prompt="Your STT system reports 6% aggregate WER and passes its CI gate, but support tickets show terrible transcription for callers with strong accents. What pitfall is this?"
+  options={[
+    { text: "WER is the wrong metric for transcription quality" },
+    { text: "Aggregate WER hiding slice failures — 6% overall can be 25% on accented or telephony audio; track WER per slice so the gate catches what matters" },
+    { text: "The CI threshold is too strict and should be loosened" },
+    { text: "Accented speech can't be evaluated with WER" }
+  ]}
+  correct={1}
+  explanation="This is the slicing lesson from the evaluation chapter applied to audio: an aggregate over mostly-easy traffic masks a catastrophic minority slice. 'WER is the wrong metric' is the tempting overcorrection — WER is exactly right; it just has to be computed per slice (accents, noise, telephony, jargon) for the gate to protect real users."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [World models & embodied AI](./085-world-models-embodied.md)

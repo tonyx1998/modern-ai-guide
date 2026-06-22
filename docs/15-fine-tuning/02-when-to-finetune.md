@@ -109,6 +109,46 @@ def should_finetune(task) -> str:
 - **Fine-tuning a frontier model when a small one would do.** If the goal is cost/latency, distilling onto a *small* model is the win, not fine-tuning the big one.
 :::
 
+<Quiz id="ft-when-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="A team fine-tunes a model on their company wiki so it will 'know our documentation'. What does this page predict the result will be?"
+  options={[
+    { text: "The model will reliably answer questions about the wiki contents" },
+    { text: "The model will sound like the wiki but confidently invent details — it absorbed the style, not a lookup table; facts need RAG" },
+    { text: "The fine-tune will fail to converge because wikis are unstructured" },
+    { text: "It will work, but only if they train for more epochs" }
+  ]}
+  correct={1}
+  explanation="Fine-tuning teaches behaviour, style, and format — not reliable factual recall — so this produces a confident hallucinator. It's called the single most common mistake on the page because the intuition 'training on docs = knowing docs' feels right; but 'the model should know our docs' is a retrieval problem, solved by giving it the right facts at runtime."
+/>
+
+<Question
+  prompt="You have a great 2,000-token prompt that works on a big expensive model, and your goal is to cut cost and latency on this one narrow task. What does this page call the highest-ROI move?"
+  options={[
+    { text: "Fine-tune the big model so it needs fewer output tokens" },
+    { text: "Cache the system prompt to amortize its cost" },
+    { text: "Negotiate volume pricing with the provider" },
+    { text: "Distill — fine-tune a small model on input/output pairs from the big one, often dropping the long system prompt entirely" }
+  ]}
+  correct={3}
+  explanation="Distillation is named as the highest-ROI reason to fine-tune in 2026: the small student internalizes the behaviour, so you can shrink the model and prompt and cut cost/latency 5-10x. Fine-tuning the big model is the tempting reflex, but if cost is the goal, the win comes from the model getting smaller, not better."
+/>
+
+<Question
+  prompt="Six months after shipping a fine-tune, a much better base model is released. Why does this page say the prompting team is in a better position than the fine-tuning team?"
+  options={[
+    { text: "A prompt usually just works on the newer base model for free, while the fine-tune team must re-evaluate, re-train, and re-deploy their artifact" },
+    { text: "Prompts are version-controlled and fine-tunes are not" },
+    { text: "New base models cannot load old LoRA adapters, so the fine-tune is deleted" },
+    { text: "The fine-tuning team isn't worse off — fine-tunes transfer automatically to new bases" }
+  ]}
+  correct={0}
+  explanation="The training run is the cheap part; owning a model artifact is the ongoing bill. Each base-model upgrade forces the fine-tune team through re-evaluation and likely re-training, while a prompt simply rides the better model. The adapter-compatibility answer has a kernel of truth but isn't the page's point — the burden is the maintenance cycle, not file formats."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Data preparation: the dataset IS the product](./03-data-prep.md)

@@ -266,6 +266,44 @@ Build a small script: takes a customer support email body on stdin, returns a Py
 
 ## Page checkpoint
 
+<Quiz id="stage-3-structured-output-quick-check" variant="micro" title="Quick check">
 
+<Question
+  prompt="Why is strict schema mode (json_schema with strict true) preferred over a 'reply in JSON' prompt, even though the prompt approach usually works?"
+  options={[
+    { text: "Strict mode responses are cheaper because they skip the sampling step" },
+    { text: "The provider enforces the schema during decoding, so outputs that violate it are impossible by construction — not just unlikely" },
+    { text: "Strict mode lets the model return multiple objects in one call" },
+    { text: "Prompt-based JSON cannot handle nested objects" }
+  ]}
+  correct={1}
+  explanation="'Reply in JSON' works about 80% of the time — the model might wrap output in a markdown fence or emit a trailing comma, and you inherit a parsing-and-retry problem. Strict mode moves enforcement into the provider's constrained decoding, shrinking the failure mode from 'the model said something weird' to essentially zero. It costs the same and handles nesting fine; the difference is reliability, not features."
+/>
+
+<Question
+  prompt="You are building a ticket classifier with structured output. What temperature should you use, and why?"
+  options={[
+    { text: "Around 0.7, so the model can handle ambiguous tickets creatively" },
+    { text: "1.0, since classification needs the model's full distribution" },
+    { text: "It does not matter — strict mode overrides sampling settings" },
+    { text: "0 (or near it), so the same input maps to the same output and your evals stay reproducible" }
+  ]}
+  correct={3}
+  explanation="Classification has a right answer; you want determinism, not creativity. Temperature near 0 means the same ticket classifies the same way every run — which is also the only way an eval score means anything, since at higher temperatures a re-run changes answers without any change to your code. Strict mode constrains the output's shape, not which valid value gets picked, so it does not substitute for low temperature."
+/>
+
+<Question
+  prompt="In your schema, why should a field like category be a Literal or enum rather than a plain string?"
+  options={[
+    { text: "Enums serialize to fewer tokens, reducing cost" },
+    { text: "Plain strings are not supported in strict mode" },
+    { text: "A closed set makes it impossible for the model to invent new categories, and your routing code can switch on it exhaustively" },
+    { text: "Enums make the model respond faster" }
+  ]}
+  correct={2}
+  explanation="Every open string field is a chance for the model to invent — 'billing-ish', 'Billing.', or a category you never defined. A Literal of valid values cuts that surface area to zero and turns your downstream code into a type-checked, exhaustive match instead of brittle substring checks. Strict mode supports plain strings fine; the point is that you should not use them where a finite set exists. Token and speed differences are negligible."
+/>
+
+</Quiz>
 
 → [Next: Stage 4 — Tool calling](./05-stage-4-tools.md) · [Back to Part I overview](./index.md)

@@ -114,6 +114,46 @@ Read the five comments top to bottom and you have the whole discipline. The same
 
 For how this fits the broader project arc, see the [Lifecycle](/docs/lifecycle) chapter (especially monitor and improve); for the org and governance layer at scale, see [Enterprise AI](/docs/enterprise). For the decision of *when* this rigor pays for itself, see [How much to invest in evals](/docs/decisions/eval-investment).
 
+<Quiz id="pattern-llmops-loop-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the core discipline of the five-station LLMOps loop?"
+  options={[
+    { text: "Model swaps go through the full loop, but prompt tweaks can ship directly" },
+    { text: "Each station runs once per quarter on a fixed schedule" },
+    { text: "Only customer-facing changes need to be versioned" },
+    { text: "Nothing skips a station — a prompt tweak is versioned, canaried, and watched exactly like a model swap" }
+  ]}
+  correct={3}
+  explanation="To users, a prompt edit and a model upgrade are the same risk: the output distribution moved. The 'prompt tweaks ship directly' option is the precise anti-pattern the page names — treating prompt edits as 'not a deploy' is how a one-word change moves your refusal rate in production unwatched."
+/>
+
+<Question
+  prompt="Why do LLM features degrade silently in ways ordinary services do not?"
+  options={[
+    { text: "Failures are distributional — the feature slides from 94 percent good to 89 percent good, with no outage to alert on" },
+    { text: "LLM providers do not publish status pages" },
+    { text: "LLM features have no logs to inspect" },
+    { text: "Users never complain about AI quality" }
+  ]}
+  correct={0}
+  explanation="A service is up or down; an LLM feature quietly slips, and only production evaluation (sampling plus judging) makes the slide visible. That is also why alerting on infra metrics alone fails — CPU and 5xx dashboards will not tell you the answers got worse."
+/>
+
+<Question
+  prompt="What is wrong with deploying a floating model alias like a bare model name in production?"
+  options={[
+    { text: "Floating aliases cost more per token" },
+    { text: "Aliases are slower to resolve at request time" },
+    { text: "The provider can silently repoint it to a new snapshot, so your pinned-version guarantees evaporate without any change on your side" },
+    { text: "Floating aliases cannot be used with prompt caching" }
+  ]}
+  correct={2}
+  explanation="The page says to always deploy a dated snapshot and treat the upgrade as a change that goes through the loop — version, canary, observe. The cost and latency options are plausible-sounding but false; the actual danger is that the ground shifts under you with no deploy event to correlate against."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Complete worked example](./13-complete-example.md)

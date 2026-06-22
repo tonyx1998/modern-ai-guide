@@ -117,6 +117,46 @@ They evaluate Sierra and a custom build on LangGraph Cloud. Sierra wins because 
 The lesson: the raw version got them to year 2. The platform earned its cost only once the problem outgrew the raw approach. Buying on day one would have over-paid for a year; building on day 2 would have been undifferentiated infra work.
 :::
 
+<Quiz id="when-to-buy-agent-platform-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the default for a team with 2 or fewer simple agents in production?"
+  options={[
+    { text: "Build a raw agent loop on top of your existing job infrastructure" },
+    { text: "Buy a vertical platform like Sierra immediately" },
+    { text: "Adopt three platforms and compare them in production" },
+    { text: "Build a custom durable-execution engine from scratch" }
+  ]}
+  correct={0}
+  explanation="With simple workflows, short runs, and a job runner already handling durability, a 100-line agent loop is the right answer. Buying before you have a working agent means you don't yet know what you need from a platform — and building your own runtime is reinventing a known hard problem."
+/>
+
+<Question
+  prompt="Which signal says it is genuinely time to buy an agent platform?"
+  options={[
+    { text: "You have one agent working in a demo" },
+    { text: "A platform's pitch lists features you might want someday" },
+    { text: "You need durable multi-hour runs, first-class human-in-the-loop, or compliance-grade audit logs" },
+    { text: "The platform has strong branding and funding" }
+  ]}
+  correct={2}
+  explanation="The buy signals are operational pains you are actually feeling: 10+ distinct agents needing a registry, runs spanning hours or days, HITL flows, audit requirements. Features you 'might want someday' is the trap — each platform capability is valuable only if you need it, and you pay lock-in either way."
+/>
+
+<Question
+  prompt="Before adopting a platform, what should you have in hand?"
+  options={[
+    { text: "A signed annual contract for the best discount" },
+    { text: "Zero agents, so the platform can shape your design" },
+    { text: "A larger infrastructure budget" },
+    { text: "A working raw agent plus a measured list of what the raw version lacks" }
+  ]}
+  correct={3}
+  explanation="The build-first signals are: a working agent in raw code, a concrete list of missing pieces, a measurement of what building them costs, and a vendor covering over 70% of that list. Without these, 'let's adopt an agent platform' is shopping, not engineering."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Hiring constraint](./14-hiring-constraint.md).

@@ -131,6 +131,46 @@ The mature posture: **measure, document the tradeoffs you chose and why, keep a 
 - **No human accountable for consequential decisions.** For hiring/lending/housing, a model output should never be the final word — both ethically and, increasingly, legally.
 :::
 
+<Quiz id="safety-bias-fairness-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="You want to test whether a résumé-screening model scores candidates differently by demographic. What is the workhorse technique this page describes?"
+  options={[
+    { text: "Counterfactual slice testing — hold the scenario fixed, vary only the protected attribute (e.g. the name), repeat many times, and measure the outcome gap" },
+    { text: "Reading the model's chain-of-thought to check for biased reasoning" },
+    { text: "Asking the model directly whether it treats groups fairly" },
+    { text: "Reviewing the training data for offensive content" }
+  ]}
+  correct={0}
+  explanation="You can't eyeball fairness; you measure it — the modern version of the classic résumé-name audit, runnable as a CI test. Asking the model or inspecting its reasoning is tempting because it feels direct, but the model has no reliable insight into its own biases; only outcome gaps across controlled slices count as evidence."
+/>
+
+<Question
+  prompt="A lending team deletes the gender field from inputs and declares the model can't be biased by gender. What does this page call this, and why does it fail?"
+  options={[
+    { text: "Data minimization — it works and is also a GDPR requirement" },
+    { text: "Demographic parity — it equalizes selection rates by construction" },
+    { text: "Fairness through unawareness — proxies like name, zip code, or school leak the attribute back in, so the model reconstructs it" },
+    { text: "Output post-processing — valid but better done with threshold adjustment" }
+  ]}
+  correct={2}
+  explanation="Removing the explicit field doesn't remove the signal: correlated features act as proxies and the model infers the attribute anyway. It feels like a clean fix — 'the model literally can't see gender' — which is exactly why it's the most common false defense; only measuring outcomes across groups shows whether bias survived."
+/>
+
+<Question
+  prompt="Your team tunes the model until demographic parity is satisfied, then declares the system fair. What uncomfortable truth from this page does that ignore?"
+  options={[
+    { text: "Demographic parity can only be computed on training data, not production data" },
+    { text: "Parity metrics only apply to image models" },
+    { text: "Fairness metrics always improve together, so one metric is enough" },
+    { text: "The group fairness metrics are mathematically incompatible — satisfying one can worsen another, so which to prioritize is a documented value choice, not a maximization" }
+  ]}
+  correct={3}
+  explanation="Demographic parity, equal opportunity, equalized odds, and calibration generally cannot all hold at once — chasing one trades off others. 'We hit the metric, we're fair' is the trap: the mature posture is choosing which harm matters most for your use case with stakeholders, documenting it, and monitoring over time."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Privacy & data governance](./07-privacy-data.md)

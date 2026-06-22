@@ -187,6 +187,46 @@ The hype paints agents as autonomous beings. They're not. They're loops over an 
 
 **→ Going deeper:** This is the foundational loop. For the production version — iteration caps, per-step observability, structured errors, and human handoff — see [The agent loop with guardrails](../10-patterns/agent-loop.md). For how you *measure* whether an agent's loop is actually any good (outcome, trajectory, and tool-call accuracy), see [Evaluating agents](../13-evaluation/095-agent-evaluation.md).
 
+<Quiz id="agent-loop-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="In the agent loop, how does your code know the agent is finished?"
+  options={[
+    { text: "The model's response contains no tool calls — its plain content is the final answer" },
+    { text: "The model must call a special done tool" },
+    { text: "The loop always runs exactly MAX_STEPS times" },
+    { text: "The executor detects that the goal was achieved and breaks" }
+  ]}
+  correct={0}
+  explanation="The termination signal is the model itself: as long as it wants more information it emits tool calls, and when it believes it has enough, it answers in plain content — that's your exit. MAX_STEPS is the safety cap for confused models, not the normal exit. Nothing in your code judges whether the goal was achieved; the model decides when it's done."
+/>
+
+<Question
+  prompt="After five tool calls each returning 2K of JSON, your agent starts ignoring earlier results and drifting. The page's diagnosis is:"
+  options={[
+    { text: "The model needs a higher temperature" },
+    { text: "Too few tools are available" },
+    { text: "Context bloat — large tool results pollute attention; truncate or summarize them" },
+    { text: "The loop needs more iterations to recover" }
+  ]}
+  correct={2}
+  explanation="Each loop step carries the full growing context, so five 2K results means a 30K prompt where the model loses focus. The fix is returning summaries or truncated results and letting the model request detail when it needs it. More iterations make it worse — every extra step adds more context and more cost to an already-drowning prompt."
+/>
+
+<Question
+  prompt="Per the 2026 default on this page, a brand-new workflow should start as:"
+  options={[
+    { text: "A multi-agent system, since it's the most capable architecture" },
+    { text: "A hard-coded chain; promote to a single agent only when the workflow branches too much" },
+    { text: "A single agent with 50 tools to cover every case" },
+    { text: "A reflection loop wrapped around a planner" }
+  ]}
+  correct={1}
+  explanation="The escalation path is chain, then single agent, then multi-agent — and you only move up with evidence. A chain is predictable and debuggable; an agent earns its keep when the workflow genuinely varies per request. The 50-tool agent is the tempting shortcut, but tool selection accuracy tanks well before 50; tight, curated tool sets beat sprawling ones."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Planning and reflection](./planning-and-reflection.md)

@@ -186,6 +186,46 @@ function* statusEvents(): AsyncGenerator<string> {
 
 On the client, render each `status` event in a small chip above the assistant bubble. Vague-but-immediate beats accurate-but-delayed every time.
 
+<Quiz id="pattern-streaming-ux-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What does streaming actually change about an LLM response?"
+  options={[
+    { text: "Nothing about generation speed — the user starts reading early, so perceived latency collapses" },
+    { text: "The model generates tokens faster in streaming mode" },
+    { text: "Streaming reduces the total token count of the answer" },
+    { text: "Streaming skips the provider's queue" }
+  ]}
+  correct={0}
+  explanation="The model is not faster when you stream; it just looks faster, because TTFT drops to a few hundred milliseconds while the rest generates. The 'model is faster' option is the natural misconception — the win is perceptual, which is exactly why the page calls it the cheapest UX win in the AI stack."
+/>
+
+<Question
+  prompt="Why is the cancel path (Stop button to abort to provider) worth wiring all the way through?"
+  options={[
+    { text: "It is required by the SSE specification" },
+    { text: "It prevents the conversation history from growing" },
+    { text: "Abort propagates to the provider call, so token generation stops and so does the bill" },
+    { text: "It makes the next request start faster" }
+  ]}
+  correct={2}
+  explanation="Half a streamed answer cancelled mid-flight is half the tokens billed — the abort chain (client fetch, server handler, provider call) is the part most teams forget. The other options are invented mechanics; the real stakes are cost and a Stop button that actually stops."
+/>
+
+<Question
+  prompt="Streaming works locally but production users see the whole answer arrive as one blob. What is the likely cause?"
+  options={[
+    { text: "The model is too fast in production" },
+    { text: "A buffering hop — CDN, reverse proxy, or middleware — is collecting chunks and shipping them as one frame" },
+    { text: "The client is rendering markdown" },
+    { text: "SSE is unsupported in production browsers" }
+  ]}
+  correct={1}
+  explanation="A single buffering hop anywhere in the chain silently defeats streaming; the page says to verify in DevTools that the content-type is an event stream and the body arrives in chunks. Browser support is the red herring — SSE is plain HTTP and works everywhere; the problem is almost always infrastructure between your server and the user."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Structured output everywhere](./structured-output.md).

@@ -200,6 +200,46 @@ Without these, "RAG is broken" is an unanswerable bug report.
 For a RAG-heavy or search-heavy product, your data pipeline is more of the engineering surface than your LLM glue code. Teams that treat the pipeline as a first-class system — with monitoring, evals, deletion semantics, multi-tenancy, refresh discipline — ship reliable AI products. Teams that treat it as an offline batch script ship demos.
 :::
 
+<Quiz id="lifecycle-data-engineering-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What does the page call the single biggest predictor of RAG quality on document-heavy corpora?"
+  options={[
+    { text: "The size of the embedding model" },
+    { text: "Parser quality — bad parsing turns tables into text soup and retrieval finds the wrong chunks" },
+    { text: "The choice between HNSW and IVF indexes" },
+    { text: "The temperature setting on the generation model" }
+  ]}
+  correct={1}
+  explanation="Parsing is stage 2 of the pipeline and the page names parser quality as the single biggest predictor of RAG quality for document-heavy corpora: when tables become text soup, lists lose structure, and headers disappear, retrieval surfaces the wrong chunks no matter how good the model is. Index type and embedding size matter, but they cannot recover information the parser destroyed."
+/>
+
+<Question
+  prompt="Why do many teams keep a separate 'source_docs' table in addition to the chunk index?"
+  options={[
+    { text: "Deletion is the hardest refresh case — the table is the master list of what should exist, used to reconcile and remove orphaned chunks" },
+    { text: "Vector databases cannot store document-level metadata" },
+    { text: "It makes embedding batches cheaper to schedule" },
+    { text: "Compliance rules require two copies of every document" }
+  ]}
+  correct={0}
+  explanation="When a document is deleted at the source, the pipeline has to know to delete its chunks — otherwise deleted docs keep serving in retrieval, which the page lists as a common mistake ('no deletion path'). The source_docs table is the master list of what should exist; periodic reconciliation against the actual index catches orphans that webhooks or polling missed."
+/>
+
+<Question
+  prompt="You switch to a new embedding model and only embed new chunks with it. What does the page say happens?"
+  options={[
+    { text: "Nothing — embedding models are interchangeable at query time" },
+    { text: "The index automatically converts old vectors to the new space" },
+    { text: "Distance scores become nonsense because old and new chunks live in different vector spaces — always fully re-embed on a model change" },
+    { text: "Only multilingual queries are affected" }
+  ]}
+  correct={2}
+  explanation="Embeddings from different models live in incompatible vector spaces, so mixing them makes similarity scores meaningless — a mistake the page calls out explicitly. A model switch means re-embedding the whole corpus, and the pipeline section recommends planning a parallel index during the migration rather than mutating the live one."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Choose the approach](./03-approach.md)

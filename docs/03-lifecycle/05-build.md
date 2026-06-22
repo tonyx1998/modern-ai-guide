@@ -172,6 +172,46 @@ Total time: 1.5 days. They are now ready to iterate.
 - [ ] No framework you can't read end-to-end in an hour.
 - [ ] One paragraph written: "what surprised us in v0."
 
+<Quiz id="lifecycle-build-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the primary purpose of the v0 build?"
+  options={[
+    { text: "To surface unknowns by getting something minimal running end-to-end and scored on the eval set" },
+    { text: "To impress stakeholders with a polished demo" },
+    { text: "To establish the production architecture, including caching and routing" },
+    { text: "To compare several frameworks side by side" }
+  ]}
+  correct={0}
+  explanation="v0 is intentionally minimal and throwaway-quality: real input in, output out, scored against the eval baseline. Its job is to surface surprises — messy docs, worse-than-expected latency — not to ship beauty. Caching, routing, and pretty UI are deliberately omitted, and 'the demo worked' is explicitly not the definition of done; the eval score is."
+/>
+
+<Question
+  prompt="Why does the page say to use the raw provider SDK instead of a framework like LangChain for v0?"
+  options={[
+    { text: "Frameworks are forbidden in production environments" },
+    { text: "Raw SDKs are always faster at runtime" },
+    { text: "Frameworks hide useful detail — retries, tool-call shapes, prompt assembly — which makes v0 hard to debug" },
+    { text: "Provider SDKs include free eval tooling" }
+  ]}
+  correct={2}
+  explanation="At the v0 stage you need to understand the whole surface, and frameworks hide retries, tool-call shapes, and prompt assembly — you cannot debug what you cannot see. The checklist rule is 'no framework you can't read end-to-end in an hour.' It is not a runtime-speed or policy issue; it is about keeping every variable visible while you learn."
+/>
+
+<Question
+  prompt="The page warns against trusting the model to follow your output schema without enforcement. What does it recommend instead?"
+  options={[
+    { text: "Lowering the temperature to zero so output is deterministic" },
+    { text: "Using the SDK's structured-output or tool-use feature, since free-form JSON parsing fails roughly 5-15% of the time" },
+    { text: "Asking the model to double-check its own JSON before responding" },
+    { text: "Wrapping the call in custom retry logic until the JSON parses" }
+  ]}
+  correct={1}
+  explanation="Even with great prompts, free-form JSON fails to parse about 5-15% of the time, so the page says to use the SDK's structured-output / tool-use enforcement. Custom retry logic is tempting but v0 deliberately omits retries beyond what the SDK does automatically — enforcement at the API level fixes the root cause instead of papering over it."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Iterate with evals](./06-iterate.md)

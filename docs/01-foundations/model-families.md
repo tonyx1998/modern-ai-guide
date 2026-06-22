@@ -2,7 +2,7 @@
 id: model-families
 title: Model families
 sidebar_position: 7
-description: Frontier vs workhorse vs small. Closed vs open. Reasoning models vs base chat models. A map of what's out there in May 2026.
+description: Frontier vs workhorse vs small. Closed vs open. Reasoning models vs base chat models. The durable map of the model landscape.
 ---
 
 # Model families
@@ -13,74 +13,70 @@ description: Frontier vs workhorse vs small. Closed vs open. Reasoning models vs
 There isn't "the LLM." There's a whole zoo. Frontier models are Ferraris — fastest, most expensive, used when nothing cheaper works. Workhorse models are Hondas — 80% of the speed at 20% of the price, the right default. Small models are e-bikes — perfect for one specific quick trip. Closed models are SaaS; open models you can host yourself. Reasoning models *think* before they answer, at the cost of latency and dollars.
 :::
 
-## The three tiers (May 2026)
+## The three tiers
+
+Every major provider ships the same three-tier shape. The names rotate every few months; the
+tiers don't. **Current names and per-token prices live on the
+[Model snapshot](/docs/model-snapshot)** — this page teaches the durable shape.
 
 ```mermaid
 flowchart TB
     subgraph Frontier["Frontier — top of leaderboards, most expensive"]
-        F1[Claude Opus 4.7]
-        F2[GPT-5 / 5.1]
-        F3[Gemini 2.5 Ultra / Deep Think]
-        F4[o4-mini-high / o4]
+        F1[Each provider's flagship]
+        F2[Reasoning variants]
     end
-    subgraph Workhorse["Workhorse — 80% quality, 10-20% price"]
-        W1[Claude Sonnet 4.6]
-        W2[GPT-5-mini]
-        W3[Gemini 2.5 Pro]
-        W4[Llama-3.3-70B]
-        W5[Qwen-2.5-72B]
+    subgraph Workhorse["Workhorse — ~80% quality, 10-20% price"]
+        W1[Each provider's mid model]
+        W2[Large open-weight models]
     end
     subgraph Small["Small — fast, cheap, focused"]
-        S1[Claude Haiku 4]
-        S2[GPT-5-nano]
-        S3[Gemini 2.5 Flash]
-        S4[Llama-3.3-8B]
-        S5[Phi-4]
+        S1[Each provider's mini/nano/flash]
+        S2[Small open-weight models]
     end
 ```
 
 ### Frontier
 
 - **Used for:** hard reasoning, agent backbones, complex code generation, anything where you'd otherwise need a human expert.
-- **Examples:** Claude Opus 4.7, GPT-5 / 5.1, Gemini 2.5 Ultra, o4 reasoning series.
-- **Price:** ~$3–$15 / 1M input, $15–$75 / 1M output.
+- **Examples:** each provider's flagship — see the [snapshot](/docs/model-snapshot) for current names.
+- **Price shape:** roughly 4–10× the workhorse tier per token.
 - **Latency:** 1–5 seconds time-to-first-token, often slower for reasoning models.
 
 ### Workhorse
 
 - **Used for:** the default for most user-facing features. Chat, summarization, classification, RAG synthesis, light coding.
-- **Examples:** Claude Sonnet 4.6, GPT-5-mini, Gemini 2.5 Pro, Llama-3.3-70B-instruct.
-- **Price:** ~$0.3–$3 / 1M input, $1.5–$15 / 1M output.
+- **Examples:** each provider's mid-size model, plus the large open-weight instruct models.
+- **Price shape:** roughly 5–10× the small tier per token.
 - **Latency:** 300ms–1s TTFT, 80–200 tokens/sec.
 
 ### Small
 
 - **Used for:** classification, extraction, routing, simple chat, heavy-volume background jobs. Distilled from a bigger model for one job.
-- **Examples:** Claude Haiku 4, GPT-5-nano, Gemini 2.5 Flash / Flash-Lite, Llama-3.3-8B, Phi-4, Qwen-2.5-7B.
-- **Price:** ~$0.05–$0.30 / 1M input, $0.20–$1.50 / 1M output.
-- **Latency:** sub-200ms TTFT, 200–500+ tokens/sec on dedicated infra (Groq, Cerebras can hit 1000+).
+- **Examples:** each provider's mini / nano / flash models, plus small open-weight models.
+- **Price shape:** the cheapest tier — often 50–100× cheaper than frontier per token.
+- **Latency:** sub-200ms TTFT, 200–500+ tokens/sec on dedicated fast-inference infra (1000+ is possible).
 
 ## Closed vs open
 
-- **Closed (hosted only):** OpenAI (GPT-5, o-series), Anthropic (Claude), Google (Gemini). You hit an API; you don't see the weights. Best raw quality, simplest ops, but vendor lock-in and no offline.
-- **Open weights (downloadable):** Meta (Llama 3.3, Llama 4), Mistral (Mistral Large 2, Codestral), Alibaba (Qwen 2.5, 3.0), DeepSeek (V3, R1), Cohere Command, Microsoft Phi-4. You can host them yourself, fine-tune them, run them air-gapped.
+- **Closed (hosted only):** OpenAI, Anthropic, Google. You hit an API; you don't see the weights. Best raw quality, simplest ops, but vendor lock-in and no offline.
+- **Open weights (downloadable):** Meta (Llama), Mistral, Alibaba (Qwen), DeepSeek, Cohere, Microsoft (Phi). You can host them yourself, fine-tune them, run them air-gapped.
 
-In 2026 the quality gap between top open and top closed has narrowed to ~3 months on most benchmarks. The lock-in gap has not.
+The quality gap between top open and top closed has narrowed to a few months on most benchmarks (see the [snapshot](/docs/model-snapshot) for the current state). The lock-in gap has not.
 
 | Need                                  | Default                                   |
 |---------------------------------------|-------------------------------------------|
-| Top quality, you don't mind paying    | Closed frontier (Claude Opus, GPT-5)      |
-| Data must not leave your VPC          | Open, self-hosted (Llama, Qwen, DeepSeek) |
-| High volume, cheap-per-token          | Open via managed inference (Groq, Fireworks) |
+| Top quality, you don't mind paying    | Closed frontier                           |
+| Data must not leave your VPC          | Open, self-hosted                         |
+| High volume, cheap-per-token          | Open via managed inference                |
 | Compliance / customer demands offline | Open, self-hosted                         |
-| Just shipping fast                    | Closed workhorse (Claude Sonnet, GPT-5-mini) |
+| Just shipping fast                    | Closed workhorse                          |
 
 ## Reasoning models vs base chat models
 
 A second axis. *Reasoning models* spend "thinking" tokens internally before answering. They're better at multi-step math, code planning, and chain-of-thought problems — at the cost of higher latency and higher cost per visible answer token.
 
-- **Reasoning:** OpenAI o-series (o3, o4, o4-mini, o4-mini-high), Claude with extended thinking, Gemini 2.5 Deep Think, DeepSeek R1, Qwen3-Reasoner.
-- **Base chat:** Claude Sonnet 4.6, GPT-5, Gemini 2.5 Pro, Llama-3.3, default mode of most workhorses.
+- **Reasoning:** OpenAI's o-series, Claude with extended thinking, Gemini's Deep Think mode, and open-weight reasoners like DeepSeek R1 (current names: [snapshot](/docs/model-snapshot)).
+- **Base chat:** the default mode of most workhorse and frontier models.
 
 ```mermaid
 flowchart LR
@@ -113,12 +109,12 @@ You're building a support-ticket router that reads incoming tickets and tags the
 
 Try, in order:
 
-1. **Small model first.** Claude Haiku 4 or GPT-5-nano with a structured-output schema. Cost: ~$1–$3/day at this volume. Run on an eval set of 200 labeled tickets.
-2. **If accuracy is \&lt;95%:** try workhorse (Sonnet, GPT-5-mini). Cost: ~$10–$30/day. Usually closes the gap.
+1. **Small model first.** Any small-tier model with a structured-output schema. Cost: a few dollars a day at this volume. Run on an eval set of 200 labeled tickets.
+2. **If accuracy is \&lt;95%:** try a workhorse model. Cost: roughly 10× the small tier per day. Usually closes the gap.
 3. **If still bad:** consider fine-tuning the small model on your labeled tickets (best ROI), or only routing the *hard* cases to a workhorse with the small model as gatekeeper (cascade pattern).
 4. **Frontier:** almost never the right call for this. Save it for the 5% of tickets the workhorse refuses to tag.
 
-The 2026 default is "cheapest tier that passes evals," not "most expensive that's available."
+The default is "cheapest tier that passes evals," not "most expensive that's available."
 
 ## What beginners get wrong
 
@@ -128,12 +124,52 @@ The 2026 default is "cheapest tier that passes evals," not "most expensive that'
 - **Treating "open" as automatically cheaper.** A self-hosted Llama on idle H100s is the most expensive model on Earth. Cheap requires utilization.
 - **Mixing reasoning models into latency-critical UX.** Users will not wait 30 seconds for a chat bubble. Use reasoning for offline or "deep research" flows only.
 - **Pinning to a specific model version forever.** Models deprecate. Build your code so the model name is one environment variable away from being swapped.
-- **Not running evals before switching.** "Gemini 2.5 came out, let's switch" without an eval set is how regressions ship to prod.
+- **Not running evals before switching.** "The new model came out, let's switch" without an eval set is how regressions ship to prod.
 :::
 
 :::info[Highlight: the cascade pattern, your single best cost lever]
 Run a small model first. If its confidence (or a cheap check) says "I'm not sure," escalate to a workhorse. If the workhorse still struggles, escalate to a frontier. Most traffic stays on the small model; quality matches the frontier on the few that matter. 5–20× cost reduction is typical.
 :::
+
+<Quiz id="model-families-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="You are building a support-ticket tagger handling 50,000 tickets a day. According to this page, which model should you try first?"
+  options={[
+    { text: "A frontier model, to guarantee quality from day one" },
+    { text: "A reasoning model, since classification requires careful thought" },
+    { text: "A workhorse model, as a safe middle ground" },
+    { text: "A small-tier model with structured output, measured against an eval set" }
+  ]}
+  correct={3}
+  explanation="The default is the cheapest tier that passes your evals, not the most capable model available. For high-volume classification, a small model with a schema often hits the accuracy bar for a few dollars a day; you escalate to a workhorse only if the eval says you must. Starting at frontier 'to be safe' burns 10 times the budget with no measured quality win — and frontier is almost never right for this task."
+/>
+
+<Question
+  prompt="Why does the page call a self-hosted Llama on idle H100s 'the most expensive model on Earth'?"
+  options={[
+    { text: "Open models carry hidden licensing fees" },
+    { text: "Self-hosting requires rarer GPUs than closed providers use" },
+    { text: "You pay for the GPUs whether or not they are busy — cheap self-hosting requires high utilization" },
+    { text: "Open models use more tokens per request" }
+  ]}
+  correct={2}
+  explanation="Open weights remove the per-token markup but replace it with a fixed infrastructure cost. If your GPUs sit idle, the effective cost per token skyrockets. Self-hosting wins only when volume keeps the hardware busy — which is why 'open' is not automatically 'cheaper', and why managed inference providers exist as a middle path."
+/>
+
+<Question
+  prompt="What is the cascade pattern this page calls your single best cost lever?"
+  options={[
+    { text: "Run a small model first and escalate to bigger tiers only when it is unsure" },
+    { text: "Run all three tiers in parallel and pick the best answer" },
+    { text: "Start with frontier and downgrade once quality is proven" },
+    { text: "Cache frontier responses and replay them from the small model" }
+  ]}
+  correct={0}
+  explanation="The cascade routes most traffic to the cheap small model and escalates only the uncertain minority to a workhorse or frontier — typically a 5 to 20 times cost reduction while matching frontier quality on the requests that matter. Running all tiers in parallel pays for every tier on every request, which is the opposite of the goal."
+/>
+
+</Quiz>
 
 ---
 

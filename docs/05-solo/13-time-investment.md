@@ -165,6 +165,46 @@ Self-check:
 - Is your distribution plan written down with specific channels and dates?
 - Have you set yourself a "step back and reassess" date (3 months out) so you don't either give up too early or grind too long?
 
+<Quiz id="solo-time-investment-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the calibration timeline this page gives for a solo AI project?"
+  options={[
+    { text: "A month to MVP, six months to 100 users, a year to first revenue" },
+    { text: "A weekend to MVP, about a month to 100 users, two to four months to first $100 MRR" },
+    { text: "One evening to MVP, a week to 1,000 users, a month to $1,000 MRR" },
+    { text: "There is no useful timeline — every project is different" }
+  ]}
+  correct={1}
+  explanation="The medians are: working v0 in one weekend (~16 hours), 80-250 signups by end of month 1, and first $100 MRR around months 2-4. The one-evening option matches founder-storytelling on Twitter, which the page calls survivorship bias — compare yourself to the median, not the outlier."
+/>
+
+<Question
+  prompt="You have fewer than 30 signups at the end of month 1. What does the page say the problem is?"
+  options={[
+    { text: "Distribution, not product — re-launch with a better demo video or pick a different audience" },
+    { text: "Product quality — pause marketing and rebuild the core feature" },
+    { text: "Pricing — the free tier is too generous" },
+    { text: "Timing — wait six months and try again" }
+  ]}
+  correct={0}
+  explanation="The diagnostic is explicit: under 30 signups means the distribution motion failed, so the fix is another launch with better assets or a different audience. Rebuilding the product is the instinctive response because building feels safe — but the page identifies 'avoiding distribution' as one of the four standard reasons projects miss the timeline."
+/>
+
+<Question
+  prompt="What kind of deadlines does the page say you should set for yourself?"
+  options={[
+    { text: "Revenue deadlines, since money is the only honest metric" },
+    { text: "User-growth deadlines, like 100 users by month-end" },
+    { text: "No deadlines at all — solo projects should be pressure-free" },
+    { text: "Deadlines on outputs you control, like shipping v2 or posting a launch — not on outcomes like signups" }
+  ]}
+  correct={3}
+  explanation="User growth is mostly outside your control, so '100 users by month-end' sets you up to feel like a failure over variance. Deadlines on controllable outputs — ship, post, send 20 DMs — keep the pressure productive. The user-growth option is tempting because growth IS the goal, but the page distinguishes goals from the levers you actually hold."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [Common Pitfalls](./14-pitfalls.md) where we'll cover the 10 things that consistently kill solo AI projects — and the specific guardrails for each.

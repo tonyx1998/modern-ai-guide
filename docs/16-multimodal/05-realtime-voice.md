@@ -120,6 +120,46 @@ Putting an agent on an actual phone number adds a transport layer. The audio is 
 - **Skipping filler during tool calls**, so the agent goes dead-silent for two seconds and the user assumes it crashed.
 :::
 
+<Quiz id="mm-voice-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Your voice agent's replies take 2.5 seconds to fully generate, and users say it feels laggy. An engineer proposes switching to a model with faster total generation time. What does this page say to optimize instead?"
+  options={[
+    { text: "Total tokens per reply — shorter replies are the only lever" },
+    { text: "Time-to-first-sound — stream and pipeline every stage so the agent starts speaking the first sentence while the rest is still being generated" },
+    { text: "Network bandwidth, since audio is heavy" },
+    { text: "The VAD threshold, which dominates all other latency" }
+  ]}
+  correct={1}
+  explanation="Users judge responsiveness by when the agent starts talking, not when it finishes — so STT partials feed the LLM early, the LLM streams tokens, and TTS speaks sentence one while sentence two is still being written. Faster total generation is the intuitive target, but pipelining buys more than any single component swap; short replies help too, but as a complement."
+/>
+
+<Question
+  prompt="During testing, your agent keeps talking right over users who try to interrupt it. What's the fix this page describes for barge-in?"
+  options={[
+    { text: "Run VAD on the input even while playing output, and the instant user speech is detected, stop the agent's audio and cancel the in-flight LLM/TTS" },
+    { text: "Shorten the agent's replies so interruptions become unnecessary" },
+    { text: "Raise the microphone gain so the user's voice overpowers the agent's" },
+    { text: "Add a 'press any key to interrupt' fallback" }
+  ]}
+  correct={0}
+  explanation="Barge-in requires listening while speaking: continuous input VAD plus immediate cancellation of playback and the pipeline behind it. Shorter replies reduce how often interruption is needed but don't make it possible — and an agent you can't interrupt 'feels broken and infuriating'. Note this also depends on echo cancellation, so the agent doesn't mistake its own voice for the user."
+/>
+
+<Question
+  prompt="You're building a voice agent that must look up orders, apply business rules, and log every decision for audits. Speech-native models are faster and more natural. Which architecture does this page recommend here?"
+  options={[
+    { text: "Speech-native — lower latency always wins in voice" },
+    { text: "Neither — voice agents can't reliably call tools yet" },
+    { text: "Cascaded (or a hybrid) — you need the transparency: inspectable transcripts, deterministic tool calls, per-stage logging, and text-based evals, which is worth the latency tax" },
+    { text: "Two parallel speech-native models that cross-check each other" }
+  ]}
+  correct={2}
+  explanation="The trade is control vs latency: cascaded pipelines let you inspect every stage, run evals on text, and execute business logic deterministically — exactly what auditable task agents need, and modern frameworks make a tuned cascade fast enough. 'Lower latency always wins' is the seductive default, but the page's 2026 answer reserves speech-native for natural, low-complexity conversation, often wrapped in hybrid guardrails."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Video](./06-video.md)

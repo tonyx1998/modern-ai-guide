@@ -157,6 +157,46 @@ ROI is obvious enough that the team got greenlit to apply the same pattern to tw
 - [ ] Quality metrics visible in the team's standard product dashboard, not just the AI-specific one.
 - [ ] At least one domain expert spends 1-2 hours/week on this.
 
+<Quiz id="lifecycle-improve-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the core mechanic of continuous improvement, according to the page?"
+  options={[
+    { text: "Re-training the model monthly on fresh production data" },
+    { text: "Sampling production logs weekly, turning real failures into new eval cases, fixing the issue, and re-shipping" },
+    { text: "Running A/B tests on every prompt variant" },
+    { text: "Migrating to each new model release as soon as it ships" }
+  ]}
+  correct={1}
+  explanation="The page's one-liner: the team that compounds quality fastest is the team that turns the most real-world failures into eval cases. The weekly loop — sample, triage, add to evals, fix, ship — grows the eval set from 100 cases to 800+ over a year and real-world quality with it. Model swaps happen too, but only quarterly and only after a bake-off, not on every release."
+/>
+
+<Question
+  prompt="Why does the page recommend rewriting the prompt from scratch once a quarter?"
+  options={[
+    { text: "Providers deprecate prompt formats every quarter" },
+    { text: "Rewrites reset the prompt cache and reduce cost" },
+    { text: "Longer prompts always score worse on evals" },
+    { text: "Prompts accumulate patches like coral on a shipwreck; a from-scratch rewrite is often shorter and scores higher" }
+  ]}
+  correct={3}
+  explanation="Months of incremental fixes leave a prompt full of accumulated cruft. The quarterly audit-and-rewrite surprisingly often produces something shorter that scores higher — at Acme, one rewrite cut the system prompt by 40% and contributed three eval points. It is not that long prompts always lose; it is that unmanaged patch-on-patch growth degrades quality."
+/>
+
+<Question
+  prompt="A team wants to fine-tune to escape slow prompt iteration. What does the page say about this?"
+  options={[
+    { text: "Fine-tune only after exhausting prompting and RAG, and only when all four preconditions hold — a stable narrow task, hundreds of quality pairs, evidence of a ceiling, and latency or cost pressure" },
+    { text: "Fine-tuning is recommended as soon as you have any production data" },
+    { text: "Fine-tuning lets you retire the eval set once the model is specialized" },
+    { text: "Fine-tuning is always cheaper to operate than prompting" }
+  ]}
+  correct={0}
+  explanation="All four conditions must apply, and 'fine-tuning to escape the work of curating better evals' is a named anti-pattern — a fine-tune fixes one ceiling, while bad evals are a forever ceiling. The page also notes fine-tuning is operationally heavier than it sounds: re-training cadence, version management, and ongoing A/B against the base model."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Handoffs across the team](./11-handoffs.md)

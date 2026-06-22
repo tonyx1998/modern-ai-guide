@@ -8,7 +8,18 @@ description: text-embedding-3-small/large, Voyage, Cohere v3, BGE, plus when to 
 
 # Embedding Tier — The Vectors Under Your RAG
 
+:::info[Dated content — June 2026]
+This page names specific tools, models, and prices, which rotate quarterly. The *selection
+logic* is durable; the names are a snapshot. Cross-check the
+[Model snapshot](/docs/model-snapshot) for current model names and pricing.
+:::
+
+
 > **In one line:** The embedding model decides what "similar" means for retrieval — and it's nearly always the same answer (text-embedding-3-small) until you have evidence to climb.
+
+:::tip[In plain English]
+An embedding model turns a piece of text into a list of numbers, placed so that texts with similar meaning end up near each other — like assigning every sentence a spot on a giant map. When your app searches for relevant documents, it's really asking which spots on that map are closest to the question. This page decides which mapmaker to use, and the honest answer is that the popular default is fine for almost everyone. The one rule you genuinely cannot break: documents and questions must be mapped by the exact same model, or your search quietly returns nonsense.
+:::
 
 ## What's in this tier (as of 2026)
 
@@ -139,5 +150,45 @@ For 95% of apps, off-the-shelf embeddings + careful retrieval engineering wins.
 - **Self-hosting embeddings prematurely.** "We'll save money self-hosting bge-m3 on our own GPUs!" — then you spend two engineers' salaries on ops. At \&lt;10M queries/month, hosted embeddings are nearly free; self-hosting is theater.
 - **Not pinning version.** OpenAI may update embedding models. If your code says `model="text-embedding-3-small"` and they release a v2 with the same name, your retrieval silently breaks. Pin model strings and verify on provider docs.
 :::
+
+<Quiz id="embedding-tier-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Your RAG retrieval recall is measuring around 70 percent. According to this page, what is the most likely culprit?"
+  options={[
+    { text: "Chunking strategy or relying on pure vector search instead of hybrid" },
+    { text: "The embedding model is too small and needs the largest available upgrade" },
+    { text: "The vector database is too slow" },
+    { text: "The LLM generating answers is too cheap" }
+  ]}
+  correct={0}
+  explanation="Below roughly 75 percent recall, the problem is almost certainly chunking or pure-vector-versus-hybrid search, not the embedding model. Differences between top embeddings are small; chunking and hybrid search are the big levers. Swap embeddings only after those are fixed."
+/>
+
+<Question
+  prompt="What happens if you embed your documents with one model and your queries with a different one?"
+  options={[
+    { text: "Retrieval works but runs slower" },
+    { text: "Retrieval silently returns garbage, because the vectors do not live in the same space" },
+    { text: "The vector database raises an error at query time" },
+    { text: "Quality drops slightly but remains usable" }
+  ]}
+  correct={1}
+  explanation="This is the same-model-everywhere rule. Mismatched models — or even mismatched versions of the same model — produce vectors in incompatible spaces, and nothing errors out; you just get silently broken retrieval. It is one of the hardest bugs to spot, which is why upgrading means re-embedding the entire corpus first."
+/>
+
+<Question
+  prompt="When is fine-tuning a custom embedding model actually worth it?"
+  options={[
+    { text: "As soon as your corpus contains any specialized vocabulary" },
+    { text: "Whenever you want a few extra points of recall" },
+    { text: "For most production RAG systems past a certain size" },
+    { text: "Almost never — only when domain language is unusual, you have ground-truth pairs to train on, and retrieval is still the bottleneck after fixing chunking, hybrid search, and reranking" }
+  ]}
+  correct={3}
+  explanation="For about 95 percent of apps, off-the-shelf embeddings plus careful retrieval engineering wins. Fine-tuning needs all the conditions at once: unusual domain language, training pairs, exhausted simpler fixes, and enough volume to justify the engineering cost."
+/>
+
+</Quiz>
 
 → Next: [Vector DB pick](./05-vector-db-pick.md) — where these embeddings actually live.

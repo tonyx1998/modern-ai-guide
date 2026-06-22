@@ -153,4 +153,44 @@ The way you actually become "the retrieval person" is by being the one your team
 - **Treating Forward-Deployed Engineer as a downgrade.** At Anthropic, OpenAI, Sierra, and Decagon, FDE is a senior IC track with high comp and unusual career upside (you see the most interesting enterprise problems first).
 :::
 
+<Quiz id="career-specializations-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="When does the page say is the natural time to pick a specialization track?"
+  options={[
+    { text: "Year 2 to 3, after shipping enough features to know which problems energize you" },
+    { text: "Day one, so every project builds toward the same depth" },
+    { text: "Year 5 or later, once you have reached senior level" },
+    { text: "Only after a manager assigns you a specialty" }
+  ]}
+  correct={0}
+  explanation="Not in Year 1 - junior breadth across prompting, retrieval, evals, and observability matters more than depth, and you need to feel which problems you enjoy debugging at 11pm. By Year 2-3 you have shipped 4-8 features and can see which depth compounds."
+/>
+
+<Question
+  prompt="What does the page call the wrong reason to pick a specialization?"
+  options={[
+    { text: "Picking the track your current employer needs most" },
+    { text: "Picking the track that pays 25 percent more on levels.fyi when the work does not actually energize you" },
+    { text: "Picking a track that overlaps your previous career background" },
+    { text: "Picking a track with an active open-source community" }
+  ]}
+  correct={1}
+  explanation="If you do not enjoy the day-to-day of a track - like reading model release notes every week - you will burn out faster than the comp premium pays back. The curiosity audit recommends specializing where your energy and the market's needs intersect, leaning energy when they do not."
+/>
+
+<Question
+  prompt="According to the page, how do you actually become known as 'the retrieval person'?"
+  options={[
+    { text: "Change your job title and LinkedIn headline to Retrieval Engineer" },
+    { text: "Complete a retrieval-focused certification program" },
+    { text: "Be the person your team brings retrieval problems to - own the next chunking decision, write the retrieval eval suite, give the brown-bag talk" },
+    { text: "Publish a paper on reranking at an academic conference" }
+  ]}
+  correct={2}
+  explanation="Specialization happens at the team level, not the resume level. Three months of being-the-person beats six months of resume rewrites - the title follows the work, not the other way around."
+/>
+
+</Quiz>
+
 → Next: [AI system-design interviews](./ai-system-design.md).

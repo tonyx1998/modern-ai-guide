@@ -10,6 +10,10 @@ description: Order-of-magnitude estimation for LLM features. Why caching is the 
 
 > **In one line:** Develop the muscle to estimate any AI feature's monthly cost in 30 seconds — and you'll catch the obvious disasters before you build them.
 
+:::tip[In plain English]
+Every AI feature has a bill, and the math behind it is short: how many calls you make, how many tokens go in and out per call, and which tier of model you use. Output tokens cost several times more than input tokens, and a frontier model can cost roughly 17 times more than a cheap one for the exact same call. The skill this page builds is doing that multiplication in your head in 30 seconds — so you spot the feature that would cost millions a month before anyone builds it.
+:::
+
 The skill: given a feature description (volume + tokens-per-call + model tier), produce a per-month cost estimate accurate within ~2x. Then verify with logs.
 
 ## 1. The base equation
@@ -206,5 +210,45 @@ Optimizations without measurements are theater.
 - **Ignoring output-token cost.** Output is 5–10x input. "Tell me everything you know" is a 50x more expensive prompt than "Reply in one sentence."
 - **Not measuring after changes.** Make a change "to save money," ship, never check the bill. Verify.
 :::
+
+<Quiz id="cost-intuition-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Which optimization does the page call the single highest-leverage one for most apps?"
+  options={[
+    { text: "Switching to a cheaper provider every quarter" },
+    { text: "Prompt caching on stable prefixes like the system prompt" },
+    { text: "Capping output length with max_tokens" },
+    { text: "Using batch APIs for everything" }
+  ]}
+  correct={1}
+  explanation="Caching stable prefixes typically cuts 50-90% of cached input cost - a chat app re-sending a 5k-token system prompt on every turn benefits hugely. The other options help, but they rank lower."
+/>
+
+<Question
+  prompt="Why does the page call 'make the model write less' the most common cost optimization?"
+  options={[
+    { text: "Output tokens are priced several times higher than input tokens" },
+    { text: "Output tokens are free but slow down the response" },
+    { text: "Input tokens are actually the expensive ones" },
+    { text: "Shorter outputs are always more accurate" }
+  ]}
+  correct={0}
+  explanation="Across every tier, output runs about 4-8x the price of input. Tightening max_tokens and asking for concise replies attacks the expensive side of the equation directly."
+/>
+
+<Question
+  prompt="Which metric does the page say decides whether an AI feature is profitable for a SaaS?"
+  options={[
+    { text: "Total monthly token count" },
+    { text: "The p95 latency of user-facing calls" },
+    { text: "The cache hit rate across features" },
+    { text: "Monthly LLM spend divided by monthly active users" }
+  ]}
+  correct={3}
+  explanation="Cost-per-active-user is the number that matters: if your subscription is $20/user/month and your LLM cost per user is $50, the feature loses money on every customer no matter how good it is."
+/>
+
+</Quiz>
 
 → Next: [Latency intuition](./06-latency-intuition.md) — TTFT, streaming UX, perceived vs measured speed.

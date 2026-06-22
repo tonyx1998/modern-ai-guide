@@ -7,6 +7,13 @@ description: Distilabel, Argilla, Lilac, Gretel, PromptWright, Bonito — genera
 
 # Synthetic data tools
 
+:::info[Dated content — June 2026]
+This page names specific tools, models, and prices, which rotate quarterly. The *selection
+logic* is durable; the names are a snapshot. Cross-check the
+[Model snapshot](/docs/model-snapshot) for current model names and pricing.
+:::
+
+
 > **In one line:** Tools that use an LLM to generate the training, eval, or fine-tuning data you don't have — and the labeling / curation surfaces to clean what you generate.
 
 :::tip[In plain English]
@@ -115,6 +122,46 @@ Synthetic eval data is one of the cheapest, highest-leverage investments in your
 - **Using synthetic data to fine-tune away production errors without verifying.** You can over-fit to artifacts. Always evaluate on a held-out, *real* set after training.
 - **Not labeling synthetic rows.** Six months later, nobody remembers which examples are real. Always tag.
 - **Generating only "easy" cases.** A model generating user questions tends to produce well-formed ones. Real users mangle queries. Explicitly prompt for the messy long tail.
+
+<Quiz id="synthetic-data-tools-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Why should the model that judges generated examples be different from the model that generated them?"
+  options={[
+    { text: "A model rates its own output too highly, leaking bias into what gets kept" },
+    { text: "Providers prohibit using the same model twice in one pipeline" },
+    { text: "Judges must always be smaller and cheaper than generators" },
+    { text: "Identical models cannot exchange JSON" }
+  ]}
+  correct={0}
+  explanation="A judge sharing the generator's quirks and preferences will systematically over-score its own style — the generator-judge pair only filters effectively when the perspectives differ. The page suggests a stronger or different-family judge; nothing forces it to be cheaper, and there's no technical restriction at play."
+/>
+
+<Question
+  prompt="Which situation is the classic trigger for generating synthetic eval data?"
+  options={[
+    { text: "You have millions of production traces already" },
+    { text: "Your pipeline's outputs are fully deterministic" },
+    { text: "A new feature has no users yet, so there is no production traffic to build an eval set from" },
+    { text: "Your team is forbidden from fine-tuning" }
+  ]}
+  correct={2}
+  explanation="Synthetic generation exists to buy coverage you don't have logs for — new features, adversarial edge cases, the messy long tail real users haven't produced yet. If you already have millions of traces, promoting real ones is better: production data still beats synthetic for what users actually do."
+/>
+
+<Question
+  prompt="How should you treat synthetic data relative to real production traces?"
+  options={[
+    { text: "As interchangeable once a judge model approves it" },
+    { text: "As a seed — useful for coverage, but real traces still beat it for what users actually do" },
+    { text: "As strictly superior because it is cleaner" },
+    { text: "As training-only data that must never appear in eval sets" }
+  ]}
+  correct={1}
+  explanation="Synthetic data carries subtle artifacts — formal phrasing, missing typos, model-isms — so it seeds coverage rather than defining ground truth, and every row should be tagged synthetic versus real. Its cleanliness is precisely the problem: real users mangle queries in ways generators don't. It absolutely belongs in eval sets, just labeled."
+/>
+
+</Quiz>
 
 ---
 

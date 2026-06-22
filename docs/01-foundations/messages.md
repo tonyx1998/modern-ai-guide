@@ -129,6 +129,46 @@ Five fields, ~150 tokens, covers 80% of use cases. Resist the urge to write a ma
 Once you understand the message list pattern, every chat-style provider in the world is some flavor of this. Differences are details. The mental model — "a list of role-tagged turns I extend each round" — is universal.
 :::
 
+<Quiz id="messages-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="In a chat app, the user asks a follow-up question. What must your code send to the API?"
+  options={[
+    { text: "Just the new question — the provider remembers the session" },
+    { text: "The new question plus a session ID" },
+    { text: "The entire message history, including the assistant's own previous replies" },
+    { text: "A model-generated summary of the conversation so far" }
+  ]}
+  correct={2}
+  explanation="The API is stateless: the provider keeps no memory between requests, so every turn you re-send the full role-tagged history — including past assistant turns, which the model needs to know what it already said. There is no session ID in the chat protocol; statelessness is a feature that makes scaling, recovery, and edit-and-resend simple."
+/>
+
+<Question
+  prompt="Why should you never place user-supplied text inside the system prompt?"
+  options={[
+    { text: "It makes prompt injection much easier, since system-level text carries instruction authority" },
+    { text: "The system prompt has a strict 500-token limit" },
+    { text: "User text in the system role causes an API validation error" },
+    { text: "It prevents the model from streaming its response" }
+  ]}
+  correct={0}
+  explanation="The system prompt is where behavior rules live, so injected text like 'ignore previous instructions' is far more dangerous there than in the user role. Nothing errors out — the API accepts it happily, which is exactly why it is the textbook injection foothold. Keep untrusted input in user messages, where it carries less authority."
+/>
+
+<Question
+  prompt="You want your long system prompt to benefit from prompt caching. How should you split your instructions?"
+  options={[
+    { text: "Put everything, stable and variable, in the system prompt for consistency" },
+    { text: "Alternate instructions between user and assistant roles" },
+    { text: "Move all instructions into the latest user message" },
+    { text: "Stable instructions in the system prompt, variable per-request details in the user message" }
+  ]}
+  correct={3}
+  explanation="Caching works on identical prefixes, so a stable system prompt at the front can be cached while the variable user message at the end changes freely. Mixing per-request details like names or dates into the system prompt changes the prefix every call and produces zero cache hits — you pay full price for the same instructions every time."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Prompting — the craft](./prompting-craft.md)

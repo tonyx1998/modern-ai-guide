@@ -111,4 +111,44 @@ Almost every pitfall on this page is, at root, the absence of two specific disci
 - **Confusing "I've used many tools" with "I've understood many problems."** A long tool list on a resume without shipped artifacts is the modern equivalent of "knows all the frameworks." Depth on a small set beats name-dropping a long one.
 :::
 
+<Quiz id="career-pitfalls-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What does the page identify as the root cause behind almost every career pitfall it lists?"
+  options={[
+    { text: "The absence of two disciplines - shipping and evaluating - which is what separates accumulating evidence from accumulating opinions" },
+    { text: "Working at the wrong tier of company for your level" },
+    { text: "Spending too much time on Twitter and not enough on papers" },
+    { text: "Choosing the wrong specialization too early" }
+  ]}
+  correct={0}
+  explanation="Engineers who ship and evaluate accumulate evidence; engineers who consume and theorize accumulate opinions, and the 2026 market pays for evidence. The single habit fix: every new LLM feature ships with an eval suite, no exceptions."
+/>
+
+<Question
+  prompt="What is the recommended fix for model-leaderboard chasing?"
+  options={[
+    { text: "Always run the newest frontier model so you never fall behind" },
+    { text: "Pin one model permanently and never revisit the choice" },
+    { text: "Let each engineer pick whichever model they prefer" },
+    { text: "Upgrade only when evals show a real win, cost or latency improves meaningfully, or a needed capability appears - on a fixed quarterly cadence, not reactively" }
+  ]}
+  correct={3}
+  explanation="The leaderboard moves every 4 to 8 weeks, and engineers who chase it ship less. Production stability and eval discipline matter more than always running the newest model - so make re-evaluation a scheduled decision, not a reflex to each release."
+/>
+
+<Question
+  prompt="In the agent-demo-itis self-diagnostic, which question reveals you are in the trap?"
+  options={[
+    { text: "Whether your agent uses the latest orchestration framework" },
+    { text: "Whether you have a task-success rate on an eval set you did not hand-pick, and whether anyone besides you has used it for a real task" },
+    { text: "Whether your demo video got enough engagement on Twitter" },
+    { text: "Whether the agent completes its demo in under a minute" }
+  ]}
+  correct={1}
+  explanation="If the answer to the eval question is 'I don't have an eval set' and nobody else uses the agent, that is the trap. The fix: pause new features, write 20 eval cases reflecting real use, run them, and only post the demo once you can also post the numbers."
+/>
+
+</Quiz>
+
 → Next: [Bootcamps, Courses, Degrees](./11-bootcamps-degrees.md).

@@ -187,6 +187,46 @@ Self-check:
 - Is there a per-user rate limit on the route, keyed on `userId`?
 - Is there a global daily cap that emails you if breached?
 
+<Quiz id="solo-auth-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Why does this page insist on adding auth before any other features on a public LLM endpoint?"
+  options={[
+    { text: "An anonymous, uncapped LLM endpoint will be discovered and abused — you need to identify users so per-user limits can work" },
+    { text: "App stores reject AI apps that lack a login screen" },
+    { text: "You cannot charge users later unless auth was added first" },
+    { text: "LLM providers require authenticated end users in their terms of service" }
+  ]}
+  correct={0}
+  explanation="Open endpoints get hit by token resellers, spammers, and benchmarkers within hours of being shared, and you cannot rate-limit people you cannot identify. The charging option is tempting because payments do build on auth, but the page is explicit that day-one auth is about identification for limits, not monetization."
+/>
+
+<Question
+  prompt="Why is a per-IP rate limit alone NOT enough protection?"
+  options={[
+    { text: "IP addresses change too slowly to be useful as keys" },
+    { text: "Per-IP limits cannot return 429 status codes" },
+    { text: "Rate limiters cannot read IP addresses behind a CDN" },
+    { text: "It is trivial to bypass, and one mobile carrier can share an IP across thousands of legitimate users" }
+  ]}
+  correct={3}
+  explanation="Per-IP limits both over-block (carrier-grade NAT puts thousands of real users behind one IP) and under-block (abusers rotate IPs easily), so the primary limit should be keyed on userId with per-IP only as a backup for unauthenticated routes. The CDN option sounds technical and plausible, but the page's argument is about shared and rotating IPs, not header visibility."
+/>
+
+<Question
+  prompt="Beyond per-user rate limits, what second guardrail does the page recommend adding in your own code?"
+  options={[
+    { text: "A CAPTCHA on every request to the LLM route" },
+    { text: "A global daily request cap that refuses further requests and emails you when breached" },
+    { text: "A weekly cron job that rotates your API keys" },
+    { text: "A honeypot endpoint that bans IPs that touch it" }
+  ]}
+  correct={1}
+  explanation="The two-layer defense is a global daily cap in your code (the polite 'something is wrong, look at it' signal) paired with the provider dashboard cap as the absolute ceiling. A CAPTCHA is a plausible-sounding control, but the page never suggests it — the in-code cap protects you even from abuse patterns that pass auth, like a runaway loop in your own code."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [Payments](./08-payments.md) where we'll add the "remove the limit" upgrade path so abuse turns into revenue.

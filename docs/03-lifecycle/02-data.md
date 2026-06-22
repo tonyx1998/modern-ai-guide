@@ -154,6 +154,46 @@ Total elapsed: 3 days. The PII scrubber takes longer than expected (named-entity
 - [ ] Model-provider contract is sufficient for the data class you're sending.
 - [ ] Retention and deletion policies are agreed for both inputs and outputs.
 
+<Quiz id="lifecycle-data-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="The page describes three distinct piles of data. If a team only builds one, which does the page say it should be?"
+  options={[
+    { text: "The knowledge data, because RAG cannot work without it" },
+    { text: "The eval data — the 50-500 graded examples that tell you whether the system works" },
+    { text: "The training data, because fine-tuning gives the biggest quality gains" },
+    { text: "A unified pile that serves knowledge, evals, and training at once" }
+  ]}
+  correct={1}
+  explanation="The page is explicit: 'If you only build one data pile, build this one' — the eval set. Knowledge data matters for RAG, but without evals you cannot tell whether anything works. Training data is only needed for fine-tuning, which most projects defer, and a single pile for everything is listed as an anti-pattern because the three have different shapes and freshness needs."
+/>
+
+<Question
+  prompt="Why does the page warn against eval sets made only of synthetic (LLM-generated) cases?"
+  options={[
+    { text: "Synthetic data is forbidden under GDPR retention rules" },
+    { text: "Synthetic cases cost far more tokens than sampling real logs" },
+    { text: "LLM-generated cases always contain hallucinated PII" },
+    { text: "They are easy to generate and easy to ace; real users produce input shapes no LLM can synthesize" }
+  ]}
+  correct={3}
+  explanation="Synthetic cases are useful for coverage and stress-testing edge formats, but the page says they must never be the only source: a system can ace an LLM-generated test while failing on the messy, surprising inputs real users actually send. The other options are not claims the page makes — the objection is about blind spots, not cost or legality."
+/>
+
+<Question
+  prompt="According to the page, what is the single most common AI security bug in 2026?"
+  options={[
+    { text: "RAG with no per-user permission filtering, so users can see retrieved content they should not access" },
+    { text: "Prompt injection through customer-uploaded files" },
+    { text: "Leaking provider API keys in client-side code" },
+    { text: "Poisoned training data in fine-tuned models" }
+  ]}
+  correct={0}
+  explanation="The page names RAG without per-user filtering as 'the single most common AI security bug in 2026.' Authorization becomes a retrieval concern: a user must never see retrieved content they could not otherwise read. Prompt injection via uploaded files is a real risk the page also flags, but it is rated a high-pain source — not the most common bug."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Data engineering for AI features](./data-engineering.md)

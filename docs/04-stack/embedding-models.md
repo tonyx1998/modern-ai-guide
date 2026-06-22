@@ -7,6 +7,13 @@ description: OpenAI, Cohere, Voyage, BGE, E5 — the models that turn text into 
 
 # Embedding models
 
+:::info[Dated content — June 2026]
+This page names specific tools, models, and prices, which rotate quarterly. The *selection
+logic* is durable; the names are a snapshot. Cross-check the
+[Model snapshot](/docs/model-snapshot) for current model names and pricing.
+:::
+
+
 > **In one line:** A cheaper, smaller model that turns a piece of text (or image, or audio) into a fixed-length vector — the unit currency of RAG, semantic search, classification, and clustering.
 
 :::tip[In plain English]
@@ -95,6 +102,46 @@ The expensive part is *re-embedding* on a model change. Plan for it.
 - **Mixing models across query and corpus during an A/B test.** The "B" arm looks terrible because nothing matches, not because the model is worse.
 - **Skipping a re-ranker on small-`k` retrieval.** Embeddings alone bring back coarse matches. A cross-encoder rerank (Cohere Rerank 3, Voyage Rerank) on top-50 → top-5 is the single biggest RAG quality win for the cost.
 - **Putting embeddings in `JSONB` instead of a vector column.** Works for 10 rows, dies at 10k. Use pgvector or a real vector DB.
+
+<Quiz id="embedding-models-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Why is the choice of embedding model worth making deliberately up front?"
+  options={[
+    { text: "Re-embedding a large corpus after a model swap is a major project, so switching later is expensive" },
+    { text: "Embedding models cannot be changed once a vector DB is created" },
+    { text: "All embedding models produce the same dimensions, so quality is the only difference" },
+    { text: "Query latency doubles every time you change models" }
+  ]}
+  correct={0}
+  explanation="Embedding the corpus once is cheap; RE-embedding ten million chunks on a model change is a one-week project, which is the real switching cost. You absolutely can change models later — it's just painful — and dimensions vary widely across models, which is part of what makes the migration hard."
+/>
+
+<Question
+  prompt="Your users search a codebase for functions, API calls, and stack traces. Which model does the page call the clear winner?"
+  options={[
+    { text: "text-embedding-3-small" },
+    { text: "voyage-code-3" },
+    { text: "bge-small quantized" },
+    { text: "text-embedding-005" }
+  ]}
+  correct={1}
+  explanation="The page is blunt: voyage-code-3 just wins on code, no subtlety about it. text-embedding-3-small is the great general-purpose default, but code retrieval is a specialized task where the code-tuned model reliably outperforms generalists."
+/>
+
+<Question
+  prompt="A query embedded with model A returns garbage against a corpus embedded with model B. What's the root cause?"
+  options={[
+    { text: "The vector database index needs to be rebuilt weekly" },
+    { text: "Cosine similarity only works on English text" },
+    { text: "Model A is simply lower quality than model B" },
+    { text: "Vectors from different models live in incompatible spaces, so distances between them are meaningless" }
+  ]}
+  correct={3}
+  explanation="Each model defines its own meaning-space; coordinates from one space say nothing about distances in another, so query and corpus must always use the same model. Blaming model quality is the tempting wrong answer — even two excellent models are mutually incompatible. This also bites silently during A/B tests."
+/>
+
+</Quiz>
 
 ---
 

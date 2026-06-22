@@ -10,6 +10,10 @@ description: Why chunking + hybrid search dominate embedding choice. The retriev
 
 > **In one line:** In production RAG, retrieval quality dominates generation quality — and chunking + hybrid search dominate embedding model choice. Tune in that order.
 
+:::tip[In plain English]
+When a RAG system gives a bad answer, the instinct is to blame the language model — but about 70% of the time, the real problem is that the right passage never got fetched in the first place. The good news: the fixes that help most aren't exotic. Splitting your documents at sensible boundaries (chunking) and combining old-fashioned keyword search with vector search (hybrid retrieval) move the numbers far more than swapping in a fancier embedding model. This page ranks the levers so you pull them in the right order.
+:::
+
 You built the RAG pipeline in [Stage 5](../01-part-1-from-zero/06-stage-5-rag.md). The first version always feels magical for a week. The next month of work is RAG-quality engineering — and almost none of it is about LLMs.
 
 ## 1. The retrieval-vs-generation diagnosis
@@ -231,5 +235,45 @@ Most production RAG ends up close to this. You don't need all of it on day one; 
 - **Forgetting to re-index after schema changes.** Changed chunk size? Switched embedding models? Modified the chunking algorithm? Re-index everything, not just new docs.
 - **Reranker over the wrong candidates.** Rerank the top-K from cheap retrieval, not random docs or the whole corpus.
 :::
+
+<Quiz id="retrieval-quality-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="In practice, where do roughly 70% of bad RAG answers come from?"
+  options={[
+    { text: "The model hallucinating despite having the right context" },
+    { text: "Retrieval failing to put the answer-bearing chunk in the top-K" },
+    { text: "The system prompt being too short" },
+    { text: "Temperature set too high" }
+  ]}
+  correct={1}
+  explanation="Most bad RAG answers are retrieval bugs. The diagnostic is concrete: log the retrieved chunks and look - if the answer-bearing text isn't in the top-K, no amount of prompt work will fix it."
+/>
+
+<Question
+  prompt="Which lever does the page rank as having the highest typical lift on retrieval quality?"
+  options={[
+    { text: "Swapping in a better embedding model" },
+    { text: "Increasing K and filtering" },
+    { text: "Better chunking that respects document structure" },
+    { text: "Hypothetical document embeddings (HyDE)" }
+  ]}
+  correct={2}
+  explanation="Structure-aware chunking gives a typical 10-30% recall lift - the top of the table. The much-discussed embedding model swap is only mid-tier at 3-8%, and it carries a re-indexing cost."
+/>
+
+<Question
+  prompt="What is the advantage of Reciprocal Rank Fusion (RRF) for combining BM25 and vector results?"
+  options={[
+    { text: "It requires careful per-corpus weight tuning" },
+    { text: "It only works when both searches use the same embedding model" },
+    { text: "It trains a small neural network to merge the rankings" },
+    { text: "It needs no tuning or learned weights - it just works" }
+  ]}
+  correct={3}
+  explanation="RRF combines the two ranked lists with a simple rank-based formula. No tuning, no learned weights, no embedding fiddling - which is why it's the default way to get hybrid retrieval's 10-20% recall lift."
+/>
+
+</Quiz>
 
 → Next: [Agent discipline](./04-agent-discipline.md) — when agents are the right shape, when they're not, how to keep loops safe.

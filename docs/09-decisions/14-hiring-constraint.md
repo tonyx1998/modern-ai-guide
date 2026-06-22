@@ -127,6 +127,46 @@ A competitor team hired an ML PhD for the same role. By month 4 they have a grea
 The lesson: the scarce skill was shipping discipline + production reliability, not ML knowledge. The successful hire had the rare thing. The fancy hire had the abundant thing.
 :::
 
+<Quiz id="hiring-constraint-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What does 'AI engineer' actually mean in about 90% of 2026 job postings?"
+  options={[
+    { text: "An ML PhD who pushes the model itself" },
+    { text: "A product engineer deeply fluent in LLM APIs, evals, and production patterns" },
+    { text: "A GPU infrastructure specialist" },
+    { text: "Someone who trains and fine-tunes models daily" }
+  ]}
+  correct={1}
+  explanation="Most roles are AI product engineers: senior software engineers who learned LLMs on the job and don't train models. Hiring an ML researcher for this work is the classic mismatch — expensive, often unhappy doing product work, and six months later you have a great notebook and no shipped feature."
+/>
+
+<Question
+  prompt="What is the scarcest skill on the 2026 hiring list?"
+  options={[
+    { text: "Eval discipline — engineers who reflexively measure before changing things" },
+    { text: "LangChain familiarity" },
+    { text: "General curiosity about AI" },
+    { text: "Using AI tools in the editor" }
+  ]}
+  correct={0}
+  explanation="Eval discipline tops the genuinely-scarce list, ahead of agent reliability and production prompt engineering. The distractors are explicitly NOT scarce: LangChain is a three-month learning curve for any engineer, most engineers are AI-curious, and 'uses AI in editor' is table stakes by 2026, not a hire signal."
+/>
+
+<Question
+  prompt="What sourcing strategy does the page recommend for an AI product engineer role?"
+  options={[
+    { text: "Hire ML researchers and let them learn product work" },
+    { text: "Filter candidates by AI certifications and degrees" },
+    { text: "Source from senior product and backend engineers, screening for shipping discipline first" },
+    { text: "Only consider candidates with a Lead AI Engineer title" }
+  ]}
+  correct={2}
+  explanation="A great product engineer learns prompts in a week; a prompt enthusiast may never learn shipping. In the worked example, a backend engineer who had never used an LLM SDK shipped in 4 weeks, while the competitor's PhD hire shipped nothing in 6 months. Titles and certifications are explicitly listed as bad proxies."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [The 1-page checklist](./15-checklist.md).

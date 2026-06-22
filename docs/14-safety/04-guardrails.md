@@ -206,6 +206,46 @@ Every check is deterministic, fast, outside the model, and fails closed. That's 
 - **No telemetry.** If you don't log every block (category, score, which rail), you can't tune thresholds, spot an attack campaign, or prove compliance later.
 :::
 
+<Quiz id="safety-guardrails-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Your moderation API starts timing out during a provider outage. Your code currently lets requests through when the check errors. What does this page say about that design?"
+  options={[
+    { text: "It's correct — availability matters more than an occasional unmoderated request" },
+    { text: "It's fine as long as output guardrails are still running" },
+    { text: "It's failing open, which is wrong for safety — an attacker only needs to induce a timeout to bypass the rail, so block when you can't check" },
+    { text: "It's acceptable if you log the outage for later review" }
+  ]}
+  correct={2}
+  explanation="Fail closed is the most important guardrail design decision: a wrongly-blocked benign request is an annoyed user, while a wrongly-allowed harmful one is an incident — and outages become an attack vector if errors mean 'allow'. The availability argument is the tempting one, and it's why fail-open is the most common dangerous default."
+/>
+
+<Question
+  prompt="Your model must return a typed object with an action field of 'answer', 'escalate', or 'refuse'. It occasionally returns malformed JSON or invents new action values. What's the page's highest-leverage fix?"
+  options={[
+    { text: "Constrain generation with schema/grammar-constrained decoding so invalid output is structurally impossible" },
+    { text: "Add retry logic that re-asks the model until the JSON parses" },
+    { text: "Lower the temperature to make outputs more deterministic" },
+    { text: "Add a system-prompt example showing the exact JSON format" }
+  ]}
+  correct={0}
+  explanation="Constrained decoding turns a whole class of failures into impossibilities — an enum field literally cannot come back as 'answre' or a novel action. Retry-until-parse is the tempting patch because it usually works eventually, but it's 'parsing hopefully': it costs latency and tokens and still can't guarantee valid values, whereas constraining removes the failure mode."
+/>
+
+<Question
+  prompt="A team deploys a top-tier guardrail framework with toxicity, PII, and topic rails, and concludes their injected agent can no longer fire dangerous tools. What's wrong with that conclusion?"
+  options={[
+    { text: "Nothing — modern guardrail frameworks cover the full threat surface" },
+    { text: "Frameworks only work on managed cloud providers" },
+    { text: "Guardrails should be hand-rolled, never bought" },
+    { text: "Guardrails catch content; architecture stops actions — a content filter can't stop a tool call, which needs authz and human confirmation" }
+  ]}
+  correct={3}
+  explanation="The page draws this line explicitly: frameworks add convenience and observability for content checks, but they are not a substitute for least privilege, authorization in code, and confirmation on consequential actions. 'The framework covers it' is the comforting conclusion that leaves the action path — the scariest one — undefended."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Hallucination & confabulation](./05-hallucination.md)

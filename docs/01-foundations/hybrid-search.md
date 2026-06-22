@@ -169,6 +169,46 @@ Typical pattern: hybrid wins on queries with exact terms; vector wins on highly 
 You already have your vectors. Adding a BM25 index alongside is one schema change and 30 lines of fusion code. The quality jump is large enough that "we should add hybrid" is almost never a wrong call.
 :::
 
+<Quiz id="hybrid-search-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="A user searches for 'SKU-44827-A' and pure vector search returns generic 'product defect' docs instead of the exact SKU page. Why?"
+  options={[
+    { text: "Embeddings capture meaning, not exact strings, so rare identifiers don't match well" },
+    { text: "The vector index is corrupted and needs rebuilding" },
+    { text: "The query is too short for cosine similarity to work" },
+    { text: "The SKU page was never embedded" }
+  ]}
+  correct={0}
+  explanation="Exact identifiers — product codes, error strings, names, hashes — are a documented blind spot of embeddings, because the embedding cares about meaning rather than exact characters. That's precisely the gap BM25 keyword search fills, which is the whole case for hybrid. A corrupted index is where beginners reach first, but this behavior is by design, not a bug."
+/>
+
+<Question
+  prompt="Why does Reciprocal Rank Fusion combine results using rank positions instead of raw scores?"
+  options={[
+    { text: "Rank positions are cheaper to compute than scores" },
+    { text: "BM25 doesn't produce scores at all" },
+    { text: "BM25 and cosine scores live on incomparable scales, so blending raw scores is meaningless" },
+    { text: "Rank-based methods always return more results" }
+  ]}
+  correct={2}
+  explanation="A BM25 score and a cosine similarity aren't measured in the same units — adding or averaging them directly compares apples to oranges. RRF sidesteps the whole normalization problem by only looking at where each document ranked in each list. BM25 absolutely produces scores; the issue is that they can't be compared to cosine values, not that they don't exist."
+/>
+
+<Question
+  prompt="Your team has two free weeks: finetune a better embedding model, or add BM25 alongside the existing vectors. The benchmarks cited on the page suggest:"
+  options={[
+    { text: "Finetune the embedding model — model quality dominates retrieval" },
+    { text: "Add hybrid search — it typically gains 10 to 15% recall versus 3 to 8% from a better embedding model" },
+    { text: "Both options gain about the same; flip a coin" },
+    { text: "Neither helps; only the reranker matters" }
+  ]}
+  correct={1}
+  explanation="The blend is a bigger lever than the model: upgrading from mid-tier to top-tier embeddings gains about 3 to 8% recall, while adding hybrid gains about 10 to 15%. 'Better model first' feels intuitive because models get all the headlines, but the page calls spending weeks on embedding finetuning before you have BM25 in the stack a prioritization mistake."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Chunking strategies](./chunking-strategies.md)

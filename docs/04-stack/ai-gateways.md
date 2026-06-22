@@ -7,6 +7,13 @@ description: Portkey, OpenRouter, LiteLLM Proxy, Cloudflare AI Gateway, Kong AI 
 
 # AI gateways
 
+:::info[Dated content — June 2026]
+This page names specific tools, models, and prices, which rotate quarterly. The *selection
+logic* is durable; the names are a snapshot. Cross-check the
+[Model snapshot](/docs/model-snapshot) for current model names and pricing.
+:::
+
+
 > **In one line:** A reverse proxy in front of LLM providers. You call the gateway; the gateway calls the provider. In return you get routing, fallback, caching, rate limiting, cost tracking, PII redaction, and one bill.
 
 :::tip[In plain English]
@@ -131,6 +138,46 @@ Gateway cost is small relative to provider spend. The real value is the **cache 
 - **No circuit breaker.** Repeated 503s from Anthropic shouldn't keep retrying for 30 seconds; trip the breaker, route around.
 - **Provider creds in app code AND gateway.** Pick one place to hold credentials. Usually the gateway.
 - **Gateway as a single point of failure.** Run two instances; health-check; have a way to bypass to direct provider calls during a gateway outage.
+
+<Quiz id="ai-gateways-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Why is caching responses that contain user-specific content dangerous at the gateway?"
+  options={[
+    { text: "One user's cached answer can be served to a different user — cache only generic prompts or use per-user cache keys" },
+    { text: "User-specific responses are too large to cache" },
+    { text: "Caching personal content doubles the token bill" },
+    { text: "Semantic caches cannot store proper nouns" }
+  ]}
+  correct={0}
+  explanation="A cache keyed only on prompt text will happily replay 'Email Jane about her return' content to someone else — a privacy incident, not a performance bug. The fix is policy, not size limits: generic FAQ-style prompts cache safely, personalized ones need per-user keys or no caching at all."
+/>
+
+<Question
+  prompt="How do you keep the gateway itself from becoming a single point of failure?"
+  options={[
+    { text: "Enable semantic caching so most requests never reach it" },
+    { text: "Run redundant instances, health-check them, and keep a bypass path to call providers directly during a gateway outage" },
+    { text: "Only deploy the gateway in the provider's own region" },
+    { text: "Use a hosted gateway, which cannot go down" }
+  ]}
+  correct={1}
+  explanation="Putting every LLM call through one chokepoint means its outage is YOUR outage; redundancy plus a documented direct-to-provider escape hatch restores the resilience the gateway was supposed to add. Hosted services absolutely can go down — the bypass path matters regardless of who operates the proxy."
+/>
+
+<Question
+  prompt="According to the page, when should a team add a gateway?"
+  options={[
+    { text: "On day one, before the first provider integration" },
+    { text: "Only after passing a compliance audit" },
+    { text: "Once there is a real trigger — like running two or more providers in production or needing centralized cost control" },
+    { text: "Never; SDK-level routing always suffices" }
+  ]}
+  correct={2}
+  explanation="Most teams add a gateway within months 3 to 12, when failover, org-wide cost tracking, or per-tenant rate limits become real needs. Day-one adoption is the named pitfall — premature abstraction for problems you don't have yet. SDK routing works early but doesn't centralize policy across teams."
+/>
+
+</Quiz>
 
 ---
 

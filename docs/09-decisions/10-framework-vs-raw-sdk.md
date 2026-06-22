@@ -109,6 +109,46 @@ They migrate to raw SDK + 4 helper functions in one sprint. Total post-migration
 The lesson: the framework optimized for the wrong thing. They needed code they could understand, not abstractions someone else built.
 :::
 
+<Quiz id="framework-vs-raw-sdk-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the default starting point for a new AI feature?"
+  options={[
+    { text: "LangChain from day one to save setup time" },
+    { text: "A custom in-house framework" },
+    { text: "The most feature-rich framework available" },
+    { text: "The vendor's native SDK plus a few thin helpers" }
+  ]}
+  correct={3}
+  explanation="Raw SDK plus helpers gets you 90% of what a framework would, in code you fully understand — a simple agent loop is about 30 lines. Adopting a framework to 'save time' is the classic backwards move: it saves hours on day one and costs weeks of debugging later."
+/>
+
+<Question
+  prompt="What does the 'build raw v0 first' rule actually prescribe?"
+  options={[
+    { text: "Build the raw-SDK version, use it for two weeks, and only consider a framework if workflow structure is genuinely the pain" },
+    { text: "Build the framework version first, then simplify" },
+    { text: "Skip the prototype and design the abstraction up front" },
+    { text: "Pick whichever framework has the most GitHub stars" }
+  ]}
+  correct={0}
+  explanation="If the pain turns out to be repeated retry/parse/loop code, you extract helpers — no framework needed. Only when the workflow's structure makes your code genuinely unreadable do you reach for the smallest framework that fits. 80% of the time, the framework solves a problem you don't actually have."
+/>
+
+<Question
+  prompt="Why do AI frameworks deserve more skepticism than web frameworks like Rails or Next.js?"
+  options={[
+    { text: "AI frameworks are mostly written in Python" },
+    { text: "Web frameworks are equally risky" },
+    { text: "AI frameworks are young and bet on patterns still being discovered, so their abstractions churn" },
+    { text: "AI frameworks cost more money to license" }
+  ]}
+  correct={2}
+  explanation="Web framework abstractions are mature with well-understood pain points; AI frameworks are 2-3 years old, and adopting one is betting on someone else's bet about the right pattern. Code that calls the SDK directly survives that churn; code wrapped in a framework gets rewritten when the framework changes its API."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Prompt engineering vs fine-tuning](./11-prompt-engineering-vs-fine-tuning.md).

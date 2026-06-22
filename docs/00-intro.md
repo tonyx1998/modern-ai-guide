@@ -12,13 +12,13 @@ toc_max_heading_level: 2
 
 *From your first API call to agentic systems in production — for absolute beginners and beyond.*
 
-**What it is** — A comprehensive 2026 guide to how AI is actually built and used: how LLM-powered applications are designed, built, evaluated, shipped, and operated; how **agentic systems** are orchestrated; and the broader landscape — research, tooling, careers, and the industry — that a working AI practitioner needs to read fluently. The spine is engineering; the throughline is agents. Read it front to back as a complete beginner and you finish job-ready.
+**What it is** — A comprehensive 2026 guide to how AI is actually built and used: how LLM-powered applications are designed, built, evaluated, shipped, and operated; how **agentic systems** are orchestrated; and the broader landscape — research, tooling, careers, and the industry — that a working AI practitioner needs to read fluently. **18 chapters in seven parts**, in focused single-topic pages. The spine is engineering; the throughline is agents. Read it front to back as a complete beginner and you finish job-ready.
 
 **Who it's for** — Anyone from "I've used ChatGPT but never written code against an LLM" to "I build production AI systems and want a refresh on 2026 tooling, agent patterns, and where the field is heading."
 
 **Where to start** — New to AI? Jump straight to [the first lesson →](/docs/foundations/tokens). Everything else fans out from there.
 
-*Last reviewed: June 2026. Model names, pricing, and "current state" claims are accurate as of that date — the AI space moves faster than anywhere else in software, so confirm specifics before relying on any single recommendation.*
+*Last reviewed: June 2026. Model names, pricing, and "current state" claims live on the [Model snapshot](/docs/model-snapshot) page and in clearly dated sections — the AI space moves faster than anywhere else in software, so confirm specifics before relying on any single recommendation.*
 
 ---
 
@@ -32,7 +32,7 @@ toc_max_heading_level: 2
 
 ## What this guide covers
 
-**Seven parts, seventeen chapters** — written so a complete beginner can follow along while still being useful to working engineers. Read top to bottom and you go from "what is a token?" to designing evals, shipping safely, fine-tuning a model, building voice agents, and reading the architectures of products like Cursor and Glean. Each part builds on the one before it.
+**Seven parts, eighteen chapters** — written so a complete beginner can follow along while still being useful to working engineers. Read top to bottom and you go from "what is a token?" to designing evals, shipping safely, fine-tuning a model, building voice agents, and reading the architectures of products like Cursor and Glean. Each part builds on the one before it.
 
 ### Part A · Fundamentals
 How LLMs actually work, and how to learn the rest of this guide.
@@ -75,7 +75,8 @@ Grow as an AI engineer, study shipped systems, and look things up.
 
 - **[15. Career →](/docs/career)** — What an AI engineer actually does in 2026: AI engineer vs ML engineer vs research engineer, portfolio anatomy, specialization tracks, compensation context.
 - **[16. Case Studies →](/docs/case-studies)** — Eight shipped 2026 architectures reconstructed from public sources — Cursor, Claude Code, Perplexity, Sierra, Harvey, Glean, Notion AI, Duolingo Max — what's durable vs. what's a snapshot.
-- **[17. Glossary →](/docs/glossary)** — Every term in the guide, defined in plain English.
+- **[17. Cutting Edge →](/docs/cutting-edge/)** — Optional post-curriculum look ahead: agent harnesses, agentic RAG, trajectory evals, efficient inference, and a dated research radar.
+- **[18. Glossary →](/docs/glossary)** — Every term in the guide, defined in plain English.
 
 ---
 

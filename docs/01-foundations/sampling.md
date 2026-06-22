@@ -155,6 +155,46 @@ This still isn't *guaranteed* reproducibility (see the myth section above), but 
   hint="Track the index of the best value seen so far. Use strict greater-than (>) when comparing so the first of any tied maxima wins."
 />
 
+<Quiz id="sampling-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="You are extracting structured JSON from documents and want maximum reliability. What temperature should you start with?"
+  options={[
+    { text: "1.2, to give the model creative freedom with edge cases" },
+    { text: "0.7, the general chat default" },
+    { text: "0 — always pick the top token" },
+    { text: "It does not matter; temperature does not affect structured tasks" }
+  ]}
+  correct={2}
+  explanation="Extraction has a right answer, so you want the model's most probable token at every step — temperature 0. Higher temperatures mean more invented keys, malformed schemas, and hallucinated values, because the sampler deliberately picks lower-probability options. The 0.7 chat default exists for conversational variety, which is the opposite of what extraction needs."
+/>
+
+<Question
+  prompt="With temperature 0 and an identical prompt, you occasionally get different outputs across days. Is something broken?"
+  options={[
+    { text: "Yes — temperature 0 guarantees identical outputs" },
+    { text: "Yes — the provider is silently sampling at 0.1" },
+    { text: "No, but only because you forgot to also set top_p" },
+    { text: "No — batching effects, hardware non-determinism, and provider version drift can all change the output" }
+  ]}
+  correct={3}
+  explanation="Temperature 0 makes the sampling step deterministic, but the system around it is not: floating-point differences from batching, GPU scheduling, and silent checkpoint updates can flip the top token at near-ties. For evals, pin the exact model version, use temperature 0, pass a seed if supported, and log exact responses — that is as close to reproducible as providers allow."
+/>
+
+<Question
+  prompt="A teammate says 'lower the temperature to make the model smarter'. What is wrong with that claim?"
+  options={[
+    { text: "Nothing — temperature 0 maximizes intelligence" },
+    { text: "Temperature changes variety, not knowledge — the model knows the same things at 0 and at 1" },
+    { text: "Lowering temperature actually makes the model less capable" },
+    { text: "Temperature only affects the first token of a response" }
+  ]}
+  correct={1}
+  explanation="Temperature reshapes how adventurously the sampler picks from the model's probability distribution; the distribution itself — what the model 'knows' — is unchanged. Low temperature suits tasks with one right answer, high suits brainstorming, but neither setting adds or removes capability. It is a UX dial, not a quality dial."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Streaming](./streaming.md)

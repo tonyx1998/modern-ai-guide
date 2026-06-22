@@ -8,7 +8,18 @@ description: Langfuse, Helicone, LangSmith, Phoenix, Braintrust — when to use 
 
 # Observability Pick — Logs, Traces, Cost
 
+:::info[Dated content — June 2026]
+This page names specific tools, models, and prices, which rotate quarterly. The *selection
+logic* is durable; the names are a snapshot. Cross-check the
+[Model snapshot](/docs/model-snapshot) for current model names and pricing.
+:::
+
+
 > **In one line:** Start with the Postgres table from Stage 7. Move to a platform when you want trace UIs, per-feature cost breakdowns out of the box, or alerts you don't want to build.
+
+:::tip[In plain English]
+Observability just means keeping a record of every call your app makes to an AI model — what was sent, what came back, how long it took, and what it cost. Without that record, you can't answer basic questions like 'why did the bill double?' or 'why did this user get a weird answer?' This page picks the tool that keeps those records, and the starting answer is a plain database table you already know how to use. The paid dashboards are worth it later, when you have complicated multi-step flows to untangle or want ready-made charts and alerts instead of building your own.
+:::
 
 :::note[Observability feeds evaluation]
 Traces aren't just for debugging — sampling production traffic and scoring it is how you catch quality drift. See [production evals](/docs/evaluation/eval-production) in [Chapter 5: Evaluation & Measurement](/docs/evaluation).
@@ -167,5 +178,45 @@ Migrating the eval set + run history *out* of a platform is often harder than ge
 - **No alerts.** Logs without alerts mean problems are discovered weeks later. Wire up: cost spike, error rate spike, latency p95 spike, refusal rate spike.
 - **Vendor lock-in via SDK.** Wrap your logging in a `log_llm_call` interface; only that function knows the vendor. Swappable later.
 :::
+
+<Quiz id="observability-pick-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="When is the DIY Postgres logging table enough, according to this page?"
+  options={[
+    { text: "Small team, modest call volume, questions answerable with a few SQL queries, and no deep agent call chains to visualize" },
+    { text: "Only during the first week of development" },
+    { text: "Never — production apps always need a hosted observability platform" },
+    { text: "Only if the team has a dedicated database administrator" }
+  ]}
+  correct={0}
+  explanation="The boring answer holds longer than people expect. The signal to move is being able to name what you are missing — a trace-tree UI for agents, out-of-the-box cost breakdowns, or alerts you do not want to build yourself. Until then, the table is enough."
+/>
+
+<Question
+  prompt="What does this page warn about stripping system prompts or retrieved chunks from logs to save storage?"
+  options={[
+    { text: "It is recommended, since storage costs dominate observability budgets" },
+    { text: "It only matters for compliance-heavy industries" },
+    { text: "It defeats the purpose of logging — without full context you cannot replay a call to debug it" },
+    { text: "It is fine as long as you keep the model name and token counts" }
+  ]}
+  correct={2}
+  explanation="Replayability is the whole point of LLM logs. A logged call missing its system prompt, tool definitions, or retrieved chunks cannot be re-run to reproduce a problem, so the log tells you something went wrong but not why."
+/>
+
+<Question
+  prompt="What is the recommended way to migrate from the DIY table to a hosted platform?"
+  options={[
+    { text: "Cut over in one step to avoid duplicate data" },
+    { text: "Send data to both systems in parallel for a week or two, compare, then cut over — and prefer tools with good data export" },
+    { text: "Keep the table as primary forever and use the platform only for demos" },
+    { text: "Migrate historical data first, then switch live traffic" }
+  ]}
+  correct={1}
+  explanation="Running both briefly lets you verify costs, query patterns, and dashboards before committing. And since getting data OUT of a platform is often harder than getting it in, export quality should weigh on the choice — it is your escape hatch from lock-in."
+/>
+
+</Quiz>
 
 → Next: [Gateway pick](./09-gateway-pick.md) — Cloudflare AI Gateway, LiteLLM, OpenRouter, and friends.

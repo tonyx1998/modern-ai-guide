@@ -150,6 +150,46 @@ Engineers who internalize the triple naturally pick the right model per feature.
 - **Treating Sentry like a TODO list.** Errors pile to 10,000+ unread. Spend 20 minutes weekly archiving and grouping, or signal collapses to noise.
 :::
 
+<Quiz id="startup-ai-observability-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the page's guidance on choosing between Langfuse and Braintrust for LLM traces?"
+  options={[
+    { text: "Pick exactly one and commit — running both burns context-switching cost for marginal benefit" },
+    { text: "Run both so you can compare their dashboards" },
+    { text: "Use Langfuse in dev and Braintrust in production" },
+    { text: "Neither — Datadog covers LLM tracing on its own" }
+  ]}
+  correct={0}
+  explanation="One trace tool, one app-metrics tool: the split context of running both trace platforms kills the value of either, and the page lists it explicitly as a common mistake. The Datadog option is tempting because Datadog IS in the stack — but it covers app metrics; LLM traces (prompts, outputs, tokens, judge scores) need a dedicated trace tool."
+/>
+
+<Question
+  prompt="Why must every dashboard report quality, cost, AND latency together?"
+  options={[
+    { text: "Auditors require all three metrics for SOC 2" },
+    { text: "Three metrics fill the dashboard space better than one" },
+    { text: "Optimizing any one in isolation wrecks the others — a cheaper model cuts cost but may drop quality; a bigger one boosts quality but spikes latency and cost" },
+    { text: "Providers only expose these three metrics in their APIs" }
+  ]}
+  correct={2}
+  explanation="The triple makes trade-offs visible: engineers who internalize it naturally pick the right model per feature, while those who don't spend a quarter optimizing one axis at the expense of another. The SOC 2 option borrows compliance authority it doesn't have — the rationale is engineering trade-off visibility, not audit requirements."
+/>
+
+<Question
+  prompt="How does production quality monitoring via LLM-as-judge actually run?"
+  options={[
+    { text: "Every production trace is judged inline before the response returns to the user" },
+    { text: "Roughly 1% of production traces are sampled and judged asynchronously by a stronger, version-pinned model, with scores attached to traces" },
+    { text: "Users rate every response and the ratings replace automated judging" },
+    { text: "The eval suite in CI is sufficient — production judging is redundant" }
+  ]}
+  correct={1}
+  explanation="Sampling at 1% keeps cost trivial ($1-10/day at 100K traces/day), running async via a queue avoids blocking user responses, and the scores power the quality dashboard that catches drift. 'CI evals are sufficient' is the common mistake called out directly: having evals does not mean measuring production quality — real traffic hits patterns your eval set lacks."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [Security & Compliance](./12-security.md) where prompt injection defenses, PII scrubbing, SOC 2, DPAs, and provider opt-out get real.

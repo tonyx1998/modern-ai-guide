@@ -90,6 +90,46 @@ Instead they run their own eval (500 real tickets, graded by humans). New model:
 They don't switch. They saved a month of prompt re-tuning and avoided a quality regression. Six months later the new model gets cheaper and faster — they re-evaluate then.
 :::
 
+<Quiz id="boring-models-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="For a new AI feature, what is the default model choice according to this page?"
+  options={[
+    { text: "The current #1 model on LMArena" },
+    { text: "The cheapest model per token" },
+    { text: "The incumbent, most-deployed model in your provider" },
+    { text: "A brand-new open-weight model" }
+  ]}
+  correct={2}
+  explanation="The default is the boring incumbent (GPT-4.1, Claude Sonnet, Gemini 2.5 Pro) because deep production deployment means documented failure modes, stable pricing, working tools, and predictable latency. LMArena rank is tempting but measures preference on generic chat — and your product is not generic chat."
+/>
+
+<Question
+  prompt="What legitimately earns the right to swap to a newer model?"
+  options={[
+    { text: "The new model meaningfully wins on your own evals by enough margin to justify the swap cost" },
+    { text: "A blog post showing it is 2x better at coding" },
+    { text: "Other startups are switching to it" },
+    { text: "It has a lower per-token price" }
+  ]}
+  correct={0}
+  explanation="Only eval evidence on your specific tasks justifies a swap. The per-token price is the tempting trap: new 'cheap' models often use 3x more tokens for the same task, so you must measure end-to-end cost on real traffic, not the price card."
+/>
+
+<Question
+  prompt="In which situation does the boring-models rule NOT apply?"
+  options={[
+    { text: "Your team wants to compare models in production" },
+    { text: "A new model just topped the leaderboard" },
+    { text: "Everyone is talking about a new release" },
+    { text: "You need data residency that closed boring models cannot satisfy" }
+  ]}
+  correct={3}
+  explanation="Data residency can force self-hosted open models regardless of what is boring — the rule explicitly steps aside there. The other options are hype-driven reasons the page rejects; adding a model just to 'compare in production' is even listed as a usual mistake."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [The reversibility ladder](./02-reversibility.md).

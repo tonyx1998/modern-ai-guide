@@ -3,7 +3,7 @@ id: decisions-checkpoint
 title: Chapter 13 checkpoint
 sidebar_position: 99
 sidebar_label: Checkpoint
-description: Self-test of the decision rules from chapter 9. Do you remember the defaults and the conditions that flip them?
+description: Self-test of the decision rules from chapter 13. Do you remember the defaults and the conditions that flip them?
 ---
 
 # Chapter 13 checkpoint

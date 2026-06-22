@@ -170,6 +170,46 @@ Tooling note for 2026: **Unsloth** (drop-in, 2× faster LoRA/QLoRA, lower memory
 - **Losing the base model.** A LoRA adapter is useless without the exact base weights it was trained against. Version and pin both. (See [serving](./09-serving-finetunes.md).)
 :::
 
+<Quiz id="ft-lora-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="A colleague is surprised that your LoRA fine-tune of an 8B model produced a file of just a few megabytes. Why is the artifact so small?"
+  options={[
+    { text: "LoRA compresses the full model with 4-bit quantization before saving" },
+    { text: "The trainer only saves layers whose weights actually changed" },
+    { text: "It's a delta-encoded diff of the full weights" },
+    { text: "Only the two skinny adapter matrices per layer are trained and saved — r×(d+k) parameters instead of d×k, under 1% of the model — while the frozen base never moves" }
+  ]}
+  correct={3}
+  explanation="LoRA's bet is that the needed change is low-rank: freeze W and learn ΔW = B·A from two tiny matrices, e.g. ~131K params instead of ~16.8M for a 4096x4096 layer at r=16. The quantization answer confuses QLoRA's memory trick with the artifact size — the adapter is small because so few parameters were ever trainable."
+/>
+
+<Question
+  prompt="You want to fine-tune a 70B model (~140 GB in bf16) on a single high-memory GPU. How does QLoRA make this possible?"
+  options={[
+    { text: "Load the frozen base in 4-bit (~35 GB) and train 16-bit LoRA adapters on top — low precision is fine for weights that never move" },
+    { text: "Quantize both the base and the adapters to 4-bit so everything shrinks" },
+    { text: "Stream layers from disk one at a time during training" },
+    { text: "Train on a random 25% subset of the layers" }
+  ]}
+  correct={0}
+  explanation="QLoRA = quantized frozen base + full-precision tiny adapters: the base shrinks 4x and the trainable part was already megabytes, so the whole job fits on one GPU. Quantizing the adapters too is the tempting symmetry — but the adapters are where gradients flow, so they stay in 16-bit; only the frozen part tolerates low precision."
+/>
+
+<Question
+  prompt="Months later you try to deploy an old LoRA adapter but can't remember which base model checkpoint it was trained against. How bad is this?"
+  options={[
+    { text: "Not a problem — adapters are base-agnostic and work on any model of the same size" },
+    { text: "Minor — the adapter will work but with slightly reduced quality" },
+    { text: "Fatal — an adapter is a learned delta on top of specific frozen weights and is useless without the exact base it was trained against; version and pin both" },
+    { text: "Recoverable — the base model can be reconstructed from the adapter weights" }
+  ]}
+  correct={2}
+  explanation="The adapter encodes 'how to nudge these exact weights', so applying it to different weights produces nonsense — that's why the page says to version and pin base and adapter together. 'Same size = compatible' is the tempting shortcut, but matching dimensions only means the math runs, not that the result is meaningful."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Preference tuning: RLHF & DPO](./06-preference-tuning.md)

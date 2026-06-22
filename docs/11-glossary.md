@@ -1,8 +1,8 @@
 ---
 id: glossary
-title: 17. Glossary
+title: 18. Glossary
 sidebar_position: 99
-sidebar_label: 17. Glossary
+sidebar_label: 18. Glossary
 description: Every term used in the Modern AI Guide, defined in plain English.
 ---
 
@@ -20,6 +20,8 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 
 **Agent loop** — The control flow of an agent: think → call tool → observe result → repeat. Usually capped by a max-iteration count and a budget.
 
+**Agent harness** — The orchestration layer around an agent: loop control, context assembly, tool allowlists, memory, budgets, and tracing. Distinct from the base *model*.
+
 **Agentic RAG** — *RAG* where the model acts as an *agent* over retrieval: it decides when to retrieve, rewrites or decomposes the query, retrieves in multiple steps, and reflects on whether the results suffice. Contrast with naive (retrieve-once) RAG.
 
 **Alignment** — The broad research goal of making models behave the way humans actually want, rather than what a misread of the objective might encourage.
@@ -35,6 +37,8 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 ---
 
 ## B
+
+**Barge-in** — In a voice agent, the user interrupting while the agent is still speaking. Handling it well (stop TTS, cancel generation, listen) is a core realtime-voice engineering problem.
 
 **Base model** — A pre-trained model that has only learned to predict the next token, without later instruction-tuning. Powerful but raw — not what you'd ship to end users.
 
@@ -76,6 +80,8 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 
 **Claude** — Anthropic's family of LLMs. Tiers in 2026: *Opus* (most capable), *Sonnet* (balanced), *Haiku* (fast and cheap).
 
+**CLIP** — OpenAI's contrastive image-text model: it embeds images and captions into the same vector space, so "find images matching this text" becomes a similarity search. The foundation of most *multimodal RAG*.
+
 **Command-R** — Cohere's LLM family, marketed around *RAG* and *tool use*.
 
 **Constitutional AI** — Anthropic's technique for aligning a model using a written set of principles ("constitution") that the model uses to critique and revise its own outputs.
@@ -91,6 +97,8 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 **Continuous batching** — A serving technique (used by *vLLM*, *TGI*) that adds and removes requests from a batch every step, dramatically improving GPU utilization.
 
 **Computer use** — A capability where a model takes screenshots and emits mouse/keyboard actions to operate a real computer. Pioneered by Anthropic in 2024.
+
+**Contrastive embedding** — An embedding trained by pulling matching pairs (e.g. an image and its caption) together in vector space and pushing non-matching pairs apart. The training recipe behind *CLIP*-style multimodal models.
 
 **Cosine similarity** — A score from -1 to 1 measuring the angle between two vectors. The default similarity metric for normalized *embeddings*.
 
@@ -274,6 +282,8 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 
 **LiteLLM** — A drop-in proxy and SDK that exposes 100+ providers behind one OpenAI-compatible API.
 
+**LiveKit** — An open-source realtime audio/video infrastructure platform (WebRTC), widely used as the transport layer for voice agents.
+
 **LlamaIndex** — A Python/TS framework focused on *RAG*, indexing, and data connectors.
 
 **LlamaParse** — LlamaIndex's hosted document parser.
@@ -336,6 +346,8 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 
 **OCR (Optical Character Recognition)** — Extracting text from images of documents. Modern multimodal models often replace dedicated OCR.
 
+**OpenCLIP** — The open-source reimplementation of *CLIP*, trained on public data. The default when you need a self-hosted image-text embedding model.
+
 **OpenRouter** — A model marketplace exposing dozens of providers behind one OpenAI-compatible endpoint.
 
 **Opus** — The most capable tier in Anthropic's Claude family.
@@ -356,6 +368,8 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 
 **Pinecone** — A managed vector database, one of the first and still widely used.
 
+**Pipecat** — An open-source Python framework for building realtime voice (and multimodal) agent pipelines — wiring *STT*, the LLM, and *TTS* into one streaming loop.
+
 **Plan-and-execute** — An agent pattern where one step produces a full plan and subsequent steps execute it. Contrast with *ReAct*.
 
 **Planner-worker** — A *multi-agent* pattern where a planner agent decomposes work and dispatches it to worker agents.
@@ -363,6 +377,8 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 **Portkey** — A commercial *AI gateway* with routing, caching, and observability.
 
 **Precision** — Of items the model flagged as positive, what fraction actually were? Pair with *recall*.
+
+**Preference tuning** — The umbrella term for training a model on human (or AI) preference comparisons rather than gold answers — *RLHF* and *DPO* are the two main recipes.
 
 **Pre-training** — The initial, massive training run on raw text that produces a *base model*.
 
@@ -460,6 +476,8 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 
 **Short-term memory** — The conversation history kept inside the *context window*. The simplest form of memory.
 
+**SigLIP** — Google's improvement on *CLIP* that swaps the softmax contrastive loss for a sigmoid loss; a common backbone for the vision side of modern *VLMs*.
+
 **SLM (Small Language Model)** — A compact LLM (typically under 10B parameters) suitable for edge or on-device use. Examples: *Phi*, *Gemma*.
 
 **Sonnet** — The middle, balanced tier in Anthropic's Claude family.
@@ -489,6 +507,8 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 ## T
 
 **Temperature** — A *sampling* parameter that flattens (high) or sharpens (low) the probability distribution. 0 ≈ deterministic, 1 ≈ balanced, >1 = wilder.
+
+**Test-time compute** — Extra inference work at answer time (reasoning tokens, verifier passes, multiple samples) to improve hard answers — bounded by harness budgets.
 
 **Together** — A serverless inference provider for open models.
 
@@ -522,6 +542,8 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 
 **Trace** — A timeline of all *spans* that made up one logical request. The basic unit of LLM *observability*.
 
+**Trajectory eval** — Evaluating an agent's tool sequence and intermediate steps (process), not only the final answer (outcome).
+
 **Training** — The process of updating a model's *parameters* by minimizing a loss function on data.
 
 **Trajectory evaluation** — Scoring an *agent* on the *sequence* of steps it took (against a *golden path*, or via a rubric judge) — order, efficiency, and not taking forbidden actions — not just the final outcome. The layer between outcome and *tool-call accuracy*.
@@ -533,6 +555,8 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 **TTS (Text-to-Speech)** — Generating audio speech from text. *ElevenLabs* is the 2026 default.
 
 **Turbopuffer** — A serverless vector database optimized for cheap storage and fast cold queries.
+
+**Turn-taking** — In voice agents, deciding when the user has finished speaking and the agent should respond. Built on *VAD* plus semantic cues; getting it wrong makes the agent interrupt or lag.
 
 ---
 

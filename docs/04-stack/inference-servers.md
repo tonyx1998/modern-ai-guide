@@ -7,6 +7,13 @@ description: vLLM, TGI, SGLang, Ollama, llama.cpp — the runtimes that serve op
 
 # Inference servers
 
+:::info[Dated content — June 2026]
+This page names specific tools, models, and prices, which rotate quarterly. The *selection
+logic* is durable; the names are a snapshot. Cross-check the
+[Model snapshot](/docs/model-snapshot) for current model names and pricing.
+:::
+
+
 > **In one line:** If you self-host an open model, an inference server is what actually loads the weights, batches requests, and serves the tokens. vLLM is the breadth default in 2026; SGLang is the de-facto choice at hyperscale.
 
 :::tip[In plain English]
@@ -96,6 +103,46 @@ The breakeven against managed providers is roughly **200M tokens/day sustained**
 - **Skipping warmup.** Cold-start on a 70B model is 30–90 seconds. A request hitting a cold replica times out. Either pre-warm replicas or set generous client timeouts.
 - **Hand-rolling quantization without re-evaluating.** FP16 → FP8 → INT4 each costs a few quality points on hard reasoning. Run your eval suite after every quantization change.
 - **Forgetting that "OpenAI-compatible" is partial.** Tool calling, structured output, vision, and image gen vary by server and model. Test the *specific* features you use.
+
+<Quiz id="inference-servers-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Your workload is dominated by JSON-schema constrained generation and tool-call flows. Which inference server does the page suggest considering over the default?"
+  options={[
+    { text: "SGLang" },
+    { text: "TGI" },
+    { text: "llama.cpp" },
+    { text: "Ollama" }
+  ]}
+  correct={0}
+  explanation="SGLang has better primitives for structured output and constrained generation than vLLM, and its RadixAttention often wins on prefix-heavy workloads. TGI is a general-purpose alternative without that edge, and Ollama and llama.cpp target local dev and edge devices, not production structured-output serving."
+/>
+
+<Question
+  prompt="Why is Ollama the wrong choice for a production endpoint?"
+  options={[
+    { text: "It only runs on Apple Silicon hardware" },
+    { text: "It cannot expose an OpenAI-compatible API" },
+    { text: "It serializes requests and lacks the continuous batching that makes production serving economical" },
+    { text: "It refuses to load models larger than 7B parameters" }
+  ]}
+  correct={2}
+  explanation="Continuous batching is the single biggest throughput win in inference serving, and Ollama doesn't have it — requests queue one after another. It actually DOES expose an OpenAI-compatible API and runs on many platforms, which is exactly why it's so tempting to promote from laptop to prod. Don't."
+/>
+
+<Question
+  prompt="What happens if you run vLLM without setting the max-model-len flag?"
+  options={[
+    { text: "The server refuses to start until you set it" },
+    { text: "It defaults to the model's maximum context and reserves enormous KV-cache memory, slashing your concurrency" },
+    { text: "Requests longer than 4k tokens are silently truncated" },
+    { text: "Quantization is automatically disabled" }
+  ]}
+  correct={1}
+  explanation="The default is the model's full context window — for example 128k — which pre-reserves huge KV-cache headroom per request. Setting it to what you actually use can yield 5 to 10 times more concurrency on the same GPU. The server starts fine, which is why this footgun goes unnoticed until the bill arrives."
+/>
+
+</Quiz>
 
 ---
 

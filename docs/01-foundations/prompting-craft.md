@@ -273,6 +273,46 @@ This is the difference between "prompt engineering" (vibes) and **prompt enginee
 The internet pretends prompt engineering is about finding magic phrases. The actual craft is: write a measurable spec, build an eval set, iterate against it. Engineers who can build an eval set and iterate against it consistently beat engineers with bigger prompt-trick vocabularies and no eval discipline.
 :::
 
+<Quiz id="prompting-craft-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="According to this page, what separates real prompt engineering from 'vibes'?"
+  options={[
+    { text: "Iterating against an eval set of 20 to 50 representative cases" },
+    { text: "Knowing more named techniques than other engineers" },
+    { text: "Using XML tags instead of markdown sections" },
+    { text: "Writing longer, more emphatic instructions" }
+  ]}
+  correct={0}
+  explanation="The craft is the loop: build an eval set, score a baseline, find the dominant failure pattern, apply the one technique that fixes it, re-score. Technique vocabulary without measurement just inflates tokens, and 'it worked on my one test case' is not validation. The eval set is the engine that makes every other technique on this page usable."
+/>
+
+<Question
+  prompt="Your few-shot prompt has four positive examples and one negative, and the classifier now over-predicts positive. What went wrong?"
+  options={[
+    { text: "Few-shot never works for classification" },
+    { text: "The examples should have been placed after the input" },
+    { text: "Unbalanced examples bias the model toward the over-represented label" },
+    { text: "Five examples is too few for the model to learn from" }
+  ]}
+  correct={2}
+  explanation="Few-shot examples act as anchors, and the model picks up their distribution as well as their format — a 4-to-1 skew reads as 'positive is the usual answer'. Balance the labels and include the tricky boundary cases. Few-shot is the right tool here; it just needs representative examples, not simply more of them."
+/>
+
+<Question
+  prompt="Does opening your prompt with 'You are a world-class mathematician' make the model better at math?"
+  options={[
+    { text: "Yes — role assignment unlocks latent capabilities" },
+    { text: "Yes, but only on frontier models" },
+    { text: "Only if combined with a high temperature" },
+    { text: "No — roles tune tone and vocabulary, not capability" }
+  ]}
+  correct={3}
+  explanation="Role assignment primes vocabulary, tone, and refusal behavior — a 'senior accountant' answers more conservatively — but it is a tone knob, not a capability knob. Actual capability gains come from scaffolding: chain-of-thought, tools, retrieval, or a stronger model. Grand titles are a common but ineffective substitute for those."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Context windows](./context-window.md)

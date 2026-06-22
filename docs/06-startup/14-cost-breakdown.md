@@ -148,6 +148,46 @@ The engineer's job: model selection per feature, prompt caching coverage, batch 
 - **Spending an engineer-week to save $200/month.** A senior engineer's time is ~$1,500/day. Cost-optimization projects must clear a "saves > $5K/month" bar.
 :::
 
+<Quiz id="startup-ai-cost-breakdown-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the single largest variable line item in an AI-first startup's infrastructure bill?"
+  options={[
+    { text: "Database and vector storage" },
+    { text: "Hosting and CDN bandwidth" },
+    { text: "Observability and eval platforms" },
+    { text: "LLM provider API spend — often the majority of the entire infra bill" }
+  ]}
+  correct={3}
+  explanation="In the real-world walkthrough, provider spend (Anthropic + OpenAI + Bedrock) is $99K of a $112K bill — 88% of infra. The database option reflects the pure-SaaS instinct the page explicitly corrects: 'Postgres is $1K; the provider bill is $80K' — engineering attention should follow the bill."
+/>
+
+<Question
+  prompt="What is the highest-impact cost lever, according to the page's ordered list?"
+  options={[
+    { text: "Model selection per feature — routing routine work to mid-tier models often saves 60%+ on that feature" },
+    { text: "Negotiating a volume discount with the provider" },
+    { text: "Switching hosting providers" },
+    { text: "Reducing the number of eval runs in CI" }
+  ]}
+  correct={0}
+  explanation="Model selection tops the list, followed by prompt caching (50-80% on repeated context), max_tokens ceilings, semantic caching, per-tenant caps, and batch APIs. Cutting eval runs is the falsely-economical option — eval costs run only $100-500/month while the discipline they enable is what makes safe model downgrades possible in the first place."
+/>
+
+<Question
+  prompt="When should you invest engineering time in a cost-reduction project?"
+  options={[
+    { text: "Whenever any savings are identified, regardless of size" },
+    { text: "Only when the provider bill exceeds $500K/month" },
+    { text: "When it saves more than $5K/month and takes under 2 engineer-weeks — and ignore anything saving under $1K/month" },
+    { text: "Only during the annual budget review" }
+  ]}
+  correct={2}
+  explanation="The rule prevents both neglect and over-optimization: a senior engineer's time runs about $1,500/day, so an engineer-week chasing $200/month is a net loss. 'Any savings, always' feels frugal but is the trap the page names — track hours-spent-saving-dollars and you catch yourself optimizing the cheap bills."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [Day in the Life](./15-day-in-life.md) for a worked day in the life of an AI engineer at a 20-person startup.

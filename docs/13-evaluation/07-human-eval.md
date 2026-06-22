@@ -136,6 +136,46 @@ def hybrid_eval(outputs, llm_judge, sample_size=50):
 - **Letting calibration go stale.** Models drift, products change. Re-sample for human grading periodically, not once.
 :::
 
+<Quiz id="eval-human-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Your two annotators only agree at kappa 0.45 on a faithfulness task. The manager wants to fire one annotator and hire a 'better' one. What does this page say is almost always the real problem?"
+  options={[
+    { text: "The annotators are underqualified and need domain training" },
+    { text: "Kappa is the wrong statistic for two annotators" },
+    { text: "The sample of overlapping cases is too small to compute kappa" },
+    { text: "The task definition is ambiguous — fix the annotation guideline, not the people" }
+  ]}
+  correct={3}
+  explanation="Low inter-annotator agreement is almost always a guideline problem: an ambiguous task can't be scored consistently by anyone, human or LLM. Blaming the grader is the intuitive move, but the page's test is to hand the guideline to a fresh grader — if they diverge, the guideline is what's broken."
+/>
+
+<Question
+  prompt="Two human graders agree with each other at only kappa 0.5. What does this imply for the LLM-judge you're trying to calibrate against them?"
+  options={[
+    { text: "You cannot build a judge that agrees with 'the humans' better than they agree with each other — there's no consistent target to hit" },
+    { text: "The judge just needs a stronger model to exceed human agreement" },
+    { text: "You should average the two humans' scores and calibrate to that, which removes the ambiguity" },
+    { text: "Kappa 0.5 is near-perfect agreement, so calibration can proceed normally" }
+  ]}
+  correct={0}
+  explanation="IAA caps achievable automated-eval quality: if humans disagree, the 'ground truth' itself is inconsistent, so no grader can match it reliably. The stronger-model answer is tempting because more capability usually helps — but the bottleneck here is the ambiguous task, and the fix is clarifying the guideline first."
+/>
+
+<Question
+  prompt="You have 10,000 production outputs to evaluate weekly. What is the standard pattern this page recommends?"
+  options={[
+    { text: "Human-grade all 10,000 — humans are the gold standard, so anything less is untrustworthy" },
+    { text: "LLM-judge everything, human-grade a random sample (~50), and use their agreement to confirm the judge is still calibrated" },
+    { text: "Skip humans entirely once the LLM-judge has been calibrated a single time" },
+    { text: "Use raw percent agreement instead of kappa to keep the comparison simple" }
+  ]}
+  correct={1}
+  explanation="The economics (minutes and dollars per human-graded case vs seconds and fractions of a cent for a judge) drive the hybrid: automate the bulk, human-audit a sample, and re-calibrate when they diverge. 'Calibrate once and forget' is the tempting trap — models and products drift, so the human sample must recur."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Evals in CI/CD](./08-evals-in-cicd.md)

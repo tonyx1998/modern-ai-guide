@@ -10,6 +10,10 @@ description: How to think about measurement. LLM-judge biases (positional, verbo
 
 > **In one line:** Evals are the foundation of every other AI skill — and the bulk of the work isn't the runner, it's curating cases that reflect reality and avoiding the biases of LLM-as-judge.
 
+:::tip[In plain English]
+An eval is just a test suite for your AI feature: a stack of example inputs plus a way to grade the outputs. The tricky part isn't writing the code that runs them — it's picking cases that look like real life and grading them fairly. Often the grader is another AI model, and that judge has predictable blind spots: it favors longer answers, whichever answer it saw first, and answers written by models from its own family. This page is about spotting those traps and keeping your scores honest.
+:::
+
 You built an eval runner in [Stage 6](../01-part-1-from-zero/07-stage-6-evals.md). This page is the *thinking* side: what to grade, how to grade it, what biases corrupt your scores, and how to keep an eval set honest as your product evolves.
 
 :::tip[→ Going deeper]
@@ -199,5 +203,45 @@ The diff is the signal. Block PRs that regress. Don't block on small absolute dr
 - **Pass-rate as the only metric.** Track per-case results, not just the aggregate. A 90% pass rate that's regressed on critical cases is worse than 80% with no regressions.
 - **No judge model versioning.** When the judge model updates, scores become incomparable. Pin versions everywhere.
 :::
+
+<Quiz id="eval-mindset-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Which category of grading does the page rank as highest trust?"
+  options={[
+    { text: "LLM-as-judge with a carefully written rubric" },
+    { text: "Reference-based similarity against a gold answer" },
+    { text: "Deterministic checks like schema validation and required substrings" },
+    { text: "Embedding cosine similarity" }
+  ]}
+  correct={2}
+  explanation="Deterministic checks are free, fast, and completely repeatable - use them for everything you possibly can. Reference-based grading is medium trust, and LLM-as-judge is lower trust with broad scope."
+/>
+
+<Question
+  prompt="What is the recommended mitigation for positional bias in an LLM judge?"
+  options={[
+    { text: "Tell the judge to ignore the order of the answers" },
+    { text: "Randomize order and run each comparison twice with the order flipped" },
+    { text: "Always present the baseline answer first" },
+    { text: "Use a larger judge model" }
+  ]}
+  correct={1}
+  explanation="Judges prefer whichever answer they see first, so you randomize and run each pair twice with the order flipped. If the verdict flips with the order, mark the pair 'no signal' rather than a tie."
+/>
+
+<Question
+  prompt="You're evaluating outputs from a GPT-5 system. What does the page recommend for the judge?"
+  options={[
+    { text: "Use a judge from a different model family, such as Claude" },
+    { text: "Use GPT-5 itself, since it knows its own outputs best" },
+    { text: "Use a smaller model from the same family to save cost" },
+    { text: "Skip LLM judging entirely for that system" }
+  ]}
+  correct={0}
+  explanation="Self-preference bias means a judge from family X scores family X outputs higher than equivalent outputs from another family. Judging across families avoids inflating your scores."
+/>
+
+</Quiz>
 
 → Next: [Retrieval quality](./03-retrieval-quality.md) — why chunking and hybrid search dominate embedding-model swaps.

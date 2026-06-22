@@ -151,6 +151,46 @@ A few hours here is the highest-ROI safety work you will ever do.
 - **No incident plan.** Discovering your breach-notification deadline *during* a breach is how you miss it. Write the runbook in advance.
 :::
 
+<Quiz id="safety-red-teaming-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Your support bot scores 0.95 on every quality eval. The team concludes it's safe to launch without an adversarial pass. What does this page say?"
+  options={[
+    { text: "Correct — high eval scores imply the system also resists attack" },
+    { text: "Mostly correct, as long as the eval set includes some hard cases" },
+    { text: "Run the public safety benchmarks instead; they replace app-specific red-teaming" },
+    { text: "Wrong — evals are cooperative and measure quality; a model can ace them and still leak another customer's data to a fake [SYSTEM] block. You need an adversarial pass too" }
+  ]}
+  correct={3}
+  explanation="Evals ask 'does it work?'; red-teaming asks 'how do I make it misbehave?' — different questions with non-overlapping answers. The benchmark answer is the subtler trap: suites like HarmBench are useful baselines, but attackers exploit your tools, data, and integrations, which only red-teaming the whole pipeline covers."
+/>
+
+<Question
+  prompt="You find a jailbreak during a pre-launch session, patch the prompt, verify the attack no longer works, and move on. What's missing, per this page?"
+  options={[
+    { text: "Capturing the attack as a permanent regression test in CI — otherwise the next prompt change can silently reopen the hole" },
+    { text: "Nothing — verified fixes are complete fixes" },
+    { text: "Rotating all API keys, since a jailbreak implies credential exposure" },
+    { text: "Reporting the jailbreak to the model provider before shipping" }
+  ]}
+  correct={0}
+  explanation="The trick that makes red-teaming stick is that every successful attack becomes a frozen test that runs on every change — fixes without regression tests rot the moment you tweak a prompt or swap models. 'Verified fix = done' is the natural workflow instinct, and it's exactly how the same hole reopens twice."
+/>
+
+<Question
+  prompt="An active incident: your agent is being injected into sending emails right now. What does this page call the single most valuable thing to have built in advance?"
+  options={[
+    { text: "A blameless postmortem template" },
+    { text: "A kill switch — a feature flag that instantly disables the feature or the specific tool without a deploy" },
+    { text: "A faster CI pipeline so the fix deploys quickly" },
+    { text: "An automated attacker LLM to reproduce the exploit" }
+  ]}
+  correct={1}
+  explanation="Containment speed is everything mid-incident, and 'we'll redeploy a fix' is too slow while damage accrues — the flag that turns off send_email in seconds is the page's top pre-built artifact. Faster CI is the tempting engineering answer, but even a fast deploy is minutes of continued exfiltration versus an instant switch."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Governance & regulation in 2026](./09-governance-regulation.md)

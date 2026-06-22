@@ -163,6 +163,46 @@ One product, six evals, four positions on the grid. That's normal and correct.
 - **Inverted pyramid.** Expensive evals you run rarely give you slow, coarse, late feedback. Push checks down to fast unit/component level wherever you can.
 :::
 
+<Quiz id="eval-types-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Your RAG bot's retriever scores recall@5 = 0.6, and users complain about wrong answers. The team wants to spend a sprint rewriting the answer prompt. What does this page predict?"
+  options={[
+    { text: "Prompt work will fix it, since generation is the last step and controls output quality" },
+    { text: "No prompt can lift answer quality past ~60%, because the right context is missing 40% of the time — fix the retriever first" },
+    { text: "The recall@5 number is irrelevant because retrieval and generation are evaluated together" },
+    { text: "The team should switch to a larger model before touching either component" }
+  ]}
+  correct={1}
+  explanation="A component eval localizes the failure: if the gold document is absent from the top-5 results 40% of the time, the generator literally cannot answer correctly in those cases, no matter the prompt. The prompt-rewrite answer is tempting because the symptom shows up in the generated answer, but the broken layer is retrieval."
+/>
+
+<Question
+  prompt="You need to grade open-ended chat summaries where two good answers can be worded completely differently. Which grading family fits?"
+  options={[
+    { text: "Exact match against a gold summary string" },
+    { text: "Set membership against gold document IDs" },
+    { text: "Accuracy over a fixed label set" },
+    { text: "Reference-free grading against criteria, typically via LLM-judge or human" }
+  ]}
+  correct={3}
+  explanation="Open-ended generation has no single right answer to compare against, so you judge against criteria (faithfulness, tone, relevance) without a gold answer. Exact match is the tempting wrong choice because it is precise and cheap — but it fails every good summary that happens to be phrased differently from the reference."
+/>
+
+<Question
+  prompt="A team's only evals are a handful of expensive, multi-turn, LLM-judged end-to-end scenarios run before each release. What does this page call this, and what goes wrong?"
+  options={[
+    { text: "An inverted pyramid — feedback is slow and coarse, and when quality drops you can't tell which layer broke" },
+    { text: "A healthy setup, since end-to-end evals are the only ones that test the real product" },
+    { text: "An offline-only gap that should be fixed by removing the end-to-end evals entirely" },
+    { text: "A reference-based bias that makes the scores too strict" }
+  ]}
+  correct={0}
+  explanation="The eval pyramid says cheap unit and component evals should form the base; relying only on slow, costly end-to-end judges means tests run rarely, regressions slip through, and failures can't be localized. 'End-to-end tests the real product' is the tempting trap — they are valuable, but only as the thin top of the pyramid, not the whole thing."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Building eval datasets](./04-datasets.md)

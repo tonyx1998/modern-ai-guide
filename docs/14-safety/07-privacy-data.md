@@ -169,6 +169,46 @@ async def handle_erasure_request(user_id: str):
 - **Treating residency as an afterthought.** EU data quietly flowing to a US region (via a default provider endpoint or log sink) is a GDPR violation. Pin regions deliberately.
 :::
 
+<Quiz id="safety-privacy-data-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="A GDPR erasure request comes in. Your handler deletes the user's row from Postgres and returns success. What does this page say you've missed?"
+  options={[
+    { text: "Nothing — the database is the system of record, so the obligation is met" },
+    { text: "Erasure is a pipeline, not a row delete — the data also lives in logs, the prompt cache, the vector index, the analytics warehouse, and eval sets" },
+    { text: "You must also notify the user within 72 hours of deleting" },
+    { text: "You should have anonymized the row instead of deleting it" }
+  ]}
+  correct={1}
+  explanation="An AI feature scatters personal data into more stores than a CRUD app — the vector index is the one everyone forgets. 'Postgres is the system of record' is the classic bug this page opens with; the deletion fan-out must reach every yellow box on the data map, and it's far easier to build before the first request than under a 30-day legal deadline."
+/>
+
+<Question
+  prompt="Your provider contract guarantees no-training and zero retention, so a teammate proposes sending raw patient health records in prompts. What's the page's position?"
+  options={[
+    { text: "A no-training agreement stops training use, but the data still leaves your perimeter — for top-sensitivity workloads like PHI, self-host so it never leaves your infrastructure" },
+    { text: "That's fine — zero retention means the data legally never existed at the provider" },
+    { text: "It's fine as long as you also redact the data after the API call returns" },
+    { text: "Health data can never be processed by any model under HIPAA" }
+  ]}
+  correct={0}
+  explanation="No-training agreements are necessary but not sufficient: the data still transits and lives in the provider's systems under their retention. 'Zero retention = never existed' is the comfortable reading the page warns against — for the highest-sensitivity data, the answer is keeping it inside your own walls with self-hosted open models."
+/>
+
+<Question
+  prompt="User B's chat suddenly includes details from user A's earlier conversation. Per this page, what is the most likely cause?"
+  options={[
+    { text: "The model memorized user A's data during pre-training" },
+    { text: "A membership-inference attack by user B" },
+    { text: "An engineering bug — a shared prompt cache, shared context, or a vector index filter not scoped to the authenticated tenant" },
+    { text: "The provider's safety filters routing responses to the wrong session" }
+  ]}
+  correct={2}
+  explanation="Cross-user leakage at inference is usually a bug you caused, not a model property: cache keys, assembled context, and index filters must all be scoped to the authenticated tenant in code. Blaming model memorization is tempting because it's the famous research result — but memorization requires the data to have been in training, while a mis-scoped cache leaks it the same day."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Red-teaming & adversarial testing](./08-red-teaming.md)

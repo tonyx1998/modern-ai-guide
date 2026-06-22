@@ -122,6 +122,46 @@ Not: a LeetCode hard, an ML theory whiteboard, a system-design interview for a h
 - **Recycling FAANG ML interview loops.** A 4-round system design + ML theory + ML coding loop selects for the wrong skills. Replace with applied exercises that mirror the actual job.
 :::
 
+<Quiz id="startup-ai-team-structure-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the non-negotiable requirement for the first AI hire?"
+  options={[
+    { text: "They have shipped an LLM feature to real, non-internal users" },
+    { text: "They hold a PhD in machine learning" },
+    { text: "They have published at a top AI conference" },
+    { text: "They have experience training models on GPU clusters" }
+  ]}
+  correct={0}
+  explanation="The gap between 'I built a demo' and 'I shipped, evaled, and iterated against customer traces' is the whole hire — and a senior candidate opens with 'what does your eval set look like?', not 'which model should we swap to?'. The PhD options are the trap: the page's worked example is a Staff ML Engineer from a big lab who ships zero code in three months while a junior AI engineer ships three customer-visible features."
+/>
+
+<Question
+  prompt="Which leg of the AI feature triad is most often missing, and what happens without it?"
+  options={[
+    { text: "The PM — features ship without specs" },
+    { text: "The engineer — features never get built" },
+    { text: "The designer — features ship that engineers love and customers don't" },
+    { text: "The data scientist — metrics go unmeasured" }
+  ]}
+  correct={2}
+  explanation="The triad is AI engineer + AI-fluent PM + AI-fluent designer, and the designer is usually the missing leg — the result is ChatGPT clones instead of streaming UIs with citations and confidence indicators. The data-scientist option is plausible because metrics matter, but the triad as defined has no such role; eval ownership belongs to the AI engineer."
+/>
+
+<Question
+  prompt="When should you hire the first platform/infra engineer?"
+  options={[
+    { text: "On day one, so the foundation is right from the start" },
+    { text: "Never — feature teams should own all their infrastructure permanently" },
+    { text: "Only after reaching 100+ engineers" },
+    { text: "Around 15-20 engineers, when shared pain like scattered eval results and duplicated retrieval helpers starts costing real hours" }
+  ]}
+  correct={3}
+  explanation="The signal is unowned shared pain: messy gateway config, eval results scattered across personal projects, three teams rebuilding the same helper. Hire too early (at 5 engineers) and they invent work; too late (at 30) and you have eaten avoidable pain. Day-one hiring feels prudent but is the explicit too-early case the page warns against."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [Quarterly Planning](./03-planning.md) where we cover roadmapping, feature sequencing, and risk-tiering AI features by failure cost.

@@ -182,6 +182,46 @@ For most production AI apps, the largest single cost lever is **turning on promp
 Run a one-day experiment, measure `cached_input_tokens` in `usage`, and you'll usually find this pays for the engineering work before lunch.
 :::
 
+<Quiz id="pattern-caching-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What are the three caches this page describes, and what distinguishes them?"
+  options={[
+    { text: "L1, L2, and L3 — three sizes of the same response cache" },
+    { text: "Browser, CDN, and server — three locations for the same data" },
+    { text: "Read, write, and delete caches keyed by operation type" },
+    { text: "Response, prompt, and embedding caches — each at a different layer, with different keys, saving a different bill" }
+  ]}
+  correct={3}
+  explanation="The response cache returns the same answer for the same question; the provider-side prompt cache reuses KV state for a stable prefix; the embedding cache avoids re-embedding unchanged text. They are not size or location tiers of one cache — that framing misses that each saves a completely different cost."
+/>
+
+<Question
+  prompt="Why would adding a timestamp to the top of your system prompt destroy your prompt-cache savings?"
+  options={[
+    { text: "Timestamps make the prompt longer than the provider minimum" },
+    { text: "The prompt cache requires a byte-identical stable prefix, and a changing timestamp invalidates it on every call" },
+    { text: "Providers block prompts that contain dates" },
+    { text: "It causes the response cache to return stale answers" }
+  ]}
+  correct={1}
+  explanation="The prompt cache matches on the stable prefix — put stable content (system prompt, tools, reference text) first and variable content last; any change at the top, even one byte, misses the cache every call. The response-cache option confuses the two layers: a timestamp in the system prompt hurts the provider-side prompt cache, not your Redis response cache."
+/>
+
+<Question
+  prompt="Which of these is a caching failure mode called out on this page?"
+  options={[
+    { text: "Caching responses for longer than one hour" },
+    { text: "Using Redis instead of a Postgres table" },
+    { text: "Memoizing failures — caching an error envelope so every future request gets the cached error" },
+    { text: "Normalizing whitespace in cache keys" }
+  ]}
+  correct={2}
+  explanation="Cache only happy results: if an error gets written to the cache, the failure becomes sticky and outlives the original incident. TTLs longer than an hour are fine for stable content like FAQ answers, and normalizing whitespace is recommended (it prevents near-identical inputs from caching separately), so both are plausible-sounding non-problems."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Cost control patterns](./cost-control.md).

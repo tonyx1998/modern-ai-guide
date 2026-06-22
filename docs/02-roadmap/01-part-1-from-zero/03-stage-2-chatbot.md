@@ -305,6 +305,44 @@ Build a chat app and deploy it somewhere — Vercel free tier is fine. Requireme
 
 ## Page checkpoint
 
+<Quiz id="stage-2-chatbot-quick-check" variant="micro" title="Quick check">
 
+<Question
+  prompt="Your chatbot answers the first message fine, but on the second turn it acts like the conversation just started. What is the most likely bug?"
+  options={[
+    { text: "The streaming response is being buffered instead of flushed" },
+    { text: "The system prompt is missing from the route handler" },
+    { text: "The frontend is sending only the latest user message instead of the full history" },
+    { text: "The model's context window is too small for two turns" }
+  ]}
+  correct={2}
+  explanation="The architecture re-sends the full message history from browser to server on every turn — the model has no memory, so anything you leave out simply does not exist for it. Sending only the latest message is the classic way multi-turn breaks. A buffering bug would change how tokens appear, not what the model knows, and two turns of chat is nowhere near any context limit."
+/>
+
+<Question
+  prompt="A user clicks the Stop button mid-stream. What should a correct implementation do?"
+  options={[
+    { text: "Cancel the client-side stream and abort the upstream LLM call, so you stop paying for tokens nobody will see" },
+    { text: "Hide the output but let the generation finish so the history stays complete" },
+    { text: "Only stop rendering — the provider stops billing once the user disconnects" },
+    { text: "Restart the request with a shorter max_tokens value" }
+  ]}
+  correct={0}
+  explanation="Stopping has two halves: the client stops consuming the stream, and the server aborts the upstream call to the provider. If you skip the second half, the model keeps generating and you keep getting charged for output tokens that go nowhere — the provider does not stop billing just because your user closed the tap. This is exactly what the useChat hook's abort controller handles for you."
+/>
+
+<Question
+  prompt="Your chat app streams perfectly in local dev, but on the deployed version long responses silently cut off partway through. What is the likely cause?"
+  options={[
+    { text: "The provider rate-limited your production API key" },
+    { text: "Production traffic increased the model's latency" },
+    { text: "The browser closed the SSE connection due to inactivity" },
+    { text: "The serverless function hit its execution time limit mid-stream" }
+  ]}
+  correct={3}
+  explanation="Local dev runs a long-lived process with no time ceiling; serverless platforms kill functions at their duration limit, truncating any stream still in flight — which is why you configure maxDuration explicitly or move to a runtime without the limit. Rate limiting produces errors at request start, not silent mid-stream cutoffs, and SSE connections do not idle out while tokens are actively flowing."
+/>
+
+</Quiz>
 
 → [Next: Stage 3 — Structured output](./04-stage-3-structured-output.md) · [Back to Part I overview](./index.md)

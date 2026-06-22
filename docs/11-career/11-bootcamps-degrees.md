@@ -165,4 +165,44 @@ If you're about to spend $3K on a certificate or course beyond the cohort that g
 - **Doing a PhD to "land an AI job."** A PhD is a 4–6 year commitment that pays back only if you're targeting research engineering at a frontier lab or academia. For applied AI engineering, ship instead.
 :::
 
+<Quiz id="career-bootcamps-degrees-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the common thread the page draws across every education route into AI engineering?"
+  options={[
+    { text: "The prestige of the institution determines interview volume" },
+    { text: "Cohort-based learning always beats self-study" },
+    { text: "What you actually built - and how rigorously you evaluated it - matters more than how you learned" },
+    { text: "Free courses are always better value than paid ones" }
+  ]}
+  correct={2}
+  explanation="In the worked example, a Master's grad, a self-taught engineer, and a Maven-cohort engineer all land similar roles - and what they share is shipped, evaluated projects. If the portfolio is strong, the route is a footnote; if it is weak, no credential saves it."
+/>
+
+<Question
+  prompt="Which three reasons does the page list as legitimate cases for a CS Master's?"
+  options={[
+    { text: "Higher starting salary, faster promotion, and recruiter visibility" },
+    { text: "Visa or immigration purposes, research-engineering specialization, and a career pivot from a non-CS field" },
+    { text: "Networking, internship access, and brand-name signaling" },
+    { text: "Avoiding interviews, skipping the junior level, and remote eligibility" }
+  ]}
+  correct={1}
+  explanation="Outside those three cases, a Master's is rarely necessary for working AI engineers, and the opportunity cost is real - roughly two years of foregone 200K-plus salary plus tuition. Do the math before committing."
+/>
+
+<Question
+  prompt="What is the page's honest 2026 assessment of AI bootcamps?"
+  options={[
+    { text: "They remain the fastest reliable route into a first AI job" },
+    { text: "They were never useful at any point" },
+    { text: "They are only worthwhile if they offer a job guarantee" },
+    { text: "They helped in the 2023 panic-hiring era but help less now - grads are undifferentiated, and you should budget for months of post-bootcamp shipping" }
+  ]}
+  correct={3}
+  explanation="The market hardened, and most bootcamp projects are recognizable LangChain demos. A bootcamp can fill a specific gap for an engineer with chops but no AI exposure - but the bootcamp gets you patterns, while shipped projects with evals get you the job."
+/>
+
+</Quiz>
+
 → Next: [A Multi-Year Path](./12-multi-year-path.md).

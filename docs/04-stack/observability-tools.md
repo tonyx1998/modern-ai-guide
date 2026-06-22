@@ -7,6 +7,13 @@ description: Langfuse, LangSmith, Helicone, Arize Phoenix, Braintrust — loggin
 
 # Observability tools
 
+:::info[Dated content — June 2026]
+This page names specific tools, models, and prices, which rotate quarterly. The *selection
+logic* is durable; the names are a snapshot. Cross-check the
+[Model snapshot](/docs/model-snapshot) for current model names and pricing.
+:::
+
+
 > **In one line:** What Datadog and Sentry are for traditional services, these are for LLM calls — per-request prompt + response + tokens + cost + latency, plus traces across multi-step agent flows.
 
 :::tip[In plain English]
@@ -121,6 +128,46 @@ Observability is one of the cheapest investments in the AI stack — measured in
 - **No cost on the span.** Token counts without dollars are not actionable. Calculate cost at log time using current provider pricing.
 - **No user-feedback signal.** Without thumbs / regenerates joined to traces, you're guessing at "is this a bug?"
 - **Treating observability and evals as the same tool.** Some platforms bundle them; that's fine, but conceptually they answer different questions ("what happened in prod?" vs "did this change make things better?"). Don't confuse the two.
+
+<Quiz id="observability-tools-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What makes LLM observability different from ordinary application logging?"
+  options={[
+    { text: "LLM logs must be stored for seven years for compliance" },
+    { text: "Huge prompt payloads, per-request dollar cost, and multi-step trace trees instead of flat log lines" },
+    { text: "LLM calls cannot be logged through standard HTTP middleware" },
+    { text: "Observability tools replace the need for error handling" }
+  ]}
+  correct={1}
+  explanation="The page's three twists: a 32k-token prompt is not a one-line log, cost matters on every span, and agent runs need a trace tree. It IS still logging at heart — which is the tempting trap, because app-level INFO logging leaks PII and loses the structure you need to replay a failure."
+/>
+
+<Question
+  prompt="Why is sampling only 1% of requests a problem for LLM observability?"
+  options={[
+    { text: "Sampling breaks token-count accounting" },
+    { text: "Providers bill extra for unsampled requests" },
+    { text: "The one bad trace a user is complaining about is exactly the one you dropped" },
+    { text: "Trace UIs cannot render sparse data" }
+  ]}
+  correct={2}
+  explanation="LLM debugging is usually about a specific failure — 'why did this user get a bad answer' — and a sampled trace store almost never contains that specific request. Aggregate metrics survive sampling fine; incident forensics don't. That asymmetry is why full capture with redaction beats sampling here."
+/>
+
+<Question
+  prompt="If you want observability by changing exactly one line of code, which option does the page point to?"
+  options={[
+    { text: "Self-hosting Langfuse" },
+    { text: "Instrumenting with OpenLLMetry" },
+    { text: "Adopting LangSmith" },
+    { text: "Helicone in proxy mode — point your SDK at its base URL and every call is logged" }
+  ]}
+  correct={3}
+  explanation="Helicone's proxy design means the integration IS the base-URL swap; nothing else in your code changes. Langfuse is the page's overall default and OpenLLMetry is the OTel-native route, but both involve wrapping SDKs or initializing instrumentation — more than one line."
+/>
+
+</Quiz>
 
 ---
 

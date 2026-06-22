@@ -155,6 +155,46 @@ Pre-2020, "find similar text" required hand-tuned synonyms, query expansion, and
   hint="Accumulate three sums in one pass: the dot product, and the squared magnitude of each vector. Then divide the dot product by sqrt(na) * sqrt(nb)."
 />
 
+<Quiz id="embeddings-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="A query 'I cannot log in' retrieves the doc 'Account locked after too many attempts' even though they share no words. Why does this work?"
+  options={[
+    { text: "The embedding model translates both into synonyms first" },
+    { text: "The vector index stores a thesaurus of related terms" },
+    { text: "Keyword search falls back to fuzzy matching" },
+    { text: "Both texts map to nearby points in vector space because their meanings are similar" }
+  ]}
+  correct={3}
+  explanation="Embeddings place texts in a high-dimensional space where semantic similarity becomes geometric closeness, so meaning matches even with zero word overlap. There is no thesaurus or translation step — the model learned that these phrasings occur in similar contexts. This is exactly the thing keyword search cannot do, and it is the whole trick behind semantic search and RAG."
+/>
+
+<Question
+  prompt="You embedded your corpus with model A, then started embedding queries with model B without re-indexing. What should you expect?"
+  options={[
+    { text: "Garbage results — similarity is only meaningful within one model's vector space" },
+    { text: "Slightly lower quality but mostly fine" },
+    { text: "Identical results, since both models understand English" },
+    { text: "An API error, because providers block mixed-model comparisons" }
+  ]}
+  correct={0}
+  explanation="Each embedding model defines its own coordinate system, so distances between vectors from two different models are noise — not just slightly degraded. Nothing errors out, which makes this failure sneaky: the pipeline runs fine and quietly returns garbage. Changing the embedding model means re-embedding the entire corpus."
+/>
+
+<Question
+  prompt="You embed an entire 50-page PDF as a single vector for retrieval. What is the problem?"
+  options={[
+    { text: "The vector will be too large to store in most databases" },
+    { text: "One vector averages everything into 'this is a PDF about X', which is useless for finding specific passages" },
+    { text: "Embedding APIs reject any input longer than one page" },
+    { text: "PDFs must be converted to JSON before embedding" }
+  ]}
+  correct={1}
+  explanation="An embedding has a fixed length regardless of input size, so a whole document collapses into one blurry summary of its overall topic — fine for 'what is this about', useless for retrieving the paragraph that answers a question. Chunk first, then embed each chunk. Storage is not the issue: the vector is the same size whether you embed a sentence or a book."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [The transformer](./transformer.md)

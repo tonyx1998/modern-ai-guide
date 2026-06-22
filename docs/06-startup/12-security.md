@@ -134,6 +134,46 @@ Real security comes from the defense-in-depth practices in this page, not from a
 - **Treating SOC 2 as a one-time project.** It's a quarterly discipline (evidence collection, access reviews, vendor reviews). Use the platform to automate; don't let it lapse between audits.
 :::
 
+<Quiz id="startup-ai-security-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="In the worked example, an injection attack made the model call lookup-order-status with user_id=*. What actually stopped the attack?"
+  options={[
+    { text: "The model recognized the injection and refused" },
+    { text: "The adversarial eval suite caught it before deployment" },
+    { text: "The provider's safety filters blocked the malicious input" },
+    { text: "The tool wrapper validated the user_id against the authenticated session — the call failed at the authorization layer, not the model layer" }
+  ]}
+  correct={3}
+  explanation="The model was successfully tricked; defense in depth saved them because every model-generated tool call is re-authorized at the wrapper as if it came from a user. The eval-suite option is tempting since the suite did include basic injection cases — but this specific attack passed it, which is the point: you will not stop all injections, so the goal is limiting blast radius."
+/>
+
+<Question
+  prompt="How should an authenticated tool get its API key, and what if a secret ever appeared in a system prompt?"
+  options={[
+    { text: "The tool wrapper holds the secret and the model gets only high-level instructions; any secret that was ever in a prompt gets rotated, even if briefly" },
+    { text: "Put the key in the system prompt with instructions not to reveal it" },
+    { text: "Encrypt the key before placing it in the prompt" },
+    { text: "Pass the key as a tool argument so the model can use it directly" }
+  ]}
+  correct={0}
+  explanation="Models can be coaxed into repeating anything in their context, so secrets stay in the wrapper layer the model never sees — and exposure history means rotation, no exceptions. 'Instructions not to reveal it' is the intuitive fix that fails: an instruction is just more text the model can be prompted to ignore, as every jailbreak demonstrates."
+/>
+
+<Question
+  prompt="What is SOC 2 actually for, according to this page?"
+  options={[
+    { text: "It guarantees your AI system is secure against prompt injection" },
+    { text: "It is legally required before processing any user data" },
+    { text: "It is a sales unlock — it makes you legibly secure to enterprise buyers, while real security comes from defense-in-depth practices" },
+    { text: "It replaces the need for DPAs with enterprise customers" }
+  ]}
+  correct={2}
+  explanation="SOC 2 does not make you secure; it makes your security legible, and the discipline of writing practices down surfaces holes as a bonus — pursue Type I (~3 months) then Type II for the mid-market sales unlock. The 'guarantees security' option is the comfortable conflation the highlight exists to break: real protection is the injection defenses, PII scrubbing, and least-privilege tooling, not the checkbox."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [Maintenance](./13-maintenance.md) where weekly eval review, quarterly model audits, and deprecating features become routine.

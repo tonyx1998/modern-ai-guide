@@ -175,6 +175,46 @@ Five stages, well under 300ms total. The shape of every serious RAG system I've 
 A working "cheap retrieval → expensive rerank" pipeline takes one afternoon to add and reliably bumps quality from "demo-good" to "ship-able." If your RAG feels janky, this is the first place to look.
 :::
 
+<Quiz id="reranking-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Why is a cross-encoder more accurate than a bi-encoder at judging relevance?"
+  options={[
+    { text: "It uses a larger embedding dimension" },
+    { text: "It reads the query and the document together in one forward pass, so it sees how each query word relates to each doc word" },
+    { text: "It pre-computes document scores at index time" },
+    { text: "It always runs on faster hardware" }
+  ]}
+  correct={1}
+  explanation="A bi-encoder embeds query and doc separately and only compares the two finished vectors — all the fine-grained word-to-word interaction is lost. A cross-encoder processes the pair together and captures it. Pre-computing is the giveaway wrong answer: that's exactly the bi-encoder's trick, and the cross-encoder's accuracy comes at the price of NOT being able to pre-compute anything — which is why you only run it on about 50 candidates."
+/>
+
+<Question
+  prompt="Your reranker receives only the top 10 retrieval results and barely improves anything. What does the page recommend?"
+  options={[
+    { text: "Replace it with a multilingual reranker" },
+    { text: "Lower the final top_n to 3" },
+    { text: "Cache the rerank scores more aggressively" },
+    { text: "Send 30 to 100 candidates — the reranker's value is surfacing right answers the retriever ranked low" }
+  ]}
+  correct={3}
+  explanation="The reranker shines when the right answer is sitting at rank 12 or 30 in the retriever's list — but if you only send the top 10, that answer was already cut before the reranker ever saw it. Send a wide candidate set so it has somewhere to dig. Going much past 100 hits diminishing returns: latency grows and quality plateaus."
+/>
+
+<Question
+  prompt="For which setup does the page say reranking is usually NOT worth adding?"
+  options={[
+    { text: "A corpus of under about 1,000 documents" },
+    { text: "A corpus of over 1 million documents" },
+    { text: "Any pipeline that already uses hybrid search" },
+    { text: "Any system with users in multiple languages" }
+  ]}
+  correct={0}
+  explanation="On a tiny corpus you can simply retrieve more and let the LLM sort it out — there's not enough haystack for a reranker to earn its latency. Large corpora are where reranking pays MOST, not least. And hybrid plus reranker stack rather than compete: the page's eval shows recall going from 71% with hybrid alone to 83% after adding the reranker on top."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [RAG basics](./rag-basics.md)

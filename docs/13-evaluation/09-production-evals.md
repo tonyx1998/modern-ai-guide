@@ -168,6 +168,46 @@ Offline evals ([CI/CD](./08-evals-in-cicd.md)) prove a change is safe to try; ca
 - **No privacy guardrails on sampled data.** Production samples contain real user data; scrub PII and respect retention rules before they enter your eval store (see [safety](/docs/safety)).
 :::
 
+<Quiz id="eval-production-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="A PM proposes using thumbs up/down as the primary production quality metric. What does this page say is wrong with that?"
+  options={[
+    { text: "Explicit ratings are too expensive to collect at scale" },
+    { text: "Only a tiny, biased fraction of users rate anything — implicit signals like regenerations and edits cover every interaction and are more reliable" },
+    { text: "Thumbs ratings cannot be logged alongside other signals" },
+    { text: "Users rate the UI, not the answer, so the signal is meaningless" }
+  ]}
+  correct={1}
+  explanation="Explicit feedback is sparse and skewed toward the angriest users, while implicit signals (regenerate clicks, heavy edits, abandonment, schema failures) are free and cover all traffic. The cost framing is the tempting distractor — thumbs buttons are actually cheap to build; the problem is who clicks them, not what they cost."
+/>
+
+<Question
+  prompt="Your sampling budget allows grading 2% of traffic. A request just triggered a regeneration and a thumbs-down. How should your sampler treat it?"
+  options={[
+    { text: "Skip it — graded samples must be uniform random to stay unbiased" },
+    { text: "Grade it synchronously before returning the response to the user" },
+    { text: "Always grade it — signal-triggered requests are your richest failure source, on top of a small uniform baseline sample" },
+    { text: "Only grade it if it also falls into the 2% random sample" }
+  ]}
+  correct={2}
+  explanation="Smart sampling combines a small uniform sample (for an unbiased quality estimate) with always-grading anything that threw a failure signal — those are exactly the cases that teach you the most. The 'must stay uniform' answer confuses the two purposes; and grading must always be async, never on the user's critical path."
+/>
+
+<Question
+  prompt="A team finds and fixes production failures every week, but never adds those failures to their offline golden set. What does this page predict?"
+  options={[
+    { text: "The same classes of bug keep recurring, because no CI gate ever learns to catch them — the flywheel is broken" },
+    { text: "Nothing bad — fixing the bug is what matters, not where the test lives" },
+    { text: "The offline set will overfit to production traffic" },
+    { text: "Drift detection will compensate by alerting on repeat failures" }
+  ]}
+  correct={0}
+  explanation="The data flywheel is the page's central idea: each triaged failure becomes a frozen regression case, so future changes are gated on it and the failure can never silently return. 'Fixing the bug is enough' is the trap — without the regression case, the next prompt tweak can reintroduce the exact same failure unnoticed."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Evaluating agents](./095-agent-evaluation.md)

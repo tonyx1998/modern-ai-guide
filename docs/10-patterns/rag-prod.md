@@ -183,6 +183,46 @@ If your RAG is "embed + cosine + top 5" today, the highest-leverage single chang
 The second-highest is **adding BM25 alongside vector search**. Together, hybrid + rerank usually clears the gap between "demo-quality" and "actually-useful."
 :::
 
+<Quiz id="pattern-rag-prod-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Your RAG today is 'embed, cosine, top 5.' What does this page call the highest-leverage single change?"
+  options={[
+    { text: "Swap the generation model for a frontier one" },
+    { text: "Increase top 5 to top 20 so the answer is more likely to be included" },
+    { text: "Add a reranker over the top 50 candidates, collapsing to top 5 by true relevance" },
+    { text: "Re-embed the corpus with a larger embedding model" }
+  ]}
+  correct={2}
+  explanation="A reranker is one API call at sub-cent cost and routinely improves answer quality more than swapping the generation model; hybrid BM25 is the second win. Stuffing top 20 into context is the tempting fix, but it backfires — 'lost in the middle' means chunks 8-15 are effectively ignored, and top 5 reranked beats top 20 raw on both quality and cost."
+/>
+
+<Question
+  prompt="The system prompt says 'cite only from the provided context.' Why does production RAG still validate citations in code?"
+  options={[
+    { text: "Because citation validation makes retrieval faster" },
+    { text: "The model obeys only mostly — code-side validation means an invented source ID can never pass through" },
+    { text: "Because providers strip citations from responses" },
+    { text: "To convert citations into clickable links" }
+  ]}
+  correct={1}
+  explanation="The page is blunt: trusting the model to obey the instruction is a listed failure mode. Checking every cited ID against the actually-retrieved set turns 'the model can invent a source' into 'an invented source gets dropped and logged.' Clickable links are a UI concern; validation exists for integrity, not rendering."
+/>
+
+<Question
+  prompt="Where should tenant, language, and ACL filtering happen in the retrieval pipeline?"
+  options={[
+    { text: "In the SQL query, before the vector search runs" },
+    { text: "After retrieval, by dropping chunks the user cannot see" },
+    { text: "In the system prompt, by telling the model which tenant is asking" },
+    { text: "It is unnecessary if each tenant has a separate frontend" }
+  ]}
+  correct={0}
+  explanation="Pre-filtering is both faster and more accurate than post-filtering — and for ACLs it is a security property, since a forbidden chunk that never gets retrieved can never leak. Post-filtering is the tempting wrong answer because it seems equivalent, but it wastes the candidate budget on chunks you will discard and leaves a window for mistakes; the prompt-based option violates the rule that the model is never the security boundary."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Agentic RAG & GraphRAG](./agentic-rag.md).

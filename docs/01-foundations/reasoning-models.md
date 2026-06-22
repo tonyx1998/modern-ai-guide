@@ -186,6 +186,46 @@ If you show thinking to users, **never display it raw without sanitization** —
 Pre-2024, "better model" was a single axis — bigger = more capable, slower, more expensive. Reasoning models split this into two axes: capability without thinking, and capability with thinking. The same base model can be a fast workhorse or a slow reasoner depending on a budget flag. This is the most important architectural shift since tool use, and it changes how you pick models per route.
 :::
 
+<Quiz id="reasoning-models-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Which task is the worst fit for a reasoning model?"
+  options={[
+    { text: "Debugging why code fails on a specific input" },
+    { text: "Planning a multi-stage migration with rollbacks" },
+    { text: "Real-time voice agent responses" },
+    { text: "A frontier-level math competition problem" }
+  ]}
+  correct={2}
+  explanation="Reasoning models add 5 to 30 seconds of thinking before anything appears, which is fatal for voice and other latency-critical UX. They shine exactly where the other options live — math, debugging, multi-step planning — where one wrong step ruins the answer. The decision test: a verifiable right answer, a latency budget over 5 seconds, and tolerance for 10 to 20 times the cost."
+/>
+
+<Question
+  prompt="You add five worked examples to your prompt for a reasoning model and accuracy drops. Why?"
+  options={[
+    { text: "The examples used the wrong formatting" },
+    { text: "Few-shot examples push the model to pattern-match instead of reasoning — zero-shot is the right shape" },
+    { text: "Reasoning models have smaller context windows" },
+    { text: "More examples always require a higher thinking budget" }
+  ]}
+  correct={1}
+  explanation="Few-shot prompting tells the model 'just follow this pattern', which suppresses the internal thinking these models are built around. The same applies to adding 'think step by step' — it is already built in, so the instruction makes things worse. State the problem and the success criteria plainly, and constrain the output format rather than the reasoning process."
+/>
+
+<Question
+  prompt="With OpenAI's hidden-reasoning models like o3, what is true about the thinking tokens?"
+  options={[
+    { text: "You are billed for them even though you never see them" },
+    { text: "They are free, since they are never delivered to you" },
+    { text: "You can stream them to your UI for transparency" },
+    { text: "They count against input tokens, not output" }
+  ]}
+  correct={0}
+  explanation="Hidden reasoning tokens never reach you but still show up on the bill — part of why reasoning responses cost 5 to 20 times more in output tokens. If you want to log, audit, or display the thinking, you need a visible-reasoning model like Claude extended thinking or DeepSeek R1; with hidden reasoning there is simply nothing to stream until the final answer begins."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Model families](./model-families.md)

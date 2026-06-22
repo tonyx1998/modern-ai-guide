@@ -136,6 +136,46 @@ Self-check, all answers should be honest "yes":
 - Model string pinned, evals re-run on each bump?
 - Distribution plan with 3 channels written down?
 
+<Quiz id="solo-pitfalls-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the guardrail against agent loop runaway?"
+  options={[
+    { text: "Use a smarter model that knows when to stop" },
+    { text: "Run agents only during business hours when you can watch them" },
+    { text: "A hard iteration limit like max_steps=5, a total-token budget per session, and a kill on no-progress steps" },
+    { text: "Log every tool call so you can bill the user afterward" }
+  ]}
+  correct={2}
+  explanation="The worked example shows an uncapped agent making 47 LLM calls on a single query; the fix is structural — hard caps the model cannot talk its way past. 'A smarter model' is the tempting answer because runaway feels like a reasoning failure, but the page treats it as an engineering failure: the cap, not the model, is what makes infinite loops impossible."
+/>
+
+<Question
+  prompt="You already have auth and per-user rate limits. Why does the page say you STILL need a hard spend cap on the provider dashboard?"
+  options={[
+    { text: "Providers offer a discount to accounts with caps configured" },
+    { text: "Rate limits reset at midnight, leaving a gap" },
+    { text: "Caps are only needed if you skip auth" },
+    { text: "A bug in your own code or a runaway agent can overshoot even with abuse protections in place" }
+  ]}
+  correct={3}
+  explanation="Auth and rate limits stop OTHER people from abusing your endpoint; the provider cap protects you from YOUR OWN code — a loop bug or agent runaway bills you just the same. The 'only if you skip auth' option is the trap: the page lists no-spend-cap as its own pitfall precisely because builders assume auth made them safe."
+/>
+
+<Question
+  prompt="What does the page say about the timing of putting guardrails in place?"
+  options={[
+    { text: "Nearly every guardrail takes under an hour before the pitfall bites, but fixing it after the incident is a 10x project" },
+    { text: "Add guardrails after launch, once you know which risks are real for your tool" },
+    { text: "Guardrails are optional until you have paying customers" },
+    { text: "Only the top three pitfalls need day-one guardrails; the rest can wait" }
+  ]}
+  correct={0}
+  explanation="The page's highlight: guardrail-everything-upfront is one of the few areas where solo work should look like enterprise work, because the post-incident version comes bundled with a provider bill, a jailbreak screenshot, or a GDPR email. 'Wait until you know which risks are real' sounds lean, but the common-mistakes list calls out exactly that reasoning — the incident is how you find out."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [Starter Templates](./15-templates.md) where we'll list the four templates worth knowing so you don't start from scratch.

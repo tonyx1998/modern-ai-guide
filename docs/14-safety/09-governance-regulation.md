@@ -148,6 +148,46 @@ Engineering keeps it safe; governance proves it's safe and keeps it legal. You n
 - **No human accountable for high-risk decisions.** Both the EU AI Act and good sense require a human in the loop on consequential automated decisions — design it in, don't bolt it on.
 :::
 
+<Quiz id="safety-governance-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Your company uses the same foundation model in a recipe-suggestion app and in a résumé-screening tool. How does the EU AI Act treat these two features?"
+  options={[
+    { text: "Identically — the Act classifies models, so both inherit the model's tier" },
+    { text: "Both are limited-risk because they use a general-purpose model" },
+    { text: "Differently — tiers follow the use case, so the recipe app is minimal-risk while hiring is high-risk with heavy obligations" },
+    { text: "The recipe app is exempt and the hiring tool is banned outright" }
+  ]}
+  correct={2}
+  explanation="Obligations scale with what the feature does to people, not the model's capabilities — hiring is explicitly in the high-risk tier (risk management, human oversight, conformity assessment), while recipe suggestions are minimal-risk. 'The Act classifies models' is the common misreading; the GPAI track for model providers is a separate layer on top."
+/>
+
+<Question
+  prompt="A teammate says 'we call the model through a major provider's API, so EU AI Act compliance is their problem.' What does this page say?"
+  options={[
+    { text: "Correct — API consumers have no obligations under the Act" },
+    { text: "You inherit the provider's model-level compliance, but your deployment obligations — transparency, human oversight, data handling, audit trails — remain yours" },
+    { text: "Only correct if the provider is headquartered in the EU" },
+    { text: "Compliance transfers to the provider once a DPA is signed" }
+  ]}
+  correct={1}
+  explanation="Using an API covers the GPAI/model documentation track, but everything about how you deploy — disclosing AI to users, keeping humans in the loop on high-risk decisions, your logging and retention — attaches to your application. 'Their API, their problem' is the convenient assumption that leaves the deployer-side obligations unmet."
+/>
+
+<Question
+  prompt="For a high-risk feature, you build a thorough audit trail that logs every interaction — including raw, un-redacted user PII. What's the problem?"
+  options={[
+    { text: "The records themselves become a privacy violation — redact PII at write time and set deliberate retention, or your compliance artifact is a liability" },
+    { text: "Nothing — completeness is what auditors require, and raw data is the most complete" },
+    { text: "Audit trails are only needed for unacceptable-risk systems" },
+    { text: "Raw PII in logs is fine as long as access is restricted to the security team" }
+  ]}
+  correct={0}
+  explanation="You can't prove compliance without records, but records full of raw PII violate the data-minimization rules the trail was meant to support — the page's pattern is redacted inputs/outputs, explicit retention windows, and tamper-evident storage. 'Completeness for auditors' is the tempting rationale; auditors need to reconstruct what the AI did and why, which redacted traces still provide."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Chapter checkpoint](./99-checkpoint.md)

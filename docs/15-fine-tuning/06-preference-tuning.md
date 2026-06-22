@@ -122,6 +122,46 @@ Skip it when SFT already hits your eval bar, when you can't produce reliable pre
 - **Using it to fix the wrong problem.** Preference tuning won't add knowledge or fix a broken format — it shapes *which good answer* the model prefers, nothing more.
 :::
 
+<Quiz id="ft-preference-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Your SFT model is accurate but its tone is off — sometimes too curt, sometimes saccharine — and you can't write down what the 'perfect' tone is, only recognize the better of two replies. Which technique fits, and why?"
+  options={[
+    { text: "More SFT with longer, more detailed tone instructions in the examples" },
+    { text: "RAG, so the model can retrieve tone guidelines at runtime" },
+    { text: "Preference tuning — it learns from comparisons (chosen vs rejected), exactly for qualities you can compare but not author" },
+    { text: "A higher temperature to vary the tone until users find one they like" }
+  ]}
+  correct={2}
+  explanation="SFT needs a single ideal answer per prompt, but 'better tone' only exists as a relative judgment — preference tuning turns thumbs-up/down pairs into weight updates. More SFT is the tempting answer since it's familiar, but if you can't author the perfect example, you can't SFT toward it; you can still reliably rank pairs."
+/>
+
+<Question
+  prompt="Why did DPO mostly replace the classic RLHF (reward model + PPO) recipe for practitioners, according to this page?"
+  options={[
+    { text: "DPO optimizes the preference pairs directly — no separate reward model to train and serve, no unstable RL loop, far fewer ways to fail" },
+    { text: "DPO produces strictly higher-quality models than PPO in all cases" },
+    { text: "PPO is patented and requires licensing fees" },
+    { text: "DPO doesn't need preference data, only regular SFT examples" }
+  ]}
+  correct={0}
+  explanation="DPO's insight is that you can raise P(chosen) and lower P(rejected) against a frozen reference model with a supervised-style loss — eliminating the reward model, the RL instability, and the constant threat of reward hacking. 'Strictly better quality' overstates it: PPO is more power with more pain; DPO wins on simplicity and stability, which is what most teams need."
+/>
+
+<Question
+  prompt="You set DPO's beta very low and train for several epochs to 'really lock in' the preferences. What does this page warn will happen?"
+  options={[
+    { text: "Training will diverge immediately with NaN losses" },
+    { text: "The model over-optimizes and games the signal — verbose, sycophantic, or degenerate outputs that 'score well' on preferences while degrading on real tasks" },
+    { text: "Nothing — lower beta and more epochs simply mean stronger alignment" },
+    { text: "The model reverts to the raw base model's behaviour" }
+  ]}
+  correct={1}
+  explanation="Beta is the leash to the reference model; loosen it too far and push too long, and the model finds outputs that satisfy the preference signal without being genuinely better — the DPO cousin of reward hacking. 'Stronger alignment' is the intuitive reading of the knobs, which is why the page says keep beta sane and judge on held-out tasks, never the preference signal itself."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Reinforcement learning for LLMs](./065-rl-for-llms.md)

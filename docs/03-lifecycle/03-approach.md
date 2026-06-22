@@ -160,6 +160,46 @@ Time on this decision: 90 minutes including writing the ADR. The ADR matters bec
 - [ ] Latency target is named (e.g., "under 5s p95").
 - [ ] You haven't committed to fine-tuning unless all four fine-tune preconditions are met.
 
+<Quiz id="lifecycle-approach-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the page's core rule for choosing between prompting, RAG, fine-tuning, and agents?"
+  options={[
+    { text: "Start with an agent so you never have to re-architect later" },
+    { text: "Pick whichever pattern the team finds most technically interesting" },
+    { text: "Start with the simplest pattern and escalate only when evals prove it is not enough" },
+    { text: "Always fine-tune first, since a specialized model is cheapest at scale" }
+  ]}
+  correct={2}
+  explanation="The page's one-liner is to pick the simplest pattern that could plausibly work and complicate later only if evals say so. Each step up the ladder — RAG, tools, agents, fine-tuning — costs more engineering, latency, and operational complexity. Starting with an agent or a fine-tune is called out as almost always premature, and 'pattern flexing' (choosing the interesting option) is a named trip-up."
+/>
+
+<Question
+  prompt="When does the page say fine-tuning is the right move?"
+  options={[
+    { text: "A stable narrow task, a real quality ceiling with prompting, hundreds of high-quality labeled pairs, and a latency or cost constraint" },
+    { text: "Whenever you have tens of thousands of historical examples available" },
+    { text: "As soon as a prompt fails after the first few tries" },
+    { text: "When the model needs knowledge from private documents that change weekly" }
+  ]}
+  correct={0}
+  explanation="Fine-tuning needs all of: a stable narrow task, a genuine ceiling that prompting cannot pass, hundreds of good labeled pairs, and a latency or cost reason. Volume of raw examples alone is not enough — Acme had ~30K tickets and still skipped fine-tuning because policies change quarterly. Frequently changing knowledge is a RAG problem; a fine-tune would just go stale."
+/>
+
+<Question
+  prompt="In tiered routing, what is the role of the cheap model?"
+  options={[
+    { text: "It double-checks the flagship model's answers for hallucinations" },
+    { text: "It handles every request first, escalating to a bigger model only on signals like low confidence or schema failure" },
+    { text: "It is used only for offline batch jobs, never live traffic" },
+    { text: "It generates synthetic training data for the larger model" }
+  ]}
+  correct={1}
+  explanation="Tiered routing sends every request to the cheap model by default and escalates to the workhorse only when an escalation signal fires — low confidence, schema-validation failure, 'I don't know' phrasing, or length anomalies. Done well it saves 60-80% of inference cost with negligible quality loss. The cheap model is the front line, not a checker or a data generator."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Eval design](./04-evals.md)

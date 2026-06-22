@@ -111,6 +111,46 @@ The mitigations take 1 sprint to add. The feature launches with no incidents. Th
 The cost of the pre-mortem: one meeting. The cost of the incident if launched without it: a chunk of a quarter, a customer apology, a possible board update. Always worth it.
 :::
 
+<Quiz id="what-would-hurt-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What does the pre-mortem exercise ask the team to do before launch?"
+  options={[
+    { text: "Estimate how fast the feature can ship" },
+    { text: "Confirm the newest model is being used" },
+    { text: "Write down the worst plausible failures across user, business, cost, adversary, and silent categories" },
+    { text: "List additional features for the roadmap" }
+  ]}
+  correct={2}
+  explanation="For each named failure you then decide: accept, mitigate, or kill — and mitigations become launch blockers, not next-sprint items. The exercise costs a meeting; discovering the same failures after launch costs a post-mortem and a customer apology tour."
+/>
+
+<Question
+  prompt="Why is the silent-failure category called out as especially dangerous?"
+  options={[
+    { text: "Because silent failures are the loudest in monitoring" },
+    { text: "Because it only affects internal tools" },
+    { text: "Because regulators never notice silent failures" },
+    { text: "Because most AI incidents are wrong answers that look confidently right and go unnoticed" }
+  ]}
+  correct={3}
+  explanation="Silent decay — a model upgrade subtly worsening a workflow, a stale retrieval index, a prompt edit that fixes one case and breaks ten — is the hardest category to design against and the most likely to bite. Skipping it is a listed common mistake precisely because the other categories feel more dramatic."
+/>
+
+<Question
+  prompt="When can you legitimately defer the full pre-mortem?"
+  options={[
+    { text: "Whenever there is a deadline" },
+    { text: "Time-critical incident response — ship with a kill switch, do the pre-mortem in the followup" },
+    { text: "Any customer-facing feature, if the team feels confident" },
+    { text: "Whenever the demo is impressive" }
+  ]}
+  correct={1}
+  explanation="The exceptions are narrow: genuinely throwaway internal tools, small gated alphas, and time-critical incidents where you ship with at least the kill switch and complete the exercise after. Confidence and deadlines are not exceptions — doing the pre-mortem at launch readiness review is already too late; it belongs in design."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [When to buy an agent platform](./13-when-to-buy-agent-platform.md).

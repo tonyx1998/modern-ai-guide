@@ -223,6 +223,46 @@ That lands well *when you can actually defend the lines*. The trap is folding un
 You can prep general algorithms, you can prep AI sysdesign, but the question that decides most loops is *"walk me through your project."* A candidate who has done this drill three times — on three projects — is a different person in interviews than one who hasn't. The shipped code is the artifact; the defense is the signal.
 :::
 
+<Quiz id="career-defend-portfolio-drill-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Why does the drill mark certain exercises as strictly no-AI?"
+  options={[
+    { text: "Interviewers can detect AI-polished answers and penalize them" },
+    { text: "The point is to discover what you actually carry in your head - interviews test you without an assistant open" },
+    { text: "AI tools give incorrect answers about your own project" },
+    { text: "Using AI during practice violates most companies' hiring policies" }
+  ]}
+  correct={1}
+  explanation="The compare-to-reality structure - no-AI version first, then check the code - makes the gap between memory and reality visible, and that gap is the week's learning target. Sneaking a look at the code defeats the entire purpose of the rehearsal."
+/>
+
+<Question
+  prompt="On Day 2, what must a technology-choice defense include to clear the bar?"
+  options={[
+    { text: "A benchmark comparison with published performance numbers" },
+    { text: "A quote from the official documentation justifying the choice" },
+    { text: "The alternative considered, why you picked yours, and what the tradeoff is - in 60 to 90 seconds" },
+    { text: "Proof that the choice is what most companies use in production" }
+  ]}
+  correct={2}
+  explanation="Every major choice - framework, provider, protocol, data store, auth, rate limiting - needs that three-part answer in your own words. 'The AI suggested it' is explicitly a failing answer, which is the exact trap the drill exists to eliminate."
+/>
+
+<Question
+  prompt="How does the page recommend answering the inevitable interview question 'did you use AI to build this?'"
+  options={[
+    { text: "Downplay the AI involvement and emphasize the parts you wrote by hand" },
+    { text: "Redirect the conversation to the architecture before the question lands" },
+    { text: "Explain that AI authorship is irrelevant since all code gets reviewed" },
+    { text: "An honest yes, framed as treating AI like a productive junior engineer whose output you read, own, and can defend line by line" }
+  ]}
+  correct={3}
+  explanation="The frame only lands when you can actually defend the lines under technical follow-up - folding at the first probe is the trap. The drill is the rehearsal layer that converts a fast-shipped project into a defensible one."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Compensation](./07-compensation.md)

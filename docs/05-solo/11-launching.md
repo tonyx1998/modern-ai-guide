@@ -167,6 +167,46 @@ Self-check:
 - Is your first-try-free path working without signup?
 - Do you have a launch-day calendar blocked out for replies?
 
+<Quiz id="solo-launching-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the core asset of an X (Twitter) launch for a solo AI tool, according to this page?"
+  options={[
+    { text: "A detailed thread explaining the technical architecture" },
+    { text: "A professionally edited 3-minute product video with voiceover" },
+    { text: "A 30-second silent screen recording of the tool doing its thing" },
+    { text: "A static screenshot of the landing page with the pricing table" }
+  ]}
+  correct={2}
+  explanation="The format that works is a short, unedited, silent screen recording showing the tool in action, with a first line stating what it does and who it is for. The technical thread is the tempting distractor — the page explicitly says to write the tech explanation AFTER launch when curious devs ask, and a static screenshot fails because it cannot show what the tool does."
+/>
+
+<Question
+  prompt="Which of these does the page tell you NOT to ship with your launch?"
+  options={[
+    { text: "A waitlist and a Discord server" },
+    { text: "A real domain instead of a vercel.app URL" },
+    { text: "A try-it-free flow that requires no signup for the first run" },
+    { text: "An OG image for nice link previews" }
+  ]}
+  correct={0}
+  explanation="A waitlist is pure friction for a tool people could just use, and a Discord adds support burden when nobody is there yet — both are on the do-not-ship list. The other three options are all explicitly REQUIRED launch surface, which makes them tempting wrong answers if you skim the question."
+/>
+
+<Question
+  prompt="What does the page say actually compounds over time for solo AI builders?"
+  options={[
+    { text: "A single perfectly executed launch on all platforms simultaneously" },
+    { text: "Paid ads, scaled up as soon as revenue allows" },
+    { text: "Stealth development so competitors cannot copy the idea" },
+    { text: "Shipping in public repeatedly — the audience from each launch carries the next project" }
+  ]}
+  correct={3}
+  explanation="The compounding asset is the audience: successful solo builders are on their 3rd-8th tool, and followers from each launch make the next one land in a single day. Stealth is the seductive opposite — but the page notes solo AI tools die from lack of distribution, not from being copied."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [Maintenance](./12-maintenance.md) where we'll cover the 15-minute weekly cadence that keeps a solo AI tool alive past month one.

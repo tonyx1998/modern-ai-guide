@@ -6,7 +6,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 import styles from './roadmap.module.css';
 
 /**
- * A visual learning roadmap across the 17 chapters, grouped by the 7 Parts.
+ * A visual learning roadmap across the 18 chapters, grouped by the 7 Parts.
  * Externalizing the expert's knowledge map (roadmap.sh-style) helps learners
  * see structure and prerequisites — and the per-chapter completion badges read
  * the SAME `maeg:done:` localStorage keys the per-lesson progress strip writes,
@@ -84,7 +84,8 @@ const PARTS: Part[] = [
     chapters: [
       {n: '15', title: 'Career', blurb: 'Position yourself', to: '/docs/career'},
       {n: '16', title: 'Case Studies', blurb: 'Eight shipped systems', to: '/docs/case-studies'},
-      {n: '17', title: 'Glossary', blurb: 'Every term, defined', to: '/docs/glossary'},
+      {n: '17', title: 'Cutting Edge', blurb: 'The 2026 frontier', to: '/docs/cutting-edge'},
+      {n: '18', title: 'Glossary', blurb: 'Every term, defined', to: '/docs/glossary'},
     ],
   },
 ];
@@ -181,7 +182,7 @@ export default function RoadmapPage(): ReactNode {
           <span className={styles.kicker}>The full path</span>
           <h1>Learning roadmap</h1>
           <p>
-            Seventeen chapters in seven parts, in reading order — from “what is a token?” to agents,
+            Eighteen chapters in seven parts, in reading order — from “what is a token?” to agents,
             evals, fine-tuning, and the shipped architectures of real products. Read top to bottom,
             or jump to what you need.
           </p>

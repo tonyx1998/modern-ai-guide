@@ -7,6 +7,13 @@ description: Vision (image URLs and base64), audio (Whisper-class STT, Realtime)
 
 # Multimodal inputs
 
+:::info[Dated content — June 2026]
+This page names specific tools, models, and prices, which rotate quarterly. The *selection
+logic* is durable; the names are a snapshot. Cross-check the
+[Model snapshot](/docs/model-snapshot) for current model names and pricing.
+:::
+
+
 > **In one line:** Modern frontier and workhorse models accept images, audio, and PDFs alongside text. Inputs cost differently per modality, and a 1024×1024 image is typically 1K–3K tokens. Use them when the *content* is visual or auditory — not because they sound cool.
 
 :::tip[In plain English]
@@ -204,6 +211,46 @@ For high-volume pipelines, benchmark all three on *your* documents. For prototyp
 :::tip[→ Going deeper]
 This page covers the *inputs*. For building real vision and voice systems — production OCR pipelines, video understanding, voice-agent latency budgets, and how to evaluate multimodal output — see [Chapter 8: Multimodal & Voice AI](/docs/multimodal), especially [vision](/docs/multimodal/mm-vision) and [voice](/docs/multimodal/mm-voice).
 :::
+
+<Quiz id="multimodal-inputs-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="Your API bill spiked the week after you added image uploads. The most likely cause from the page is:"
+  options={[
+    { text: "Full-resolution images are being tokenized into thousands of tokens each; downscaling before sending would cut the cost" },
+    { text: "The vision encoder charges per pixel of generated output text" },
+    { text: "Images are billed at a flat per-image fee regardless of size" },
+    { text: "Enabling vision raises the price of every text token too" }
+  ]}
+  correct={0}
+  explanation="Images become tokens, and size matters: a 2048x2048 image can cost 3000+ tokens where a 1024x1024 is around 765. The flat-fee assumption is the beginner trap — there is no flat fee, which is exactly why 'we added image uploads' bill spikes happen. Resize to what the task needs: 512x512 covers most 'what does this look like' questions; save high-res for OCR."
+/>
+
+<Question
+  prompt="You need to transcribe 10,000 recorded support calls overnight. Which approach does the page recommend?"
+  options={[
+    { text: "Stream each call through the Realtime API for best quality" },
+    { text: "Send the audio files directly to a text-only chat model" },
+    { text: "Use a speech-to-text model like Whisper, then send transcripts to a text LLM" },
+    { text: "Convert each call to an image of its waveform and use vision" }
+  ]}
+  correct={2}
+  explanation="The classic STT-then-LLM pipeline costs about $0.006 per minute versus about $0.06+ for native Realtime audio — roughly 10x cheaper. Realtime's value is sub-500ms conversational latency, which is irrelevant for an overnight batch job. Using Realtime for batch transcription is a named beginner mistake on this page."
+/>
+
+<Question
+  prompt="You will ask 20 different questions about the same 30-page PDF contract. What does the page suggest to control cost?"
+  options={[
+    { text: "Re-upload the PDF each time; providers automatically dedupe identical files for free" },
+    { text: "Combine the PDF with prompt caching so calls after the first are 5 to 10 times cheaper" },
+    { text: "Convert the PDF to a single low-resolution image first" },
+    { text: "Split the PDF into 30 separate one-page requests" }
+  ]}
+  correct={1}
+  explanation="A 30-page contract can easily be 50K+ tokens, and PDFs cost text tokens plus image tokens per page. Prompt caching makes the repeated PDF prefix cheap on every follow-up question. Automatic dedupe doesn't exist — without caching you pay full price all 20 times — and splitting into per-page calls destroys the cross-page context the questions need."
+/>
+
+</Quiz>
 
 ---
 

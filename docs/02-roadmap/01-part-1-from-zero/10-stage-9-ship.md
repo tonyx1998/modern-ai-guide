@@ -260,6 +260,44 @@ Pick **one** of your previous projects (recommendation: the Stage 5 RAG). Walk t
 
 ## Page checkpoint
 
+<Quiz id="stage-9-ship-quick-check" variant="micro" title="Quick check">
 
+<Question
+  prompt="You want to ship a quick public demo with no login. Why does this page push back on that?"
+  options={[
+    { text: "App stores reject AI apps without authentication" },
+    { text: "Anonymous users cannot be rate-limited at all" },
+    { text: "Public LLM endpoints get scraped and abused within hours of being indexed — even one Google sign-in keeps you off bot scanners' radar" },
+    { text: "Auth is required for streaming responses to work" }
+  ]}
+  correct={2}
+  explanation="An unauthenticated LLM endpoint is free compute, and bots find it fast — the page calls it a public crypto-miner endpoint within hours. Even minimal auth dramatically cuts abuse, and if you genuinely need a public demo there are middle paths: invite codes, a captcha plus a few free messages, or a read-only demo with hardcoded queries. You can rate-limit by IP without auth, but that is weak against distributed scrapers — auth is the cheap fix, not a technical requirement of streaming or app stores."
+/>
+
+<Question
+  prompt="Of the four cost-cap layers (provider hard cap, global system cap, per-user daily cap, per-user rate limit), what role does the provider-level hard cap play?"
+  options={[
+    { text: "The last line of defense — it saves you in the absolute-worst case when every cap in your own code has failed" },
+    { text: "The primary cap — the other three are optional refinements" },
+    { text: "It gives the earliest warning signal of a cost problem" },
+    { text: "It replaces per-user limits for single-tenant apps" }
+  ]}
+  correct={0}
+  explanation="The provider cap fires only when total spend hits the ceiling — by then the damage is done, which is exactly why it is the backstop, not the strategy. The caps in your own code catch problems earlier and tell you WHO and WHAT: a rate limit flags burst abuse, a per-user cap isolates a leaked credential, a global cap pauses the feature before the bill grows. All four are listed as required; treating the provider cap as the early-warning layer inverts its actual role."
+/>
+
+<Question
+  prompt="Streaming works perfectly with npm run dev but cuts off on your deployed Vercel app. What is the likely cause and fix?"
+  options={[
+    { text: "Production builds disable streaming by default; enable it in next.config" },
+    { text: "Serverless functions have an execution time limit that kills long streams; set maxDuration explicitly on the route" },
+    { text: "The provider throttles streaming for non-localhost origins" },
+    { text: "The CDN buffers SSE responses; disable caching headers" }
+  ]}
+  correct={1}
+  explanation="Local dev is a long-lived process with no time ceiling, so streaming always works there — which is why the page says to test streaming on a deployed preview, not just locally. On Vercel serverless, streams cut off at the default function timeout unless you export maxDuration (30s, or 60+ on paid tiers); alternatives are runtimes without the limit. There is no production streaming switch, no provider origin throttling — the platform's function lifetime is the culprit."
+/>
+
+</Quiz>
 
 → Back to the [Roadmap overview](../index.md) or continue to [Part II — The 2026 AI Stack](../02-part-2-modern-stack/index.md).

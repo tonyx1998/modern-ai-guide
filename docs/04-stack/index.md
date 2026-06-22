@@ -50,7 +50,7 @@ This chapter ages the fastest of any in the book. Model names, prices, and tool 
 
 ## What's NOT in this chapter
 
-- **Design patterns.** "Should I use RAG or fine-tune?" lives in [Chapter 3: Decisions](/docs/decisions). This chapter is "if you decided to RAG, which library?"
+- **Design patterns.** "Should I use RAG or fine-tune?" lives in [Chapter 13: Decisions](/docs/decisions). This chapter is "if you decided to RAG, which library?"
 - **The agent loop itself.** [Chapter 1: Foundations](/docs/foundations) covers the mental model.
 - **Pricing math by token.** Too volatile to put in a doc; check provider pages.
 

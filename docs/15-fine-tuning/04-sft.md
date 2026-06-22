@@ -174,6 +174,46 @@ Defenses: fewer epochs, more/cleaner data, lower learning rate, dropout (LoRA ha
 - **Reaching for full fine-tuning by default.** It's expensive and forgets more. Start with LoRA.
 :::
 
+<Quiz id="ft-sft-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="During a run, training loss keeps falling but validation loss bottoms out and starts rising. What is happening, and what should you do?"
+  options={[
+    { text: "The run is healthy — both curves matter, but training loss is the primary signal" },
+    { text: "Overfitting has started — the model is memorizing the training set; stop training or restore the checkpoint from the validation-loss minimum" },
+    { text: "The validation set is corrupted; rebuild it and continue training" },
+    { text: "The learning rate is too low; raise it so validation loss falls again" }
+  ]}
+  correct={1}
+  explanation="Diverging curves are the tell-tale overfitting signature: the model keeps getting better at reproducing its exact training examples while getting worse at generalizing. 'Training loss is primary' is the trap — training loss always falls because memorization is enough; the validation minimum is where to stop."
+/>
+
+<Question
+  prompt="A custom training script computes loss over every token in the conversation, including the user turns. What does this page say goes wrong?"
+  options={[
+    { text: "Nothing — more tokens means more training signal" },
+    { text: "The loss values become too large to optimize numerically" },
+    { text: "You teach the model to generate user questions too — loss should be masked to only the assistant tokens, which is why your responses must be the perfect part" },
+    { text: "The model trains faster but uses more memory" }
+  ]}
+  correct={2}
+  explanation="Loss masking ('completion-only' training) exists because you want the model to learn to respond well, not to imitate users. 'More tokens, more signal' sounds plausible, but it's signal pointed at the wrong target — frameworks like TRL mask automatically, which is one reason to use them over hand-rolled loops."
+/>
+
+<Question
+  prompt="You set the learning rate 100x higher than recommended to 'train faster'. What does this page predict?"
+  options={[
+    { text: "The model forgets its general abilities, loss spikes or diverges, and outputs turn to garbage — fine-tuning is nudging, not rebuilding" },
+    { text: "Training completes faster with identical results" },
+    { text: "The model overfits more slowly because big steps skip local minima" },
+    { text: "Nothing — hosted APIs and TRL clamp the learning rate automatically" }
+  ]}
+  correct={0}
+  explanation="Each weight update is meant to be a tiny nudge from an already-good starting point; oversized steps blow away the pre-trained abilities you're building on. 'Bigger steps, faster training' is the intuitive trade that doesn't hold — when in doubt the page says go lower, and fine-tuning LRs are far smaller than pre-training ones."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [LoRA & QLoRA](./05-lora-qlora.md)

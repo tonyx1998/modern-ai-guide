@@ -83,6 +83,46 @@ What the ladder suggests:
 Total: 14% recovered, mostly on rungs 1–6, in two weeks. No fine-tuning needed. Most "we need to fine-tune" claims dissolve once you actually walk up the ladder one rung at a time.
 :::
 
+<Quiz id="reversibility-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What is the core rule of the reversibility ladder?"
+  options={[
+    { text: "Start with fine-tuning since it is the most powerful option" },
+    { text: "Prefer to make a change on the lowest rung that could work" },
+    { text: "Self-host early to avoid vendor lock-in" },
+    { text: "Lock your output schema early so customers can integrate" }
+  ]}
+  correct={1}
+  explanation="Make the cheap-to-reverse change first, and only climb when the lower rung has failed with eval evidence. Locking a public schema early is the opposite move — public API contracts are rung 11, taking years to unwind once customers integrate."
+/>
+
+<Question
+  prompt="A team's RAG bot misses answers in 15% of cases and they propose fine-tuning immediately. What does the ladder say?"
+  options={[
+    { text: "Fine-tune, since 15% is a large gap" },
+    { text: "Self-host an open model instead" },
+    { text: "Switch providers before anything else" },
+    { text: "Try prompt edits, few-shot examples, and retrieval changes first" }
+  ]}
+  correct={3}
+  explanation="In the worked example, rungs 1-6 (prompt tuning, few-shot, chunking, reranker) recovered 14 of the 15 points in two weeks. Fine-tuning is rung 9 — months of data collection and retraining — and most 'we need to fine-tune' claims dissolve once you walk up the ladder one rung at a time."
+/>
+
+<Question
+  prompt="Which engineering choice best preserves reversibility?"
+  options={[
+    { text: "Keeping evals in git so you can re-run them against any model in an afternoon" },
+    { text: "Storing prompts only in a vendor's UI" },
+    { text: "Scattering model calls across 40 files" },
+    { text: "Freezing a public JSON schema before the prompt stabilizes" }
+  ]}
+  correct={0}
+  explanation="Eval ownership is called the most underrated reversibility lever: if re-running evals against a new model is an afternoon, every model decision becomes cheap. The other three are listed as choices that close off future options — UI-locked prompts, scattered call sites, and prematurely bolted-on contracts."
+/>
+
+</Quiz>
+
 ---
 
 → Next: [Team-size heuristic](./03-team-size-heuristic.md).

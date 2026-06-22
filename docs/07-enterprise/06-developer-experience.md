@@ -182,6 +182,46 @@ Platform-team OKRs are typically about *paved-road adoption percentage* (e.g., "
 - **Investing in the senior AI engineers' workflow first.** They already know the tricks. The right customer is the back-end engineer adding their first AI feature next month — and the best DevEx metric is "minutes from `acme ai feature new` to a passing eval on a non-trivial case."
 :::
 
+<Quiz id="enterprise-ai-developer-experience-quick-check" variant="micro" title="Quick check">
+
+<Question
+  prompt="What does the page call the deepest value of the golden-path scaffold?"
+  options={[
+    { text: "It saves engineers a few hours of boilerplate typing" },
+    { text: "Policy lives in the template — gateway config, risk intake, model card, and eval gates become the default path" },
+    { text: "It guarantees the feature passes its first audit" },
+    { text: "It lets engineers skip the prompt registry" }
+  ]}
+  correct={1}
+  explanation="When the scaffold automatically creates a gateway policy, opens a risk-review ticket, and wires the eval gate into CI, governance stops being a wiki suggestion and becomes the default that requires deliberate work to escape. 'Saves time' is true but shallow — the page explicitly says convenience is not the deepest value."
+/>
+
+<Question
+  prompt="What happens when an engineer promotes a prompt to production for a Medium or High tier feature?"
+  options={[
+    { text: "The prompt deploys immediately and is reviewed afterward" },
+    { text: "The CLI rejects the promotion until the model is retrained" },
+    { text: "Only the feature team lead needs to approve" },
+    { text: "The prompt review committee is triggered, and the sign-off is recorded in the registry" }
+  ]}
+  correct={3}
+  explanation="Promotion to production triggers the prompt review committee for Medium and High tier features, and the registry records who signed off and what the eval score was at the time — the record that answers auditor questions months later. Deploy-then-review is the startup pattern the registry exists to replace."
+/>
+
+<Question
+  prompt="Who does the page say is the right customer to optimize the platform's developer experience for?"
+  options={[
+    { text: "The senior AI engineers who push the platform's limits" },
+    { text: "External customers consuming the AI features" },
+    { text: "The back-end engineer adding their first AI feature" },
+    { text: "The compliance auditors who review the artifacts" }
+  ]}
+  correct={2}
+  explanation="Senior AI engineers already know the tricks; the best DevEx metric is minutes from the scaffold command to a passing eval for an engineer who has never shipped AI. Optimizing for the specialists is the tempting mistake because they give the loudest feedback — the page lists it under common mistakes."
+/>
+
+</Quiz>
+
 ## What's next
 
 → Continue to [Development Practices for AI Code](./07-development-practices.md) — what daily coding looks like once the platform exists.
