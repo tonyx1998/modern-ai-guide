@@ -2,7 +2,7 @@
 id: computer-use
 title: Computer use & browser agents
 sidebar_position: 25.5
-description: Claude Computer Use, OpenAI Operator, browser-based agents. The vision-loop primitive — model takes a screenshot, emits clicks/keys, repeats.
+description: Claude Computer Use, ChatGPT Agent, Gemini browser control, browser-based agents. The vision-loop primitive — model takes a screenshot, emits clicks/keys, repeats.
 ---
 
 # Computer use & browser agents
@@ -10,7 +10,7 @@ description: Claude Computer Use, OpenAI Operator, browser-based agents. The vis
 > **In one line:** Computer use is the primitive where the model receives a screenshot, emits a "click here / type this" action, and waits for the next screenshot — the loop that lets an LLM operate any software with a screen, including the browser, without an API.
 
 :::tip[In plain English]
-Most agent work goes through APIs and tools. Computer use is the escape hatch for when there's no API: the model literally sees the screen and acts on it. Shipped by Anthropic (Claude Computer Use, late 2024) and OpenAI (Operator, early 2025), and the foundation of every "AI does my web work for me" product. It's slower, less reliable, and more dangerous than API agents — but works on anything humans can use.
+Most agent work goes through APIs and tools. Computer use is the escape hatch for when there's no API: the model literally sees the screen and acts on it. As of mid-2026 it has shipped across all three majors — Anthropic's Computer Use API (a production-usable beta; Claude Opus 4.8 scores ~84% on the real-world Online-Mind2Web web-task benchmark), OpenAI (now folded into ChatGPT Agent and the `computer-use` tool in the Agents SDK), and Google (browser control inside Gemini's agent / Chrome auto-browsing). It's the foundation of every "AI does my web work for me" product. It's slower, less reliable, and more dangerous than API agents — but works on anything humans can use.
 :::
 
 ## The loop
@@ -36,11 +36,13 @@ The model's job: look at the screenshot, decide the next action, repeat until th
 
 ## The two architectures in 2026
 
-**1. Generic OS-level computer use (Claude Computer Use, OpenAI CUA).** Model sees a full desktop screenshot, controls mouse and keyboard. Works on any app. Slowest and least reliable; most flexible.
+**1. Generic OS-level / pixel-based computer use (Claude Computer Use, OpenAI's `computer-use` tool).** Model sees a full desktop screenshot, controls mouse and keyboard via pixel coordinates. Works on any app. Slowest and least reliable; most flexible.
 
-**2. Browser-native agents (OpenAI Operator, Anthropic Browser Use, Adept-style).** Model operates a headless browser via a DOM-aware API — clicks elements by selector or accessibility tree, not pixel coordinates. Faster and more reliable than pixel-level computer use; web-only.
+**2. Browser-native agents (ChatGPT Agent, Anthropic Browser Use, Gemini's agent / Chrome auto-browsing).** Model operates a browser via a DOM / accessibility-tree-aware API — clicks elements by selector or accessibility tree, not pixel coordinates. Faster and more reliable than pixel-level computer use; web-only.
 
 Browser-native is the right default unless you specifically need a desktop app. Pixel-perfect computer use is for desktop legacy apps, CAD tools, etc.
+
+> **Note (as of mid-2026):** the standalone agent products have consolidated. OpenAI **discontinued the standalone "Operator" product** and absorbed it into **ChatGPT Agent** plus a `computer-use` tool in the **OpenAI Agents SDK**. Google **shut down Project Mariner as a standalone** (~May 2026) and folded browser control into **Gemini's agent / Chrome auto-browsing** (with a consumer "Gemini" agent shown at I/O 2026, ~May 19). The pixel-based vs. browser-native split, however, still holds.
 
 ## What's different from regular agents
 
@@ -131,7 +133,7 @@ The defenses, all needed:
 - **Sandbox the environment.** Run computer-use in a fresh VM or container with no access to user credentials, no logged-in sessions for sensitive accounts.
 - **Restrict the URL set.** Browser-use agents should be allow-listed to specific domains for production use.
 - **Human approval on writes.** Any action that submits a form, completes a purchase, sends a message → confirm with the user before executing.
-- **Capability scoping.** OpenAI's Operator and Anthropic's browser tools support "supervised mode" where the user reviews each action. Use it for anything sensitive.
+- **Capability scoping.** ChatGPT Agent and Anthropic's browser tools support "supervised mode" where the user reviews each action. Use it for anything sensitive.
 - **Watch for surprise context.** If the page suddenly contains an "instruction" the user didn't write, stop and ask.
 
 See [Safety & privacy](../10-patterns/11-safety-privacy.md) for the broader threat model.

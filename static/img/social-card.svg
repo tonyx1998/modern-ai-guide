@@ -7,7 +7,7 @@
   </defs>
   <rect width="1200" height="630" fill="url(#g)"/>
   <text x="80" y="240" font-family="-apple-system, Segoe UI, Roboto, sans-serif" font-size="76" font-weight="800" fill="#ede9fe">Modern AI</text>
-  <text x="80" y="330" font-family="-apple-system, Segoe UI, Roboto, sans-serif" font-size="76" font-weight="800" fill="#a78bfa">Engineer Guide</text>
-  <text x="80" y="410" font-family="-apple-system, Segoe UI, Roboto, sans-serif" font-size="32" font-weight="500" fill="#c4b5fd">How AI systems are actually built in 2026</text>
-  <text x="80" y="560" font-family="-apple-system, Segoe UI, Roboto, sans-serif" font-size="24" font-weight="700" fill="#ddd6fe">12 chapters · for beginners and beyond</text>
+  <text x="80" y="330" font-family="-apple-system, Segoe UI, Roboto, sans-serif" font-size="76" font-weight="800" fill="#a78bfa">Guide</text>
+  <text x="80" y="410" font-family="-apple-system, Segoe UI, Roboto, sans-serif" font-size="32" font-weight="500" fill="#c4b5fd">Everything useful in AI in 2026</text>
+  <text x="80" y="560" font-family="-apple-system, Segoe UI, Roboto, sans-serif" font-size="24" font-weight="700" fill="#ddd6fe">17 chapters · from your first API call to agents in production</text>
 </svg>

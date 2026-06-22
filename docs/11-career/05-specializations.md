@@ -14,6 +14,10 @@ description: Retrieval, agents, evals, inference, voice, multimodal, safety, fin
 "Specialize" doesn't mean "stop doing the rest of AI engineering" — it means "be known as the person who's deepest on X" while still shipping features that touch everything. The tracks below are the ones that are real (have multiple companies hiring for the title), durable (will likely still matter in 3 years), and pay a premium (10–30% over generalist AI-engineer at the same level).
 :::
 
+:::note[Where the center of gravity moved, as of mid-2026]
+The AI-engineer role has shifted from "RAG + prompt plumbing" toward **agentic systems, evaluation, and context engineering**. Agents are in production at most orgs now rather than experiments, **context engineering has displaced prompt engineering** as the headline skill (per Anthropic and broad industry commentary in 2026), and fluency with **MCP** is now table-stakes. This reshapes the tracks below: the Agents and Evals tracks have widened, and a few **emerging (still non-standardized) titles** have appeared — **Agent Engineer**, **Eval Engineer**, **Context Engineer** (the newest), **RL Engineer** (niche, high-value), and **Forward-Deployed / Applied AI Engineer** — which map onto the durable tracks here rather than replacing them.
+:::
+
 ## When to specialize
 
 **Not in Year 1.** As a junior, breadth across prompting / retrieval / evals / observability is more valuable than depth in any one. You need to *feel* which problems energize you, which means trying all of them.
@@ -36,9 +40,9 @@ The wrong reason to specialize: "this track pays 25% more on levels.fyi." If you
 
 ### 2. Agents
 
-**Owns:** agentic systems — multi-step, tool-using, sometimes autonomous LLM workflows.
+**Owns:** agentic systems — multi-step, tool-using, sometimes autonomous LLM workflows. As of mid-2026 these are in production at most orgs, not just experiments, and this is the track most often hired under the emerging **Agent Engineer** title. The closely-related **Context Engineer** (newest title) overlaps heavily here — owning what goes into the model's context window across tools, memory, and retrieval.
 
-- **Deep in:** planning, tool design (the schema and description of each tool matters more than the orchestration framework), memory (short-term, long-term, episodic), orchestration (LangGraph, Inngest, Mastra, Restate, Temporal-for-agents), multi-agent (CrewAI, AutoGen, but increasingly homegrown), evaluation of agent traces.
+- **Deep in:** planning, tool design (the schema and description of each tool matters more than the orchestration framework), **context engineering** (assembling and pruning the context window — now the headline skill), **MCP** (Model Context Protocol — table-stakes for tool/server integration as of mid-2026), memory (short-term, long-term, episodic), orchestration (LangGraph, Inngest, Mastra, Restate, Temporal-for-agents), multi-agent (CrewAI, AutoGen, but increasingly homegrown), evaluation of agent traces.
 - **Pairs with:** workflow-engine backgrounds (Airflow, Temporal), distributed-systems experience.
 - **Companies hiring deep agent roles:** Sierra, Decagon, Cresta, Cognition (Devin), Anthropic (Claude Code), Cursor, MultiOn, Lindy, Crew.ai, Harvey, every "AI employee" company.
 - **Conferences worth attending:** **AI Engineer Summit / AI Engineer World's Fair** (the agent track is the headliner in 2025–2026), Latent Space's events, NeurIPS agent workshops.
@@ -46,7 +50,7 @@ The wrong reason to specialize: "this track pays 25% more on levels.fyi." If you
 
 ### 3. Evals & quality
 
-**Owns:** the eval platform and the practices around it.
+**Owns:** the eval platform and the practices around it. As of mid-2026 this is the strongest hiring signal in the field — being able to design an eval suite is widely cited as the best evidence that someone has actually shipped LLM systems, which is why the **Eval Engineer** title is now appearing on its own.
 
 - **Deep in:** LLM-as-judge methodology (calibration, judge prompt design, bias mitigation), regression discipline, statistical testing for stochastic systems, production sampling, alignment of evals to user-perceived quality.
 - **Pairs with:** QA backgrounds, statistics / data-science backgrounds, search-quality / relevance-engineering backgrounds.
@@ -96,7 +100,7 @@ The wrong reason to specialize: "this track pays 25% more on levels.fyi." If you
 
 ### 8. Fine-tuning / custom models
 
-**Owns:** custom-model work.
+**Owns:** custom-model work. Worth a reality check: as of mid-2026 most teams still do *not* fine-tune — they lean on strong base models plus RAG — so this remains a **high-value niche** rather than a default. The RL/post-training corner of it is increasingly hired under the emerging **RL Engineer** title (niche, scarce, well-paid).
 
 - **Deep in:** data curation (the #1 lever), SFT / DPO / RFT / RLHF, LoRA and QLoRA, eval-driven training, evaluation of fine-tuned vs base + prompt, distillation.
 - **Pairs with:** ML-engineering background.
@@ -106,12 +110,12 @@ The wrong reason to specialize: "this track pays 25% more on levels.fyi." If you
 
 ### 9. Forward-Deployed Engineer (FDE) / Applied AI
 
-**Owns:** customer success through engineering.
+**Owns:** customer success through engineering. As of mid-2026 this is one of the fastest-growing AI-engineering roles: a customer-facing, build-in-the-field role popularized by Palantir and now hot at OpenAI, Anthropic, and Google, often hired under the **Forward-Deployed Engineer (FDE)** or **Applied AI / Solutions Engineer** titles.
 
 - **Deep in:** the customer's actual workflow, integration with the customer's stack, on-site debugging, feedback loops back to the core product, sometimes one customer per quarter relationship.
 - **Pairs with:** consulting backgrounds, customer-facing engineering, generalist AI engineering.
-- **Companies hiring FDE / Applied AI:** **Anthropic, OpenAI, Sierra, Decagon, Harvey, Hebbia, Glean, Cresta, Palantir (the original).**
-- **Comp note:** at frontier labs, FDE is paid at senior IC bands and often has unusual upside.
+- **Companies hiring FDE / Applied AI:** **Anthropic, OpenAI, Google, Sierra, Decagon, Harvey, Hebbia, Glean, Cresta, Palantir (the original).**
+- **Comp note:** at frontier labs, FDE is paid at senior IC bands and often has unusual upside; specific figures are crowdsourced/aggregated, so treat them as directional.
 
 :::tip[→ Going deeper into a track]
 Four of these tracks have a full chapter in this guide — the fastest way to test whether one energizes you before you commit:

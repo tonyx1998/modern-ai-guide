@@ -170,4 +170,4 @@ Offline evals ([CI/CD](./08-evals-in-cicd.md)) prove a change is safe to try; ca
 
 ---
 
-→ Next: [Chapter checkpoint](./99-checkpoint.md)
+→ Next: [Evaluating agents](./095-agent-evaluation.md)

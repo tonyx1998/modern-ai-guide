@@ -67,14 +67,19 @@ const CHAPTERS = [
   {n: '02', t: 'Roadmap', d: 'From zero to shipping', to: '/docs/roadmap'},
   {n: '03', t: 'Lifecycle', d: 'Idea → shipped → measured', to: '/docs/lifecycle'},
   {n: '04', t: 'Tech Stack', d: 'The 2026 toolbox', to: '/docs/stack'},
-  {n: '05', t: 'Solo / Indie', d: 'Ship alone, free tier', to: '/docs/solo'},
-  {n: '06', t: 'Startup AI Team', d: '20-person, eval-first', to: '/docs/startup'},
-  {n: '07', t: 'Enterprise AI', d: 'Governance & private cloud', to: '/docs/enterprise'},
-  {n: '08', t: 'Comparison', d: 'Scale-by-scale tradeoffs', to: '/docs/comparison'},
-  {n: '09', t: 'Decisions', d: 'The “should we…” rules', to: '/docs/decisions'},
-  {n: '10', t: 'Production Patterns', d: 'What recurs everywhere', to: '/docs/patterns'},
-  {n: '11', t: 'Career', d: 'Position yourself', to: '/docs/career'},
-  {n: '12', t: 'Glossary', d: 'Every term, defined', to: '/docs/glossary'},
+  {n: '05', t: 'Evaluation', d: 'The #1 discipline', to: '/docs/evaluation'},
+  {n: '06', t: 'Responsible & Safe AI', d: 'Threats, guardrails, governance', to: '/docs/safety'},
+  {n: '07', t: 'Fine-tuning', d: 'When prompting isn’t enough', to: '/docs/fine-tuning'},
+  {n: '08', t: 'Multimodal & Voice', d: 'Beyond text', to: '/docs/multimodal'},
+  {n: '09', t: 'Solo / Indie', d: 'Ship alone, free tier', to: '/docs/solo'},
+  {n: '10', t: 'Startup AI Team', d: '20-person, eval-first', to: '/docs/startup'},
+  {n: '11', t: 'Enterprise AI', d: 'Governance & private cloud', to: '/docs/enterprise'},
+  {n: '12', t: 'Comparison', d: 'Scale-by-scale tradeoffs', to: '/docs/comparison'},
+  {n: '13', t: 'Decisions', d: 'The “should we…” rules', to: '/docs/decisions'},
+  {n: '14', t: 'Production Patterns', d: 'What recurs everywhere', to: '/docs/patterns'},
+  {n: '15', t: 'Career', d: 'Position yourself', to: '/docs/career'},
+  {n: '16', t: 'Case Studies', d: 'Eight shipped systems', to: '/docs/case-studies'},
+  {n: '17', t: 'Glossary', d: 'Every term, defined', to: '/docs/glossary'},
 ];
 
 const FIRST_LESSON = '/docs/foundations/tokens';
@@ -455,8 +460,8 @@ export default function Home(): ReactNode {
 
   return (
     <Layout
-      title="How AI systems are actually built"
-      description="A field guide to designing, building, evaluating, shipping, and operating LLM-powered applications — from your first API call to production at enterprise scale.">
+      title="Everything useful in AI"
+      description="A comprehensive guide to designing, building, evaluating, shipping, and operating LLM-powered applications and agentic systems — from your first API call to production at enterprise scale.">
       <div className="maeg" ref={rootRef}>
         {/* ---------------- HERO ---------------- */}
         <header className="hero">
@@ -470,22 +475,22 @@ export default function Home(): ReactNode {
                 <em>actually built.</em>
               </h1>
               <p className="sub">
-                A field guide to designing, building, evaluating, shipping, and operating
-                LLM-powered applications — from your first API call to production at enterprise
-                scale.
+                A comprehensive guide to designing, building, evaluating, shipping, and operating
+                LLM-powered applications and agentic systems — from your first API call to
+                production at enterprise scale.
               </p>
               <div className="hero-cta">
                 <Link to={FIRST_LESSON} className="btn btn-primary">
                   Start the first lesson <span className="arr">→</span>
                 </Link>
                 <a href="#chapters" className="btn btn-ghost">
-                  Browse all 12 chapters
+                  Browse all 17 chapters
                 </a>
               </div>
               <div className="hero-meta">
                 <div className="stat">
-                  <div className="n display" data-count={12}>
-                    12
+                  <div className="n display" data-count={17}>
+                    17
                   </div>
                   <div className="l">Chapters</div>
                 </div>
@@ -496,7 +501,7 @@ export default function Home(): ReactNode {
                   <div className="l">Single-topic pages</div>
                 </div>
                 <div className="stat">
-                  <div className="n display">May ’26</div>
+                  <div className="n display">Jun ’26</div>
                   <div className="l">Last reviewed</div>
                 </div>
                 <div className="stat">
@@ -590,7 +595,7 @@ export default function Home(): ReactNode {
           <div className="wrap">
             <div className="sec-head">
               <span className="kicker">What this guide covers</span>
-              <h2 className="display">Six themes, twelve chapters.</h2>
+              <h2 className="display">Six themes, seventeen chapters.</h2>
               <p>
                 Written so a beginner can follow along while still being useful to working
                 engineers. Read in order, or jump to what you need.
@@ -622,7 +627,7 @@ export default function Home(): ReactNode {
           <div className="wrap">
             <div className="sec-head">
               <span className="kicker">The full path</span>
-              <h2 className="display">Twelve chapters, one per stop.</h2>
+              <h2 className="display">Seventeen chapters, one per stop.</h2>
               <p>
                 Designed so you can master one topic per page and always know what comes next.
               </p>

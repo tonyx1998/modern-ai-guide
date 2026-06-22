@@ -1,24 +1,24 @@
 ---
 id: intro
-title: Modern AI Engineer Guide
+title: Modern AI Guide
 sidebar_position: 1
 sidebar_label: Introduction
 slug: /
-description: How AI systems are actually built in 2026 — for absolute beginners and beyond. 17 chapters in seven parts, designed so you can master one topic per page.
+description: Everything useful in AI in 2026 — from your first API call to agentic systems in production. For absolute beginners and beyond, in focused single-topic pages.
 toc_max_heading_level: 2
 ---
 
-# Modern AI Engineering: A Comprehensive Guide (2026)
+# Modern AI Guide: Everything Useful in AI (2026)
 
-*How AI systems are actually built in 2026 — for absolute beginners and beyond.*
+*From your first API call to agentic systems in production — for absolute beginners and beyond.*
 
-**What it is** — A 2026 reference on how LLM-powered applications are designed, built, evaluated, shipped, and operated, paired with a step-by-step roadmap for getting there from zero. **17 chapters in seven parts**, split into focused single-topic pages. Read it front to back as a complete beginner and you finish job-ready.
+**What it is** — A comprehensive 2026 guide to how AI is actually built and used: how LLM-powered applications are designed, built, evaluated, shipped, and operated; how **agentic systems** are orchestrated; and the broader landscape — research, tooling, careers, and the industry — that a working AI practitioner needs to read fluently. The spine is engineering; the throughline is agents. Read it front to back as a complete beginner and you finish job-ready.
 
-**Who it's for** — Anyone from "I've used ChatGPT but never written code against an LLM" to "I build production AI systems and want a refresh on 2026 tooling."
+**Who it's for** — Anyone from "I've used ChatGPT but never written code against an LLM" to "I build production AI systems and want a refresh on 2026 tooling, agent patterns, and where the field is heading."
 
-**Where to start** — If you're new to AI engineering, jump straight to [the first lesson →](/docs/foundations/tokens). Everything else fans out from there.
+**Where to start** — New to AI? Jump straight to [the first lesson →](/docs/foundations/tokens). Everything else fans out from there.
 
-*Last reviewed: May 2026. Model names, pricing, and "current state" claims are accurate as of that date — the AI space moves faster than anywhere else in software, so confirm specifics before relying on any single recommendation.*
+*Last reviewed: June 2026. Model names, pricing, and "current state" claims are accurate as of that date — the AI space moves faster than anywhere else in software, so confirm specifics before relying on any single recommendation.*
 
 ---
 
@@ -82,7 +82,7 @@ Grow as an AI engineer, study shipped systems, and look things up.
 ## Conventions used throughout
 
 - **Code samples** are illustrative, not always copy-pasteable. They show the shape of solutions in Python or TypeScript.
-- **Model names** reflect the dominant choices as of *May 2026*. Tier names ("frontier," "mid-tier," "small") are used so the advice ages better than specific model IDs.
+- **Model names** reflect the dominant choices as of *June 2026*. Tier names ("frontier," "mid-tier," "small") are used so the advice ages better than specific model IDs.
 - **Cost estimates** are in US dollars and assume small/mid-scale usage unless specified.
 - **"In 2026"** indicates current-state context — these things change.
 - **Pitfalls and gotchas** are flagged explicitly. Most of the value of experience is knowing what *not* to do.

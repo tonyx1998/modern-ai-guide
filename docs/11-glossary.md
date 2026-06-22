@@ -3,7 +3,7 @@ id: glossary
 title: 17. Glossary
 sidebar_position: 99
 sidebar_label: 17. Glossary
-description: Every term used in the Modern AI Engineer Guide, defined in plain English.
+description: Every term used in the Modern AI Guide, defined in plain English.
 ---
 
 # Glossary
@@ -14,9 +14,13 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 
 ## A
 
+**A2A (Agent2Agent)** — An open protocol (a Linux Foundation project) for one *agent* to discover another's capabilities and delegate a task to it. The horizontal complement to *MCP*: A2A is agent ↔ agent, MCP is agent ↔ tools.
+
 **Agent** — A setup where an LLM works in a loop: it picks a tool, you run it, you feed the result back, it picks the next tool, until it decides it's done. Contrast with *chain*.
 
 **Agent loop** — The control flow of an agent: think → call tool → observe result → repeat. Usually capped by a max-iteration count and a budget.
+
+**Agentic RAG** — *RAG* where the model acts as an *agent* over retrieval: it decides when to retrieve, rewrites or decomposes the query, retrieves in multiple steps, and reflects on whether the results suffice. Contrast with naive (retrieve-once) RAG.
 
 **Alignment** — The broad research goal of making models behave the way humans actually want, rather than what a misread of the objective might encourage.
 
@@ -78,6 +82,8 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 
 **Content moderation** — Filtering inputs or outputs against a policy. Provider APIs (OpenAI moderation, Anthropic safety) make this a single call.
 
+**Context engineering** — The discipline of curating what is in the model's *context window* at each step of a long task — via compaction, external notes/memory, sub-agent summaries, and just-in-time retrieval. The 2026 successor framing to "prompt engineering" for production and agent systems.
+
 **Context length** — A synonym for *context window*.
 
 **Context window** — The maximum number of tokens an LLM can read and write in a single call. 2026 frontier models are typically 200K–2M tokens.
@@ -112,7 +118,7 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 
 **DPO (Direct Preference Optimization)** — A fine-tuning method that learns from pairs of preferred/rejected responses without needing a separate reward model. Simpler than *RLHF*.
 
-**DSPy** — Stanford framework that treats prompts as programs and optimizes them automatically against an *eval* set.
+**DSPy** — A Stanford framework for *programmatic* prompt optimization: declare typed input→output *signatures* and compose modules (e.g. ReAct), then an optimizer compiles the prompts and few-shot examples against a metric — instead of hand-tuning strings. See *GEPA*.
 
 ---
 
@@ -176,6 +182,8 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 
 **Golden dataset** — A curated, hand-verified set of examples used as the ground truth for evals.
 
+**Golden path** — A human-approved reference *trajectory* for an *agent* task — the ideal sequence of steps — used to score a run in *trajectory evaluation*.
+
 **GPT** — OpenAI's LLM family ("Generative Pre-trained Transformer").
 
 **Groq** — A hardware company whose LPUs serve open models at very high *tokens-per-second*.
@@ -183,6 +191,12 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 **Ground truth** — The known-correct answer used to score a model's output during evals.
 
 **Groundedness** — Synonym for *faithfulness*: does the output stay anchored to retrieved evidence?
+
+**GEPA (Genetic-Pareto)** — A 2026 reflective prompt-optimization method: an LLM critiques failures in natural language and evolves the prompt, keeping a Pareto front of candidates. Often more sample-efficient than RL-based tuning. Ships in *DSPy*.
+
+**GraphRAG** — A *RAG* variant that builds a knowledge graph plus community summaries over a corpus; strong for global/multi-hop questions over large document sets, and overkill for simple single-hop lookups.
+
+**GRPO (Group Relative Policy Optimization)** — The dominant 2026 RL algorithm for reasoning post-training (from DeepSeek): score a *group* of sampled responses per prompt and push toward the above-average ones, removing the separate critic network *PPO* needs. See *RLVR*.
 
 **Guardrail** — A pre- or post-processing check that blocks unsafe prompts or outputs. May be regex, classifier, or a separate LLM call.
 
@@ -360,6 +374,8 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 
 **Prompt caching** — A provider-side optimization where repeated prompt prefixes are cached and billed at a fraction of normal input cost.
 
+**Policy adherence** — In *agent* *eval*, scoring whether an action-taking agent stayed inside the rules (e.g. never refund above a cap without approval) on its way to the goal — a constraint on the *trajectory* that outcome scoring can't see. Popularized by the τ²-bench benchmark.
+
 **Prompt injection** — An attack where untrusted input (a webpage, an email, a document) carries instructions the model follows as if they were yours. Mitigations: isolation, *guardrails*, careful tool scoping.
 
 **Prompt leak** — When a model reveals its hidden system prompt to a user, often via *prompt injection*.
@@ -421,6 +437,8 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 **RFT (Reinforcement Fine-Tuning)** — OpenAI's term for fine-tuning where the model is rewarded for correct outputs on user-provided graders.
 
 **RLHF (Reinforcement Learning from Human Feedback)** — Training step where humans rank model outputs, a reward model is trained on those ranks, and the LLM is fine-tuned to maximize the reward.
+
+**RLVR (RL with Verifiable Rewards)** — Reinforcement learning where the reward comes from an automatic *verifier* (a math checker, unit tests, a proof checker) instead of a learned reward model. Dominates math/code/reasoning post-training; struggles on open-ended tasks (the "verifier problem"). See *GRPO*.
 
 **Role** — The label on a message: `system`, `user`, `assistant`, or `tool`.
 
@@ -496,6 +514,8 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 
 **Tool use** — Synonym for *function calling*.
 
+**Tool-call accuracy** — An *agent* *eval* metric: for a given step, did the agent pick the right tool with the right arguments (and avoid calling a tool when none was needed)? A component-level check that needs labeled traces. See *trajectory evaluation*.
+
 **top_k** — A *sampling* parameter that restricts the next-token choice to the K most probable tokens.
 
 **top_p** — A *sampling* parameter that restricts the next-token choice to the smallest set whose cumulative probability exceeds P (a.k.a. nucleus sampling).
@@ -503,6 +523,8 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 **Trace** — A timeline of all *spans* that made up one logical request. The basic unit of LLM *observability*.
 
 **Training** — The process of updating a model's *parameters* by minimizing a loss function on data.
+
+**Trajectory evaluation** — Scoring an *agent* on the *sequence* of steps it took (against a *golden path*, or via a rubric judge) — order, efficiency, and not taking forbidden actions — not just the final outcome. The layer between outcome and *tool-call accuracy*.
 
 **Transformer** — The neural network architecture behind every modern LLM. Introduced in 2017 ("Attention Is All You Need").
 
@@ -545,6 +567,10 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 **Vision** — Any model capability that involves understanding images.
 
 **Vision-language model (VLM)** — A *multimodal* model that takes both text and images as input. Most 2026 frontier models are VLMs.
+
+**VLA (Vision-Language-Action model)** — A model that maps visual input plus a language instruction directly to actions (e.g. robot motions). The core model type behind 2026 embodied AI.
+
+**World model** — A model that learns an environment's *dynamics* — given a state and an action, predict the next state — so an agent can plan or train in imagination. Approaches split between pixel/video-generative (Genie, Cosmos) and latent-prediction (JEPA).
 
 **vLLM** — A high-throughput open-source LLM serving engine. Uses *paged attention* and *continuous batching*.
 

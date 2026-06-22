@@ -19,6 +19,14 @@ Models don't read characters or words directly. They read tokens — integer IDs
 
 Rough rule of thumb for English: **1 token ≈ 4 characters ≈ ¾ of a word**. So 1,000 tokens ≈ 750 words ≈ a long-ish email.
 
+<PredictThenReveal
+  id="tokens-count-guess"
+  question="Before you read on, commit to a guess: the Japanese greeting 'こんにちは世界' is 7 characters. Will it tokenize into FEWER than 7 tokens, about 7, or MORE than 7?">
+
+**More** — about **8 tokens** for 7 characters. English is what tokenizers are optimized for (~4 characters per token); many non-English scripts land near *one token per character* or worse, so the same-looking sentence costs more. You'll see this exact example measured in the worked section below.
+
+</PredictThenReveal>
+
 ```mermaid
 flowchart LR
     A["'tokenization is fun'"] --> B[Tokenizer]
@@ -62,6 +70,12 @@ Every cost and limit you'll see is per token, not per request:
 - **Context window** — the model's hard limit (e.g., 200K tokens) is measured in tokens, not characters.
 - **Latency** — output tokens are generated one at a time. A 2,000-token answer takes ~20× longer than a 100-token answer at the same throughput.
 - **Rate limits** — provider quotas are TPM (tokens per minute) and RPM (requests per minute). The TPM cap bites first for any non-trivial app.
+
+"$5 per million tokens" stays abstract until it's a monthly bill. Set your request shape and volume below, switch pricing tiers, and watch the cost — and the input-vs-output split — move:
+
+<TokenCostCalculator />
+
+The thing to internalize: **output tokens dominate the bill** (they're billed several times higher than input), so a verbose model costs more than a long prompt. This is why trimming output and [caching stable prefixes](./prompt-caching.md) pay off so fast.
 
 ## A useful mental conversion table (English prose)
 

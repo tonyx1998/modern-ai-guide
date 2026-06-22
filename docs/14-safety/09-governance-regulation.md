@@ -37,13 +37,13 @@ flowchart TD
 
 Plus a separate track for **General-Purpose AI (GPAI) / foundation models** (the providers of GPT/Claude/Llama-scale models): technical documentation, training-data summaries, copyright compliance, and — for the most capable "systemic-risk" models — extra evaluation, red-teaming, and incident reporting. If you *use* an API you mostly inherit the provider's compliance; if you *fine-tune or distribute* a model you may take on some of it.
 
-**Timeline (as of 2026):** the Act entered into force in 2024; the bans on unacceptable-risk uses and AI-literacy duties applied first (early 2025), GPAI obligations next (mid-2025), and the bulk of high-risk obligations phase in through 2026–2027. Penalties are GDPR-scale: up to **€35M or 7% of global turnover** for prohibited-use violations. Treat the specific dates as "check the current text," but the *structure* — tiers + GPAI track — is stable.
+**Timeline (as of June 2026):** the Act entered into force in 2024; the bans on unacceptable-risk uses applied first (Feb 2025), **GPAI obligations applied from 2 Aug 2025** (a voluntary GPAI Code of Practice was published 10 Jul 2025), and the bulk of high-risk obligations were originally scheduled for 2 Aug 2026. **Provisionally, this is slipping:** a "Digital Omnibus" simplification package reached provisional political agreement (~6 May 2026) that pushes high-risk deadlines back — Annex III high-risk to **2 Dec 2027** and Annex I to **2 Aug 2028** — but as of June 2026 this is *not yet enacted in the Official Journal*, so treat those dates as provisional and check the current text. Penalties are GDPR-scale: up to **€35M or 7% of global turnover** for prohibited-use violations (up to 3% for GPAI-specific breaches). The *structure* — tiers + GPAI track — is stable even as the dates move.
 
 **Your job as an engineer:** classify your feature's tier *early* (it changes everything downstream), and if it's high-risk, loop in legal/compliance *before* building, not after.
 
 ## NIST AI RMF — the framework to organize around (US & global)
 
-Where the EU AI Act is *law*, the **NIST AI Risk Management Framework** is a *voluntary* (but widely adopted, including a Generative AI Profile) framework that tells you *how* to manage AI risk. It's the practical backbone US companies use, and it maps cleanly onto everything in this chapter. Four functions:
+Where the EU AI Act is *law*, the **NIST AI Risk Management Framework** is a *voluntary* (but widely adopted, including a Generative AI Profile) framework that tells you *how* to manage AI risk. It remains the practical backbone US companies use, and it maps cleanly onto everything in this chapter. Four functions:
 
 | Function | Plain meaning | Maps to |
 |---|---|---|
@@ -53,6 +53,8 @@ Where the EU AI Act is *law*, the **NIST AI Risk Management Framework** is a *vo
 | **Manage** | Prioritize, mitigate, monitor, respond | [Guardrails](./04-guardrails.md), [incident response](./08-red-teaming.md) |
 
 If someone asks "what's your AI risk process?", answering in Govern/Map/Measure/Manage terms signals you know the standard. Related: ISO/IEC 42001 (AI management system certification) and ISO/IEC 23894 (AI risk) for organizations that want an auditable certification.
+
+**US federal & state landscape (as of June 2026):** federal AI policy swung toward deregulation — Biden's executive order EO 14110 was rescinded (20 Jan 2025) and replaced by a pro-innovation order (EO 14179, 23 Jan 2025), followed by **"America's AI Action Plan"** (23 Jul 2025). NIST stays central, and the former US AI Safety Institute was renamed **CAISI (Center for AI Standards and Innovation)** in 2025. Meanwhile **states** are filling the gap: California's **SB 53** (frontier-model transparency) took effect **1 Jan 2026**, **Texas TRAIGA** in **Jan 2026**, and the **Colorado AI Act** was delayed to **30 Jun 2026**. There is an active federal push to **preempt state AI laws** (a Dec 2025 executive order plus DOJ/FTC/Commerce actions), but legal consensus is that an executive order alone likely *cannot* preempt state law without Congress — so as of June 2026 this is **unresolved**, and engineers should still plan for the strictest applicable state rule.
 
 ## Model cards & system cards — the documentation that proves it
 

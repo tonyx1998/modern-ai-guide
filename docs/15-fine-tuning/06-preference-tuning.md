@@ -124,4 +124,4 @@ Skip it when SFT already hits your eval bar, when you can't produce reliable pre
 
 ---
 
-→ Next: [Distillation](./07-distillation.md)
+→ Next: [Reinforcement learning for LLMs](./065-rl-for-llms.md)
