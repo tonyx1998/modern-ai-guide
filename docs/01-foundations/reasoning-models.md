@@ -70,6 +70,19 @@ A back-of-envelope:
 
 This is why the right default is **not a reasoning model**. Reach for one when the task actually needs it.
 
+<details>
+<summary>Go deeper (optional): the three flavors of test-time compute</summary>
+
+"Thinking longer" isn't one technique — there are three ways to spend extra compute at inference time, and the premium "Heavy" / "Deep Think" / "Pro" modes combine them:
+
+- **Sequential** — one longer chain of thought: the model reasons, critiques, and refines in a single stream. More tokens, deeper single-line reasoning. (Diminishing returns: past a point, *more* sequential thinking can actually lower accuracy — the documented "overthinking" failure.)
+- **Parallel** — sample several independent attempts and pick the best (self-consistency / best-of-N, sometimes with a verifier model choosing the winner). Degrades more gracefully than sequential.
+- **Internal** — the model itself varies how much it thinks based on how hard the problem looks, which is what an automatic "effort" dial exposes.
+
+The "Heavy"/"Deep Think"/"Pro" tiers are essentially **parallel reasoning then a merge step** — run many lines of thought at once and synthesize. That's why they cost dramatically more for a marginal accuracy gain, and why they're common in evals but rare in production.
+
+</details>
+
 ## Prompting reasoning models differently
 
 Reasoning models reward a different prompt shape than chat models. The patterns that matter:

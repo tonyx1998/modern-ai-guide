@@ -86,6 +86,17 @@ You don't need to understand these in detail. You do need to know they exist so 
 
 You can productively build LLM apps for years without touching any of those. If you decide to specialize in inference optimization or fine-tuning, *then* dig in.
 
+<details>
+<summary>Go deeper (optional): how attention is actually computed</summary>
+
+Nothing later in the guide depends on this — skip it freely. But if you want the concrete version of "each token computes a weighted view of every other token":
+
+For each token the model builds three vectors — a **query** (`q`), a **key** (`k`), and a **value** (`v`) — by multiplying the token's embedding by three learned matrices. The attention weight from token *i* to token *j* is the dot product `qᵢ · kⱼ`, divided by √(head dimension) for stability, then passed through a **softmax** over all *j* so the weights sum to 1. The token's new representation is that softmax-weighted sum of every `vⱼ`. **Multi-head** attention just runs several independent `(q, k, v)` projections in parallel and concatenates the results, so different heads can specialize — one might track grammatical subjects, another long-range references like the "it → trophy" example above.
+
+That "softmax over *all* tokens" is exactly where the **O(n²)** cost comes from: every token attends to every other, so work grows with the square of the context length.
+
+</details>
+
 ## What beginners get wrong
 
 :::caution[Common mistakes]
@@ -121,7 +132,7 @@ Two distinct latency knobs, two distinct billing lines — same call.
 
 ## Mixture-of-experts in one paragraph
 
-Modern frontier models often use MoE — instead of every token using all 400B parameters, only 30–50B "experts" activate per token. Same quality as a dense model with the same active params, ~5–10× cheaper to serve. Examples in 2026: Mixtral-style, DeepSeek V3, GPT-5 (assumed), Claude Opus 4.7 (assumed). You don't pick this; the provider does. It just means "open weights = X B params" and "active per token = Y B params" are two different numbers worth knowing when self-hosting.
+Modern frontier models often use MoE — instead of every token using all 400B parameters, only 30–50B "experts" activate per token. Same quality as a dense model with the same active params, ~5–10× cheaper to serve. Examples in 2026: Mixtral-style, DeepSeek V4, GPT-5 (assumed), Claude Opus 4.8 (assumed). You don't pick this; the provider does. It just means "open weights = X B params" and "active per token = Y B params" are two different numbers worth knowing when self-hosting.
 
 ---
 
