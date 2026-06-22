@@ -26,6 +26,10 @@ A 45–60 minute session typically goes:
 
 Same structure as any sysdesign — what's different is the components.
 
+:::tip[Rehearse it out loud]
+This page covers the *whiteboard* design round. To drill the rest of the AI-eng loop verbally — RAG design, **evals**, agents, and prompt-injection defense — see [Mock interviews (SoloMock)](./career-mock-interviews), which maps each round to a specific practice problem.
+:::
+
 ## The canonical questions
 
 The questions that come up over and over:

@@ -225,4 +225,4 @@ The second-highest is **adding BM25 alongside vector search**. Together, hybrid 
 
 ---
 
-→ Next: [The agent loop with guardrails](./agent-loop.md).
+→ Next: [Agentic RAG & GraphRAG](./agentic-rag.md).

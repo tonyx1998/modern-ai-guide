@@ -14,7 +14,7 @@ logic* is durable; the names are a snapshot. Cross-check the
 :::
 
 
-> **In one line:** If you self-host an open model, an inference server is what actually loads the weights, batches requests, and serves the tokens. vLLM is the production default in 2026.
+> **In one line:** If you self-host an open model, an inference server is what actually loads the weights, batches requests, and serves the tokens. vLLM is the breadth default in 2026; SGLang is the de-facto choice at hyperscale.
 
 :::tip[In plain English]
 A model file (the "weights") is just numbers on disk — it can't answer requests by itself. An inference server is the program that loads those weights into GPU memory, accepts HTTP requests, runs the math, and streams tokens back. Picking the right one is mostly about *throughput* (how many concurrent requests can you handle per GPU) and *operational maturity* (does it crash at 3am).
@@ -24,10 +24,10 @@ A model file (the "weights") is just numbers on disk — it can't answer request
 
 | Server | Best for | Languages | Concurrency model | Notes |
 |--------|---------|-----------|-------------------|-------|
-| **vLLM** | Production self-hosting | Python (server), any client | PagedAttention + continuous batching | The default. Broadest model support. |
-| **SGLang** | Structured output, tool flows | Python | RadixAttention | Often beats vLLM on prefix-heavy workloads |
-| **TGI** (HF) | Hugging Face ecosystem | Rust + Python | Continuous batching | Solid; less momentum than vLLM in 2026 |
-| **TensorRT-LLM** | NVIDIA-only, lowest latency | C++ / Python | Custom kernels per model | Fastest, hardest to operate |
+| **vLLM** | Production self-hosting | Python (server), any client | PagedAttention + continuous batching | The breadth default. Broadest model support; actively developed (near-weekly releases). |
+| **SGLang** (LMSYS) | Hyperscale serving, prefix-heavy, tool flows | Python | RadixAttention | The 2026 hyperscale standard (xAI, Cursor, etc.); strong on shared-context throughput; Day-0 DeepSeek-V4 support |
+| **TGI** (HF) | Hugging Face ecosystem | Rust + Python | Continuous batching | Solid; much less prominent than vLLM/SGLang in 2026 |
+| **NVIDIA Dynamo** | NVIDIA-only, lowest latency | C++ / Python | TensorRT-LLM kernels (+ vLLM/SGLang) | "Inference OS" (1.0 GA ~early 2026) orchestrating TensorRT-LLM; fastest, hardest to operate |
 | **Ollama** | Laptop / dev | Go | Simple queue | Not for prod. Perfect for local. |
 | **llama.cpp** | CPU / Mac / edge | C++ | Single-threaded per request | GGUF quantization, runs on a phone |
 | **MLX** (Apple) | Apple Silicon dev | Python / Swift | Unified memory | Mac-only; fast on M-series |
@@ -37,14 +37,14 @@ A model file (the "weights") is just numbers on disk — it can't answer request
 
 **Don't self-host.** Use a managed inference provider — **Together**, **Fireworks**, or **Groq** — and you get vLLM-class performance without operating it. You pay per token, not per GPU-hour.
 
-If you've decided to self-host, **vLLM on Modal or RunPod** is the path of least resistance. You write a 20-line Modal function, point it at a Llama or Mistral checkpoint, and get a scaling endpoint. For local development and laptop demos, **Ollama**.
+If you've decided to self-host, **vLLM on Modal or RunPod** is the path of least resistance for most teams. You write a 20-line Modal function, point it at a Llama or Mistral checkpoint, and get a scaling endpoint. At hyperscale (very large GPU fleets, prefix-heavy traffic), **SGLang** is the de-facto 2026 standard. For local development and laptop demos, **Ollama** (now also offered as a hosted "Turbo/Cloud" tier); **LM Studio** is the best local GUI, especially on Apple Silicon (MLX).
 
 ## When to deviate
 
-- **Structured-output-heavy workload** (lots of JSON schemas, tool calling, constrained generation): **SGLang** has better primitives for this than vLLM.
-- **Sub-50ms first-token latency on a single model**: **TensorRT-LLM** with a pre-compiled engine — but be ready to maintain it.
+- **Hyperscale serving or prefix/shared-context-heavy workload** (lots of JSON schemas, tool calling, constrained generation, big GPU fleets): **SGLang**'s RadixAttention primitives shine here, which is why it's the de-facto choice at very large deployments in 2026.
+- **Sub-50ms first-token latency on a single model**: **TensorRT-LLM**, now under the **NVIDIA Dynamo** umbrella, with a pre-compiled engine — but be ready to maintain it.
 - **Edge / on-device inference**: **llama.cpp** with a Q4_K_M quantized model, or **MLX** on Apple Silicon.
-- **Hugging Face-native ops** (Inference Endpoints, Spaces): **TGI** integrates more cleanly than vLLM there.
+- **Hugging Face-native ops** (Inference Endpoints, Spaces): **TGI** integrates more cleanly than vLLM there, though it's less prominent overall in 2026.
 - **You need the absolute cheapest hosted endpoint and latency is fine**: **Groq** for LPU speed, **DeepInfra** for cost.
 
 ## Minimum integration
@@ -63,7 +63,7 @@ ollama run llama3.3:70b
 import modal
 
 app = modal.App("llm")
-image = modal.Image.debian_slim().pip_install("vllm==0.6.5")
+image = modal.Image.debian_slim().pip_install("vllm")  # pin to a current release; vLLM ships near-weekly
 
 @app.function(image=image, gpu="A100-80GB:2", scaledown_window=300)
 @modal.web_server(8000)
@@ -87,11 +87,11 @@ That's a production-grade autoscaling endpoint in about 15 lines. Modal cold-sta
 
 ## Pricing & cost notes
 
-A practical rule from production deployments:
+A practical rule from production deployments (June 2026 ballpark):
 
-- **Hosted (Together / Fireworks):** $0.60–$1.50 / Mtok blended for Llama-class 70B.
-- **Self-hosted vLLM at saturation:** roughly half that, *if your GPUs stay busy*.
-- **Self-hosted vLLM at 20% utilization:** *more expensive* than hosted, because you pay the full GPU-hour either way.
+- **Hosted (Together / Fireworks / Groq):** roughly $0.40–$1.00 / Mtok for ~70B-class open models.
+- **Self-hosted vLLM/SGLang at saturation:** can undercut that, *but only if your GPUs stay busy*.
+- **Self-hosted at low utilization (~20%):** *more expensive* than hosted, because you pay the full GPU-hour either way.
 
 The breakeven against managed providers is roughly **200M tokens/day sustained**. Below that, hosted is cheaper and saner. Above that, the spreadsheet starts to favor self-hosting — assuming you have someone to operate it.
 

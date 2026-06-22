@@ -39,6 +39,14 @@ That single operation powers a huge fraction of useful AI features:
 - **Classification & clustering** — embed examples, run k-NN or k-means, get a working classifier without training a model.
 - **Recommendation** — embed users by their history, items by their content, recommend nearby items.
 
+<PredictThenReveal
+  id="embeddings-no-word-overlap"
+  question="You'll search 5 short docs (one is a pizza recipe) with the query 'I can't log in to my account' — which shares NO words with any of the docs. Will semantic search still surface the login-related docs, or fall apart because nothing overlaps word-for-word?">
+
+**It still finds them.** Embeddings match on *meaning*, not shared words — "I can't log in" lands nearest "Account locked after too many attempts" and "How to reset your password," while the pizza recipe sits far away. The worked example below shows the exact cosine scores (top match ≈ 0.61 with zero word overlap; pizza ≈ 0.04).
+
+</PredictThenReveal>
+
 ## Worked example: a 20-line semantic search
 
 ```python

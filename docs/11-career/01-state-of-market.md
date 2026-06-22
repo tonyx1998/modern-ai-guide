@@ -22,7 +22,7 @@ The companies whose primary product is the foundation model: **Anthropic, OpenAI
 
 - **What you'd actually do:** depends heavily on team. Applied / product teams ship Claude-the-product or ChatGPT-the-product; capability teams work on evals, safety, post-training; research-engineering teams build the training stack itself.
 - **The bar:** very high. Most hires are senior engineers with a track record at top scaleups or big tech; juniors are rare and usually have an exceptional artifact (a popular OSS project, a viral side project, a strong publication).
-- **Comp:** the highest in tech outside of HFT. Total comp $400K–$1M+ for senior, $1M–$3M+ for staff, frequently more at the top end (Anthropic, OpenAI, and DeepMind have all reportedly made $5M+ offers for scarce specialists).
+- **Comp:** the highest in tech outside of HFT, and heavily equity-weighted. All figures here are crowdsourced/aggregated (levels.fyi-style) and directional, not authoritative — as of mid-2026, total comp roughly $400K–$1M+ for senior, $1M–$3M+ for staff, frequently more at the top end (Anthropic, OpenAI, and DeepMind have all reportedly made $5M+ offers for scarce specialists).
 - **Where:** SF Bay Area dominant (Anthropic, OpenAI, xAI). London (DeepMind, Cohere office, Anthropic office). Mountain View (DeepMind). Paris (Mistral). Some remote for senior IC.
 
 ### AI-native scaleups
@@ -31,7 +31,7 @@ Companies built around an AI product, usually founded 2020–2024, Series B or l
 
 - **What you'd actually do:** ship product features, own a slice end-to-end (frontend through prompt through eval), wear multiple hats. Less hand-holding than big tech, more ownership.
 - **The bar:** strong-engineer plus visible AI work. You don't need to be a research star; you need to be able to ship a feature with evals and observability without three layers of review.
-- **Comp:** $250K–$600K total at senior, often with meaningful pre-IPO equity. Cursor and Perplexity in particular have been making aggressive offers to poach from FAANG in 2025–2026.
+- **Comp:** as of mid-2026, roughly $250K–$600K total at senior, often with meaningful (and equity-heavy) pre-IPO upside — figures are crowdsourced/aggregated, so treat them as directional. Cursor and Perplexity in particular have been making aggressive offers to poach from FAANG in 2025–2026.
 - **Where:** SF Bay Area dominant, NYC growing (Hebbia, Decagon, Harvey), London (ElevenLabs, Speak). Strong remote tolerance, especially for engineers with shipped AI features in their portfolio.
 
 ### AI features at non-AI companies
@@ -65,6 +65,17 @@ The supply side has caught up somewhat from the 2023–2024 panic, but demand st
 - **Mid-level (3–5 yrs of total engineering, 1–2 of which is AI):** very strong market. Multiple offers common. The "can you ship a feature with evals" filter is the main gate.
 - **Senior (5+ yrs, with 2–3 yrs of shipped AI):** brutal seller's market. Counter-offers are routine. Specialists in retrieval-at-scale, agents-at-scale, inference, evals, and voice are particularly scarce.
 - **Staff+:** named-pick territory. Most hires come via direct outreach from execs.
+
+:::note[What hiring is actually screening for, as of mid-2026]
+The center of gravity of the role has moved from "RAG + prompt plumbing" toward **agentic systems, evaluation, and context engineering** — agents are now in production at most orgs, not just experiments. Two shifts are worth internalizing before you interview:
+
+- **Evals are the core hiring signal.** Being able to design an eval suite is widely cited as the strongest evidence that a candidate has actually shipped LLM systems — it's the single thing most likely to separate offers from rejections at the mid level.
+- **Context engineering has displaced prompt engineering** as the headline skill (per Anthropic and broad industry commentary in 2026), and fluency with **MCP** (Model Context Protocol) is now treated as table-stakes. Most teams still do *not* fine-tune — they rely on strong base models plus RAG — so RL/fine-tuning remains a high-value niche rather than a baseline expectation.
+:::
+
+:::caution[Reported shift: coding agents and team shape (directional, not precise)]
+Coding agents (Claude Code, Cursor, Codex, and peers) have visibly changed team composition as of mid-2026: it's widely reported that one senior engineer plus an AI assistant now ships what used to take a senior plus a junior. Directionally, entry-level / junior SWE hiring appears to have contracted while senior demand has held — treat this as reported industry observation, not a precise statistic. Commentators have flagged a downstream risk: if junior hiring stays compressed, teams may face a **mid-level talent pipeline gap** a few years out.
+:::
 
 :::note[Worked example: same junior, three tiers]
 You're a 2-year backend engineer who shipped a RAG app at your current SaaS company. You apply to:

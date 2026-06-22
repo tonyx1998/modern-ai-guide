@@ -15,12 +15,12 @@ The context window is the model's working memory for one call — everything it 
 
 ![Context window budget: the system prompt, chat history, retrieved docs, and the answer all share one fixed space](/img/context-budget.svg)
 
-## Numbers to know (May 2026)
+## Numbers to know (June 2026)
 
-- **Frontier chat models:** 200K tokens (Claude Opus 4.7, GPT-5) — some up to 1M–2M (Gemini 2.5).
+- **Frontier chat models:** 1M tokens is now the baseline (Claude Opus 4.8, GPT-5.5, Gemini 3.x) — but *effective* recall degrades well before the advertised limit.
 - **Workhorse:** 128K–200K is standard.
 - **Small / mid-tier:** 32K–128K is the common floor.
-- **Open-weight models:** 8K–128K depending on architecture and how it was fine-tuned for long context. Llama 3.3 and Qwen 2.5 ship 128K out of the box.
+- **Open-weight models:** 8K–1M depending on architecture and how it was fine-tuned for long context. Llama 4 and Qwen 3 ship 128K+ out of the box.
 
 A million tokens is roughly a 750,000-word document — *War and Peace* twice over. You can fit a lot. Whether you *should* is a different question.
 
@@ -59,6 +59,14 @@ total:        25,500 / 200,000 = 13% used
 ```
 
 You have plenty of room. If the user uploads a 500-page PDF (~250K tokens), you suddenly *don't*. Now you have to chunk it and use RAG instead of stuffing the whole thing in.
+
+<PredictThenReveal
+  id="context-lost-in-middle"
+  question="A model gets a long document and one fact it needs to answer the question. The fact could sit at the START, the MIDDLE, or the END of that context. Which placement will the model recall most reliably — and which worst?">
+
+**Best: the start and the end. Worst: the middle.** Long-context models recall information at the edges of the context far more reliably than facts buried in the middle — accuracy on mid-context facts can drop **20–40%**. This is the counterintuitive "lost in the middle" effect, and it's why *where* you place context matters as much as *how much* you include.
+
+</PredictThenReveal>
 
 ## The "lost in the middle" effect
 

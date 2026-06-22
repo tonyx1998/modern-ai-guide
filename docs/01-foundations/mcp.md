@@ -66,10 +66,19 @@ Server-defined prompt templates the user can invoke by name (e.g., `/review-pr` 
 
 ## Why this matters in 2026
 
-1. **Tool ecosystems compound.** Once a vendor ships an MCP server, every MCP client gets the integration "for free." By mid-2026 there are 1000+ public MCP servers — filesystem, GitHub, Slack, Linear, Postgres, every major SaaS, and a long tail of internal ones at enterprises.
+1. **Tool ecosystems compound.** Once a vendor ships an MCP server, every MCP client gets the integration "for free." By mid-2026 there are thousands of public MCP servers — filesystem, GitHub, Slack, Linear, Postgres, every major SaaS, and a long tail of internal ones at enterprises.
 2. **Less framework lock-in.** You're no longer choosing "the LangChain integration" vs "the LlamaIndex integration." You're choosing whether your client speaks MCP.
 3. **Inside-the-firewall reuse.** Enterprise teams stand up internal MCP servers (your CRM, your data lake, your runbook system) and any AI tool an employee uses can plug in with the same auth model.
 4. **Distinction from function-calling, sharpened.** Function-calling is the *protocol between the model and its host*. MCP is the *protocol between the host and external tool processes*. Both exist; MCP composes on top.
+
+## Who owns MCP now — and where A2A fits
+
+Two developments since the protocol's early days are worth knowing as of mid-2026:
+
+- **MCP is now vendor-neutral.** In December 2025 Anthropic donated MCP to the **Agentic AI Foundation**, a fund under the **Linux Foundation**, co-founded with OpenAI and Block and backed by Google, Microsoft, AWS, and others. It is governed by open working groups now, not a single company — which is why every major AI IDE and frontier-lab app supports it. The 2026 spec revision adds a *stateless* core (easier load-balancing), an async **Tasks** primitive for long-running work, and **MCP Apps** (interactive HTML surfaced by a server).
+- **A2A is the complementary layer.** MCP connects an agent to *tools and data*. **A2A (Agent2Agent)** — also a Linux Foundation project, at v1.0 with 150+ member organizations — is a separate protocol for one *agent to talk to another agent* (discovering its capabilities via a signed "Agent Card," delegating a task, streaming results back). The 2026 default is to use **both**: MCP for vertical tool access, A2A for horizontal agent-to-agent coordination. (Earlier proposals like IBM's ACP have merged into A2A.)
+
+If you only remember one line: **MCP = agent ↔ tools; A2A = agent ↔ agent.** See [Multi-agent systems](./multi-agent.md) for when agent-to-agent coordination is actually worth it.
 
 ## Worked example: a minimal MCP server (Python)
 

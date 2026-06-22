@@ -20,23 +20,27 @@ logic* is durable; the names are a snapshot. Cross-check the
 "Open-weight" doesn't mean "open-source" the way Linux is — most of these licenses come with restrictions, and you almost never get the training data. What you do get is the *model file*: a multi-gigabyte bag of numbers you can load into your own inference server (vLLM, Ollama) or hand to a hosting provider (Together, Fireworks, Groq, Replicate). The pitch is privacy, control, and cost at scale. The catch is that you now own a piece of ML infrastructure.
 :::
 
-## The major families (May 2026)
+## The major families (June 2026)
 
 | Family | Maintainer | Top sizes | Best for | License notes |
 |--------|-----------|-----------|---------|---------------|
-| **Llama 4** | Meta | 8B, 70B, 405B, 600B MoE | General workhorse, broad community | Llama Community License (commercial OK with caps) |
-| **Mistral / Mixtral** | Mistral AI | 8B, 22B, 8x22B MoE, Large 3 | European workloads, MoE efficiency | Apache 2.0 on small; commercial license on flagship |
-| **Qwen 3** | Alibaba | 7B, 32B, 72B, 235B MoE | Multilingual, especially CJK | Apache 2.0 |
-| **DeepSeek v3 / R1** | DeepSeek | 67B, 236B MoE, 671B | Reasoning, cost-efficiency | MIT |
+| **DeepSeek V4** | DeepSeek | 284B & 1.6T MoE (small active) | Reasoning, agentic coding, cost-efficiency, 1M context | MIT |
+| **Qwen 3 / 3.5** | Alibaba | 7B–235B MoE, dual thinking modes | Multilingual (esp. CJK), reasoning | Apache 2.0 (open tier) |
+| **Llama 4** | Meta | Scout (10M ctx), Maverick (1M ctx) | General workhorse, broad community | Llama Community License (commercial OK with caps) |
+| **Mistral Large 3 / Ministral 3** | Mistral AI | 3B–14B dense, 675B MoE | European workloads, MoE efficiency | Apache 2.0 |
+| **GLM / MiniMax / Kimi** | Zhipu / MiniMax / Moonshot | Large MoE | Frontier-adjacent open weights | Mostly permissive |
 | **Gemma 3** | Google | 2B, 9B, 27B | On-device, edge | Gemma license (commercial OK) |
-| **Phi-4** | Microsoft | 4B, 14B | Small but strong reasoning | MIT |
-| **Command R+** | Cohere | 104B | Enterprise RAG, tool use | CC-BY-NC (research) |
+
+:::note[Two big 2026 shifts in the open-weight world]
+- **Meta pivoted away from open weights at the frontier.** In April 2026 Meta's new Superintelligence Labs shipped **Muse Spark** — a *closed*, API-only model that succeeds Llama 4. The Llama 4 herd (Scout, Maverick) remains downloadable, but don't expect a future open Llama flagship. If you picked Llama for "the open default," re-evaluate.
+- **The open-weight frontier is now mostly Chinese.** As of mid-2026 the strongest open-weight models on public leaderboards come from **DeepSeek (V4), Alibaba (Qwen), Zhipu (GLM), MiniMax, and Moonshot (Kimi)** — with Google's Gemma and NVIDIA's Nemotron the main Western entries. The best open models trail the closed frontier by a small margin and win decisively on cost.
+:::
 
 ## Default pick for most teams
 
 **Don't.** If you're under ~$5k/month in API spend and you don't have a hard compliance requirement, stay on closed providers. The operational cost of running an open model in production — GPU procurement, autoscaling, quantization tuning, eval drift — almost always swamps the API savings.
 
-If you've decided you need open weights, **Llama 4 70B** via **Together AI** or **Fireworks** is the no-think default. You get a serverless endpoint, predictable pricing, and zero infra. For reasoning-heavy tasks, **DeepSeek R1** is the price/quality leader in May 2026.
+If you've decided you need open weights, a mid-size **Llama 4** or **Qwen 3** model via **Together AI** or **Fireworks** is the no-think default. You get a serverless endpoint, predictable pricing, and zero infra. For reasoning- and coding-heavy tasks, **DeepSeek V4** is the open price/quality leader as of June 2026.
 
 ## When to deviate (i.e. when open weights actually make sense)
 
@@ -69,8 +73,9 @@ client = OpenAI(
     base_url="https://api.together.xyz/v1",
 )
 
+# Model IDs are provider-specific and change often — check the provider's catalog.
 response = client.chat.completions.create(
-    model="meta-llama/Llama-4-70B-Instruct",
+    model="deepseek-ai/DeepSeek-V4",
     messages=[{"role": "user", "content": "Explain MoE in one sentence."}],
 )
 ```
@@ -81,12 +86,12 @@ For local dev, **Ollama** is one command:
 ollama run llama3.3:70b   # downloads + serves on localhost:11434, OpenAI-compatible API
 ```
 
-## Pricing & cost notes (May 2026 ballpark)
+## Pricing & cost notes (June 2026 ballpark)
 
-| Path | Cost shape | Example for Llama 4 70B |
+| Path | Cost shape | Example for a ~70B-class open model |
 |------|-----------|------------------------|
-| Managed (Together, Fireworks) | $0.60–$1.20 / Mtok blended | ~$0.88 / Mtok blended |
-| Groq (fast) | $0.60–$1.00 / Mtok | ~$0.80 / Mtok, 500+ tok/s |
+| Managed (Together, Fireworks) | $0.40–$1.20 / Mtok blended | ~$0.88 / Mtok blended |
+| Groq (fast) | $0.40–$1.00 / Mtok | ~$0.80 / Mtok, 400+ tok/s |
 | Self-hosted (your GPUs) | $/GPU-hour ÷ throughput | A100 80GB ~$1.50/hr; ~$0.15/Mtok at saturation |
 | Self-hosted (idle) | Same $/GPU-hour, no requests | $$$$ — idle GPUs are pure burn |
 

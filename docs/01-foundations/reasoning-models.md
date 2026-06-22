@@ -2,7 +2,7 @@
 id: reasoning-models
 title: Reasoning models
 sidebar_position: 6.5
-description: o1/o3, Claude extended thinking, DeepSeek R1, Gemini Deep Think. Models that "think" before responding — when they're worth it, when they're not, and how to prompt them differently.
+description: Reasoning-effort dials, Claude extended thinking, DeepSeek V4 thinking mode, Gemini Deep Think. Models that "think" before responding — when they're worth it, when they're not, and how to prompt them differently.
 ---
 
 # Reasoning models
@@ -15,15 +15,19 @@ A normal LLM emits tokens one after another and hopes the answer comes out right
 
 ## The reasoning model family
 
-By mid-2026 every major lab ships a reasoning variant:
+By mid-2026 reasoning isn't a separate product line anymore — it's a **mode of the flagship**, controlled by an effort/budget dial:
 
 | Model | Lab | What "thinking" looks like |
 |---|---|---|
-| **o1 / o3 / o4** | OpenAI | Hidden reasoning tokens; you pay for them but never see them |
-| **Claude extended thinking** (3.7+ and 4.x) | Anthropic | Visible `<thinking>` blocks; budget configurable per call |
-| **DeepSeek R1** (and successors) | DeepSeek | Visible reasoning; open weights |
-| **Gemini Deep Think / 2.5 Pro reasoning** | Google | Visible reasoning; depth budget |
-| **Qwen QwQ** | Alibaba | Open-weights reasoning; visible chain-of-thought |
+| **GPT-5.5** (reasoning effort: `none`…`high`) | OpenAI | Hidden reasoning tokens, auto-routed by an internal router; billed but not shown. (The standalone o1/o3 line is being retired into this.) |
+| **Claude adaptive / extended thinking** (Opus 4.8, Sonnet 4.6) | Anthropic | Summarized `<thinking>`; budget configurable per call |
+| **DeepSeek V4 thinking mode** | DeepSeek | Visible reasoning; open weights (the R1 line's successor — note there is no "R2") |
+| **Gemini 3.1 Deep Think** | Google | Visible reasoning; thinking-budget dial |
+| **Qwen3 / Qwen3.7-Max thinking mode** | Alibaba | Extended-thinking toggle; open and closed variants |
+
+:::note[The 2026 shift]
+Through 2024 a "reasoning model" was a distinct model you chose (o1, R1). As of 2026 the major flagships ship **one model with a reasoning dial** — turn effort up for hard problems, down (or off) for cheap ones. The mental model below still holds; just read "use a reasoning model" as "turn reasoning effort up on the model you already use."
+:::
 
 Two design variants matter:
 
@@ -60,11 +64,24 @@ A back-of-envelope:
 
 | Model | Tokens per "what's 2+2 + show work" | Approx cost (relative) |
 |---|---|---|
-| Sonnet 4.6 non-thinking | ~50 output | 1× |
+| Sonnet 4.6, effort off | ~50 output | 1× |
 | Sonnet 4.6 + extended thinking (medium) | ~800 output | ~16× |
-| o3 | ~1200 output (some hidden) | ~20× |
+| GPT-5.5, effort high | ~1200 output (some hidden) | ~20× |
 
 This is why the right default is **not a reasoning model**. Reach for one when the task actually needs it.
+
+<details>
+<summary>Go deeper (optional): the three flavors of test-time compute</summary>
+
+"Thinking longer" isn't one technique — there are three ways to spend extra compute at inference time, and the premium "Heavy" / "Deep Think" / "Pro" modes combine them:
+
+- **Sequential** — one longer chain of thought: the model reasons, critiques, and refines in a single stream. More tokens, deeper single-line reasoning. (Diminishing returns: past a point, *more* sequential thinking can actually lower accuracy — the documented "overthinking" failure.)
+- **Parallel** — sample several independent attempts and pick the best (self-consistency / best-of-N, sometimes with a verifier model choosing the winner). Degrades more gracefully than sequential.
+- **Internal** — the model itself varies how much it thinks based on how hard the problem looks, which is what an automatic "effort" dial exposes.
+
+The "Heavy"/"Deep Think"/"Pro" tiers are essentially **parallel reasoning then a merge step** — run many lines of thought at once and synthesize. That's why they cost dramatically more for a marginal accuracy gain, and why they're common in evals but rare in production.
+
+</details>
 
 ## Prompting reasoning models differently
 

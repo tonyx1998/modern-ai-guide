@@ -152,4 +152,4 @@ Put these in CI exactly like text evals: a fixed audio test set, WER and latency
 
 ---
 
-→ Next: [Chapter checkpoint](./99-checkpoint.md)
+→ Next: [World models & embodied AI](./085-world-models-embodied.md)

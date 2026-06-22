@@ -32,6 +32,10 @@ flowchart LR
     F -->|"top_p 0.5"| H[Tighter: keep top 50%]
 ```
 
+Reading about temperature only gets you so far — *feel* it. Drag the sliders below and watch the same set of next-token probabilities sharpen toward one word or spread across the long tail:
+
+<SamplingExplorer />
+
 ## When to use what
 
 - **Deterministic-ish output (classification, JSON extraction, code):** `temperature=0`. Note: even at temp 0, perfect determinism is not guaranteed across providers and across time (batching, hardware non-determinism).

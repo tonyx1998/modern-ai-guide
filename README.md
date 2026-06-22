@@ -1,6 +1,6 @@
-# Modern AI Engineer Guide
+# Modern AI Guide
 
-A comprehensive, beginner-friendly 2026 guide to how AI systems and LLM-powered applications are actually built, paired with a step-by-step roadmap for getting there from zero. **18 chapters in 7 parts**, written so a complete beginner can read it front to back and finish job-ready — while still being useful to working engineers. *Last reviewed: May 2026.*
+A comprehensive, beginner-friendly 2026 guide to everything useful in AI — how LLM-powered applications and **agentic systems** are actually built, evaluated, shipped, and operated, plus the broader landscape (research, tooling, careers, industry) a working practitioner needs. Paired with a step-by-step roadmap for getting there from zero. **18 chapters in 7 parts**, written so a complete beginner can read it front to back and finish job-ready — while still being useful to working engineers. The spine is engineering; the throughline is agents. *Last reviewed: June 2026.*
 
 > **Live site:** https://tonyx1998.github.io/modern-ai-engineer-guide/
 
@@ -36,7 +36,8 @@ The guide is organized into seven parts. Read top to bottom and you go from "wha
 | **G** | **Career & reference** | |
 | 15 | [Career](docs/11-career/) | AI engineer career path, specializations, 2026 compensation context. |
 | 16 | [Case Studies](docs/12-case-studies/) | Eight shipped 2026 architectures reconstructed from public sources — Cursor, Claude Code, Perplexity, Sierra, Harvey, Glean, Notion AI, Duolingo Max. |
-| 17 | [Glossary](docs/11-glossary.md) | Every term used in the guide, in plain English. |
+| 17 | [Cutting Edge](docs/17-cutting-edge/) | Optional look ahead at the 2026 frontier — agent harnesses, agentic RAG, trajectory evals, efficient inference, and a dated research radar. |
+| 18 | [Glossary](docs/11-glossary.md) | Every term used in the guide, in plain English. |
 
 ---
 

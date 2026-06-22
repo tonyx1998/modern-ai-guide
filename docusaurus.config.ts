@@ -3,8 +3,8 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
-  title: 'Modern AI Engineer Guide',
-  tagline: 'How AI systems are actually built in 2026 — for absolute beginners and beyond',
+  title: 'Modern AI Guide',
+  tagline: 'Everything useful in AI in 2026 — from your first API call to agentic systems in production',
   favicon: 'img/favicon.ico',
 
   future: {
@@ -20,6 +20,14 @@ const config: Config = {
   trailingSlash: false,
 
   onBrokenLinks: 'warn',
+
+  // Set ASK_AI_ENDPOINT at build time to enable the "Ask AI about this page"
+  // widget. It must point at YOUR backend that holds the provider API key and
+  // proxies the question to an LLM. Empty by default → the widget stays disabled
+  // and makes no network calls. No key ever lives in this repo.
+  customFields: {
+    askAiEndpoint: process.env.ASK_AI_ENDPOINT || '',
+  },
 
   // "Technical Editorial" type system — Space Grotesk / Hanken Grotesk / JetBrains Mono.
   headTags: [
@@ -114,7 +122,7 @@ const config: Config = {
       },
     },
     navbar: {
-      title: 'Modern AI Engineer Guide',
+      title: 'Modern AI Guide',
       hideOnScroll: false,
       items: [
         {
@@ -129,8 +137,18 @@ const config: Config = {
           label: 'Guide',
         },
         {
+          to: '/roadmap',
+          label: 'Roadmap',
+          position: 'left',
+        },
+        {
           to: '/docs/glossary',
           label: 'Glossary',
+          position: 'left',
+        },
+        {
+          to: '/review',
+          label: 'Review',
           position: 'left',
         },
       ],
@@ -187,7 +205,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Modern AI Engineer Guide. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Modern AI Guide. Built with Docusaurus.`,
     },
     prism: {
       theme: prismThemes.github,

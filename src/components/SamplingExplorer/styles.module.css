@@ -1,0 +1,107 @@
+.explorer {
+  border: 1px solid var(--accent-line);
+  border-radius: 12px;
+  background: var(--surface-2);
+  padding: 1.2rem 1.35rem;
+  margin: 1.75rem 0;
+}
+
+.tag {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-dim);
+  margin-bottom: 0.5rem;
+}
+
+.prompt {
+  margin: 0 0 1rem;
+  color: var(--ifm-font-color-base);
+}
+
+.controls {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.1rem;
+}
+
+.control {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1 1 200px;
+}
+
+.controlLabel {
+  font-size: 0.85rem;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.controlLabel b {
+  font-family: var(--ifm-font-family-monospace);
+  color: var(--accent-dim);
+}
+
+.control input[type='range'] {
+  width: 100%;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.bars {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 5.5rem 1fr 3.2rem;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.token {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.85rem;
+  color: var(--ifm-font-color-base);
+  text-align: right;
+}
+
+.track {
+  height: 14px;
+  background: var(--ifm-color-emphasis-200);
+  border-radius: 7px;
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 7px;
+  transition: width 0.18s ease;
+}
+
+.pct {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.8rem;
+  color: var(--ifm-color-emphasis-700);
+  text-align: right;
+}
+
+.dead {
+  opacity: 0.35;
+  text-decoration: line-through;
+}
+
+.readout {
+  margin: 1.1rem 0 0;
+  padding-top: 0.85rem;
+  border-top: 1px dashed var(--accent-line);
+  font-size: 0.9rem;
+  color: var(--ifm-color-emphasis-700);
+  min-height: 2.5em;
+}

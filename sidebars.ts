@@ -112,6 +112,7 @@ const sidebars: SidebarsConfig = {
             'foundations/agent-loop',
             'foundations/planning-and-reflection',
             'foundations/multi-agent',
+            'foundations/context-engineering',
             'foundations/computer-use',
           ],
         },
@@ -186,6 +187,7 @@ const sidebars: SidebarsConfig = {
           items: [
             'stack/llm-sdks',
             'stack/prompt-management',
+            'stack/prompt-optimization',
             'stack/rag-frameworks',
             'stack/agent-frameworks',
           ],
