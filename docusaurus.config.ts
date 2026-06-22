@@ -21,6 +21,14 @@ const config: Config = {
 
   onBrokenLinks: 'warn',
 
+  // Set ASK_AI_ENDPOINT at build time to enable the "Ask AI about this page"
+  // widget. It must point at YOUR backend that holds the provider API key and
+  // proxies the question to an LLM. Empty by default → the widget stays disabled
+  // and makes no network calls. No key ever lives in this repo.
+  customFields: {
+    askAiEndpoint: process.env.ASK_AI_ENDPOINT || '',
+  },
+
   // "Technical Editorial" type system — Space Grotesk / Hanken Grotesk / JetBrains Mono.
   headTags: [
     {
@@ -127,6 +135,11 @@ const config: Config = {
           sidebarId: 'tutorialSidebar',
           position: 'left',
           label: 'Guide',
+        },
+        {
+          to: '/roadmap',
+          label: 'Roadmap',
+          position: 'left',
         },
         {
           to: '/docs/glossary',

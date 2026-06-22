@@ -1,0 +1,158 @@
+.page {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 2.5rem 1.25rem 4rem;
+}
+
+.header {
+  margin-bottom: 1.5rem;
+}
+
+.kicker {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-dim);
+}
+
+.header h1 {
+  margin: 0.4rem 0 0.6rem;
+}
+
+.header p {
+  color: var(--ifm-color-emphasis-700);
+  margin: 0;
+}
+
+.loading {
+  color: var(--ifm-color-emphasis-600);
+  padding: 2rem 0;
+}
+
+.totalBar {
+  border: 1px solid var(--accent-line);
+  border-left: 3px solid var(--accent);
+  border-radius: 10px;
+  background: var(--surface-2);
+  padding: 0.8rem 1.1rem;
+  font-size: 0.9rem;
+  color: var(--ifm-color-emphasis-800);
+  margin-bottom: 2rem;
+}
+
+.totalBar b {
+  color: var(--accent-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.map {
+  position: relative;
+}
+
+.part {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 2rem;
+  border-left: 2px solid var(--ifm-color-emphasis-200);
+}
+
+.partHead {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.9rem;
+}
+
+.partLetter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 6px;
+  background: var(--accent);
+  color: #14160d;
+  font-weight: 800;
+  font-size: 0.85rem;
+  margin-left: -2.3rem;
+}
+
+.partName {
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+}
+
+.nodes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 0.7rem;
+}
+
+.node {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 11px;
+  background: var(--surface);
+  padding: 0.7rem 0.85rem;
+  color: var(--ifm-font-color-base);
+  text-decoration: none;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.node:hover {
+  border-color: var(--accent);
+  text-decoration: none;
+  color: var(--ifm-font-color-base);
+  transform: translateY(-1px);
+}
+
+.num {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 50%;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  font-family: var(--ifm-font-family-monospace);
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.numDone {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #14160d;
+}
+
+.nodeBody {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.nodeTitle {
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+
+.nodeBlurb {
+  font-size: 0.78rem;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.badge {
+  margin-left: auto;
+  flex-shrink: 0;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--accent-dim);
+  font-variant-numeric: tabular-nums;
+}
