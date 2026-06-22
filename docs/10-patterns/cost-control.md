@@ -26,7 +26,7 @@ export async function classifyWithCascade(input: string) {
   if (fast.confidence >= 0.85) return fast;
 
   // ~5% of traffic falls through to the expensive model
-  return classify({ model: 'claude-sonnet-4-5', input });
+  return classify({ model: 'claude-sonnet-4-6', input });
 }
 ```
 
@@ -111,7 +111,7 @@ export async function POST(req: Request) {
   }
 
   // 4. Escalate to the bigger model only when needed
-  const big = await answerWithModel('claude-sonnet-4-5', messages, tenantId);
+  const big = await answerWithModel('claude-sonnet-4-6', messages, tenantId);
   await spendTracker.record(tenantId, cheap.costUsd + big.costUsd);
   return Response.json(big);
 }
@@ -163,7 +163,9 @@ A toggle on each feature for the kill switch, and a "this month's budget burndow
 
 ## Token economics, in one table
 
-Knowing the rough numbers turns "this feature feels expensive" into a calculation.
+Knowing the rough numbers turns "this feature feels expensive" into a calculation. Plug your real request shape and volume in below before you reach for the table:
+
+<TokenCostCalculator />
 
 | Lever                                       | Typical cost change          |
 |---------------------------------------------|------------------------------|
