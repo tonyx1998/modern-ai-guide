@@ -212,6 +212,20 @@ There is no universal chunking config because there are no universal documents. 
 
 The simplest chunker — and the one most production RAG systems start with — is a sliding window: take `size` tokens, slide forward by `size − overlap`, repeat. Overlap is what stops a fact from being severed at a chunk boundary. Implement the windowing once and the "overlap" knob stops being abstract.
 
+Here it is traced once on a tiny input, so the exercise below is just reproducing the loop you've already watched run:
+
+```text
+tokens = [A, B, C, D, E],  size = 3,  overlap = 1
+step = size − overlap = 2
+
+start = 0 → tokens[0:3] = [A, B, C]
+start = 2 → tokens[2:5] = [C, D, E]   ← C reappears: that's the overlap
+start = 4 → tokens[4:7] = [E]         ← last window, shorter than size
+start = 6 → 6 ≥ length, stop
+```
+
+Now write it yourself — same loop, same `step = size − overlap`:
+
 <CodeChallenge
   id="foundations-chunk"
   fnName="chunk"
