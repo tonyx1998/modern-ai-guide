@@ -133,6 +133,11 @@ const config: Config = {
           label: 'Glossary',
           position: 'left',
         },
+        {
+          to: '/review',
+          label: 'Review',
+          position: 'left',
+        },
       ],
     },
     footer: {
