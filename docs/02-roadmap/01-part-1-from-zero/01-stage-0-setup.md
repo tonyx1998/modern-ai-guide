@@ -18,6 +18,10 @@ This is the boring stage every tutorial skips, and then learners debug environme
 You are *not* installing AI. You're installing a script-running environment (Python or Node), a library (the provider's SDK), and storing a password (the API key) somewhere your code can read but git can't see. That's it.
 :::
 
+:::note[Prerequisites]
+This stage is hands-on in the **[terminal](/docs/foundations/programming-basics#5-the-terminal)** and uses **[API keys and environment variables](/docs/foundations/programming-basics#4-api-keys-and-environment-variables)**. If those terms are new, skim the [programming on-ramp](/docs/foundations/programming-basics) first — it teaches both in plain English.
+:::
+
 ## 1. Pick one language and stick with it
 
 You'll do every stage of the roadmap in this language. You can re-do the whole roadmap in the other language later if you want — but switching mid-stage is how you make zero progress in two languages instead of real progress in one.

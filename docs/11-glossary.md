@@ -16,6 +16,8 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 
 **A2A (Agent2Agent)** — An open protocol (a Linux Foundation project) for one *agent* to discover another's capabilities and delegate a task to it. The horizontal complement to *MCP*: A2A is agent ↔ agent, MCP is agent ↔ tools.
 
+**Activation function** — A simple non-linear function (e.g. *ReLU*, sigmoid) applied to a *neuron*'s weighted sum. Without it, stacked layers would collapse into a single straight-line function.
+
 **Agent** — A setup where an LLM works in a loop: it picks a tool, you run it, you feed the result back, it picks the next tool, until it decides it's done. Contrast with *chain*.
 
 **Agent loop** — The control flow of an agent: think → call tool → observe result → repeat. Usually capped by a max-iteration count and a budget.
@@ -37,6 +39,8 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 ---
 
 ## B
+
+**Backpropagation** — The algorithm that computes, for every *weight*, how much it contributed to the *loss*. Those gradients are what *gradient descent* uses to train a *neural network* — one efficient backward sweep per step.
 
 **Barge-in** — In a voice agent, the user interrupting while the agent is still speaking. Handling it well (stop TTS, cancel generation, listen) is a core realtime-voice engineering problem.
 
@@ -109,6 +113,8 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 ## D
 
 **Data poisoning** — An attack where adversarial documents are inserted into a training set or *RAG* corpus to make the model behave badly later.
+
+**Deep learning** — Machine learning with *neural networks* that have many layers ("deep"). It's the technology under every modern LLM — a *transformer* is a deep-learning model.
 
 **DeepSeek** — A Chinese lab whose 2024–2026 open models pushed reasoning-model quality at very low cost.
 
@@ -201,6 +207,8 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 **Groundedness** — Synonym for *faithfulness*: does the output stay anchored to retrieved evidence?
 
 **GEPA (Genetic-Pareto)** — A 2026 reflective prompt-optimization method: an LLM critiques failures in natural language and evolves the prompt, keeping a Pareto front of candidates. Often more sample-efficient than RL-based tuning. Ships in *DSPy*.
+
+**Gradient descent** — The core training loop: nudge each *weight* a small step in the direction that lowers the *loss*, repeated over many examples. The "learning" in deep learning. See *backpropagation*.
 
 **GraphRAG** — A *RAG* variant that builds a knowledge graph plus community summaries over a corpus; strong for global/multi-hop questions over large document sets, and overkill for simple single-hop lookups.
 
@@ -300,6 +308,8 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 
 **Long-term memory** — Persistent storage of facts about a user or domain, surfaced into context on future calls. Usually a vector or key-value store.
 
+**Loop engineering** — Informal name for engineering the agent's *loop* and *harness* — what the model sees each turn, which tools it gets, when it stops, what it remembers — rather than swapping the base model. Same idea as *harness engineering* + *context engineering*. See [Agent harness engineering](./17-cutting-edge/01-agent-harnesses.md).
+
 **LoRA (Low-Rank Adaptation)** — A *fine-tuning* method that trains small adapter matrices instead of all weights. Cheap, fast, and swappable at inference time.
 
 ---
@@ -335,6 +345,10 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 ---
 
 ## N
+
+**Neural network** — A stack of layers of *neurons*, each computing a weighted sum plus an *activation function*, that maps an input vector to an output. Trained by *gradient descent*. Every LLM is one, scaled up.
+
+**Neuron (unit)** — The atom of a *neural network*: it multiplies each input by a *weight*, adds a bias, and applies an *activation function*.
 
 **NIST AI RMF** — The US National Institute of Standards and Technology's AI Risk Management Framework. A voluntary playbook for governing AI risk.
 
@@ -397,6 +411,8 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 **Prompt leak** — When a model reveals its hidden system prompt to a user, often via *prompt injection*.
 
 **Prompt registry** — A versioned store of prompts, separate from code. Lets you A/B-test and roll back prompts without redeploying.
+
+**Prompt tuning (soft prompts)** — A *PEFT* fine-tuning method that freezes the model and learns a small set of continuous "virtual token" embeddings prepended to the input (a close cousin is *prefix tuning*). Cheaper than *LoRA* but usually lower quality, so LoRA is the 2026 default. Not to be confused with *prompt engineering* (writing better prompts by hand).
 
 **Prompt version** — A specific revision of a prompt stored in a *prompt registry*.
 
