@@ -26,6 +26,7 @@ const sidebars: SidebarsConfig = {
       collapsed: true,
       link: {type: 'doc', id: 'foundations/foundational-concepts'},
       items: [
+        'foundations/map-of-ai',
         'foundations/programming-basics',
         {
           type: 'category',
