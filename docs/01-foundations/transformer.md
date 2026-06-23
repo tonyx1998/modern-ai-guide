@@ -13,6 +13,10 @@ description: The neural network architecture behind every modern LLM. Just enoug
 A transformer reads a sequence by letting each word "look at" every other word and decide how much to listen to it. That's *attention*. Stack 60–100 of those layers, train on the internet, and you get something that can finish your sentence in a way that's usually correct. The architecture is the same — the magic is the scale and the training data.
 :::
 
+:::note[Prerequisites]
+This page assumes the [Neural networks](./neural-networks.md) lesson — neurons, weights, layers, the forward pass, and how training nudges weights. A transformer is a *specific kind* of neural network, so if "weighted sum plus an activation, stacked into layers" isn't familiar, read that first.
+:::
+
 You don't need to implement one to build with one. You do need a mental model so concepts like *context window*, *KV cache*, *prefix caching*, and *quadratic cost in context length* make sense.
 
 ## The 30-second version

@@ -2,7 +2,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 import type {ReactNode} from 'react';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
-import {fsrs, generatorParameters, createEmptyCard, Rating, type Card} from 'ts-fsrs';
+import {fsrs, generatorParameters, createEmptyCard, Rating, type Card, type Grade} from 'ts-fsrs';
 import {REVIEW_DECK} from '@site/src/data/reviewDeck';
 import styles from './review.module.css';
 
@@ -79,7 +79,7 @@ function ReviewApp(): ReactNode {
   const currentId = queue[pos];
   const card = useMemo(() => REVIEW_DECK.find((c) => c.id === currentId), [currentId]);
 
-  const grade = (rating: Rating) => {
+  const grade = (rating: Grade) => {
     if (!card) return;
     const now = new Date();
     const existing = schedule[card.id] ?? createEmptyCard(now);

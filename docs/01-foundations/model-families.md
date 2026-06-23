@@ -99,6 +99,28 @@ When NOT to:
 - High-volume classification (way overkill).
 - Anything a workhorse + good prompt already passes.
 
+## Dense vs MoE (why some huge models are cheap to run)
+
+A third axis, and an increasingly important one. Most models are **dense**: every parameter runs for every token. A **Mixture-of-Experts (MoE)** model instead splits its layers into many "expert" sub-networks and a router sends each token through only a *few* of them. So two numbers come apart:
+
+- **Total parameters** — how big the model is on disk and in memory (you must hold *all* experts in VRAM).
+- **Active parameters** — how many actually run per token, which sets compute, latency, and cost.
+
+```
+Example MoE shape:  ~670B total params  →  ~37B active per token
+You pay LATENCY/COST like a ~37B model, but need MEMORY for ~670B.
+```
+
+What that buys you:
+
+| Property | Scales with | So MoE gives you… |
+|---|---|---|
+| Quality | total params | frontier-ish quality |
+| Speed & cost/token | active params | workhorse-ish speed |
+| VRAM to host it | total params | a big memory bill |
+
+The net: MoE is how providers ship "frontier quality at workhorse speed." On a **hosted API this is invisible** — you just see the price and latency, and pick by tier as above. It matters the moment you **self-host**: an MoE model needs enough VRAM for *all* its experts, which is exactly where [quantization](./quantization.md) earns its keep. Open MoE families you'll see named (current specifics on the [snapshot](/docs/model-snapshot)): Mixtral, DeepSeek, and Qwen's MoE variants.
+
 ## Worked example: picking a model for a real task
 
 You're building a support-ticket router that reads incoming tickets and tags them with `category` and `priority`.

@@ -197,4 +197,4 @@ Pre-2020, "find similar text" required hand-tuned synonyms, query expansion, and
 
 ---
 
-→ Next: [The transformer](./transformer.md)
+→ Next: [Neural networks](./neural-networks.md) — the machine that turns these vectors into predictions.

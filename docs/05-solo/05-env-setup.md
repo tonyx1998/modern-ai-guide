@@ -16,6 +16,10 @@ description: The seven free-tier accounts to open on day one, the dotfiles, the 
 
 *This page assumes basic web-dev and deployment knowledge (env vars, git, deploying to a host like Vercel). If those are new, the companion modern web dev guide covers them from the ground up.*
 
+:::note[Prerequisites]
+Most of this page is **[API keys and environment variables](/docs/foundations/programming-basics#4-api-keys-and-environment-variables)** and **[terminal](/docs/foundations/programming-basics#5-the-terminal)** work. New to those? → [Programming on-ramp](/docs/foundations/programming-basics).
+:::
+
 ## The day-one account checklist
 
 Open all seven before writing any code. Most take 60 seconds.

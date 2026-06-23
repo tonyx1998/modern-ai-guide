@@ -37,7 +37,7 @@ toc_max_heading_level: 2
 ### Part A · Fundamentals
 How LLMs actually work, and how to learn the rest of this guide.
 
-- **[1. Foundations →](/docs/foundations)** — The bedrock: tokens, embeddings, the transformer (just enough to be useful), context windows, sampling, streaming, structured output, tool calling, RAG, and agent loops.
+- **[1. Foundations →](/docs/foundations)** — The bedrock: tokens, embeddings, how a neural network learns, the transformer (just enough to be useful), quantization, context windows, sampling, streaming, structured output, tool calling, RAG, and agent loops.
 - **[2. Roadmap →](/docs/roadmap)** — A staged, beginner-to-job-ready learning path: what to learn, in what order, and how to know you've learned it.
 
 ### Part B · Building & shipping

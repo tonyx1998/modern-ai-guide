@@ -7,7 +7,7 @@ description: The orchestration layer around agents — memory, tool routing, bud
 
 # Agent harness engineering
 
-> **In one line:** An agent is a model plus a **harness** — the code that decides what it sees, what tools it gets, when to stop, and what to remember — and in production the harness often matters more than swapping the base model.
+> **In one line:** An agent is a model plus a **harness** — the code that decides what it sees, what tools it gets, when to stop, and what to remember — and in production the harness often matters more than swapping the base model. (You'll also hear this called **"loop engineering"**: tuning the agent's loop instead of the model.)
 
 :::tip[In plain English]
 Think of the model as the engine and the harness as everything else in the car: steering, brakes, fuel gauge, GPS. Two teams can use the same frontier model; the one with a better harness ships a reliable product while the other chases flaky demos. This page names what belongs in that layer and links back to foundations you already have.

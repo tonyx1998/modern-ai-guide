@@ -12,6 +12,10 @@ description: How LLM systems actually work — tokens, embeddings, the transform
 
 > **In one line:** An LLM is a function that takes a sequence of tokens in and produces a probability distribution over the next token out. Everything else — chat, RAG, agents, multimodal — is layered on top of that one primitive.
 
+:::note[New to the field?]
+Start with [The map of AI](./map-of-ai.md) to see where LLMs sit inside artificial intelligence, machine learning, and deep learning — then come back here for how they work. This chapter is the LLM/agent slice of that map.
+:::
+
 :::tip[In plain English]
 You don't need a PhD to build LLM apps. You need a working mental model of: what a token is, what a context window is, how the model decides what to say next, and what new patterns (retrieval, tool use, agents) exist on top of that core. This chapter gives you exactly that — no calculus, no PyTorch.
 :::
@@ -51,49 +55,9 @@ Read that loop until it feels boring. Every concept in this chapter is some way 
 
 ## How this chapter is organized
 
-Each page focuses on a single concept. Read in order the first time.
+Each page focuses on a single concept. Read in order the first time. *(This list is generated from the sidebar, so the order and numbering never drift from the source of truth.)*
 
-### The model
-1. [Tokens](./tokens.md) — The unit of LLM input and output.
-2. [Tokenizers](./tokenizers.md) — BPE, SentencePiece, and why the same string is 100 tokens for one model and 130 for another.
-3. [Embeddings](./embeddings.md) — Vectors that capture meaning.
-4. [The transformer](./transformer.md) — Just enough architecture to be useful.
-5. [Training vs. inference](./training-vs-inference.md) — Why one is rare and the other is your daily reality.
-6. [Reasoning models](./reasoning-models.md) — o1/o3, extended thinking, R1; when "thinking" beats more context.
-7. [Model families](./model-families.md) — Frontier vs workhorse vs small; closed vs open; reasoning vs base.
-
-### Using the API
-8. [Messages: system, user, assistant](./messages.md) — How you actually call an LLM.
-9. [Prompting — the craft](./prompting-craft.md) — Chain-of-thought, few-shot, ReAct, self-consistency, prompt chaining — the named techniques.
-10. [Context windows](./context-window.md) — The hard limit on what fits in one call.
-11. [Prompt caching](./prompt-caching.md) — Reusing KV cache across calls for 5–10× cost savings.
-12. [Sampling: temperature, top_p, top_k](./sampling.md) — How the next token is picked.
-13. [Streaming](./streaming.md) — Delivering tokens as they're generated.
-14. [Structured output](./structured-output.md) — Forcing JSON or schema-conformant responses.
-15. [Tool use / function calling](./tool-use.md) — Letting the model invoke your code.
-16. [Function calling, deep](./function-calling-deep.md) — Parallel tools, forced choice, streaming partial JSON.
-17. [MCP — Model Context Protocol](./mcp.md) — The open protocol for connecting LLM clients to tool servers, resources, and prompts.
-18. [Multimodal inputs](./multimodal-inputs.md) — Vision, audio, document inputs.
-
-### Retrieval & memory
-19. [Vector search](./vector-search.md) — Finding semantically similar text.
-20. [Hybrid search](./hybrid-search.md) — BM25 + vector; what each catches that the other misses.
-21. [Chunking strategies](./chunking-strategies.md) — The biggest single lever on RAG quality.
-22. [Reranking](./reranking.md) — The cheap-retrieval → expensive-rerank pattern.
-23. [RAG basics](./rag-basics.md) — Retrieval-Augmented Generation, end to end.
-24. [Memory](./memory.md) — Giving an assistant continuity across conversations.
-
-### Agents
-25. [The agent loop](./agent-loop.md) — Tool → observation → next tool → done.
-26. [Planning and reflection](./planning-and-reflection.md) — Explicit plan-act-reflect; when reflection helps.
-27. [Multi-agent systems](./multi-agent.md) — When (and when not) to add a second agent.
-28. [Computer use & browser agents](./computer-use.md) — Vision-loop agents that operate any UI.
-
-### Checkpoint
-29. [Foundations checkpoint](./foundations-checkpoint.md) — A self-test before moving on.
-
-### Appendix
-- [Math primer](./math-primer.md) — Optional 1-page intuition for embeddings, softmax, attention, and gradient descent.
+<ChapterContents />
 
 ---
 

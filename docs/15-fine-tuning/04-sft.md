@@ -83,6 +83,8 @@ There are two ways to do SFT, differing in *how many* weights you change:
 
 For the vast majority of real fine-tunes you'll use PEFT — specifically **LoRA/QLoRA**, which the [next page](./05-lora-qlora.md) explains in full. Full fine-tuning is for teams with serious compute who've measured that LoRA leaves quality on the table.
 
+PEFT is a *family*, not just LoRA. The other branch is **soft-prompt methods** — **prompt tuning** and its cousin **prefix tuning** — which freeze the whole model and instead learn a handful of continuous "virtual token" embeddings prepended to every input. They train even fewer parameters than LoRA, but in practice land at lower quality, so LoRA/QLoRA remains the 2026 default. (Don't confuse "prompt tuning" the training method with [prompting as a craft](/docs/roadmap/part-3-beyond/prompting-as-craft) — writing better prompts by hand.)
+
 ## A real SFT run with Hugging Face TRL
 
 The `SFTTrainer` from Hugging Face's TRL library is the standard way to run SFT locally. This is the actual shape of a training script (here with LoRA — see next page):

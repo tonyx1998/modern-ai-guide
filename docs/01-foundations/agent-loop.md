@@ -104,6 +104,32 @@ print(research("What's the most-downloaded npm package in May 2026 and why?"))
 
 Forty lines, full research agent. The model decides when to search, what to fetch, when it's done. You decided what tools it has and how to format their outputs.
 
+## Cost model: what an agent run actually costs
+
+A single chat call is easy to price. An agent is trickier because **every step is a full LLM call over the *growing* context** — step 3 re-sends everything from steps 1 and 2. Cost grows faster than linearly in steps, so you estimate per *run*, then multiply by volume.
+
+Worked example — a support agent that averages **3 steps**, roughly 4K input + 200 output tokens per step (the input climbs each step as tool results pile up), on a workhorse model at ~$1 / 1M input and ~$5 / 1M output:
+
+```
+per step:  4,000 in  × $1 /1M  = $0.004
+           200   out × $5 /1M  = $0.001
+           ----------------------------
+           $0.005 per step  ×  3 steps  ≈  $0.015 per run
+
+at 10,000 runs/day:  ~$150/day  ≈  ~$4,500/month
+```
+
+Now the levers, biggest first:
+
+1. **Cap steps and tokens.** The `max_steps` / `max_tokens_total` caps in the skeleton below aren't just safety — they're your cost ceiling. To turn a *dollar* budget into a token budget: `$0.05 ÷ blended price ≈ token cap`.
+2. **Truncate / summarize tool results.** The input is what balloons. Returning a 500-token summary instead of a 4K JSON dump cuts every *subsequent* step, not just the current one.
+3. **Cache the static prefix.** The system prompt + tool definitions are identical every step — [prompt caching](./prompt-caching.md) bills them at a fraction after the first call, typically 30–50% off input on multi-step runs.
+4. **Route easy turns to a smaller model.** Not every step needs the frontier; a [cascade](./model-families.md) inside the loop keeps cheap turns cheap.
+
+:::info[Try it — instrument the cost]
+Take the research mini-agent above and log `(step, tokens_in, tokens_out, cost)` per step. Run it on 20 questions and plot cost against step count — you'll see the super-linear curve. Then add tool-result truncation (cap each result at ~800 tokens) and prompt caching, re-run, and measure the savings. The before/after chart is a tidy [portfolio](/docs/career/career-portfolio) artifact: "how I cut my agent's cost per run by 40%."
+:::
+
 ## Where agents fail
 
 - **Drift over many steps.** Each step has some error rate; long agentic workflows compound it. Keep agents short. If the workflow has more than ~10 steps, consider decomposing.

@@ -26,6 +26,7 @@ const sidebars: SidebarsConfig = {
       collapsed: true,
       link: {type: 'doc', id: 'foundations/foundational-concepts'},
       items: [
+        'foundations/map-of-ai',
         'foundations/programming-basics',
         {
           type: 'category',
@@ -43,8 +44,10 @@ const sidebars: SidebarsConfig = {
             'foundations/tokens',
             'foundations/tokenizers',
             'foundations/embeddings',
+            'foundations/neural-networks',
             'foundations/transformer',
             'foundations/training-vs-inference',
+            'foundations/quantization',
             'foundations/reasoning-models',
             'foundations/model-families',
           ],

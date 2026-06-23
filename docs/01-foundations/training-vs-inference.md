@@ -167,4 +167,4 @@ Most production apps end up multi-provider: a frontier API for hard requests, a 
 
 ---
 
-→ Next: [Reasoning models](./reasoning-models.md)
+→ Next: [Quantization](./quantization.md) — how those open models get small and cheap enough to self-host.

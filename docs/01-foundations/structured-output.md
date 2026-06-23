@@ -13,6 +13,10 @@ description: Forcing the model to return JSON, or even better, JSON that conform
 LLMs naturally emit free-form text. Your code wants typed objects. Structured output is the provider promising "I'll constrain the model's word choices so the result is valid JSON matching your schema." You stop writing "extract the JSON from this prose with a regex" code, forever.
 :::
 
+:::note[Prerequisites]
+This lesson leans on **[JSON](./programming-basics.md#3-json)** throughout — the output format and the schema that describes it are both JSON. New to it? → [Programming on-ramp](./programming-basics.md#3-json).
+:::
+
 ## Three levels of guarantee
 
 1. **"Please respond in JSON" in the prompt.** Sometimes works, often doesn't. Don't ship this.

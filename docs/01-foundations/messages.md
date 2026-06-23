@@ -13,6 +13,10 @@ description: The shape of every modern LLM API call — system prompt for instru
 Pretend you're a screenwriter scripting a conversation. The `system` message is the director's note at the top of the page ("act like a senior backend engineer"). `user` messages are what the human says. `assistant` messages are what the AI character says. To "continue" the scene, you hand the whole script back to the model and ask for the next line.
 :::
 
+:::note[Prerequisites]
+This lesson is the first that sends a real API call, so it assumes you can read **[JSON](./programming-basics.md#3-json)** and know what an **[HTTP request](./programming-basics.md#2-http-requests)** is. New to either? → [Programming on-ramp](./programming-basics.md).
+:::
+
 ## The shape of a call
 
 ```python
