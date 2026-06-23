@@ -215,8 +215,14 @@ Passive reading is the floor; the bar is **practice in the page**.
   rename directories (URLs strip numeric prefixes; renames break links).
 - Quiz/interactive components are MDX components registered globally; visuals are static SVGs
   referenced by Markdown image syntax (not inline JSX).
+- **Chapter overview "contents" lists are generated from the sidebar**, never hand-numbered —
+  a global MDX component reads the current sidebar category and renders the grouped, auto-
+  numbered lesson list (title + description per doc). Hand-typed lists silently drift the
+  moment a lesson is added or reordered, which violates "numbers derived from position."
 - Keep prefixed vs folder-relative link ids straight; run the build and fix broken-link
-  warnings before shipping.
+  warnings before shipping. **Explicit `{#id}` heading anchors are not supported** by this
+  MDX setup (parsed as a JS expression → build fails); link to the auto-generated heading
+  slug or use a relative `./file.md#slug` link instead.
 
 ---
 
