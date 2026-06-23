@@ -26,7 +26,7 @@ export default function FeedbackWidget(): null {
   const githubRepo =
     siteConfig.organizationName && siteConfig.projectName
       ? `${siteConfig.organizationName}/${siteConfig.projectName}`
-      : 'tonyx1998/modern-ai-engineer-guide';
+      : 'tonyx1998/modern-ai-guide';
 
   useEffect(() => {
     // Avoid double-injection (React StrictMode double-effect, remounts).

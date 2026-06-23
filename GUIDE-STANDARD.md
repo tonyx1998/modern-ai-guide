@@ -1,7 +1,7 @@
 # Guide Standard
 
 The canonical frame for every learning guide in this collection (`swe-interview-guide`,
-`modern-ai-engineer-guide`, `modern-web-dev-guide`, and any future guide). It is
+`modern-ai-guide`, `modern-web-dev-guide`, and any future guide). It is
 **platform-agnostic**: it governs *content, structure, pedagogy, and terminology*, not the
 tech stack. A guide may ship as a single-file HTML app or a Docusaurus site and still
 conform — see [Per-stack implementation notes](#per-stack-implementation-notes).
@@ -210,7 +210,7 @@ Passive reading is the floor; the bar is **practice in the page**.
 - When editing programmatically, preserve embedded widgets/tabs/quizzes verbatim and verify in
   a real browser (no broken widgets, console clean).
 
-**Docusaurus site** (e.g. `modern-ai-engineer-guide`, `modern-web-dev-guide`)
+**Docusaurus site** (e.g. `modern-ai-guide`, `modern-web-dev-guide`)
 - One Markdown/MDX doc per lesson; order/numbering live in `sidebars.ts` + page text — never
   rename directories (URLs strip numeric prefixes; renames break links).
 - Quiz/interactive components are MDX components registered globally; visuals are static SVGs

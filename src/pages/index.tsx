@@ -83,7 +83,7 @@ const CHAPTERS = [
   {n: '18', t: 'Glossary', d: 'Every term, defined', to: '/docs/glossary'},
 ];
 
-const FIRST_LESSON = '/docs/foundations/tokens';
+const GUIDE_START = '/docs/'; // Introduction (docs/00-intro.md, slug: /)
 
 /**
  * All landing-page motion, ported from the mockup's motifs.js + inline hero
@@ -481,8 +481,8 @@ export default function Home(): ReactNode {
                 production at enterprise scale.
               </p>
               <div className="hero-cta">
-                <Link to={FIRST_LESSON} className="btn btn-primary">
-                  Start the first lesson <span className="arr">→</span>
+                <Link to={GUIDE_START} className="btn btn-primary">
+                  Start from the Introduction <span className="arr">→</span>
                 </Link>
                 <a href="#chapters" className="btn btn-ghost">
                   Browse all 18 chapters
@@ -496,8 +496,8 @@ export default function Home(): ReactNode {
                   <div className="l">Chapters</div>
                 </div>
                 <div className="stat">
-                  <div className="n display" data-count={240} data-suffix="+">
-                    240+
+                  <div className="n display" data-count={280} data-suffix="+">
+                    280+
                   </div>
                   <div className="l">Single-topic pages</div>
                 </div>
@@ -696,8 +696,8 @@ export default function Home(): ReactNode {
               every bill, every context limit, and every latency number is measured in tokens.
             </p>
             <div className="hero-cta">
-              <Link to={FIRST_LESSON} className="btn btn-primary">
-                Start with the first lesson <span className="arr">→</span>
+              <Link to={GUIDE_START} className="btn btn-primary">
+                Start from the Introduction <span className="arr">→</span>
               </Link>
             </div>
           </div>
