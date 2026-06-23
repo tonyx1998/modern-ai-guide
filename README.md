@@ -2,7 +2,7 @@
 
 A comprehensive, beginner-friendly 2026 guide to everything useful in AI — how LLM-powered applications and **agentic systems** are actually built, evaluated, shipped, and operated, plus the broader landscape (research, tooling, careers, industry) a working practitioner needs. Paired with a step-by-step roadmap for getting there from zero. **18 chapters in 7 parts**, written so a complete beginner can read it front to back and finish job-ready — while still being useful to working engineers. The spine is engineering; the throughline is agents. *Last reviewed: June 2026.*
 
-> **Live site:** https://tonyx1998.github.io/modern-ai-engineer-guide/
+> **Live site:** https://tonyx1998.github.io/modern-ai-guide/
 
 ---
 
@@ -75,7 +75,7 @@ The dev server hot-reloads as you edit any file in `docs/`, `src/`, or the confi
 ## Repository layout
 
 ```
-modern-ai-engineer-guide/
+modern-ai-guide/
 ├── docs/                       # The guide, split into focused per-topic pages
 │   ├── 00-intro.md
 │   ├── 01-foundations/         # How LLM systems work

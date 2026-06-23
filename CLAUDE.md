@@ -1,4 +1,4 @@
-# modern-ai-engineer-guide
+# modern-ai-guide
 
 Docusaurus learning guide — AI engineering curriculum. Follow `GUIDE-STANDARD.md` for all content changes.
 

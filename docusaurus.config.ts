@@ -12,10 +12,10 @@ const config: Config = {
   },
 
   url: 'https://tonyx1998.github.io',
-  baseUrl: '/modern-ai-engineer-guide/',
+  baseUrl: '/modern-ai-guide/',
 
   organizationName: 'tonyx1998',
-  projectName: 'modern-ai-engineer-guide',
+  projectName: 'modern-ai-guide',
   deploymentBranch: 'gh-pages',
   trailingSlash: false,
 
@@ -200,7 +200,7 @@ const config: Config = {
           items: [
             {
               label: 'GitHub',
-              href: 'https://github.com/tonyx1998/modern-ai-engineer-guide',
+              href: 'https://github.com/tonyx1998/modern-ai-guide',
             },
           ],
         },
