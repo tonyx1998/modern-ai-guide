@@ -116,13 +116,17 @@
   overflow: hidden;
   background: var(--bg);
 }
+/* Warm, energetic hero wash — coral signature for this guide. A second
+   amber-leaning radial layered under the coral gives the gradient a subtle
+   warm sunrise feel without losing the family's restrained look. */
 .maeg .hero::before {
   content: '';
   position: absolute;
   inset: 0;
   background:
     radial-gradient(900px 480px at 78% -10%, var(--accent-soft), transparent 60%),
-    radial-gradient(700px 500px at 8% 8%, color-mix(in srgb, var(--accent) 5%, transparent), transparent 55%);
+    radial-gradient(620px 460px at 92% 4%, color-mix(in srgb, #ffae33 9%, transparent), transparent 58%),
+    radial-gradient(700px 500px at 8% 8%, color-mix(in srgb, var(--accent) 6%, transparent), transparent 55%);
   pointer-events: none;
 }
 .maeg .hero canvas.mesh {

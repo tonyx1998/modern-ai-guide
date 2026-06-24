@@ -3,16 +3,61 @@
  * Ported from the redesign mockup (redesign/index.html + styles.css).
  *
  *   Type:  Space Grotesk (display) · Hanken Grotesk (body) · JetBrains Mono (code/labels)
- *   Color: deep neutral ink + one sharp signature accent — electric lime — used surgically.
- *   Dark-first; light mode swaps the lime for a deeper olive so the accent stays legible.
+ *   Color: deep neutral ink + one sharp signature accent. This guide carries the
+ *          family's WARM signature — a coral / warm-orange accent (#ff6a3d) — so it
+ *          reads as part of one family but is clearly its own. Other guides keep their
+ *          own accent; only the local tokens below are re-tinted (vendor stays shared).
+ *   Dark-first; light mode deepens the coral so the accent keeps strong text contrast.
  *
  * Fonts are loaded via `stylesheets` in docusaurus.config.ts.
  */
 
 /* =================================================================
-   Design tokens + Infima overrides now live in @throughline/guide-kit/tokens.css
-   (loaded FIRST via theme.customCss in docusaurus.config.ts; override locally below if needed).
+   Design tokens + Infima overrides come FIRST from
+   @throughline/guide-kit/tokens.css (shared, do NOT edit there — it
+   colors every guide). We override ONLY the accent + Infima primary
+   ladder locally so THIS guide is coral/warm while staying structurally
+   identical to its siblings. Everything (landing page, navbar mark,
+   admonitions, hero mesh canvas, pagination) is token-driven, so
+   re-tinting these few variables recolors the whole guide.
    ================================================================= */
+
+/* ---- Coral identity — LIGHT mode ----
+   Accent is deepened (#d15732 / dim #b84c2c) so small accent text keeps
+   AA contrast on the near-white background. */
+:root {
+  --accent: #d15732;
+  --accent-dim: #b84c2c;
+  --accent-soft: rgba(255, 106, 61, 0.1);
+  --accent-line: rgba(255, 106, 61, 0.32);
+  /* --on-accent inherits the guide-kit light value (#f7f7f4) */
+
+  --ifm-color-primary: #d15732;
+  --ifm-color-primary-dark: #bc4e2d;
+  --ifm-color-primary-darker: #b24a2b;
+  --ifm-color-primary-darkest: #923d23;
+  --ifm-color-primary-light: #d66847;
+  --ifm-color-primary-lighter: #d87051;
+  --ifm-color-primary-lightest: #df8970;
+}
+
+/* ---- Coral identity — DARK mode ----
+   The full-strength warm coral; bright enough on the deep ink background. */
+[data-theme='dark'] {
+  --accent: #ff6a3d;
+  --accent-dim: #e65f37;
+  --accent-soft: rgba(255, 106, 61, 0.14);
+  --accent-line: rgba(255, 106, 61, 0.3);
+  /* --on-accent inherits the guide-kit dark value (#10120a) */
+
+  --ifm-color-primary: #ff6a3d;
+  --ifm-color-primary-dark: #e65f37;
+  --ifm-color-primary-darker: #d95a34;
+  --ifm-color-primary-darkest: #b34a2b;
+  --ifm-color-primary-light: #ff7950;
+  --ifm-color-primary-lighter: #ff805a;
+  --ifm-color-primary-lightest: #ff9777;
+}
 
 * {
   box-sizing: border-box;
