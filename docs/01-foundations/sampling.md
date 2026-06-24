@@ -155,6 +155,29 @@ This still isn't *guaranteed* reproducibility (see the myth section above), but 
   hint="Track the index of the best value seen so far. Use strict greater-than (>) when comparing so the first of any tied maxima wins."
 />
 
+## Practice: temperature-scaled softmax (in Python)
+
+Before the sampler can pick a token, the model's raw scores (**logits**) get turned into a probability distribution by **softmax** — and `temperature` is the knob that's applied *inside* it: divide every logit by `T` before exponentiating. Low `T` sharpens the distribution toward the top token; high `T` flattens it. This one runs real **Python** in your browser (via Pyodide — the first run downloads the interpreter, then it's cached).
+
+<CodeChallenge
+  language="python"
+  id="foundations-softmax-temp"
+  fnName="softmax"
+  prompt="Write softmax(logits, temperature) — divide each logit by temperature, exponentiate, and normalize so the result sums to 1. Return a list of probabilities in the same order. (Assume temperature > 0.)"
+  starter={`import math\n\ndef softmax(logits, temperature):\n    # 1) scale each logit by temperature\n    # 2) exponentiate\n    # 3) normalize so they sum to 1\n    pass`}
+  solution={`import math\n\ndef softmax(logits, temperature):\n    scaled = [x / temperature for x in logits]\n    exps = [math.exp(x) for x in scaled]\n    total = sum(exps)\n    return [e / total for e in exps]`}
+  tolerance={1e-9}
+  tests={[
+    {args: [[0, 0], 1], expected: [0.5, 0.5]},
+    {args: [[1, 1, 1], 1], expected: [0.3333333333, 0.3333333333, 0.3333333333]},
+    {args: [[2, 1], 1], expected: [0.7310585786, 0.2689414214]},
+    {args: [[2, 1], 0.5], expected: [0.8807970780, 0.1192029220]},
+  ]}
+  hint="A list comprehension keeps it tidy: scale with `[x / temperature for x in logits]`, then `math.exp` each, sum them, and divide. Lower temperature makes the top logit's probability climb."
+/>
+
+Notice the last two cases share the same logits `[2, 1]` but different temperatures: at `T=1` the gap is 0.73 vs 0.27; at `T=0.5` it widens to 0.88 vs 0.12. That's temperature sharpening the distribution before a single token is sampled.
+
 <Quiz id="sampling-quick-check" variant="micro" title="Quick check">
 
 <Question

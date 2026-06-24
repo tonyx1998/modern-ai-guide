@@ -1,6 +1,6 @@
 import MDXComponents from '@theme-original/MDXComponents';
-import Quiz, {Question} from '@site/src/components/Quiz';
-import CodeChallenge from '@site/src/components/CodeChallenge';
+import Quiz, {Question} from '@throughline/guide-kit/quiz';
+import CodeChallenge from '@throughline/guide-kit/code-challenge';
 import PredictThenReveal from '@site/src/components/PredictThenReveal';
 import SamplingExplorer from '@site/src/components/SamplingExplorer';
 import TokenCostCalculator from '@site/src/components/TokenCostCalculator';

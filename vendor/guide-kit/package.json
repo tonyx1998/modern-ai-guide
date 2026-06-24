@@ -1,0 +1,31 @@
+{
+  "name": "@throughline/guide-kit",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Shared building blocks for the Modern guides — design tokens + the house-style diagram (Mermaid) renderer. Single source of truth so the guides stop drifting.",
+  "type": "module",
+  "exports": {
+    "./mermaid": "./dist/mermaid.js",
+    "./quiz": "./dist/quiz.js",
+    "./quiz.css": "./dist/quiz.css",
+    "./code-challenge": "./dist/code-challenge.js",
+    "./code-challenge.css": "./dist/code-challenge.css",
+    "./tokens.css": "./tokens.css",
+    "./styles/mermaid.css": "./styles/mermaid.css"
+  },
+  "files": [
+    "dist",
+    "tokens.css",
+    "styles"
+  ],
+  "scripts": {
+    "build": "node build.mjs",
+    "sync": "node scripts/sync-to-guides.mjs"
+  },
+  "peerDependencies": {
+    "react": ">=18"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0"
+  }
+}

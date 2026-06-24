@@ -13,9 +13,11 @@
     "serve": "docusaurus serve",
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "a11y": "node scripts/a11y.mjs"
   },
   "dependencies": {
+    "@throughline/guide-kit": "file:./vendor/guide-kit",
     "@docusaurus/core": "3.10.1",
     "@docusaurus/faster": "3.10.1",
     "@docusaurus/preset-classic": "3.10.1",
@@ -30,9 +32,11 @@
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "3.10.1",
+    "@docusaurus/plugin-pwa": "3.10.1",
     "@docusaurus/tsconfig": "3.10.1",
     "@docusaurus/types": "3.10.1",
     "@types/react": "^19.0.0",
+    "pa11y-ci": "^4.1.1",
     "typescript": "~6.0.2"
   },
   "browserslist": {

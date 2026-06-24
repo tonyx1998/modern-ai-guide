@@ -50,9 +50,29 @@ The guide is organized into seven parts. Read top to bottom and you go from "wha
 
 ---
 
+## Interactive — learn by doing
+
+The guide isn't just prose — several elements run **in your browser, with no setup**:
+
+- **Checkpoint quizzes** gate progress so you confirm understanding before moving on.
+- **Auto-graded code challenges** — write a function, click *Run*, and get pass/fail against real
+  tests in a sandboxed Web Worker. Challenges run both **JavaScript** and, via
+  [Pyodide](https://pyodide.org), **real Python in the browser** — so the Python AI examples you
+  read are runnable, not just printed.
+- **A spaced-repetition review deck** (`/review`, FSRS-scheduled) plus small interactive explainers
+  (e.g. a sampling/temperature visualizer and a token-cost calculator).
+
+---
+
 ## Running the site locally
 
 The website is built with [Docusaurus](https://docusaurus.io). You need Node.js 20+ installed.
+
+> **Shared package:** this site consumes [`@throughline/guide-kit`](../packages/guide-kit) — a
+> local `file:` dependency providing the shared design tokens and the house-style Mermaid diagram
+> renderer. Keep the sibling `packages/guide-kit/` checked out alongside this folder and build it
+> once (`cd ../packages/guide-kit && npm install && npm run build`) **before** `npm install` here,
+> or dependency resolution / the Mermaid diagrams will fail.
 
 ```bash
 # Install dependencies (one-time)
@@ -69,6 +89,56 @@ npm run serve
 ```
 
 The dev server hot-reloads as you edit any file in `docs/`, `src/`, or the config.
+
+---
+
+## Quality checks
+
+### Accessibility (WCAG 2 AA)
+
+```bash
+# Build, serve locally, and audit a representative set of routes
+npm run a11y
+```
+
+`npm run a11y` runs [`pa11y-ci`](https://github.com/pa11y/pa11y-ci) against the
+**production build** for a representative slice of the site — the home page,
+the roadmap, the glossary, and a few foundational doc pages (see
+`.pa11yci.json`). It uses the **WCAG2AA** standard and **exits non-zero if any
+violations are found**, so it's safe to wire into CI.
+
+Under the hood `scripts/a11y.mjs`:
+
+1. builds the site (`docusaurus build`),
+2. serves `build/` on a fixed port in the background,
+3. waits for the server, runs `pa11y-ci`, then stops the server.
+
+To audit an existing `build/` without rebuilding:
+
+```bash
+node scripts/a11y.mjs --no-build
+```
+
+> Requires a headless Chromium (downloaded automatically by pa11y's Puppeteer
+> dependency on first run). The Chrome launch is configured with
+> `--no-sandbox` for CI portability.
+
+### SEO
+
+A `sitemap.xml` is emitted automatically by `@docusaurus/preset-classic` on
+`npm run build` (configured in `docusaurus.config.ts`), and `static/robots.txt`
+allows all crawlers and points at it.
+
+### Offline reading (PWA)
+
+The site ships a service worker via `@docusaurus/plugin-pwa` and a web app
+manifest (`static/manifest.json`), so it can be installed and read offline.
+Offline mode activates once the app is installed or launched standalone.
+
+> The manifest currently references `favicon.ico` only. For full installability
+> on Android/desktop, add proper **192×192** and **512×512** maskable PNG icons
+> to `static/img/` and list them in `static/manifest.json` and the `pwaHead`
+> config in `docusaurus.config.ts`.
 
 ---
 
@@ -98,8 +168,8 @@ modern-ai-guide/
 ├── src/
 │   ├── pages/index.tsx         # Landing page
 │   ├── components/             # Quiz, CodeChallenge, FeedbackWidget
-│   ├── theme/                  # MDX component registry + swizzled Mermaid
-│   └── css/                    # Global theme + landing styles
+│   ├── theme/                  # MDX registry + Mermaid shim (renderer → @throughline/guide-kit)
+│   └── css/                    # Landing styles; design tokens → @throughline/guide-kit
 ├── static/img/                 # Logos, favicon, social cards
 ├── docusaurus.config.ts        # Site configuration
 ├── sidebars.ts                 # Sidebar structure (chapter order lives here)
@@ -113,4 +183,6 @@ modern-ai-guide/
 
 ## License
 
-Content licensed CC BY 4.0. Site code licensed MIT.
+**© 2026 To Yin Yu. All rights reserved.** This project is **source-available, not open-source**:
+you're welcome to read it and run it locally to learn, but it may not be copied, redistributed,
+modified, used commercially, or rebranded without permission. See [LICENSE](LICENSE) for full terms.

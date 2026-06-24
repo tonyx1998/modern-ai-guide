@@ -10,99 +10,9 @@
  */
 
 /* =================================================================
-   Design tokens (shared) + light palette (default :root)
+   Design tokens + Infima overrides now live in @throughline/guide-kit/tokens.css
+   (loaded FIRST via theme.customCss in docusaurus.config.ts; override locally below if needed).
    ================================================================= */
-:root {
-  --font-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
-  --font-body: 'Hanken Grotesk', ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
-
-  --radius: 14px;
-  --radius-sm: 9px;
-  --maxw: 1240px;
-
-  /* light palette */
-  --bg: #f7f7f4;
-  --bg-2: #f1f1ec;
-  --surface: #ffffff;
-  --surface-2: #fbfbf8;
-  --border: rgba(15, 17, 21, 0.1);
-  --border-2: rgba(15, 17, 21, 0.16);
-  --text: #16181d;
-  --muted: #565b66;
-  --faint: #878d99;
-
-  --accent: #5b8c00;
-  --accent-dim: #4a7400;
-  --accent-soft: rgba(91, 140, 0, 0.1);
-  --accent-line: rgba(91, 140, 0, 0.3);
-  --on-accent: #f7f7f4;
-
-  --shadow: 0 1px 2px rgba(15, 17, 21, 0.05), 0 10px 30px rgba(15, 17, 21, 0.07);
-
-  /* ---- Infima overrides (light) ---- */
-  --ifm-color-primary: #4a7400;
-  --ifm-color-primary-dark: #426800;
-  --ifm-color-primary-darker: #3e6200;
-  --ifm-color-primary-darkest: #335000;
-  --ifm-color-primary-light: #528000;
-  --ifm-color-primary-lighter: #568700;
-  --ifm-color-primary-lightest: #629800;
-
-  --ifm-font-family-base: var(--font-body);
-  --ifm-font-family-monospace: var(--font-mono);
-  --ifm-heading-font-family: var(--font-display);
-  --ifm-heading-font-weight: 700;
-  --ifm-font-size-base: 17px;
-
-  --ifm-background-color: var(--bg);
-  --ifm-background-surface-color: var(--surface);
-  --ifm-navbar-background-color: color-mix(in srgb, var(--bg) 82%, transparent);
-  --ifm-navbar-shadow: none;
-  --ifm-footer-background-color: var(--bg-2);
-  --ifm-toc-border-color: var(--border);
-  --ifm-code-font-size: 92%;
-  --ifm-h1-font-size: 2.2rem;
-  --ifm-h2-font-size: 1.6rem;
-  --ifm-h3-font-size: 1.25rem;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.08);
-}
-
-[data-theme='dark'] {
-  /* dark palette (signature) */
-  --bg: #0e0f13;
-  --bg-2: #121319;
-  --surface: #16181f;
-  --surface-2: #1c1f28;
-  --border: rgba(255, 255, 255, 0.09);
-  --border-2: rgba(255, 255, 255, 0.14);
-  --text: #e9eaef;
-  --muted: #a0a6b4;
-  --faint: #6b7280;
-
-  --accent: #c4f042;
-  --accent-dim: #9fc534;
-  --accent-soft: rgba(196, 240, 66, 0.12);
-  --accent-line: rgba(196, 240, 66, 0.28);
-  --on-accent: #10120a;
-
-  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 30px rgba(0, 0, 0, 0.28);
-
-  /* ---- Infima overrides (dark) ---- */
-  --ifm-color-primary: #c4f042;
-  --ifm-color-primary-dark: #bbeb24;
-  --ifm-color-primary-darker: #b3e514;
-  --ifm-color-primary-darkest: #93bd10;
-  --ifm-color-primary-light: #cdf25e;
-  --ifm-color-primary-lighter: #d3f374;
-  --ifm-color-primary-lightest: #e2f7a4;
-
-  --ifm-background-color: var(--bg);
-  --ifm-background-surface-color: var(--surface);
-  --ifm-navbar-background-color: color-mix(in srgb, var(--bg) 82%, transparent);
-  --ifm-footer-background-color: var(--bg-2);
-  --docusaurus-highlighted-code-line-bg: rgba(255, 255, 255, 0.1);
-}
 
 * {
   box-sizing: border-box;
@@ -486,37 +396,7 @@ html.docs-doc-id-enterprise\/enterprise-org-chart .docusaurus-mermaid-container 
 }
 
 /* ============================================================
-   Reimagined diagram figures (swizzled @theme/Mermaid)
-   Self-contained styles for the runtime figure renderer in
-   src/theme/Mermaid/index.js. Kept here (not runtime-injected)
-   so they apply at build time — no first-paint flash. Scoped to
-   .aieg-fig / .aieg-ctrls, with their own palette, so they don't
-   interact with the site's design tokens. JetBrains Mono is
-   loaded via `stylesheets` in docusaurus.config.ts.
+   House-style diagram figure styles now live in
+   @throughline/guide-kit/styles/mermaid.css (loaded via theme.customCss).
+   Renderer: src/theme/Mermaid/index.js -> @throughline/guide-kit/mermaid.
    ============================================================ */
-.aieg-fig{--font-mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
-  --bg:#0b0a18;--panel:#17152a;--panel-2:#211e38;--panel-3:#2c2848;--ink:#ece9f7;
-  --ink-soft:#a8a2c6;--ink-faint:#7b7599;--line:#3b3659;--line-soft:#2e2a47;
-  --violet:#a78bfa;--violet-2:#8b5cf6;--violet-bg:rgba(124,92,246,.24);
-  --cyan:#5cc7e0;--cyan-bg:rgba(56,150,182,.22);--amber:#edc154;--amber-bg:rgba(196,154,60,.22);
-  --green:#5dd39c;--green-bg:rgba(48,172,122,.22);--rose:#f28a8a;--rose-bg:rgba(196,92,92,.24);
-  --halo:var(--panel);--ease:cubic-bezier(.4,.1,.2,1);
-  margin:26px 0;display:flex;flex-direction:column;align-items:center;}
-html[data-theme='light'] .aieg-fig{--bg:#f7f6fb;--panel:#fff;--panel-2:#f5f3fb;--panel-3:#ece8f6;
-  --ink:#2a2640;--ink-soft:#5d5878;--ink-faint:#8f8aa8;--line:#e4dff1;--line-soft:#efebf7;
-  --violet:#6d28d9;--violet-2:#7c3aed;--violet-bg:#efe9fd;--cyan:#1f7d96;--cyan-bg:#e3f3f8;
-  --amber:#946410;--amber-bg:#f7edd0;--green:#1f8a5b;--green-bg:#e1f3ea;--rose:#b3433f;--rose-bg:#f8e6e5;}
-.aieg-fig svg{max-width:100%;height:auto;display:block;margin:0 auto;overflow:visible;}
-.aieg-fig svg text{font-family:var(--font-mono);paint-order:stroke fill;stroke:var(--halo);
-  stroke-width:3.4px;stroke-linecap:round;stroke-linejoin:round;}
-.aieg-fig svg text.nh{stroke:none;}
-.aieg-ctrls{display:flex;align-items:center;gap:8px;margin-top:12px;flex-wrap:wrap;justify-content:center;}
-.aieg-ctrls button{font:inherit;font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:6px;
-  padding:6px 12px;border-radius:9px;border:1px solid var(--line);background:var(--panel-2);color:var(--ink);
-  cursor:pointer;transition:.15s;font-family:var(--font-mono);}
-.aieg-ctrls button:hover{border-color:var(--violet);}
-.aieg-ctrls button.pri{background:var(--violet);border-color:var(--violet);color:#fff;}
-.aieg-ctrls .pips{display:flex;gap:6px;align-items:center;}
-.aieg-ctrls .pip{width:9px;height:9px;border-radius:50%;background:var(--line);cursor:pointer;border:none;padding:0;transition:.2s;}
-.aieg-ctrls .pip.on{background:var(--violet);transform:scale(1.25);}
-.aieg-ctrls .pip.done{background:var(--violet-2);opacity:.5;}

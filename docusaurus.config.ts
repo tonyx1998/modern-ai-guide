@@ -70,6 +70,52 @@ const config: Config = {
     locales: ['en'],
   },
 
+  plugins: [
+    // Offline reading: a learning guide benefits from being available
+    // without a connection. Service worker + installable PWA manifest.
+    // NOTE: icons currently reference favicon.ico only. Proper 192x192 and
+    // 512x512 maskable PNG icons should be added to static/img/ and listed
+    // in static/manifest.json + the pwaHead below for full installability.
+    [
+      '@docusaurus/plugin-pwa',
+      {
+        debug: false,
+        offlineModeActivationStrategies: [
+          'appInstalled',
+          'standalone',
+          'queryString',
+        ],
+        pwaHead: [
+          {
+            tagName: 'link',
+            rel: 'icon',
+            href: '/modern-ai-guide/img/favicon.ico',
+          },
+          {
+            tagName: 'link',
+            rel: 'manifest',
+            href: '/modern-ai-guide/manifest.json',
+          },
+          {
+            tagName: 'meta',
+            name: 'theme-color',
+            content: '#4c1d95',
+          },
+          {
+            tagName: 'meta',
+            name: 'apple-mobile-web-app-capable',
+            content: 'yes',
+          },
+          {
+            tagName: 'meta',
+            name: 'apple-mobile-web-app-status-bar-style',
+            content: '#0f0e17',
+          },
+        ],
+      },
+    ],
+  ],
+
   presets: [
     [
       'classic',
@@ -82,7 +128,25 @@ const config: Config = {
         },
         blog: false,
         theme: {
-          customCss: './src/css/custom.css',
+          // Shared design tokens + diagram styles come from the guide-kit
+          // (single source of truth); the site's own custom.css loads last so
+          // it can build on / override them.
+          customCss: [
+            require.resolve('@throughline/guide-kit/tokens.css'),
+            require.resolve('@throughline/guide-kit/styles/mermaid.css'),
+            require.resolve('@throughline/guide-kit/quiz.css'),
+            require.resolve('@throughline/guide-kit/code-challenge.css'),
+            require.resolve('./src/css/custom.css'),
+          ],
+        },
+        // Emit a sitemap.xml in production builds (preset-classic default,
+        // made explicit here so it isn't accidentally lost). robots.txt in
+        // static/ points crawlers at the generated sitemap.
+        sitemap: {
+          lastmod: 'date',
+          changefreq: 'weekly',
+          priority: 0.5,
+          filename: 'sitemap.xml',
         },
       } satisfies Preset.Options,
     ],

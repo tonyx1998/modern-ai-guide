@@ -1,0 +1,19 @@
+{
+  "defaults": {
+    "standard": "WCAG2AA",
+    "timeout": 60000,
+    "wait": 500,
+    "chromeLaunchConfig": {
+      "args": ["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage"]
+    },
+    "ignore": []
+  },
+  "urls": [
+    "http://localhost:4001/modern-ai-guide/",
+    "http://localhost:4001/modern-ai-guide/roadmap",
+    "http://localhost:4001/modern-ai-guide/docs/glossary",
+    "http://localhost:4001/modern-ai-guide/docs/foundations/tokens",
+    "http://localhost:4001/modern-ai-guide/docs/foundations/rag-basics",
+    "http://localhost:4001/modern-ai-guide/docs/foundations/agent-loop"
+  ]
+}

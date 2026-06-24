@@ -1,28 +1,26 @@
-.challenge {
+/* src/code-challenge/styles.module.css */
+.styles_challenge {
   border: 1px solid var(--ifm-color-emphasis-300);
   border-radius: 10px;
   padding: 1rem 1.1rem 1.1rem;
   margin: 1.5rem 0;
   background: var(--ifm-background-surface-color);
 }
-
-.header {
+.styles_header2 {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
   margin-bottom: 0.5rem;
 }
-
-.badge {
+.styles_badge2 {
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   color: var(--ifm-color-primary);
 }
-
-.solvedBadge {
+.styles_solvedBadge {
   font-size: 0.8rem;
   font-weight: 700;
   color: var(--ifm-color-success-darkest, #1a7f37);
@@ -30,13 +28,11 @@
   border-radius: 999px;
   padding: 0.1rem 0.6rem;
 }
-
-.prompt {
+.styles_prompt2 {
   margin: 0 0 0.75rem;
   font-size: 0.98rem;
 }
-
-.editor {
+.styles_editor {
   width: 100%;
   font-family: var(--ifm-font-family-monospace);
   font-size: 0.85rem;
@@ -52,20 +48,17 @@
   overflow-wrap: normal;
   overflow-x: auto;
 }
-
-.editor:focus {
+.styles_editor:focus {
   outline: 2px solid var(--ifm-color-primary);
   outline-offset: 1px;
 }
-
-.actions {
+.styles_actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
   margin-top: 0.75rem;
 }
-
-.run {
+.styles_run {
   font-weight: 600;
   color: #fff;
   background: var(--ifm-color-primary);
@@ -74,15 +67,14 @@
   padding: 0.4rem 1rem;
   cursor: pointer;
 }
-.run:hover {
+.styles_run:hover {
   background: var(--ifm-color-primary-dark);
 }
-.run:disabled {
+.styles_run:disabled {
   opacity: 0.6;
   cursor: progress;
 }
-
-.secondary {
+.styles_secondary {
   font-weight: 500;
   color: var(--ifm-font-color-base);
   background: transparent;
@@ -91,11 +83,10 @@
   padding: 0.4rem 0.85rem;
   cursor: pointer;
 }
-.secondary:hover {
+.styles_secondary:hover {
   background: var(--ifm-color-emphasis-100);
 }
-
-.hint {
+.styles_hint {
   margin-top: 0.75rem;
   padding: 0.6rem 0.8rem;
   border-radius: 6px;
@@ -103,8 +94,15 @@
   border-left: 3px solid var(--ifm-color-info, #4cb3d4);
   font-size: 0.9rem;
 }
-
-.error {
+.styles_loading {
+  margin-top: 0.75rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 6px;
+  background: var(--ifm-color-info-contrast-background, #eef6fb);
+  border-left: 3px solid var(--ifm-color-info, #4cb3d4);
+  font-size: 0.9rem;
+}
+.styles_error {
   margin-top: 0.75rem;
   padding: 0.6rem 0.8rem;
   border-radius: 6px;
@@ -113,52 +111,48 @@
   font-size: 0.88rem;
   font-family: var(--ifm-font-family-monospace);
 }
-
-.resultPass,
-.resultFail {
+.styles_resultPass2,
+.styles_resultFail {
   margin-top: 0.75rem;
   padding: 0.7rem 0.85rem;
   border-radius: 8px;
 }
-.resultPass {
+.styles_resultPass2 {
   background: var(--ifm-color-success-contrast-background, #e6f4ea);
   border: 1px solid var(--ifm-color-success, #2a8f4e);
 }
-.resultFail {
+.styles_resultFail {
   background: var(--ifm-color-warning-contrast-background, #fff8e6);
   border: 1px solid var(--ifm-color-warning, #e6a700);
 }
-
-.resultHead {
+.styles_resultHead {
   font-weight: 700;
   margin-bottom: 0.4rem;
 }
-
-.testList {
+.styles_testList {
   margin: 0;
   padding-left: 0;
   list-style: none;
   font-size: 0.85rem;
 }
-.testList li {
+.styles_testList li {
   padding: 0.15rem 0;
 }
-.testList code {
+.styles_testList code {
   font-size: 0.82rem;
 }
-.testPass {
+.styles_testPass {
   color: var(--ifm-color-success-darkest, #1a7f37);
 }
-.testFail {
+.styles_testFail {
   color: var(--ifm-color-emphasis-800);
 }
-.testIcon {
+.styles_testIcon {
   font-weight: 800;
 }
-.testWhy {
+.styles_testWhy {
   color: var(--ifm-color-emphasis-700);
 }
-
-.solution {
+.styles_solution {
   margin-top: 0.75rem;
 }
