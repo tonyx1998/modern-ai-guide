@@ -278,4 +278,4 @@ This page is self-contained for debugging LLM features in dev and prod. If you w
 
 ---
 
-→ Next: [Safe model swaps & canary deploys](./model-swaps.md)
+→ Next: [Incident response & on-call for LLM systems](./incident-response.md)

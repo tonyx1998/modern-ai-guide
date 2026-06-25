@@ -9,7 +9,7 @@ description: A self-test before you move on. If you can answer these without scr
 
 You've finished the Foundations chapter. Take a minute to make sure the core ideas stuck.
 
-There are **15 questions in the bank** — each visit picks 5 at random, so retaking gives you different ones. If you miss one, the result card tells you exactly which page to revisit.
+There are **16 questions in the bank** — each visit picks 5 at random, so retaking gives you different ones. If you miss one, the result card tells you exactly which page to revisit.
 
 You must pass (≥ 60%) to unlock the Next button at the bottom.
 
@@ -208,6 +208,19 @@ You must pass (≥ 60%) to unlock the Next button at the bottom.
   correct={0}
   explanation="An agent is structurally a loop: model emits tool calls → you execute them → results go back into context → model decides what to do next → repeat until done. The loop IS the agent."
   revisit={{ to: "/docs/foundations/agent-loop", label: "Agent loop" }}
+/>
+
+<Question
+  prompt="An LLM confidently tells you '4,829 × 7,613 = 36,748,177', but the real product is different. Why did a model that writes working code get basic multiplication wrong?"
+  options={[
+    { text: "The number was too large to fit in the context window" },
+    { text: "There's no arithmetic unit inside a transformer — it pattern-matches number-shaped text, so large, rare products come out plausible but wrong" },
+    { text: "Multiplication requires a fine-tuned model" },
+    { text: "The temperature was set too high, adding randomness to the digits" }
+  ]}
+  correct={1}
+  explanation="A transformer has no ALU; it predicts likely tokens. Small, common sums it has seen often are reliable, but a large product it never saw verbatim gets a plausible-shaped guess. The fix is to make it show its work or hand it a calculator tool — never trust mental math for exact numbers."
+  revisit={{ to: "/docs/foundations/what-llms-cant-do", label: "Where LLMs fail (and why)" }}
 />
 
 </Quiz>

@@ -50,6 +50,7 @@ const sidebars: SidebarsConfig = {
             'foundations/quantization',
             'foundations/reasoning-models',
             'foundations/model-families',
+            'foundations/what-llms-cant-do',
           ],
         },
         {

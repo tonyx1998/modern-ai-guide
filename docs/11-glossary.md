@@ -52,6 +52,8 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 
 **Bias** — Systematic skew in model outputs against certain groups, topics, or viewpoints. Audited via subgroup *evals*.
 
+**Blameless postmortem** — A written, no-blame account after an *incident*: timeline, impact, root cause, what went well/poorly, and action items with owners. Asks what in the system allowed the failure, never who caused it, so people share the truth.
+
 **BLEU** — An old machine-translation metric that counts n-gram overlap between output and reference. Mostly superseded by *LLM-as-judge*.
 
 **BM25** — A classic keyword-ranking algorithm for *sparse retrieval*. Often combined with *dense retrieval* in *hybrid search*.
@@ -72,6 +74,8 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 
 **Cerebras** — A hardware company whose wafer-scale chips serve open models at extremely high *tokens-per-second*.
 
+**Checkpointing** — Persisting an *agent*'s state (message history, completed tool results, step counter, accumulated cost) to durable storage after each step, so a fresh process can reload it and resume from the last completed step instead of restarting after a crash. The basis of *durable execution* in *Temporal* / *Inngest* / *Restate*.
+
 **Chain** — A fixed pipeline of LLM and non-LLM steps (vs. an *agent*, which decides the order itself).
 
 **Chain-of-thought (CoT)** — Prompting the model to produce intermediate reasoning steps before its final answer. Improves accuracy on multi-step problems.
@@ -84,6 +88,8 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 
 **Claude** — Anthropic's family of LLMs. Tiers in 2026: *Opus* (most capable), *Sonnet* (balanced), *Haiku* (fast and cheap).
 
+**Circuit breaker** — A wrapper around a dependency that tracks its recent failure rate and, once failures cross a threshold, "trips" — failing calls fast to a *fallback* for a cooldown instead of retrying a dependency that's down. Three states: closed (normal), open (failing fast), half-open (one trial call to test recovery). Stops an agent thrashing a dead dependency.
+
 **CLIP** — OpenAI's contrastive image-text model: it embeds images and captions into the same vector space, so "find images matching this text" becomes a similarity search. The foundation of most *multimodal RAG*.
 
 **Command-R** — Cohere's LLM family, marketed around *RAG* and *tool use*.
@@ -91,6 +97,8 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 **Constitutional AI** — Anthropic's technique for aligning a model using a written set of principles ("constitution") that the model uses to critique and revise its own outputs.
 
 **Content moderation** — Filtering inputs or outputs against a policy. Provider APIs (OpenAI moderation, Anthropic safety) make this a single call.
+
+**Confabulation** — The neuroscience-borrowed word for what an LLM does when it fills a knowledge gap with a fluent, confident, fabricated answer instead of admitting "I don't know." A more precise name for the everyday *hallucination*: the model isn't lying, it's completing a pattern. Defended with *grounding*, *abstention*, and citation/faithfulness checks.
 
 **Context engineering** — The discipline of curating what is in the model's *context window* at each step of a long task — via compaction, external notes/memory, sub-agent summaries, and just-in-time retrieval. The 2026 successor framing to "prompt engineering" for production and agent systems.
 
@@ -111,6 +119,8 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 ---
 
 ## D
+
+**Data flywheel** — The self-reinforcing loop where using a product generates labeled data (e.g. thumbs up/down, edits, accepted vs rejected suggestions) that improves the model or prompt, which makes the product better, which attracts more usage and more labels. The compounding moat behind well-instrumented AI products; in this guide it shows up concretely as production failures feeding the *eval* set.
 
 **Data poisoning** — An attack where adversarial documents are inserted into a training set or *RAG* corpus to make the model behave badly later.
 
@@ -154,7 +164,11 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 
 **Eval suite** — A collection of eval cases run together, usually with a scorecard summary.
 
+**Eval fixture** — A failing case captured from a real *incident* or bug — the triggering input plus the expected-good output — added permanently to the *eval suite* as a regression case so the failure can't recur silently.
+
 **Exact match** — A scorer that returns 1 if output equals the reference string, 0 otherwise. Brittle but cheap.
+
+**Exponential backoff** — A retry strategy where each successive retry waits a multiplicatively longer time (e.g. 0.5s, 1s, 2s, 4s), giving a struggling dependency room to recover. Paired with *jitter* and a hard attempt cap; applied only to *transient* failures, never permanent ones (a 400/401/404).
 
 ---
 
@@ -222,7 +236,7 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 
 **Haiku** — The smallest, fastest tier in Anthropic's Claude family.
 
-**Hallucination** — When the model produces something confident but wrong. The dominant correctness failure mode; mitigated via *RAG*, citations, validation, and *evals*.
+**Hallucination** — When the model produces something confident but wrong (more precisely, *confabulation*). The dominant correctness failure mode; mitigated via *RAG*, citations, validation, and *evals*.
 
 **Haystack** — An open-source framework for building *RAG* and search applications.
 
@@ -232,6 +246,8 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 
 **Hugging Face** — The dominant hub for open-source models, datasets, and training/inference libraries.
 
+**Human-in-the-loop (HITL)** — A design where a person reviews, confirms, or corrects the model's output before a consequential action is taken (sending an email, charging a card, deleting data). The standard safety pattern for high-impact AI actions; the confirmation step also produces labeled data for the *data flywheel*.
+
 **Hybrid search** — Combining *dense retrieval* (embeddings) with *sparse retrieval* (*BM25*), then merging the rankings.
 
 ---
@@ -239,6 +255,12 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 ## I
 
 **Image embedding** — A vector representation of an image. Used for similarity search across images, or to feed images into a text model.
+
+**Incident** — An unplanned event where an AI feature is harming users or the business *right now* — wrong answers at scale, a data leak, a cost blowout, an outage. Live and time-boxed, unlike an ordinary bug ticket. Classified by *severity*.
+
+**Incident Commander (IC)** — The single person who owns an *incident* response and makes the roll-back-vs-investigate call. Coordinates rather than codes; the key property is that there is exactly one.
+
+**Idempotency** — The property that running an operation once or many times produces the same end state. Makes a retry safe: a read is naturally idempotent, while a write (charge a card, send an email) needs an *idempotency key* — a unique token minted once per action so the server dedupes repeats instead of doing the work twice.
 
 **Image-to-text** — Generating a textual description of an image (captioning, OCR, VQA).
 
@@ -260,7 +282,11 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 
 ## J
 
+**Jagged intelligence** — The observation that an LLM's skill profile is spiky, not a smooth easy-to-hard line: the same model that writes working code may fail to count the letters in a word. Failures cluster on *symbolic* tasks (exact math, counting, state-tracking) even as the model excels at fuzzy language tasks.
+
 **Jailbreak** — A prompt designed to bypass a model's safety training, often through roleplay, encoding tricks, or persona pressure.
+
+**Jitter** — A small random amount added to each retry's *exponential backoff* wait, so concurrent clients don't all retry at the same instant. Without it, a shared dependency's hiccup triggers synchronized waves of retries (a *retry storm* / thundering herd) that knock it back down each time it recovers.
 
 **JSON mode** — A provider feature that constrains the model to emit syntactically valid JSON.
 
@@ -326,6 +352,8 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 
 **Milvus** — An open-source distributed vector database.
 
+**Mitigation** — Action taken during an *incident* to stop the harm *now* — kill switch, *rollback*, flipping to a *fallback*, disabling a tool. Distinct from a root-cause fix, which comes later in the *postmortem*.
+
 **Mistral** — A French lab and its open-weights LLM family.
 
 **Mixtral** — Mistral's *MoE* model family.
@@ -357,6 +385,8 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 ## O
 
 **Observability** — The discipline of seeing into a running LLM system: logs, *traces*, *spans*, metrics, prompts, costs. *Langfuse*, *Helicone*, *LangSmith*, *Braintrust*.
+
+**On-call** — The rotation where one person is the designated responder for a shift: they get paged for *incidents* and own the response until it's resolved or handed off.
 
 **OCR (Optical Character Recognition)** — Extracting text from images of documents. Modern multimodal models often replace dedicated OCR.
 
@@ -410,6 +440,8 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 
 **Prompt leak** — When a model reveals its hidden system prompt to a user, often via *prompt injection*.
 
+**Postmortem** — The written account after an *incident* is resolved. See *blameless postmortem*. Its highest-value output is usually an *eval fixture*.
+
 **Prompt registry** — A versioned store of prompts, separate from code. Lets you A/B-test and roll back prompts without redeploying.
 
 **Prompt tuning (soft prompts)** — A *PEFT* fine-tuning method that freezes the model and learns a small set of continuous "virtual token" embeddings prepended to the input (a close cousin is *prefix tuning*). Cheaper than *LoRA* but usually lower quality, so LoRA is the 2026 default. Not to be confused with *prompt engineering* (writing better prompts by hand).
@@ -462,6 +494,10 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 
 **Reranker** — A second-stage model that re-scores retrieved candidates more accurately than the first-stage retriever. Usually a *cross-encoder*.
 
+**Rollback** — Reverting a prompt, model, or config to the last-known-good *prompt version* during an *incident*. Fast rollback requires the artifact to live in a revertible *prompt registry*, not inside code.
+
+**Runbook** — A written, step-by-step procedure for a known failure or routine operation, so the *on-call* responder follows a checklist instead of improvising.
+
 **Retell** — A voice-agent platform built on realtime APIs.
 
 **Retrieval** — Looking up relevant data given a query. The "R" in *RAG*.
@@ -487,6 +523,8 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 **Scorer** — The function that turns a model output (and optional reference) into a score during evals.
 
 **SentencePiece** — A *tokenizer* implementation popular for non-English languages and Llama-family models.
+
+**Severity (SEV1 / SEV2 / SEV3)** — A fixed scale, agreed in advance, for how bad an *incident* is. SEV1 = active harm, data risk, or full outage (drop everything); SEV2 = serious quality or cost degradation without data risk; SEV3 = degraded but contained. For LLM apps, any data leak or attacker-driven behavior is SEV1 regardless of how few users are hit.
 
 **SFT (Supervised Fine-Tuning)** — The simplest form of *fine-tuning*: train on (input, desired-output) pairs.
 
@@ -515,6 +553,8 @@ A single A–Z reference for every term used in this guide. Plain-English defini
 **Structured output** — Forcing the model to emit data matching a *JSON Schema*. Underlies tool calls and typed responses.
 
 **System card** — A document accompanying a major model release, covering capabilities, evals, and safety mitigations.
+
+**Symbolic task** — A task with exact, rule-based answers reached by following a procedure (arithmetic, counting, sorting, logic). The axis where LLMs are weakest — the opposite of a traditional computer — and where you delegate to a *tool* instead of trusting the model's output. Contrast with fuzzy, pattern-based language tasks. See *jagged intelligence*.
 
 **System prompt** — The first, hidden instruction message that sets the model's persona, rules, and tools.
 

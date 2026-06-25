@@ -154,4 +154,4 @@ Multi-agent is the most over-applied pattern of 2026. Teams reach for a swarm be
 </Quiz>
 
 ---
-→ Next: [Evals as a product surface](./evals.md)
+→ Next: [Agent reliability & self-healing](./reliability.md)

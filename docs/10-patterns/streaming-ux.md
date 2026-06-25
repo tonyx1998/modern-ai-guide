@@ -228,4 +228,4 @@ On the client, render each `status` event in a small chip above the assistant bu
 
 ---
 
-→ Next: [Structured output everywhere](./structured-output.md).
+→ Next: [Designing AI product UX](./ai-product-ux.md).
