@@ -160,7 +160,7 @@
   font-size: 10.5px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--faint);
+  color: var(--muted);
   margin: 0 0 7px;
 }
 .fb-field {
@@ -176,7 +176,7 @@
   transition: border-color 0.15s, box-shadow 0.15s;
 }
 .fb-field::placeholder {
-  color: var(--faint);
+  color: var(--muted);
 }
 .fb-field:focus {
   outline: none;
@@ -197,7 +197,7 @@ textarea.fb-field {
   gap: 8px;
   font-family: var(--font-mono);
   font-size: 11.5px;
-  color: var(--faint);
+  color: var(--muted);
   background: var(--bg-2);
   border: 1px solid var(--border);
   border-radius: 8px;

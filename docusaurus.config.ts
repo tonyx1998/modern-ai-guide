@@ -1,6 +1,19 @@
 import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
+import rehypeTaskListA11y from './src/remark/rehype-task-list-a11y.mjs';
+
+// Dracula's default comment colour (#6272a4) only reaches 3.03:1 on its dark
+// background — below the WCAG2AA 4.5:1 floor. Lift it to a lighter blue-grey
+// (~5:1) so code comments pass while staying visibly dimmer than live code.
+const draculaA11y = {
+  ...prismThemes.dracula,
+  styles: prismThemes.dracula.styles.map((s) =>
+    s.types.includes('comment')
+      ? {...s, style: {...s.style, color: '#8e97c6'}}
+      : s,
+  ),
+};
 
 const config: Config = {
   title: 'Modern AI Guide',
@@ -125,6 +138,9 @@ const config: Config = {
           routeBasePath: '/docs',
           // showLastUpdateTime requires a git repository — re-enable after `git init`.
           showLastUpdateTime: false,
+          // Label the disabled checkboxes that GFM task lists generate so they
+          // pass WCAG2AA (pa11y). See src/remark/rehype-task-list-a11y.mjs.
+          rehypePlugins: [rehypeTaskListA11y],
         },
         blog: false,
         theme: {
@@ -273,7 +289,7 @@ const config: Config = {
     },
     prism: {
       theme: prismThemes.github,
-      darkTheme: prismThemes.dracula,
+      darkTheme: draculaA11y,
       additionalLanguages: [
         'bash',
         'json',

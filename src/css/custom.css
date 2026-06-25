@@ -115,7 +115,7 @@ html {
   font-family: var(--font-mono);
   font-size: 10.5px;
   letter-spacing: 0.12em;
-  color: var(--faint);
+  color: var(--muted);
   border: 1px solid var(--border-2);
   border-radius: 5px;
   padding: 2px 6px;
