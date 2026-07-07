@@ -285,7 +285,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Modern AI Guide. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Modern AI Guide. Built with Docusaurus. · Built by <a href="https://www.toyinyu.com/">To Yin Yu</a>`,
     },
     prism: {
       theme: prismThemes.github,
