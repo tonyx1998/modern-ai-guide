@@ -24,8 +24,8 @@ const config: Config = {
     v4: true,
   },
 
-  url: 'https://tonyx1998.github.io',
-  baseUrl: '/modern-ai-guide/',
+  url: 'https://modernaiguide.dev',
+  baseUrl: '/',
 
   organizationName: 'tonyx1998',
   projectName: 'modern-ai-guide',

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://tonyx1998.github.io/modern-ai-guide/sitemap.xml
+Sitemap: https://modernaiguide.dev/sitemap.xml
