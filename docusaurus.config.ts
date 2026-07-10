@@ -102,12 +102,12 @@ const config: Config = {
           {
             tagName: 'link',
             rel: 'icon',
-            href: '/modern-ai-guide/img/favicon.ico',
+            href: '/img/favicon.ico',
           },
           {
             tagName: 'link',
             rel: 'manifest',
-            href: '/modern-ai-guide/manifest.json',
+            href: '/manifest.json',
           },
           {
             tagName: 'meta',
