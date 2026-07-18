@@ -273,8 +273,8 @@ This page is self-contained for debugging LLM features in dev and prod. If you w
 
 - [Observability tools](../04-stack/observability-tools.md) — Langfuse, LangSmith, gateway tracing in depth
 - [Evaluation overview](../13-evaluation/index.md) — building regression sets so bugs stay fixed
-- [Modern Web Dev Guide — Debugging methodology](https://modern-web-dev-guide.vercel.app/docs/foundations/debugging) — production app debugging, unfamiliar codebases, performance and flaky tests
-- [SWE Interview Guide — debugging rounds](https://swe-interview-guide.vercel.app/#/lesson/debugging-round) — the same hypothesis loop under interview pressure
+- [Modern Web Dev Guide — Debugging methodology](https://modernwebdevguide.com/docs/foundations/debugging) — production app debugging, unfamiliar codebases, performance and flaky tests
+- [SWE Interview Guide — debugging rounds](https://sweinterviewguide.com/#/lesson/debugging-round) — the same hypothesis loop under interview pressure
 
 ---
 

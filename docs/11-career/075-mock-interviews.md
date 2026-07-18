@@ -79,4 +79,4 @@ Candidates pour prep into RAG diagrams and skip evals — then lose the loop on 
 
 ## What's next
 
-→ Pair this with the [AI system-design interviews](./career-ai-system-design) page, then run a round at [SoloMock](https://solomock.com) (AI Engineer track). For the general coding loop, the [SWE Interview Guide](https://swe-interview-guide.vercel.app) shares the same problem set.
+→ Pair this with the [AI system-design interviews](./career-ai-system-design) page, then run a round at [SoloMock](https://solomock.com) (AI Engineer track). For the general coding loop, the [SWE Interview Guide](https://sweinterviewguide.com) shares the same problem set.
