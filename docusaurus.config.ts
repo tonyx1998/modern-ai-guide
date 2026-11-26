@@ -163,6 +163,9 @@ const config: Config = {
           changefreq: 'weekly',
           priority: 0.5,
           filename: 'sitemap.xml',
+          // The search page is a UI shell with no content of its own; keep it
+          // out of the sitemap so it isn't submitted for indexing.
+          ignorePatterns: ['/search'],
         },
       } satisfies Preset.Options,
     ],
