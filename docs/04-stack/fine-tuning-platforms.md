@@ -36,6 +36,7 @@ Fine-tuning takes a base model and continues training it on your data so it gets
 | **Unsloth** | OSS library | Llama, Mistral, Qwen, Gemma | 2x faster, 70% less memory | Pairs with Modal / RunPod |
 | **Axolotl** | OSS config-driven | Most open models | YAML configs | Reproducible community recipes |
 | **Predibase** | Hosted (Ludwig) | Many open models | LoRA-as-a-service | Production LoRA at scale |
+| **Adaption AutoScientist** | Hosted | Open weights | SFT, DPO; LoRA or full; optimizes data and training recipe | Teams without an ML research team |
 | **Mosaic AI (Databricks)** | Enterprise | Open weights | SFT, continued pre-training | Databricks shops |
 | **NVIDIA NeMo / NIMs** | Self / NVIDIA-managed | NVIDIA-curated models | Enterprise full-stack | NVIDIA enterprise |
 
